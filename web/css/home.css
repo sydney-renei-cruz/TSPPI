@@ -1,0 +1,37 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+Created on : Aug 14, 2016, 9:13:59 PM
+Author     : cruzsyd
+*/
+
+@CHARSET "ISO-8859-1";
+
+@font-face{
+    font-family: candara;
+    src: url(CANDARA.ttf) format("truetype");
+}
+
+body{font-family: candara;}
+
+/*carousel img size*/
+.carousel img{height: 350px !important;}
+#home-carousel{
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+/*main content*/
+.col-md-12{background-color: rgb(248, 248, 248) !important;}
+#contents{padding-bottom: 25px;}
+.col-md-12 .front-image-1{
+    width: 150px; 
+    padding-top: 5px; 
+    padding-bottom: 5px;
+}
+
+.front-div{border: 10px solid black;}
+.front-button{border-top: 5px solid black;}
