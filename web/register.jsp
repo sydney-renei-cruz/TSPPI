@@ -42,17 +42,22 @@
                                         <div class="col-lg-12">
                                             <form id="register-form" action="RegisterServlet" method="post">
                                                 <div class="form-group">
-                                                    <input type="text" name="username" id="username" class="form-control" placeholder="Username" value="">
+                                                    <input type="text" name="username" id="username" class="form-control" placeholder="Username" required>
                                                 </div>
                                                 <div class="form-group">
                                                     <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
                                                 </div>
                                                 <div class="form-group">
                                                     <input type="password" name="confirm_password" id="confirm-password" class="form-control" placeholder="Confirm Password" required>
-                                                </div>
+                                               
+                                                <input style = "border: none" type="text" name="validate_box" id="validation-box" class="form-control" size = 2 readonly required>
+                                                
+                                                 </div>
+                                                
                                                 <script>
                                                     $(document).ready(function() {
                                                         $("#confirm-password").keyup(validate);
+                                                        
                                                     });
                                                     function validate() {
                                                         var password1 = $("#password").val();
@@ -60,31 +65,35 @@
 
                                                         if(password1 === password2) {
                                                             $("#reg-password").css("border", "solid 1px #1CB94A");   
-                                                            $("#confirm-password").css("border", "solid 1px #1CB94A");   
+                                                            $("#confirm-password").css("border", "solid 1px #1CB94A"); 
+                                                            $("#validation-box").val("Password matches");
                                                         }
                                                         else {
                                                             $("#reg-password").css("border", "solid 1px #e60000");   
-                                                                    $("#confirm-password").css("border", "solid 1px #e60000");   
+                                                            $("#confirm-password").css("border", "solid 1px #e60000");
+                                                            $("#validation-box").val(null);
+                                                            
                                                         }
 
                                                       }
 
                                                 </script>
                                                 <div class="form-group">
-                                                        <input type="text" name="first_name" id="first_name" class="form-control" placeholder="First Name">
+                                                        <input type="text" name="first_name" id="first_name" class="form-control" placeholder="First Name" required>
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Last Name">
+                                                    <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Last Name" required>
                                                 </div>
                                                 <div class="form-group">
-                                                    <input type="email" name="email" id="email" class="form-control" placeholder="Email Address">
+                                                    <input type="email" name="email" id="email" class="form-control" placeholder="Email Address" required>
                                                 </div>
                                                 <div class="form-group">
-                                                    <input type="text" name="mobile_number" id="mobile_number" class="form-control" placeholder="Mobile Number">
+                                                    <input type="number" name="mobile_number" id="mobile_number" class="form-control" placeholder="Mobile Number" max = "11" min = "11" required>
                                                 </div>
+                                               
                                                 <div class="form-group">
-                                                    <input type="text" name="telephone_number" id="telephone_number" class="form-control" placeholder="Telephone Number">
+                                                    <input type="number" name="telephone_number" id="telephone_number" class="form-control" placeholder="Telephone Number" max = "7" min = "7" required>
                                                 </div>
                                                 <div class="form-group">
                                                     <textarea rows="4" cols="50" placeholder="Mailing Address" class="form-control" name="address" id="company_address"></textarea>
@@ -92,8 +101,8 @@
                                                 						
                                                 <div class="form-group">
                                                     <div class="row">
-                                                        <div class="col-sm-6 col-sm-offset-3">
-                                                            <input type="submit" name="submit" id="register-submit" class="form-control btn btn-register" value="Register Now">
+                                                        <div class="col-sm-6 col-sm-offset-3">                                                            
+                                                                <input type="submit" name="submit" id="register-submit" class="form-control btn btn-register" value="Register Now">
                                                         </div>
                                                     </div>
                                                 </div>
