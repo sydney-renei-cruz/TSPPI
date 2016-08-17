@@ -13,7 +13,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,8 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author cruzsyd
  */
-@WebServlet(name = "RegisterServlet", urlPatterns = {"/RegisterServlet"})
-public class RegisterServlet extends HttpServlet {
+public class dsa extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,8 +34,43 @@ public class RegisterServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        
+        ServletContext context = request.getSession().getServletContext();
+        
+        String username = request.getParameter("user");
+        String password = request.getParameter("pass");
+//        String username = "Hello";
+//        String password = "Word";
+        Connection conn = null;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
+        }catch(ClassNotFoundException | SQLException e){
+            out.println("Error Class");
+            e.printStackTrace();
+        }
+        
+        try{
+            String inText = "INSERT INTO user_test1 (username, password) VALUES (?,?)";
+            
+            PreparedStatement ps =  conn.prepareStatement(inText);
+            ps.setString(1, username);
+            ps.setString(2, password);
+            
+            int i = ps.executeUpdate();
+            if(i>0){
+                response.sendRedirect("index.jsp?result=Success");
+            }
+            else{
+                response.sendRedirect("index.jsp?result=Failed");
+            }
+        }catch(SQLException | IOException e){
+            out.println(e);
+            e.printStackTrace();
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -67,61 +100,7 @@ public class RegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-
-//        Get the name of the form fields.
-
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String first_name = request.getParameter("first_name");
-        String last_name = request.getParameter("last_name");
-        String email = request.getParameter("email");
-        String mobile = request.getParameter("mobile_number");
-        String telephone = request.getParameter("telephone_number");
-        String address = request.getParameter("address");
         
-        String inText;
-        int i;
-        
-        Connection conn = null;
-        PreparedStatement ps;
-        ServletContext context;
-        
-        try{
-            context = request.getSession().getServletContext();
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
-        }catch(ClassNotFoundException | SQLException e){
-            out.println("Error Class");
-            e.printStackTrace();
-        }
-        
-        try{
-            inText = "INSERT INTO user (username, password, first_name, last_name,"
-                    + "email,mobile_num, telephone_num, address) VALUES (?,?,?,?,?,?,?,?)";
-            
-            ps =  conn.prepareStatement(inText);
-            ps.setString(1, username);
-            ps.setString(2, password);
-            ps.setString(3, first_name);
-            ps.setString(4, last_name);
-            ps.setString(5, email);
-            ps.setString(6, mobile);
-            ps.setString(7, telephone);
-            ps.setString(8, address);
-            
-            i = ps.executeUpdate();
-            if(i>0){
-                response.sendRedirect("index.jsp?result=Success");
-            }
-            else{
-                response.sendRedirect("index.jsp?result=Failed");
-            }
-        }catch(SQLException | IOException e){
-            out.println(e);
-            e.printStackTrace();
-        }
     }
 
     /**

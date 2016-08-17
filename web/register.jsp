@@ -4,12 +4,13 @@
     Author     : cruzsyd
 --%>
 
+<%@page import="java.io.PrintWriter"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
 <html>
     <head>
         <link href="css/login-register.css" rel="stylesheet" type="text/css">
+        
     </head>
     <body>
 	<%@include file="navbar.jsp" %>
@@ -39,12 +40,12 @@
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <form id="register-form" action="register-client.php" method="post">
+                                            <form id="register-form" action="RegisterServlet" method="post">
                                                 <div class="form-group">
                                                     <input type="text" name="username" id="username" class="form-control" placeholder="Username" value="">
                                                 </div>
                                                 <div class="form-group">
-                                                    <input type="password" name="password" id="reg-password" class="form-control" placeholder="Password" required>
+                                                    <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
                                                 </div>
                                                 <div class="form-group">
                                                     <input type="password" name="confirm_password" id="confirm-password" class="form-control" placeholder="Confirm Password" required>
@@ -54,7 +55,7 @@
                                                         $("#confirm-password").keyup(validate);
                                                     });
                                                     function validate() {
-                                                        var password1 = $("#reg-password").val();
+                                                        var password1 = $("#password").val();
                                                         var password2 = $("#confirm-password").val();
 
                                                         if(password1 === password2) {
@@ -86,19 +87,9 @@
                                                     <input type="text" name="telephone_number" id="telephone_number" class="form-control" placeholder="Telephone Number">
                                                 </div>
                                                 <div class="form-group">
-                                                    <textarea rows="4" cols="50" placeholder="Company Address" class="form-control" name="company_address" id="company_address"></textarea>
+                                                    <textarea rows="4" cols="50" placeholder="Mailing Address" class="form-control" name="address" id="company_address"></textarea>
                                                 </div>
-<!--                                                <div class="form-group text-center">
-                                                    <?php 
-                                                        if(isset($_GET['success'])){
-                                                            if($_GET['success'] == 'true'){
-                                                                echo '<div class="success" style="color: green !important;">THANK YOU. YOUR DATA HAS BEEN SUBMITTED</div>';
-                                                            }else{
-                                                                echo '<div class="error" style="color: red !important;">Please complete the form</div>';
-                                                            }
-                                                        }
-                                                    ?>
-                                                </div>								-->
+                                                						
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-sm-6 col-sm-offset-3">
@@ -110,7 +101,7 @@
                                                     <div class="row">
                                                         <div class="col-lg-12">
                                                             <div class="text-center">
-                                                                <a href="register.jsp" class="forgot-password">Already have an account?</a>
+                                                                <a href="login.jsp" class="forgot-password">Already have an account?</a>
                                                             </div>
                                                         </div>
                                                     </div>
