@@ -64,7 +64,7 @@
                                     </div>
                                 </form>
                             </li>
-                            <li><a href="login.php"><span class="glyphicon glyphicon-user"></span> Account</a></li>
+                            <li><a href="login.jsp"><span class="glyphicon glyphicon-user"></span> Account</a></li>
                             <li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span> Cart - ₱</a></li>
                         </ul>
                         <ul class="nav navbar-nav  navbar-left">
