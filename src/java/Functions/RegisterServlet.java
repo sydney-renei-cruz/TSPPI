@@ -93,7 +93,7 @@ public class RegisterServlet extends HttpServlet {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
         }catch(ClassNotFoundException | SQLException e){
-            out.println("Error Class");
+            out.println("Error DB Connection");
             e.printStackTrace();
         }
         
