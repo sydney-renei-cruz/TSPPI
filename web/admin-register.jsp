@@ -49,39 +49,10 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <input type="password" name="confirm_password" id="confirm-password" class="form-control" placeholder="Confirm Password" required>
-                                               
-                                                <input style = "border: none" type="text" name="validate_box" id="validation-box" class="form-control" size = 2 readonly required>
-                                                
-                                                 </div>
-                                                
-                                                <script>
-                                                    $(document).ready(function() {
-                                                        $("#confirm-password").keyup(validate);
-                                                        
-                                                    });
-                                                    function validate() {
-                                                        var password1 = $("#password").val();
-                                                        var password2 = $("#confirm-password").val();
-
-                                                        if(password1 === password2) {
-                                                            $("#reg-password").css("border", "solid 1px #1CB94A");   
-                                                            $("#confirm-password").css("border", "solid 1px #1CB94A"); 
-                                                            $("#validation-box").val("Password matches");
-                                                        }
-                                                        else {
-                                                            $("#reg-password").css("border", "solid 1px #e60000");   
-                                                            $("#confirm-password").css("border", "solid 1px #e60000");
-                                                            $("#validation-box").val(null);
-                                                            
-                                                        }
-
-                                                      }
-
-                                                </script>
+                                                </div>                                                
                                                 <div class="form-group">
                                                         <input type="text" name="first_name" id="first_name" class="form-control" placeholder="First Name" required>
                                                 </div>
-
                                                 <div class="form-group">
                                                     <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Last Name" required>
                                                 </div>
@@ -89,14 +60,14 @@
                                                     <input type="email" name="email" id="email" class="form-control" placeholder="Email Address" required>
                                                 </div>
                                                 <div class="form-group">
-                                                    <input type="number" name="mobile_number" id="mobile_number" class="form-control" placeholder="Mobile Number" max = "11" min = "11" required>
+                                                    <input type="text" name="mobile_number" id="mobile_number" class="form-control" placeholder="Mobile Number (The length of the number should be 11)" pattern=".{11,11}" title="Required length of number is 11" required>
                                                 </div>
                                                
                                                 <div class="form-group">
-                                                    <input type="number" name="telephone_number" id="telephone_number" class="form-control" placeholder="Telephone Number" max = "7" min = "7" required>
+                                                    <input type="text" name="telephone_number" id="telephone_number" class="form-control" placeholder="Telephone Number (The length of the number should be 7)" pattern=".{7,7}" title="Required length of number is 7" required>
                                                 </div>
                                                 <div class="form-group">
-                                                    <textarea rows="4" cols="50" placeholder="Mailing Address" class="form-control" name="address" id="company_address"></textarea>
+                                                    <textarea rows="4" cols="50" placeholder="Mailing Address" class="form-control" name="address" id="address"></textarea>
                                                 </div>
                                                 						
                                                 <div class="form-group">
@@ -125,6 +96,6 @@
                 </div>
             </div>
 	</section>
-	<script>
+        <script src="js/reg-form-validation.js" type="text/javascript"></script>
     </body>
 </html>

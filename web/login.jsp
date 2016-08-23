@@ -39,7 +39,7 @@
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <form id="login-form" action="" method="post" role="form">
+                                            <form id="login-form" action="Login" method="post" role="form">
                                                 <div class="form-group">
                                                     <input type="text" name="username" id="username" class="form-control" placeholder="Username" value="">
                                                 </div>
@@ -66,7 +66,7 @@
                                                         </div>
                                                         <div class="col-lg-12">
                                                             <div class="text-center">
-                                                                <a href="register.jsp" class="forgot-password">Need an account? Click Here!</a>
+                                                                <a href="client-register.jsp" class="forgot-password">Need an account? Click Here!</a>
                                                             </div>
                                                         </div>
                                                     </div>

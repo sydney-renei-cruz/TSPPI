@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Functions;
+package Servlet_Functions;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -80,6 +80,7 @@ public class RegisterServlet extends HttpServlet {
         String mobile = request.getParameter("mobile_number");
         String telephone = request.getParameter("telephone_number");
         String address = request.getParameter("address");
+        Boolean account_status = false;
         
         String inText;
         int i;
@@ -98,8 +99,8 @@ public class RegisterServlet extends HttpServlet {
         }
         
         try{
-            inText = "INSERT INTO user (username, password, first_name, last_name,"
-                    + "email,mobile_num, telephone_num, address) VALUES (?,?,?,?,?,?,?,?)";
+            inText = "INSERT INTO account (username, password, first_name, last_name,"
+                    + "email,mob_num, tel_num, address, account_status) VALUES (?,?,?,?,?,?,?,?, ?)";
             
             ps =  conn.prepareStatement(inText);
             ps.setString(1, username);
@@ -110,13 +111,14 @@ public class RegisterServlet extends HttpServlet {
             ps.setString(6, mobile);
             ps.setString(7, telephone);
             ps.setString(8, address);
+            ps.setBoolean(9, account_status);
             
             i = ps.executeUpdate();
             if(i>0){
-                response.sendRedirect("index.jsp?result=Success");
+                response.sendRedirect("login.jsp");
             }
             else{
-                response.sendRedirect("index.jsp?result=Failed");
+                response.sendRedirect("client-register.jsp?result=Failed");
             }
         }catch(SQLException | IOException e){
             out.println(e);
