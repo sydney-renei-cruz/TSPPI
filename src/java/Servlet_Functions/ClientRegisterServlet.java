@@ -22,8 +22,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author cruzsyd
  */
-@WebServlet(name = "RegisterServlet", urlPatterns = {"/RegisterServlet"})
-public class RegisterServlet extends HttpServlet {
+@WebServlet(name = "ClientRegisterServlet", urlPatterns = {"/ClientRegisterServlet"})
+public class ClientRegisterServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -82,7 +82,6 @@ public class RegisterServlet extends HttpServlet {
         String address = request.getParameter("address");
         Boolean account_status = false;
         
-        String inText;
         int i;
         
         Connection conn = null;
@@ -99,10 +98,8 @@ public class RegisterServlet extends HttpServlet {
         }
         
         try{
-            inText = "INSERT INTO account (username, password, first_name, last_name,"
-                    + "email,mob_num, tel_num, address, account_status) VALUES (?,?,?,?,?,?,?,?, ?)";
             
-            ps =  conn.prepareStatement(inText);
+            ps =  conn.prepareStatement("INSERT INTO account (username, password, first_name, last_name, email, mobile, telephone, address, account_status) VALUES (?,?,?,?,?,?,?,?, ?)");
             ps.setString(1, username);
             ps.setString(2, password);
             ps.setString(3, first_name);
@@ -112,7 +109,9 @@ public class RegisterServlet extends HttpServlet {
             ps.setString(7, telephone);
             ps.setString(8, address);
             ps.setBoolean(9, account_status);
+            i = ps.executeUpdate();
             
+            ps = conn.prepareStatement("INSERT INTO client(account_num) VALUES (LAST_INSERT_ID())");
             i = ps.executeUpdate();
             if(i>0){
                 response.sendRedirect("login.jsp");

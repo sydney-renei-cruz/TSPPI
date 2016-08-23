@@ -10,7 +10,6 @@
 <html>
     <head>
         <link href="css/login-register.css" rel="stylesheet" type="text/css">
-        
     </head>
     <body>
 	<%@include file="navbar.jsp" %>
@@ -40,7 +39,7 @@
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <form id="register-form" action="RegisterServlet" method="post">
+                                            <form id="register-form" action="ClientRegisterServlet" method="post">
                                                 <div class="form-group">
                                                     <input type="text" name="username" id="username" class="form-control" placeholder="Username" required>
                                                 </div>
