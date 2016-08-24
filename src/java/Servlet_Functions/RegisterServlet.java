@@ -22,8 +22,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author cruzsyd
  */
-@WebServlet(name = "ClientRegisterServlet", urlPatterns = {"/ClientRegisterServlet"})
-public class ClientRegisterServlet extends HttpServlet {
+@WebServlet(name = "RegisterServlet", urlPatterns = {"/RegisterServlet"})
+public class RegisterServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -80,8 +80,9 @@ public class ClientRegisterServlet extends HttpServlet {
         String mobile = request.getParameter("mobile_number");
         String telephone = request.getParameter("telephone_number");
         String address = request.getParameter("address");
+        String form_identifier = request.getParameter("form_identifier");
         Boolean account_status = false;
-        
+    
         int i;
         
         Connection conn = null;
@@ -110,11 +111,14 @@ public class ClientRegisterServlet extends HttpServlet {
             ps.setString(8, address);
             ps.setBoolean(9, account_status);
             i = ps.executeUpdate();
+                        
             
-            ps = conn.prepareStatement("INSERT INTO client(account_num) VALUES (LAST_INSERT_ID())");
+            
+            
+            ps = conn.prepareStatement("INSERT INTO " + form_identifier + "(account_num) VALUES (LAST_INSERT_ID())");
             i = ps.executeUpdate();
             if(i>0){
-                response.sendRedirect("login.jsp");
+                response.sendRedirect("login.jsp?Result");
             }
             else{
                 response.sendRedirect("client-register.jsp?result=Failed");

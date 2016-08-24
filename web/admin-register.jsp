@@ -68,12 +68,12 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <textarea rows="4" cols="50" placeholder="Mailing Address" class="form-control" name="address" id="address"></textarea>
-                                                </div>
-                                                						
+                                                </div>    						
                                                 <div class="form-group">
                                                     <div class="row">
-                                                        <div class="col-sm-6 col-sm-offset-3">                                                            
-                                                                <input type="submit" name="submit" id="register-submit" class="form-control btn btn-register" value="Register Now">
+                                                        <div class="col-sm-6 col-sm-offset-3">    
+                                                            <input type="hidden" name="form_identifier" value="Admin">
+                                                            <input type="submit" name="submit" id="register-submit" class="form-control btn btn-register" value="Register Now">
                                                         </div>
                                                     </div>
                                                 </div>

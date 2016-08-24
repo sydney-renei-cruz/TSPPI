@@ -39,7 +39,7 @@
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <form id="register-form" action="ClientRegisterServlet" method="post">
+                                            <form id="register-form" action="RegisterServlet" method="post">
                                                 <div class="form-group">
                                                     <input type="text" name="username" id="username" class="form-control" placeholder="Username" required>
                                                 </div>
@@ -63,7 +63,7 @@
                                                 </div>
                                                
                                                 <div class="form-group">
-                                                    <input type="text" name="telephone_number" id="telephone_number" class="form-control" placeholder="Telephone Number (The length of the number should be 7)" pattern=".{7,7}" title="Required length of number is 7" required>
+                                                    <input type="text" name="telephone_number" id="telephone_number" class="form-control" placeholder="Telephone Number" pattern=".{7,11}" title="Required minimum length of number is 7" required>
                                                 </div>
                                                 <div class="form-group">
                                                     <textarea rows="4" cols="50" placeholder="Mailing Address" class="form-control" name="address" id="address"></textarea>
@@ -71,8 +71,9 @@
                                                 						
                                                 <div class="form-group">
                                                     <div class="row">
-                                                        <div class="col-sm-6 col-sm-offset-3">                                                            
-                                                                <input type="submit" name="submit" id="register-submit" class="form-control btn btn-register" value="Register Now">
+                                                        <div class="col-sm-6 col-sm-offset-3">
+                                                            <input type="hidden" name="form_identifier" value="Client">
+                                                            <input type="submit" name="submit" id="register-submit" class="form-control btn btn-register" value="Register Now">
                                                         </div>
                                                     </div>
                                                 </div>
