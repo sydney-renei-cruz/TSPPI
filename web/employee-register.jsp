@@ -4,7 +4,11 @@
     Author     : cruzsyd
 --%>
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.LinkedList"%>
+<%@page import="Bean.JobTypeBean"%>
 <%@page import="java.io.PrintWriter"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -49,7 +53,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <input type="password" name="confirm_password" id="confirm-password" class="form-control" placeholder="Confirm Password" required>
-                                                </div>                                                
+                                                </div> 
                                                 <div class="form-group">
                                                         <input type="text" name="first_name" id="first_name" class="form-control" placeholder="First Name" required>
                                                 </div>
@@ -68,22 +72,22 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <textarea rows="4" cols="50" placeholder="Mailing Address" class="form-control" name="address" id="address"></textarea>
-                                                </div>    						
-                                                <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-sm-6 col-sm-offset-3"> 
-                                                            <input type="hidden" name="type_of_account" id="form_identifier" value="2">
-                                                            <input type="hidden" name="form_identifier" value="Admin">
-                                                            <input type="submit" name="submit" id="register-submit" class="form-control btn btn-register" value="Register Now">
-                                                        </div>
-                                                    </div>
                                                 </div>
+                                                <div class="form-group text-center">
+                                                    <label>Job Position: </label>
+                                                    <select name="job_type">
+                                                        <% ArrayList<JobTypeBean> jt = (ArrayList) request.getAttribute("jt");
+                                                        for(JobTypeBean jtb: jt){%>
+                                                            <option value="<%=jtb.getJobID()%>"><%=jtb.getJobType()%></option>
+                                                        <%}%>
+                                                    </select>
+                                                </div>  
                                                 <div class="form-group">
                                                     <div class="row">
-                                                        <div class="col-lg-12">
-                                                            <div class="text-center">
-                                                                <a href="login.jsp" class="forgot-password">Already have an account?</a>
-                                                            </div>
+                                                        <div class="col-sm-6 col-sm-offset-3">
+                                                            <input type="hidden" name="type_of_account" id="form_identifier" value="1">
+                                                            <input type="hidden" name="form_identifier" id="form_identifier" value="Employee">
+                                                            <input type="submit" name="submit" id="register-submit" class="form-control btn btn-register" value="Register Now">
                                                         </div>
                                                     </div>
                                                 </div>

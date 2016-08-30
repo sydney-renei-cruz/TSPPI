@@ -39,7 +39,7 @@
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <form id="register-form" action="RegisterServlet" method="post">
+                                            <form id="register-form" action="Register" method="post">
                                                 <div class="form-group">
                                                     <input type="text" name="username" id="username" class="form-control" placeholder="Username" required>
                                                 </div>
@@ -72,6 +72,7 @@
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-sm-6 col-sm-offset-3">
+                                                            <input type="hidden" name="type_of_account" id="form_identifier" value="3">
                                                             <input type="hidden" name="form_identifier" value="Client">
                                                             <input type="submit" name="submit" id="register-submit" class="form-control btn btn-register" value="Register Now">
                                                         </div>

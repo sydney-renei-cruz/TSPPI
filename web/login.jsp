@@ -12,6 +12,7 @@
         <link href="css/login-register.css" rel="stylesheet" type="text/css">
     </head>
     <body>
+        <%if (session.getAttribute("user") != null || session.getAttribute("user") != "") response.sendRedirect("profile.jsp");%>
 	<%@include file="navbar.jsp" %>
 	<header id="login-header" style="background-image: url(img/desk.png); background-size: cover;">
             <div class="container">
@@ -47,6 +48,9 @@
                                                     <input type="password" name="password" id="log-password" class="form-control" placeholder="Password">
                                                 </div>
                                                 <div class="form-group text-center">
+                                                    <div style="color: #FF0000;">${errorMessage}</div>
+                                                </div>
+                                                <div class="form-group text-center">
                                                     <input type="checkbox" class="" name="remember" id="remember">
                                                     <label for="remember"> Remember Me</label>
                                                 </div>
@@ -61,7 +65,7 @@
                                                     <div class="row">
                                                         <div class="col-lg-12">
                                                             <div class="text-center">
-                                                                <a href="" class="forgot-password">Forgot Password?</a>
+                                                                <a href="EmployeeRegisterPage" class="forgot-password">Forgot Password?</a>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-12">

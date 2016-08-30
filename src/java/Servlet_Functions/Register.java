@@ -13,7 +13,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,8 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author cruzsyd
  */
-@WebServlet(name = "RegisterServlet", urlPatterns = {"/RegisterServlet"})
-public class RegisterServlet extends HttpServlet {
+public class Register extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -80,7 +78,9 @@ public class RegisterServlet extends HttpServlet {
         String mobile = request.getParameter("mobile_number");
         String telephone = request.getParameter("telephone_number");
         String address = request.getParameter("address");
+        String account_type_id = request.getParameter("type_of_account");        
         String form_identifier = request.getParameter("form_identifier");
+        String job_id = request.getParameter("job_type");
         Boolean account_status = false;
     
         int i;
@@ -96,11 +96,11 @@ public class RegisterServlet extends HttpServlet {
         }catch(ClassNotFoundException | SQLException e){
             out.println("Error DB Connection");
             e.printStackTrace();
-        }
+        }   
         
         try{
             
-            ps =  conn.prepareStatement("INSERT INTO account (username, password, first_name, last_name, email, mobile, telephone, address, account_status) VALUES (?,?,?,?,?,?,?,?, ?)");
+            ps =  conn.prepareStatement("INSERT INTO account (username, password, first_name, last_name, email, mobile, telephone, address, account_type_id, account_status) VALUES (?,?,?,?,?,?,?,?,?,?)");
             ps.setString(1, username);
             ps.setString(2, password);
             ps.setString(3, first_name);
@@ -109,22 +109,29 @@ public class RegisterServlet extends HttpServlet {
             ps.setString(6, mobile);
             ps.setString(7, telephone);
             ps.setString(8, address);
-            ps.setBoolean(9, account_status);
+            ps.setString(9, account_type_id);
+            ps.setBoolean(10, account_status);
             i = ps.executeUpdate();
-                        
             
-            
-            
-            ps = conn.prepareStatement("INSERT INTO " + form_identifier + "(account_num) VALUES (LAST_INSERT_ID())");
-            i = ps.executeUpdate();
-            if(i>0){
-                response.sendRedirect("login.jsp?Result");
+            if(form_identifier.equals("Employee") ){
+                ps = conn.prepareStatement("INSERT INTO " + form_identifier + "(account_num, job_id) VALUES (LAST_INSERT_ID(), ?)");
+                ps.setString(1, job_id);
+                i = ps.executeUpdate();
+            }else{
+                ps = conn.prepareStatement("INSERT INTO " + form_identifier + "(account_num) VALUES (LAST_INSERT_ID())");
+                i = ps.executeUpdate();
             }
+            
+            
+            if(i>0){
+                response.sendRedirect("login.jsp");
+            } 
             else{
                 response.sendRedirect("client-register.jsp?result=Failed");
             }
         }catch(SQLException | IOException e){
             out.println(e);
+            out.println(form_identifier);
             e.printStackTrace();
         }
     }

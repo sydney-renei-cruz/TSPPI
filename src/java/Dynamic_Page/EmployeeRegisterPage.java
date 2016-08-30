@@ -3,24 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Servlet_Functions;
+package Dynamic_Page;
 
-import Class_Functions.ValidateLogin;
+import Bean.JobTypeBean;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author cruzsyd
  */
-public class Login extends HttpServlet {
+public class EmployeeRegisterPage extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,6 +39,40 @@ public class Login extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        
+        
+        Connection conn = null;
+        PreparedStatement ps;
+        ServletContext context;
+        ResultSet rs;
+        int i;
+        try{
+            context = request.getSession().getServletContext();
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
+        }catch(ClassNotFoundException | SQLException e){
+            e.printStackTrace();
+        }
+        try{
+            ps = conn.prepareStatement("SELECT * FROM job_position");
+            rs = ps.executeQuery();
+            
+            ArrayList<JobTypeBean> jt = new ArrayList<>();
+            JobTypeBean jtb;
+            while(rs.next()){
+                jtb = new JobTypeBean();
+                jtb.setJobID(rs.getInt("job_id"));
+                jtb.setJobType(rs.getString("job_type"));
+                jt.add(jtb);
+            }
+            rs.close();
+            request.setAttribute("jt", jt);
+            
+            request.getRequestDispatcher("employee-register.jsp").forward(request, response);
+            
+        }catch(SQLException | IOException e){
+            e.printStackTrace();
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -63,23 +101,7 @@ public class Login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
-        RequestDispatcher rs = null;
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        
-        if(ValidateLogin.validateUser(username, password, request, response)){
-            HttpSession session = request.getSession();
-            session.setAttribute("user", username);
-            session.setMaxInactiveInterval(30*60);
-            
-            Cookie user_name = new Cookie("user", username);
-            response.addCookie(user_name);
-            response.sendRedirect("profile.jsp");
-        }else{
-            request.setAttribute("errorMessage", "Wrong username/password");
-            response.sendRedirect("login.jsp?Result=Failed");
-        }
+        processRequest(request, response);
     }
 
     /**

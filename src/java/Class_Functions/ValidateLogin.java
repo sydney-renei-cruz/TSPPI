@@ -29,7 +29,7 @@ public class ValidateLogin extends HttpServlet{
             context = request.getSession().getServletContext();
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
-            PreparedStatement ps = conn.prepareStatement("Select username, password from user where username = ? and password = ?");
+            PreparedStatement ps = conn.prepareStatement("Select * from account where username = ? and password = ?");
             ps.setString(1, username);
             ps.setString(2, password);
             ResultSet rs = ps.executeQuery();

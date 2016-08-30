@@ -10,7 +10,8 @@
     <head>
     </head>
     <body>
+        
         <%@include file="navbar.jsp" %>
-        <h1>PROFILE</h1>
+        <h1>Client PROFILE</h1>
     </body>
 </html>
