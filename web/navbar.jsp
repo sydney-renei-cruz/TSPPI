@@ -28,7 +28,7 @@
             <nav class="navbar navbar-fixed-top navbar-inverse nav-top">
                 <div class="container">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="index.php"><img alt="" src="img/tsppi.png" id="nav-img"></a>
+                        <a class="navbar-brand" href="index.jsp"><img alt="" src="img/tsppi.png" id="nav-img"></a>
                         
                         <div class="nav navbar-left">
                             <a href="index.jsp" class="btn btn-link navbar-btn">HOME</a>
@@ -42,7 +42,7 @@
             <nav class="navbar navbar-fixed-top nav-bot">
                 <div class="container">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="#"><img alt="" src="img/whitespace.png"></a>
+                        <a class="navbar-brand" href="index.jsp"><img alt="" src="img/whitespace.png"></a>
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".bot-nav">
                             <span class="sr-only">Toggle Navigation</span>
                             <span class="icon-bar"></span>
@@ -66,7 +66,7 @@
                             </li>
                             <li><a href="login.jsp"><span class="glyphicon glyphicon-user"></span> Account</a></li>
                             <li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span> Cart - ₱</a></li>
-                        </ul>
+                        </ul>   
                         <ul class="nav navbar-nav  navbar-left">
                             <li><a href="products.php">PRODUCTS</a></li>
                             <li><a href="#">SERVICES</a></li>

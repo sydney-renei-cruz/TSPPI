@@ -12,6 +12,10 @@
         <servlet-name>EmployeeRegisterPage</servlet-name>
         <servlet-class>Dynamic_Page.EmployeeRegisterPage</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Logout</servlet-name>
+        <servlet-class>Servlet_Functions.Logout</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Register</servlet-name>
         <url-pattern>/Register</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>EmployeeRegisterPage</servlet-name>
         <url-pattern>/EmployeeRegisterPage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Logout</servlet-name>
+        <url-pattern>/Logout</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -36,11 +44,11 @@
     </context-param>
     <context-param>
         <param-name>password</param-name>
-        <param-value>tsppi_password</param-value>
+        <param-value/>
     </context-param>
     <context-param>
         <param-name>dbURL</param-name>
-        <param-value>jdbc:mysql://localhost:3306/tsppi_test2</param-value>
+        <param-value>jdbc:mysql://localhost:3306/tsppi_test</param-value>
     </context-param>
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>

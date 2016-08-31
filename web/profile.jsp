@@ -13,5 +13,8 @@
         
         <%@include file="navbar.jsp" %>
         <h1>Client PROFILE</h1>
+        <form action="Logout" method="post">
+            <input type="submit" name="logout" value="Log out">
+        </form>
     </body>
 </html>

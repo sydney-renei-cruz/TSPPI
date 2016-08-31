@@ -12,7 +12,7 @@
         <link href="css/login-register.css" rel="stylesheet" type="text/css">
     </head>
     <body>
-        <%if (session.getAttribute("user") != null || session.getAttribute("user") != "") response.sendRedirect("profile.jsp");%>
+        <%if (session.getAttribute("user") != null) response.sendRedirect("profile.jsp");%>
 	<%@include file="navbar.jsp" %>
 	<header id="login-header" style="background-image: url(img/desk.png); background-size: cover;">
             <div class="container">
