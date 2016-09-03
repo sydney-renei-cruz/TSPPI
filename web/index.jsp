@@ -11,6 +11,7 @@
 </head>
 <body>
     <%@include file="/WEB-INF/static-page/navbar.jsp" %>
+
     <section id="myCarousel">
         <div id="home-carousel" class="carousel slide col-lg-8 col-lg-offset-2" data-ride="carousel">
             <ol class="carousel-indicators">
