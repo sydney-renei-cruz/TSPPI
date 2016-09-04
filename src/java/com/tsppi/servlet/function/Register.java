@@ -16,6 +16,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.security.*;
+import java.util.*;
 
 /**
  *
@@ -82,7 +84,48 @@ public class Register extends HttpServlet {
         String form_identifier = request.getParameter("form_identifier");
         String job_id = request.getParameter("job_type");
         Boolean account_status = false;
-    
+        
+        //                  Hash the password
+        try{
+        
+            //              Salts for the hashing
+        String[] salts = new String[10];
+        salts[0] = "7LsDFJ9oHjDnfUr12";
+        salts[1] = "K8oMilIOi0ji43amS";
+        salts[2] = "AFIOUVAJNONVASJja";
+        salts[3] = "nVaWIdsj19Aij63df";
+        salts[4] = "uahRksD47kljnJN9k";
+        salts[5] = "dMna7sY01jfIoaPlY";
+        salts[6] = "Wg480ioAjEdsf31Ka";
+        salts[7] = "gMutRHj70ubQnjB67";
+        salts[8] = "gnQiaOhfXquh82z74";
+        salts[9] = "mKvqn7834wHjk1kLa";
+        
+        Random rand = new Random();
+        
+        password = password + salts[rand.nextInt(10)];
+        
+            //              End Salting
+            
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        md.update(password.getBytes());
+        
+        byte byteData[] = md.digest();
+        
+        StringBuffer sb = new StringBuffer();
+        
+        for(int i = 0; i < byteData.length; i++){
+            sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+        }
+        
+        password = sb.toString();
+        }
+        catch(NoSuchAlgorithmException e){
+            e.printStackTrace();
+        }
+        
+        //                 End Hashing
+        
         int i;
         
         Connection conn = null;

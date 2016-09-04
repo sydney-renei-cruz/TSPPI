@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 30, 2016 at 01:30 PM
+-- Generation Time: Sep 04, 2016 at 07:54 AM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 7.0.8
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `tsppi_test2`
+-- Database: `tsppi`
 --
 
 -- --------------------------------------------------------
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `account` (
   `account_num` int(10) NOT NULL,
   `username` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  `password` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `first_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `last_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(50) CHARACTER SET utf32 COLLATE utf32_unicode_ci NOT NULL,

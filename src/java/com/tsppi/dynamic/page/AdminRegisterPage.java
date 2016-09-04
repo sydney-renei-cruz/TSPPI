@@ -3,11 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Dynamic_Page;
+package com.tsppi.dynamic.page;
 
-import Bean.JobTypeBean;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import com.tsppi.bean.JobTypeBean;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -15,16 +20,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author cruzsyd
+ * @author Jasteen
  */
-public class EmployeeRegisterPage extends HttpServlet {
+public class AdminRegisterPage extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -68,7 +69,7 @@ public class EmployeeRegisterPage extends HttpServlet {
             rs.close();
             request.setAttribute("jt", jt);
             
-            request.getRequestDispatcher("employee-register.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/auth-page/admin-register.jsp").forward(request, response);
             
         }catch(SQLException | IOException e){
             e.printStackTrace();
