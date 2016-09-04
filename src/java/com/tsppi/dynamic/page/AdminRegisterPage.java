@@ -40,40 +40,8 @@ public class AdminRegisterPage extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        request.getRequestDispatcher("/WEB-INF/auth-page/admin-register.jsp").forward(request, response);
         
-        
-        Connection conn = null;
-        PreparedStatement ps;
-        ServletContext context;
-        ResultSet rs;
-        int i;
-        try{
-            context = request.getSession().getServletContext();
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
-        }catch(ClassNotFoundException | SQLException e){
-            e.printStackTrace();
-        }
-        try{
-            ps = conn.prepareStatement("SELECT * FROM job_position");
-            rs = ps.executeQuery();
-            
-            ArrayList<JobTypeBean> jt = new ArrayList<>();
-            JobTypeBean jtb;
-            while(rs.next()){
-                jtb = new JobTypeBean();
-                jtb.setJobID(rs.getInt("job_id"));
-                jtb.setJobType(rs.getString("job_type"));
-                jt.add(jtb);
-            }
-            rs.close();
-            request.setAttribute("jt", jt);
-            
-            request.getRequestDispatcher("/WEB-INF/auth-page/admin-register.jsp").forward(request, response);
-            
-        }catch(SQLException | IOException e){
-            e.printStackTrace();
-        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

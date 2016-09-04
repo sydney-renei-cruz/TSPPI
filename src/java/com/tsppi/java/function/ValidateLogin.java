@@ -34,6 +34,7 @@ public class ValidateLogin extends HttpServlet{
             ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
             st = rs.next();
+                       
         }catch(Exception e){
             e.printStackTrace();
         }
