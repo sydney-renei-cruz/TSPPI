@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
-
     <!--    <filter>
         <filter-name>AuthenticationFilter</filter-name>
         <filter-class>com.tsppi.session.filter.AuthenticationFilter</filter-class>
@@ -27,7 +26,7 @@
     </servlet>
     <servlet>
         <servlet-name>Login</servlet-name>
-        <servlet-class>com.tsppi.servlet.function.Login</servlet-class>
+        <servlet-class>com.tsppi.login.Login</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>EmployeeRegisterPage</servlet-name>
@@ -81,11 +80,11 @@
     </context-param>
     <context-param>
         <param-name>password</param-name>
-        <param-value>tsppi_password</param-value>
+        <param-value/>
     </context-param>
     <context-param>
         <param-name>dbURL</param-name>
-        <param-value>jdbc:mysql://localhost:3306/tsppi_test2</param-value>
+        <param-value>jdbc:mysql://localhost:3306/tsppi</param-value>
     </context-param>
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>

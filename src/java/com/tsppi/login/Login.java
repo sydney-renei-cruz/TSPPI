@@ -2,7 +2,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tsppi.servlet.function;
+package com.tsppi.login;
 
 import com.tsppi.java.function.ValidateLogin;
 import java.io.IOException;
@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.*;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.security.*;
 
 /**
  *
@@ -70,6 +72,12 @@ public class Login extends HttpServlet {
         PrintWriter out = response.getWriter();
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        boolean correct = false;
+        String pwplaceholder = "";
+        String pass = "";
+        String newpass= "";
+        
+        
         
         //conditional if-else >>>> session
         String account_type_id = "";
@@ -86,11 +94,91 @@ public class Login extends HttpServlet {
             context = request.getSession().getServletContext();
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM account WHERE username = ? AND password = ?");
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM account WHERE username = ?");
             ps.setString(1, username);
-            ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
-            if(rs.next()){
+            
+            //          Try the 10 different Salts
+            
+            
+              String[] salts = new String[10];
+              salts[0] = "7LsDFJ9oHjDnfUr12";
+              salts[1] = "K8oMilIOi0ji43amS";
+              salts[2] = "AFIOUVAJNONVASJja";
+              salts[3] = "nVaWIdsj19Aij63df";
+              salts[4] = "uahRksD47kljnJN9k";
+              salts[5] = "dMna7sY01jfIoaPlY";
+              salts[6] = "Wg480ioAjEdsf31Ka";
+              salts[7] = "gMutRHj70ubQnjB67";
+              salts[8] = "gnQiaOhfXquh82z74";
+              salts[9] = "mKvqn7834wHjk1kLa";
+              
+              MessageDigest md = MessageDigest.getInstance("SHA-256");
+              
+              if(rs.next())
+                 pass = rs.getString("password");
+              
+              for(int i = 0; i <= 9; i++){
+                pwplaceholder = password + salts[i];
+                
+                md.update(pwplaceholder.getBytes());
+        
+                byte byteData[] = md.digest();
+        
+                StringBuffer sb = new StringBuffer();
+        
+                for(int y = 0; y < byteData.length; y++){
+                    sb.append(Integer.toString((byteData[y] & 0xff) + 0x100, 16).substring(1));
+                }
+                
+                out.println(sb.toString());
+                out.println(i);
+                
+
+                
+                //      correct will become TRUE if a match is found
+                if(pass.equals(sb.toString())){
+                    correct = true;
+                    account_type_id = rs.getString("account_type_id");
+                    account_num = rs.getString("account_num");
+                
+                    ps = conn.prepareStatement("SELECT * FROM type_of_account WHERE account_type_id=?");
+                    ps.setString(1, account_type_id);
+                    rs = ps.executeQuery();
+                        if(rs.next()) account_type = rs.getString("account_type");
+                
+                    if(account_type.equals("employee") ){
+                        ps = conn.prepareStatement("SELECT * FROM employee WHERE account_num=?");
+                        ps.setString(1, account_num);
+                        rs = ps.executeQuery();
+                    if(rs.next()) job_id = rs.getString("job_id");
+                    
+                        ps = conn.prepareStatement("SELECT * FROM job_position WHERE job_id=?");
+                        ps.setString(1, job_id);
+                        rs = ps.executeQuery();
+                        if(rs.next()) job_position = rs.getString("job_type");
+                    }
+                
+                    session.setAttribute("job_position", job_position);
+                    session.setAttribute("account_type", account_type);
+                    session.setAttribute("user", username);
+                    session.setMaxInactiveInterval(30*60);
+
+                    Cookie user_name = new Cookie("user", username);
+                    response.addCookie(user_name);
+                    //out.println(account_type);
+                    request.getRequestDispatcher("/WEB-INF/auth-page/profile.jsp").forward(request,response);
+                    }
+                }
+                //      if correct is still FALSE, the servlet should redirect back to the login page
+              if(correct = false){
+                request.setAttribute("errorMessage", "Wrong username/password");
+                request.getRequestDispatcher("/WEB-INF/auth-page/login.jsp").forward(request,response);
+              }
+                    //          End Password Checking
+            
+            
+            if(rs.previous()){
                 account_type_id = rs.getString("account_type_id");
                 account_num = rs.getString("account_num");
                 
@@ -118,11 +206,13 @@ public class Login extends HttpServlet {
 
                 Cookie user_name = new Cookie("user", username);
                 response.addCookie(user_name);
-//                out.println(account_type);
+                out.println(account_type);
                 request.getRequestDispatcher("/WEB-INF/auth-page/profile.jsp").forward(request,response);
             }else{
-                request.setAttribute("errorMessage", "Wrong username/password");
-                response.sendRedirect("login.jsp?Result=Failed");
+                //request.setAttribute("errorMessage", "Wrong username/password");
+                //request.getRequestDispatcher("/WEB-INF/auth-page/login.jsp").forward(request,response);
+                //out.println(pass);
+               // out.println();
             }
                        
         }catch(Exception e){
