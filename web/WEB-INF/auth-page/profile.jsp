@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,19 +13,30 @@
     <body>
         <%@include file="../static-page/navbar.jsp" %>
         
-        <% if (session.getAttribute("account_type").equals("client")){ %>
-            <h1>Client PROFILE</h1>
-        <% }else if (session.getAttribute("account_type").equals("admin")){%>
-            <h1>Admin PROFILE</h1>
-        <% }else{ %>
-            <h1> Employee Profile</h1>
-            <% if (session.getAttribute("job_position").equals("Vice President")){ %>
-            <h1>Vice President</h1>
-            <% }else{ %>
-            <h1>Inventory Officer</h1>
-        <%     } 
-          } %>
-        <form action="Logout" method="post">
+        <c:choose>
+            <c:when test="${account_type == 'client'}">
+                <h1>Client PROFILE</h1>
+            </c:when>
+            <c:when test="${account_type == 'admin'}">
+                <h1>Admin PROFILE</h1>
+                <a href="emrp">Register an Employee</a>
+                <a href="allaccounts">View all Accounts!</a>
+            </c:when>
+            <c:otherwise>
+                <h1> Employee Profile</h1>
+                <c:choose>
+                    <c:when test="${job_position == 'Vice President'}">
+                        <h1>Vice President</h1>
+                        <a href="allaccounts">View all Client Accounts!</a>
+                    </c:when>
+                    <c:otherwise>
+                        <h1>Inventory Officer</h1>
+                    </c:otherwise>
+                </c:choose>
+            </c:otherwise>
+        </c:choose>
+        
+        <form action="logoutservlet" method="post">
             <input type="submit" name="logout" value="Log out">
         </form>
     </body>

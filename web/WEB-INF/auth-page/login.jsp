@@ -12,9 +12,9 @@
         <link href="${pageContext.request.contextPath}/css/login-register.css" rel="stylesheet" type="text/css">
     </head>
     <body>
-        <%if (session.getAttribute("user") != null) request.getRequestDispatcher("/WEB-INF/auth-page/profile.jsp").forward(request,response);%>
+        
 	<%@include file="../static-page/navbar.jsp" %>
-	<header id="login-header" style="background-image: url(img/desk.png); background-size: cover;">
+	<header id="login-header" style="background-image: url(img/login-register-header.png); background-size: cover;">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12 text-center">
@@ -40,7 +40,7 @@
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <form id="login-form" action="Login" method="post" role="form">
+                                            <form id="login-form" action="loginservlet" method="post" role="form">
                                                 <div class="form-group">
                                                     <input type="text" name="username" id="username" class="form-control" placeholder="Username" value="">
                                                 </div>
@@ -65,12 +65,12 @@
                                                     <div class="row">
                                                         <div class="col-lg-12">
                                                             <div class="text-center">
-                                                                <a href="EmployeeRegisterPage" class="forgot-password">Forgot Password?</a>
+                                                                <a href="" class="forgot-password">Forgot Password?</a>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-12">
                                                             <div class="text-center">
-                                                                <a href="RegistrationPage" class="forgot-password">Need an account? Click Here!</a>
+                                                                <a href="register" class="forgot-password">Need an account? Click Here!</a>
                                                             </div>
                                                         </div>
                                                     </div>

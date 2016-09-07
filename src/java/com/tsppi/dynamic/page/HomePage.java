@@ -8,7 +8,6 @@ package com.tsppi.dynamic.page;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,8 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author cruzsyd
  */
-@WebServlet(name = "RegistrationPage", urlPatterns = {"/RegistrationPage"})
-public class RegistrationPage extends HttpServlet {
+public class HomePage extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,7 +30,8 @@ public class RegistrationPage extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter(); 
+        PrintWriter out = response.getWriter();
+        request.getRequestDispatcher("index.jsp").forward(request,response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -48,8 +47,6 @@ public class RegistrationPage extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
-        request.getRequestDispatcher("/WEB-INF/auth-page/client-register.jsp").forward(request,response);
     }
 
     /**

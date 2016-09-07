@@ -18,7 +18,7 @@
     </head>
     <body>
 	<%@include file="../static-page/navbar.jsp" %>
-	<header id="login-header" style="background-image: url(img/desk.png); background-size: cover;">
+	<header id="login-header" style="background-image: url(img/login-register-header.png); background-size: cover;">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12 text-center">
@@ -44,7 +44,7 @@
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <form id="register-form" action="Register" method="post">
+                                            <form id="register-form" action="registerservlet" method="post">
                                                 <div class="form-group">
                                                     <input type="text" name="username" id="username" class="form-control" placeholder="Username" required>
                                                 </div>
@@ -76,10 +76,9 @@
                                                 <div class="form-group text-center">
                                                     <label>Job Position: </label>
                                                     <select name="job_type">
-                                                        <% ArrayList<JobTypeBean> jt = (ArrayList) request.getAttribute("jt");
-                                                        for(JobTypeBean jtb: jt){%>
-                                                            <option value="<%=jtb.getJobID()%>"><%=jtb.getJobType()%></option>
-                                                        <%}%>
+                                                        <c:forEach var="jt" items="${jt}">
+                                                            <option value="${jt.getJobID()}">${jt.getJobType()}</option>
+                                                        </c:forEach>
                                                     </select>
                                                 </div>  
                                                 <div class="form-group">

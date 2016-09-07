@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -28,10 +29,10 @@
             <nav class="navbar navbar-fixed-top navbar-inverse nav-top">
                 <div class="container">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="index.jsp"><img alt="" src="img/tsppi.png" id="nav-img"></a>
+                        <a class="navbar-brand" href="home"><img alt="" src="img/tsppi.png" id="nav-img"></a>
                         
                         <div class="nav navbar-left">
-                            <a href="index.jsp" class="btn btn-link navbar-btn">HOME</a>
+                            <a href="home" class="btn btn-link navbar-btn">HOME</a>
                             <a href="#" class="btn btn-link navbar-btn">ABOUT US</a>
                             <a href="#" class="btn btn-link navbar-btn">FAQS</a>
                         </div>
@@ -42,7 +43,7 @@
             <nav class="navbar navbar-fixed-top nav-bot">
                 <div class="container">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="index.jsp"><img alt="" src="img/whitespace.png"></a>
+                        <a class="navbar-brand" href="home"><img alt="" src="img/whitespace.png"></a>
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".bot-nav">
                             <span class="sr-only">Toggle Navigation</span>
                             <span class="icon-bar"></span>
@@ -64,8 +65,18 @@
                                     </div>
                                 </form>
                             </li>
-                            <li><a href="LoginPage"><span class="glyphicon glyphicon-user"></span> Account</a></li>
-                            <li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span> Cart - ₱</a></li>
+                            <c:choose>
+                                <c:when test="${user != null}">
+                                    <li><a href="profile"><span class="glyphicon glyphicon-user"></span> ${user}</a></li>
+                                    <c:if test="${account_type == 'client'}">
+                                        <li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span> Cart - ₱</a></li>
+                                    </c:if>
+                                </c:when>
+                                <c:otherwise>
+                                    <li><a href="login"><span class="glyphicon glyphicon-user"></span> Account</a></li>
+                                </c:otherwise>
+                            </c:choose>
+                            
                         </ul>   
                         <ul class="nav navbar-nav  navbar-left">
                             <li><a href="products.php">PRODUCTS</a></li>

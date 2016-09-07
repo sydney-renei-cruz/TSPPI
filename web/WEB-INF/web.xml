@@ -1,32 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
-    <!--    <filter>
-        <filter-name>AuthenticationFilter</filter-name>
-        <filter-class>com.tsppi.session.filter.AuthenticationFilter</filter-class>
-        <init-param>
-            <param-name>avoid-urls</param-name>
-            <param-value>/profile.jsp, </param-value>
-	</init-param>
-    </filter>
-    <filter-mapping>
-        <filter-name>AuthenticationFilter</filter-name>
-        <url-pattern>/WEB-INF/auth-pages/*</url-pattern>
-    </filter-mapping>-->
+    <!--Filter-->
     <filter>
-        <filter-name>SessionFilter</filter-name>
-        <filter-class>com.tsppi.session.filter.SessionFilter</filter-class>
+        <filter-name>CommonFilter</filter-name>
+        <filter-class>com.tsppi.session.filter.CommonFilter</filter-class>
     </filter>
     <filter-mapping>
-        <filter-name>SessionFilter</filter-name>
-        <url-pattern>/WEB-INF/auth-page/*</url-pattern>
+        <filter-name>CommonFilter</filter-name>
+        <url-pattern>/profile</url-pattern>
     </filter-mapping>
+    <filter>
+        <filter-name>AuthenticatedFilter</filter-name>
+        <filter-class>com.tsppi.session.filter.AuthenticatedFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthenticatedFilter</filter-name>
+        <url-pattern>/register</url-pattern>
+        <url-pattern>/adrp</url-pattern>
+        <url-pattern>/login</url-pattern>
+    </filter-mapping>
+    <filter>
+        <filter-name>AdminFilter</filter-name>
+        <filter-class>com.tsppi.session.filter.AdminFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AdminFilter</filter-name>
+        <url-pattern>/emrp</url-pattern>
+    </filter-mapping>
+    <filter>
+        <filter-name>SpecAdVpFilter</filter-name>
+        <filter-class>com.tsppi.session.filter.SpecAdVpFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>SpecAdVpFilter</filter-name>
+        <url-pattern>/allaccounts</url-pattern>
+    </filter-mapping>
+    <!--Filter-->
     <servlet>
-        <servlet-name>Register</servlet-name>
-        <servlet-class>com.tsppi.servlet.function.Register</servlet-class>
+        <servlet-name>RegisterServlet</servlet-name>
+        <servlet-class>com.tsppi.servlet.function.RegisterServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>Login</servlet-name>
-        <servlet-class>com.tsppi.login.Login</servlet-class>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>com.tsppi.servlet.function.LoginServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>EmployeeRegisterPage</servlet-name>
@@ -37,36 +53,68 @@
         <servlet-class>com.tsppi.dynamic.page.AdminRegisterPage</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>Logout</servlet-name>
-        <servlet-class>com.tsppi.servlet.function.Logout</servlet-class>
+        <servlet-name>ClientRegisterPage</servlet-name>
+        <servlet-class>com.tsppi.dynamic.page.ClientRegisterPage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>com.tsppi.servlet.function.LogoutServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LoginPage</servlet-name>
         <servlet-class>com.tsppi.dynamic.page.LoginPage</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ProfilePage</servlet-name>
+        <servlet-class>com.tsppi.dynamic.page.ProfilePage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>HomePage</servlet-name>
+        <servlet-class>com.tsppi.dynamic.page.HomePage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AllAccountsPage</servlet-name>
+        <servlet-class>com.tsppi.dynamic.page.AllAccountsPage</servlet-class>
+    </servlet>
     <servlet-mapping>
-        <servlet-name>Register</servlet-name>
-        <url-pattern>/Register</url-pattern>
+        <servlet-name>RegisterServlet</servlet-name>
+        <url-pattern>/registerservlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>Login</servlet-name>
-        <url-pattern>/Login</url-pattern>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/loginservlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>EmployeeRegisterPage</servlet-name>
-        <url-pattern>/EmployeeRegisterPage</url-pattern>
+        <url-pattern>/emrp</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AdminRegisterPage</servlet-name>
-        <url-pattern>/AdminRegisterPage</url-pattern>
+        <url-pattern>/adrp</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>Logout</servlet-name>
-        <url-pattern>/Logout</url-pattern>
+        <servlet-name>ClientRegisterPage</servlet-name>
+        <url-pattern>/register</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/logoutservlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>LoginPage</servlet-name>
-        <url-pattern>/LoginPage</url-pattern>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProfilePage</servlet-name>
+        <url-pattern>/profile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HomePage</servlet-name>
+        <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AllAccountsPage</servlet-name>
+        <url-pattern>/allaccounts</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -80,11 +128,11 @@
     </context-param>
     <context-param>
         <param-name>password</param-name>
-        <param-value/>
+        <param-value>tsppi_password</param-value>
     </context-param>
     <context-param>
         <param-name>dbURL</param-name>
-        <param-value>jdbc:mysql://localhost:3306/tsppi</param-value>
+        <param-value>jdbc:mysql://localhost:3306/com_tsppi</param-value>
     </context-param>
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>

@@ -2,9 +2,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tsppi.login;
+package com.tsppi.servlet.function;
 
-import com.tsppi.java.function.ValidateLogin;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -15,7 +14,6 @@ import java.sql.*;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,7 +24,7 @@ import java.security.*;
  *
  * @author cruzsyd
  */
-public class Login extends HttpServlet {
+public class LoginServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -163,56 +161,14 @@ public class Login extends HttpServlet {
                     session.setAttribute("account_type", account_type);
                     session.setAttribute("user", username);
                     session.setMaxInactiveInterval(30*60);
-
-                    Cookie user_name = new Cookie("user", username);
-                    response.addCookie(user_name);
                     //out.println(account_type);
-                    request.getRequestDispatcher("/WEB-INF/auth-page/profile.jsp").forward(request,response);
+                    response.sendRedirect("profile");
                     }
-                }
-                //      if correct is still FALSE, the servlet should redirect back to the login page
-              if(correct = false){
-                request.setAttribute("errorMessage", "Wrong username/password");
-                request.getRequestDispatcher("/WEB-INF/auth-page/login.jsp").forward(request,response);
-              }
-                    //          End Password Checking
+                }            
             
-            
-            if(rs.previous()){
-                account_type_id = rs.getString("account_type_id");
-                account_num = rs.getString("account_num");
-                
-                ps = conn.prepareStatement("SELECT * FROM type_of_account WHERE account_type_id=?");
-                ps.setString(1, account_type_id);
-                rs = ps.executeQuery();
-                if(rs.next()) account_type = rs.getString("account_type");
-                
-                if(account_type.equals("employee") ){
-                    ps = conn.prepareStatement("SELECT * FROM employee WHERE account_num=?");
-                    ps.setString(1, account_num);
-                    rs = ps.executeQuery();
-                    if(rs.next()) job_id = rs.getString("job_id");
-                    
-                    ps = conn.prepareStatement("SELECT * FROM job_position WHERE job_id=?");
-                    ps.setString(1, job_id);
-                    rs = ps.executeQuery();
-                    if(rs.next()) job_position = rs.getString("job_type");
-                }
-                
-                session.setAttribute("job_position", job_position);
-                session.setAttribute("account_type", account_type);
-                session.setAttribute("user", username);
-                session.setMaxInactiveInterval(30*60);
-
-                Cookie user_name = new Cookie("user", username);
-                response.addCookie(user_name);
-                out.println(account_type);
-                request.getRequestDispatcher("/WEB-INF/auth-page/profile.jsp").forward(request,response);
-            }else{
-                //request.setAttribute("errorMessage", "Wrong username/password");
-                //request.getRequestDispatcher("/WEB-INF/auth-page/login.jsp").forward(request,response);
-                //out.println(pass);
-               // out.println();
+            if(!rs.previous()){
+                session.setAttribute("errorMessage", "Wrong username/password");
+                response.sendRedirect("login");
             }
                        
         }catch(Exception e){

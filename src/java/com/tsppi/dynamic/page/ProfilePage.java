@@ -3,22 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tsppi.servlet.function;
+package com.tsppi.dynamic.page;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author 13-2283
+ * @author cruzsyd
  */
-public class Logout extends HttpServlet {
+public class ProfilePage extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,6 +31,8 @@ public class Logout extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        
+        request.getRequestDispatcher("/WEB-INF/auth-page/profile.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -62,24 +62,6 @@ public class Logout extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        Cookie loginCookie = null;
-    	Cookie[] cookies = request.getCookies();
-    	if(cookies != null){
-    	for(Cookie cookie : cookies){
-            if(cookie.getName().equals("user")){
-                loginCookie = cookie;
-                break;
-            }
-    	}
-    	}
-        HttpSession session=request.getSession();
-    	if(loginCookie != null && session != null){
-            loginCookie.setMaxAge(0);
-            response.addCookie(loginCookie);
-            session.invalidate();
-    	}
-        
-    	request.getRequestDispatcher("index.jsp").forward(request,response);
     }
 
     /**
