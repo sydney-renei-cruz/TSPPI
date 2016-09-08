@@ -156,7 +156,8 @@ public class LoginServlet extends HttpServlet {
                         rs = ps.executeQuery();
                         if(rs.next()) job_position = rs.getString("job_type");
                     }
-                
+                    
+                    session.setAttribute("account_num", account_num);
                     session.setAttribute("job_position", job_position);
                     session.setAttribute("account_type", account_type);
                     session.setAttribute("user", username);

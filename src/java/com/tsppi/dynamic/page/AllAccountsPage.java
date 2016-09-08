@@ -93,6 +93,8 @@ public class AllAccountsPage extends HttpServlet {
             request.setAttribute("cb", cb);
             //client accounts retrieval
            
+            
+            
            //employee accounts retrieval
            ps = conn.prepareStatement("SELECT a.*, t.account_type, j.job_type FROM account a RIGHT JOIN type_of_account t ON a.account_type_id = t.account_type_id RIGHT JOIN employee e ON a.account_num = e.account_num RIGHT JOIN job_position j ON e.job_id = j.job_id WHERE t.account_type='employee'");
             rs = ps.executeQuery();

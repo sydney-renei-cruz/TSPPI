@@ -40,7 +40,7 @@
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <form id="login-form" action="loginservlet" method="post" role="form">
+                                            <form id="login-form" action="loginservlet" method="post" role="form" autocomplete="off">
                                                 <div class="form-group">
                                                     <input type="text" name="username" id="username" class="form-control" placeholder="Username" value="">
                                                 </div>
