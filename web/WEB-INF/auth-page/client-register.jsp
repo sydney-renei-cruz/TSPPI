@@ -39,7 +39,7 @@
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <form id="register-form" action="registerservlet" method="post">
+                                            <form id="register-form" action="registerservlet" method="post" autocomplete="off">
                                                 <div class="form-group">
                                                     <input type="text" name="username" id="username" class="form-control" placeholder="Username" required>
                                                 </div>
@@ -59,11 +59,11 @@
                                                     <input type="email" name="email" id="email" class="form-control" placeholder="Email Address" required>
                                                 </div>
                                                 <div class="form-group">
-                                                    <input type="text" name="mobile_number" id="mobile_number" class="form-control" placeholder="Mobile Number (ex. 09xxxxxxxxx)" pattern=".{11,11}" title="Required length of number is 11" required>
+                                                    <input type="number" name="mobile_number" id="mobile_number" class="form-control" placeholder="Mobile Number (ex. 09xxxxxxxxx)" pattern=".{11,11}" title="Required length of number is 11" required>
                                                 </div>
                                                
                                                 <div class="form-group">
-                                                    <input type="text" name="telephone_number" id="telephone_number" class="form-control" placeholder="Telephone Number" pattern=".{7,11}" title="Required minimum length of number is 7" required>
+                                                    <input type="number" name="telephone_number" id="telephone_number" class="form-control" placeholder="Telephone Number" pattern=".{7,11}" title="Required minimum length of number is 7" required>
                                                 </div>
                                                 <div class="form-group">
                                                     <textarea rows="4" cols="50" placeholder="Mailing Address" class="form-control" name="address" id="address"></textarea>

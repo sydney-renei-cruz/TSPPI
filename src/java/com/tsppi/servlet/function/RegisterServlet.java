@@ -166,7 +166,7 @@ public class RegisterServlet extends HttpServlet {
             
             
             if(i>0){
-                response.sendRedirect(request.getContextPath() + "/LoginPage");
+                response.sendRedirect(request.getContextPath() + "/login");
             } 
             else{
                 response.sendRedirect(request.getContextPath() + "/RegistrationPage?result=Registration-Failed");

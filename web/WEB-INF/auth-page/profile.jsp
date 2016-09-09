@@ -35,9 +35,6 @@
                 </c:choose>
             </c:otherwise>
         </c:choose>
-        
-        <form action="logoutservlet" method="post">
-            <input type="submit" name="logout" value="Log out">
-        </form>
+
     </body>
 </html>

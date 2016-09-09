@@ -67,10 +67,17 @@
                             </li>
                             <c:choose>
                                 <c:when test="${user != null}">
-                                    <li><a href="profile"><span class="glyphicon glyphicon-user"></span> ${user}</a></li>
                                     <c:if test="${account_type == 'client'}">
                                         <li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span> Cart - ₱</a></li>
                                     </c:if>
+                                    <li class="dropdown">
+                                        <a class="dropdown-toggle" data-toggle="dropdown" href=""><span class="glyphicon glyphicon-user"></span> ${user} <span class="caret"></span></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="profile" class="text-center">View Profile</a></li>
+                                            <li><a href="logoutservlet" class="text-center">Logout</a></li>
+                                        </ul>
+                                    </li>
+                                    
                                 </c:when>
                                 <c:otherwise>
                                     <li><a href="login"><span class="glyphicon glyphicon-user"></span> Account</a></li>

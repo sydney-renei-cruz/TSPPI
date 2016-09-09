@@ -135,6 +135,7 @@
         <param-value>jdbc:mysql://localhost:3306/com_tsppi</param-value>
     </context-param>
     <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>home</welcome-file>
     </welcome-file-list>
 </web-app>
+
