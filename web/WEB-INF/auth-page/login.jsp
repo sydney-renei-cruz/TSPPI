@@ -48,11 +48,7 @@
                                                     <input type="password" name="password" id="log-password" class="form-control" placeholder="Password">
                                                 </div>
                                                 <div class="form-group text-center">
-                                                    <div style="color: #FF0000;">${errorMessage}</div>
-                                                </div>
-                                                <div class="form-group text-center">
-                                                    <input type="checkbox" class="" name="remember" id="remember">
-                                                    <label for="remember"> Remember Me</label>
+                                                    <div style="color: #FF0000;">${error_message}</div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="row">

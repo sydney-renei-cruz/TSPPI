@@ -16,16 +16,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.security.*;
-import java.util.*;
-import java.io.*;
 import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Jasteen
+ * @author cruzsyd
  */
-public class Edit extends HttpServlet {
+public class EditProfileServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,18 +36,7 @@ public class Edit extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Edit</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Edit at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        PrintWriter out = response.getWriter();
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -65,7 +51,7 @@ public class Edit extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        processRequest(request, response);
         //  Get fields from the edit page
         String username = request.getParameter("username");
         String first_name = request.getParameter("firstname");
@@ -78,7 +64,7 @@ public class Edit extends HttpServlet {
         
         HttpSession session = request.getSession();
         
-        String currentUsername = (String)session.getAttribute("user");
+        String currentUsername = (String)session.getAttribute("account_num");
         
         Connection conn = null;
         PreparedStatement ps;
@@ -95,49 +81,49 @@ public class Edit extends HttpServlet {
         try{
         
             if(!first_name.equals("")){
-                ps = conn.prepareStatement("UPDATE account SET first_name = ? WHERE username = ?");
+                ps = conn.prepareStatement("UPDATE account SET first_name = ? WHERE account_num = ?");
                 ps.setString(1, first_name);
                 ps.setString(2, currentUsername);
                 b = ps.executeUpdate();
             }
             
             if(!last_name.equals("")){
-                ps = conn.prepareStatement("UPDATE account SET last_name = ? WHERE username = ?");
+                ps = conn.prepareStatement("UPDATE account SET last_name = ? WHERE account_num = ?");
                 ps.setString(1, last_name);
                 ps.setString(2, currentUsername);
                 b = ps.executeUpdate();
             }
             
             if(!email.equals("")){
-                ps = conn.prepareStatement("UPDATE account SET email = ? WHERE username = ?");
+                ps = conn.prepareStatement("UPDATE account SET email = ? WHERE account_num = ?");
                 ps.setString(1, email);
                 ps.setString(2, currentUsername);
                 b = ps.executeUpdate();
             }
             
             if(!mobile.equals("")){
-                ps = conn.prepareStatement("UPDATE account SET mobile= ? WHERE username = ?");
+                ps = conn.prepareStatement("UPDATE account SET mobile= ? WHERE account_num = ?");
                 ps.setString(1, mobile);
                 ps.setString(2, currentUsername);
                 b = ps.executeUpdate();
             }
             
             if(!telephone.equals("")){
-                ps = conn.prepareStatement("UPDATE account SET telephone = ? WHERE username = ?");
+                ps = conn.prepareStatement("UPDATE account SET telephone = ? WHERE account_num = ?");
                 ps.setString(1, telephone);
                 ps.setString(2, currentUsername);
                 b = ps.executeUpdate();
             }
             
             if(!address.equals("")){
-                ps = conn.prepareStatement("UPDATE account SET address = ? WHERE username = ?");
+                ps = conn.prepareStatement("UPDATE account SET address = ? WHERE account_num = ?");
                 ps.setString(1, address);
                 ps.setString(2, currentUsername);
                 b = ps.executeUpdate();
             }
             
             if(!username.equals("")){
-                ps = conn.prepareStatement("UPDATE account SET username = ? WHERE username = ?");
+                ps = conn.prepareStatement("UPDATE account SET username = ? WHERE account_num = ?");
                 ps.setString(1, username);
                 ps.setString(2, currentUsername);
                 b = ps.executeUpdate();
@@ -145,7 +131,7 @@ public class Edit extends HttpServlet {
                 session.setAttribute("user", username);
             }
         
-            request.getRequestDispatcher("WEB-INF/auth-page/editpage.jsp").forward(request,response);
+            response.sendRedirect("profile");
         
         }
         catch(Exception e){
@@ -161,14 +147,13 @@ public class Edit extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    
-    /**
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        
     }
-    */
+
     /**
      * Returns a short description of the servlet.
      *

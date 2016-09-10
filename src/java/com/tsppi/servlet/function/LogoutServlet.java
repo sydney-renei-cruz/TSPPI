@@ -38,7 +38,7 @@ public class LogoutServlet extends HttpServlet {
             session.invalidate();
     	}
         
-    	response.sendRedirect("home");
+    	response.sendRedirect("login");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

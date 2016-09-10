@@ -32,7 +32,12 @@ public class AuthenticatedFilter implements Filter{
 
         HttpSession session = request.getSession();
         if (session.getAttribute("user") != null) {
-            response.sendRedirect("profile");
+            if(session.getAttribute("account_status").equals(false)){
+                response.sendRedirect("logoutservlet");
+            }else{
+                response.sendRedirect("profile");
+            }
+            
         }else {
             chain.doFilter(request, response);
         }

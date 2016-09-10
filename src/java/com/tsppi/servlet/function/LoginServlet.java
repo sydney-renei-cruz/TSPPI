@@ -70,7 +70,7 @@ public class LoginServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        boolean correct = false;
+        boolean status = false;
         String pwplaceholder = "";
         String pass = "";
         String newpass= "";
@@ -113,8 +113,10 @@ public class LoginServlet extends HttpServlet {
               
               MessageDigest md = MessageDigest.getInstance("SHA-256");
               
-              if(rs.next())
-                 pass = rs.getString("password");
+              if(rs.next()){
+                  pass = rs.getString("password");
+                  status = rs.getBoolean("account_status");
+              }
               
               for(int i = 0; i <= 9; i++){
                 pwplaceholder = password + salts[i];
@@ -128,50 +130,46 @@ public class LoginServlet extends HttpServlet {
                 for(int y = 0; y < byteData.length; y++){
                     sb.append(Integer.toString((byteData[y] & 0xff) + 0x100, 16).substring(1));
                 }
-                
-                out.println(sb.toString());
-                out.println(i);
-                
 
                 
                 //      correct will become TRUE if a match is found
                 if(pass.equals(sb.toString())){
-                    correct = true;
+
                     account_type_id = rs.getString("account_type_id");
                     account_num = rs.getString("account_num");
-                
+
                     ps = conn.prepareStatement("SELECT * FROM type_of_account WHERE account_type_id=?");
                     ps.setString(1, account_type_id);
                     rs = ps.executeQuery();
                         if(rs.next()) account_type = rs.getString("account_type");
-                
+
                     if(account_type.equals("employee") ){
                         ps = conn.prepareStatement("SELECT * FROM employee WHERE account_num=?");
                         ps.setString(1, account_num);
                         rs = ps.executeQuery();
-                    if(rs.next()) job_id = rs.getString("job_id");
-                    
+                        if(rs.next()) job_id = rs.getString("job_id");
+
                         ps = conn.prepareStatement("SELECT * FROM job_position WHERE job_id=?");
                         ps.setString(1, job_id);
                         rs = ps.executeQuery();
                         if(rs.next()) job_position = rs.getString("job_type");
                     }
-                    
+
+
                     session.setAttribute("account_num", account_num);
                     session.setAttribute("job_position", job_position);
                     session.setAttribute("account_type", account_type);
+                    session.setAttribute("account_status", status);
                     session.setAttribute("user", username);
                     session.setMaxInactiveInterval(30*60);
-                    //out.println(account_type);
-                    response.sendRedirect("profile");
-                    }
-                }            
+
+                }
+            }            
             
             if(!rs.previous()){
-                session.setAttribute("errorMessage", "Wrong username/password");
+                session.setAttribute("error_message", "Incorrect username or password");
                 response.sendRedirect("login");
             }
-                       
         }catch(Exception e){
             e.printStackTrace();
         }

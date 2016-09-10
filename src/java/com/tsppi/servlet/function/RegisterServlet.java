@@ -83,7 +83,7 @@ public class RegisterServlet extends HttpServlet {
         String account_type_id = request.getParameter("type_of_account");        
         String form_identifier = request.getParameter("form_identifier");
         String job_id = request.getParameter("job_type");
-        Boolean account_status = false;
+        Boolean account_status = true;
         
         //                  Hash the password
         try{
@@ -169,7 +169,7 @@ public class RegisterServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/login");
             } 
             else{
-                response.sendRedirect(request.getContextPath() + "/RegistrationPage?result=Registration-Failed");
+                response.sendRedirect(request.getContextPath() + "/register");
             }
         }catch(SQLException | IOException e){
             out.println(e);

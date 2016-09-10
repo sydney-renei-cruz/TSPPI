@@ -76,6 +76,18 @@
         <servlet-name>AllAccountsPage</servlet-name>
         <servlet-class>com.tsppi.dynamic.page.AllAccountsPage</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EditAccountPage</servlet-name>
+        <servlet-class>com.tsppi.dynamic.page.EditAccountPage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditProfileServlet</servlet-name>
+        <servlet-class>com.tsppi.servlet.function.EditProfileServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AccountActivationBServlet</servlet-name>
+        <servlet-class>com.tsppi.servlet.function.AccountActivationBServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/registerservlet</url-pattern>
@@ -116,6 +128,18 @@
         <servlet-name>AllAccountsPage</servlet-name>
         <url-pattern>/allaccounts</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditAccountPage</servlet-name>
+        <url-pattern>/editaccount</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditProfileServlet</servlet-name>
+        <url-pattern>/editprofileservlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccountActivationBServlet</servlet-name>
+        <url-pattern>/activationB</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
@@ -138,4 +162,3 @@
         <welcome-file>home</welcome-file>
     </welcome-file-list>
 </web-app>
-
