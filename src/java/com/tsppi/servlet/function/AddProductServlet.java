@@ -3,31 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tsppi.dynamic.page;
+package com.tsppi.servlet.function;
 
-import com.tsppi.bean.AllAccountBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author cruzsyd
  */
-public class EditAccountPage extends HttpServlet {
+public class AddProductServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -57,50 +51,6 @@ public class EditAccountPage extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        PrintWriter out = response.getWriter();
-        Connection conn = null;
-        PreparedStatement ps;
-        ServletContext context;
-        ResultSet rs;
-        HttpSession session = request.getSession();
-        
-        int i;
-        try{
-            context = request.getSession().getServletContext();
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
-        }catch(ClassNotFoundException | SQLException e){
-            e.printStackTrace();
-        }
-        
-        try{
-            ps = conn.prepareStatement("SELECT a.*, t.account_type FROM account a RIGHT JOIN type_of_account t ON a.account_type_id = t.account_type_id WHERE a.account_num=?");
-            ps.setString(1, (String)session.getAttribute("account_num"));;
-            rs = ps.executeQuery();
-            
-            ArrayList<AllAccountBean> pb = new ArrayList<>();
-            AllAccountBean aa;
-            while(rs.next()){
-                aa = new AllAccountBean();
-                aa.setAccountNum(rs.getInt("account_num"));
-                aa.setUsername(rs.getString("username"));
-                aa.setEmail(rs.getString("email"));
-                aa.setFirstName(rs.getString("first_name"));
-                aa.setLastName(rs.getString("last_name"));
-                aa.setAccountType(rs.getString("account_type"));
-                aa.setMobile(rs.getString("mobile"));
-                aa.setTelephone(rs.getString("telephone"));
-                aa.setAddress(rs.getString("address"));
-                pb.add(aa);
-            }
-            rs.close();
-            request.setAttribute("pb", pb);
-            
-            
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
-        request.getRequestDispatcher("/WEB-INF/auth-page/edit-profile.jsp").forward(request,response);
     }
 
     /**
@@ -115,6 +65,42 @@ public class EditAccountPage extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        
+        String product_name = request.getParameter("product_name");
+        float msrp = Float.parseFloat(request.getParameter("msrp"));
+        int stock = Integer.parseInt(request.getParameter("stock"));
+        String product_detail = request.getParameter("product_detail");
+        Boolean for_sale = false;
+        
+        Connection conn = null;
+        PreparedStatement ps;
+        ServletContext context;
+        int i;
+        try{
+            context = request.getSession().getServletContext();
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
+        }catch(ClassNotFoundException | SQLException e){
+            e.printStackTrace();
+        }   
+        
+        try{
+            ps = conn.prepareStatement("INSERT INTO product (product_name, product_detail, msrp, stock, for_sale) VALUES (?,?,?,?,?)");
+            ps.setString(1, product_name);
+            ps.setString(2, product_detail);
+            ps.setFloat(3, msrp);
+            ps.setInt(4, stock);
+            ps.setBoolean(5, for_sale);
+            i = ps.executeUpdate();
+            
+            if(i>0){
+                response.sendRedirect("profile");
+            }else{
+                response.sendRedirect("addproduct");
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     /**

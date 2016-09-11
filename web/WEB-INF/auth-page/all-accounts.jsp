@@ -11,13 +11,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <html>
     <head>
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/allaccounts.css">
-        <style>
-            th, td{
-                color: #fff;
-                border: 1px solid #fff;
-            }
-        </style>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/item-list.css">
+
     </head>
     <body>
         <%@include file="../static-page/navbar.jsp" %>

@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link href="css/login-register.css" rel="stylesheet" type="text/css">
+        <link href="css/form.css" rel="stylesheet" type="text/css">
     </head>
     <body>
 	<%@include file="../static-page/navbar.jsp" %>

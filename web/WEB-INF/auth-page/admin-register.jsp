@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link href="css/login-register.css" rel="stylesheet" type="text/css">
+        <link href="css/form.css" rel="stylesheet" type="text/css">
         
     </head>
     <body>
@@ -97,6 +97,5 @@
                 </div>
             </div>
 	</section>
-        <script src="js/reg-form-validation.js" type="text/javascript"></script>
     </body>
 </html>

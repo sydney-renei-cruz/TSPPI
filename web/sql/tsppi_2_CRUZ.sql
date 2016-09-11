@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 04, 2016 at 07:54 AM
+-- Generation Time: Sep 11, 2016 at 05:23 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 7.0.8
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `tsppi`
+-- Database: `com_tsppi`
 --
 
 -- --------------------------------------------------------
@@ -45,10 +45,12 @@ CREATE TABLE `account` (
 --
 
 INSERT INTO `account` (`account_num`, `username`, `password`, `first_name`, `last_name`, `email`, `mobile`, `telephone`, `address`, `account_type_id`, `account_status`) VALUES
-(50, 'RosalieCruz', 'rosaliecruz', 'Ro', 'C', 'rosalie@yahoo.com', '09178005410', '1234567', 'Taguig', 1, 0),
-(51, 'Vincent', 'vincent', 'Vincent', 'Arciga', 'vincent@yahoo.com', '09178876888', '1234568', 'dsa', 1, 0),
-(52, 'Sydney', 'sydney', 'Sydney', 'Cruz', 'sydney-renei.rey.cruz@hpe.com', '09166030695', '1234563', 'Pasig', 3, 0),
-(53, 'JasteenReyes', 'jasteen', 'Jasteen', 'Reyes', 'jasteen.reyes@gmail.com', '09166030692', '1234562', 'Mandaluyong', 2, 0);
+(77, 'admin', 'b347b3de01cca7dda84387d84917d1dcb0661283c59b81964b552f1ee75f29f4', 'Sydney', 'Cruz', 'sydney-renei.rey.cruz@hpe.com', '09166030695', '1234567', 'Pasig city', 2, 1),
+(78, 'rosalie_cruz', 'd9e351515aafc2cc7d368d4a43a5327b68e5661a9478c30cb528405a361760fe', 'rosalie', 'arciga', 'alie_cms@yahoo.com', '0917800540', '1234568', 'dsadsa', 1, 1),
+(79, 'employee2', '55aded98cba9c30053e9a03c97f24bc68f20e3a56cb83c9bc6821ca50ef3fabd', 'Roda', 'Cruz', 'roda@yahoo.com', '09166030695', '1234567', 'Paco Manila', 1, 1),
+(80, 'client', '9357708851ad97c02bfb1eb3792478e9a9ad8f420c661228b78c60af766d284b', 'Sydney', 'Cruz', 'sydneyrenei.cruz@uap.asia', '09166030695', '1234567', 'Pasig city', 3, 1),
+(81, 'Tera06', '8b1948fbd8461c22aa9b712e971f60b866674ea4016f2533de69ce49497bb991', 'sydney', 'cruz', 'sydneyrenei.cruz@uap.asia', '09166030695', '1234567', 'Pasig', 3, 1),
+(82, 'client2', '47e75faa97d8e1a8aabac371d96f8dd518a28a18307c2271ee17801a8092eca0', 'client', '2', 'cl@yahoo.com', '09166030695', '1234567', 'dsa', 3, 1);
 
 -- --------------------------------------------------------
 
@@ -66,8 +68,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`admin_id`, `account_num`) VALUES
-(1, 48),
-(2, 53);
+(8, 77);
 
 -- --------------------------------------------------------
 
@@ -85,7 +86,9 @@ CREATE TABLE `client` (
 --
 
 INSERT INTO `client` (`client_id`, `account_num`) VALUES
-(4, 52);
+(1, 80),
+(2, 81),
+(3, 82);
 
 -- --------------------------------------------------------
 
@@ -104,8 +107,8 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`account_num`, `employee_id`, `job_id`) VALUES
-(50, 10, 1),
-(51, 11, 2);
+(78, 17, 1),
+(79, 18, 2);
 
 -- --------------------------------------------------------
 
@@ -125,6 +128,29 @@ CREATE TABLE `job_position` (
 INSERT INTO `job_position` (`job_id`, `job_type`) VALUES
 (1, 'Vice President'),
 (2, 'Inventory Officer');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product`
+--
+
+CREATE TABLE `product` (
+  `product_id` int(11) NOT NULL,
+  `product_name` varchar(50) NOT NULL,
+  `product_detail` varchar(255) NOT NULL,
+  `msrp` float NOT NULL,
+  `stock` int(11) NOT NULL,
+  `for_sale` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `product`
+--
+
+INSERT INTO `product` (`product_id`, `product_name`, `product_detail`, `msrp`, `stock`, `for_sale`) VALUES
+(5, 'product1', 'dsadas', 5.5, 2, 0),
+(6, 'product2', 'dsa', 5.5, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -186,6 +212,12 @@ ALTER TABLE `job_position`
   ADD PRIMARY KEY (`job_id`);
 
 --
+-- Indexes for table `product`
+--
+ALTER TABLE `product`
+  ADD PRIMARY KEY (`product_id`);
+
+--
 -- Indexes for table `type_of_account`
 --
 ALTER TABLE `type_of_account`
@@ -199,27 +231,32 @@ ALTER TABLE `type_of_account`
 -- AUTO_INCREMENT for table `account`
 --
 ALTER TABLE `account`
-  MODIFY `account_num` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `account_num` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 --
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `admin_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `admin_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `client`
 --
 ALTER TABLE `client`
-  MODIFY `client_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `client_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `employee_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `employee_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT for table `job_position`
 --
 ALTER TABLE `job_position`
   MODIFY `job_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `product`
+--
+ALTER TABLE `product`
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `type_of_account`
 --

@@ -8,6 +8,7 @@
     <filter-mapping>
         <filter-name>CommonFilter</filter-name>
         <url-pattern>/profile</url-pattern>
+        <url-pattern>/editaccount</url-pattern>
     </filter-mapping>
     <filter>
         <filter-name>AuthenticatedFilter</filter-name>
@@ -34,6 +35,15 @@
     <filter-mapping>
         <filter-name>SpecAdVpFilter</filter-name>
         <url-pattern>/allaccounts</url-pattern>
+    </filter-mapping>
+    <filter>
+        <filter-name>InventoryOfficerFilter</filter-name>
+        <filter-class>com.tsppi.session.filter.InventoryOfficerFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>InventoryOfficerFilter</filter-name>
+        <url-pattern>/addproduct</url-pattern>
+        <url-pattern>/productapproval</url-pattern>
     </filter-mapping>
     <!--Filter-->
     <servlet>
@@ -88,6 +98,22 @@
         <servlet-name>AccountActivationBServlet</servlet-name>
         <servlet-class>com.tsppi.servlet.function.AccountActivationBServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddProductPage</servlet-name>
+        <servlet-class>com.tsppi.dynamic.page.AddProductPage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddProductServlet</servlet-name>
+        <servlet-class>com.tsppi.servlet.function.AddProductServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductApprovalPage</servlet-name>
+        <servlet-class>com.tsppi.dynamic.page.ProductApprovalPage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductApprovalServlet</servlet-name>
+        <servlet-class>com.tsppi.servlet.function.ProductApprovalServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/registerservlet</url-pattern>
@@ -139,6 +165,22 @@
     <servlet-mapping>
         <servlet-name>AccountActivationBServlet</servlet-name>
         <url-pattern>/activationB</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddProductPage</servlet-name>
+        <url-pattern>/addproduct</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddProductServlet</servlet-name>
+        <url-pattern>/addproductservlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductApprovalPage</servlet-name>
+        <url-pattern>/productapproval</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductApprovalServlet</servlet-name>
+        <url-pattern>/productapprovalservlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

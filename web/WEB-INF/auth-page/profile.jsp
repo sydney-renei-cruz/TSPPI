@@ -50,6 +50,11 @@
                                    <a href="emrp" class="btn btn-success btn-block"><span class="fa fa-plus-circle"></span> Register Employee</a>
                                </div>
                            </c:if>
+                           <c:if test="${job_position == 'Inventory Officer'}">
+                               <div class="col-xs-12 col-sm-4 emphasis">
+                                   <a href="addproduct" class="btn btn-success btn-block"><span class="fa fa-plus-circle"></span> Add Product</a>
+                               </div>
+                           </c:if>
                        </div>
                     </div>                 
                 </div>
