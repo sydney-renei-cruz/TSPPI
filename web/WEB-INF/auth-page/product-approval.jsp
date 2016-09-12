@@ -65,12 +65,6 @@
                                             <form action="productapprovalservlet" method="POST">
                                                 <input type="hidden" name="product_id" id="product_id" value="${pb.getProductID()}">
                                                 <input type="hidden" name="for_sale" id="for_sale" value="${pb.getForSale()}">
-                                                <c:if test="${pb.getForSale()}">
-                                                    <input type="submit" name="submit" id="submit" value="Remove from For-Sale List" class="btn btn-danger">
-                                                </c:if>
-                                                <c:if test="${!pb.getForSale()}">                                                     
-                                                    <input type="submit" name="submit" id="submit" value="Add to For-Sale List" class="btn btn-danger">
-                                                </c:if>
                                             </form>
                                     </div>
                                 </c:if>
