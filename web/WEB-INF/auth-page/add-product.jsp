@@ -54,6 +54,14 @@
                                                 <div class="form-group">
                                                     <textarea rows="4" cols="50" name="product_detail" id="product_detail" class="form-control" placeholder="Details about the product"></textarea>
                                                 </div>
+                                                <div class="form-group text-center">
+                                                    <label>Product Category: </label>
+                                                    <select name="product_category">
+                                                        <c:forEach var="pcb" items="${pcb}">
+                                                            <option value="${pcb.getCategoryID()}">${pcb.getCategoryName()}</option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </div>
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-sm-6 col-sm-offset-3"> 

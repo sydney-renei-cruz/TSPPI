@@ -100,27 +100,29 @@ public class EditProfileServlet extends HttpServlet {
                 ps.setString(2, currentUsername);
                 b = ps.executeUpdate();
             }
-            
-            if(!mobile.equals("")){
-                ps = conn.prepareStatement("UPDATE account SET mobile= ? WHERE account_num = ?");
-                ps.setString(1, mobile);
-                ps.setString(2, currentUsername);
-                b = ps.executeUpdate();
+            if(session.getAttribute("account_type").equals("client")){
+                if(!mobile.equals("")){
+                    ps = conn.prepareStatement("UPDATE client SET mobile= ? WHERE account_num = ?");
+                    ps.setString(1, mobile);
+                    ps.setString(2, currentUsername);
+                    b = ps.executeUpdate();
+                }
+
+                if(!telephone.equals("")){
+                    ps = conn.prepareStatement("UPDATE client SET telephone = ? WHERE account_num = ?");
+                    ps.setString(1, telephone);
+                    ps.setString(2, currentUsername);
+                    b = ps.executeUpdate();
+                }
+
+                if(!address.equals("")){
+                    ps = conn.prepareStatement("UPDATE client SET address = ? WHERE account_num = ?");
+                    ps.setString(1, address);
+                    ps.setString(2, currentUsername);
+                    b = ps.executeUpdate();
+                }
             }
             
-            if(!telephone.equals("")){
-                ps = conn.prepareStatement("UPDATE account SET telephone = ? WHERE account_num = ?");
-                ps.setString(1, telephone);
-                ps.setString(2, currentUsername);
-                b = ps.executeUpdate();
-            }
-            
-            if(!address.equals("")){
-                ps = conn.prepareStatement("UPDATE account SET address = ? WHERE account_num = ?");
-                ps.setString(1, address);
-                ps.setString(2, currentUsername);
-                b = ps.executeUpdate();
-            }
             
             if(!username.equals("")){
                 ps = conn.prepareStatement("UPDATE account SET username = ? WHERE account_num = ?");

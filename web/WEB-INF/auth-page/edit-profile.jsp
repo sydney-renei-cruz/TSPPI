@@ -11,6 +11,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/form.css" rel="stylesheet" type="text/css">
+        <link href="css/form-error-validation.css" rel="stylesheet" type="text/css">
     </head>
     <body>
         <%@include file="../static-page/navbar.jsp" %>
@@ -56,16 +57,18 @@
                                                 <div class="form-group">
                                                     <input type="email" name="email" id="email" class="form-control" placeholder="Email Address" value="${pb.getEmail()}">
                                                 </div>
-                                                <div class="form-group">
-                                                    <input type="number" name="mobile" id="mobile_number" class="form-control" value="${pb.getMobile()}" placeholder="Mobile Number (The length of the number should be 11)" pattern=".{11,11}" title="Required length of number is 11">
-                                                </div>
-                                               
-                                                <div class="form-group">
-                                                    <input type="number" name="telephone" id="telephone_number" class="form-control" value="${pb.getTelephone()}" placeholder="Telephone Number (The length of the number should be 7)" pattern=".{7,7}" title="Required length of number is 7">
-                                                </div>
-                                                <div class="form-group">
-                                                    <textarea rows="4" cols="50" placeholder="Mailing Address" class="form-control" name="address" id="address">${pb.getAddress()}</textarea>
-                                                </div>    						
+                                                <c:if test="${account_type == 'client'}">
+                                                    <div class="form-group">
+                                                        <input type="number" name="mobile" id="mobile_number" class="form-control" value="${pb.getMobile()}" placeholder="Mobile Number (The length of the number should be 11)" pattern=".{11,11}" title="Required length of number is 11">
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <input type="number" name="telephone" id="telephone_number" class="form-control" value="${pb.getTelephone()}" placeholder="Telephone Number (The length of the number should be 7)" pattern=".{7,7}" title="Required length of number is 7">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <textarea rows="4" cols="50" placeholder="Mailing Address" class="form-control" name="address" id="address">${pb.getAddress()}</textarea>
+                                                    </div>  
+                                                </c:if>
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-sm-6 col-sm-offset-3"> 
@@ -93,6 +96,8 @@
                 </div>
             </div>
 	</section>
+        <script src="imports/jquery.validate.js" type="text/javascript"></script>
+        <script src="js/edit-prof-validation.js" type="text/javascript"></script>
         <%@include file="/WEB-INF/static-page/footer.jsp" %>
     </body>
 </html>

@@ -65,11 +65,12 @@ public class AddProductServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
+        PrintWriter out = response.getWriter();
         String product_name = request.getParameter("product_name");
         float msrp = Float.parseFloat(request.getParameter("msrp"));
         int stock = Integer.parseInt(request.getParameter("stock"));
         String product_detail = request.getParameter("product_detail");
+        String category_id = request.getParameter("product_category");
         Boolean for_sale = false;
         
         Connection conn = null;
@@ -85,12 +86,13 @@ public class AddProductServlet extends HttpServlet {
         }   
         
         try{
-            ps = conn.prepareStatement("INSERT INTO product (product_name, product_detail, msrp, stock, for_sale) VALUES (?,?,?,?,?)");
-            ps.setString(1, product_name);
-            ps.setString(2, product_detail);
-            ps.setFloat(3, msrp);
-            ps.setInt(4, stock);
-            ps.setBoolean(5, for_sale);
+            ps = conn.prepareStatement("INSERT INTO product (category_id, product_name, product_detail, msrp, stock, for_sale) VALUES (?,?,?,?,?,?)");
+            ps.setString(1, category_id);
+            ps.setString(2, product_name);
+            ps.setString(3, product_detail);
+            ps.setFloat(4, msrp);
+            ps.setInt(5, stock);
+            ps.setBoolean(6, for_sale);
             i = ps.executeUpdate();
             
             if(i>0){
@@ -99,6 +101,7 @@ public class AddProductServlet extends HttpServlet {
                 response.sendRedirect("addproduct");
             }
         }catch(Exception e){
+            out.println(e);
             e.printStackTrace();
         }
     }

@@ -53,7 +53,7 @@ public class ProductApprovalPage extends HttpServlet {
             e.printStackTrace();
         }
         try{
-            ps = conn.prepareStatement("SELECT * FROM product");
+            ps = conn.prepareStatement("SELECT p.*, c.category_name FROM product p RIGHT JOIN product_category c ON p.category_id = c.category_id");
             rs = ps.executeQuery();
             
             ArrayList<ProductBean> pb = new ArrayList<>();
@@ -61,6 +61,7 @@ public class ProductApprovalPage extends HttpServlet {
             while(rs.next()){
                 p = new ProductBean();
                 p.setProductID(rs.getInt("product_id"));
+                p.setCategoryName(rs.getString("category_name"));
                 p.setProductName(rs.getString("product_name"));
                 p.setMSRP(rs.getFloat("msrp"));
                 p.setStock(rs.getInt("stock"));

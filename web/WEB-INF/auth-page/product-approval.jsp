@@ -26,6 +26,7 @@
                                     </div>
                                     <h1>${pb.getProductName()}</h1>
                                     <h2>ID: ${pb.getProductID()}</h2>
+                                    <h2>Category: ${pb.getCategoryName()}</h2>
                                     <h2>MSRP: ${pb.getMSRP()}</h2>
                                     <h2>Stock: ${pb.getStock()}</h2>
                                     <h2>Product Details:<br> ${pb.getProductDetail()}</h2>

@@ -70,7 +70,7 @@ public class AllAccountsPage extends HttpServlet {
         
         try{
             //client accounts retrieval
-            ps = conn.prepareStatement("SELECT a.*, t.account_type FROM account a RIGHT JOIN type_of_account t ON a.account_type_id = t.account_type_id WHERE t.account_type='client'");
+            ps = conn.prepareStatement("SELECT a.*, t.account_type, c.mobile, c.telephone, c.address FROM account a RIGHT JOIN client c ON a.account_num = c.account_num RIGHT JOIN type_of_account t ON a.account_type_id = t.account_type_id WHERE t.account_type='client'");
             rs = ps.executeQuery();
             
             ArrayList<AllAccountBean> cb = new ArrayList<>();
@@ -108,9 +108,6 @@ public class AllAccountsPage extends HttpServlet {
                 aa.setFirstName(rs.getString("first_name"));
                 aa.setLastName(rs.getString("last_name"));
                 aa.setEmail(rs.getString("email"));
-                aa.setMobile(rs.getString("mobile"));
-                aa.setTelephone(rs.getString("telephone"));
-                aa.setAddress(rs.getString("address"));
                 aa.setAccountType(rs.getString("account_type"));
                 aa.setJobType(rs.getString("job_type"));
                 aa.setAccountStatus(rs.getBoolean("account_status"));

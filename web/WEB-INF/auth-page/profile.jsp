@@ -30,9 +30,11 @@
                                    <p><strong>Username:</strong> ${pb.getUsername()}</p>
                                    <p><strong>Email: </strong> ${pb.getEmail()}</p>
                                   <c:if test="${account_type == 'employee'}"><p><strong>Role: </strong> ${job_position} </p></c:if> <!--used session-->
-                                   <p><strong>Mobile Number: </strong> ${pb.getMobile()}</p>
-                                   <p><strong>Telephone Number: </strong> ${pb.getTelephone()}</p>
-                                   <p><strong>Address: </strong> ${pb.getAddress()}</p>
+                                  <c:if test="${account_type == 'client'}">
+                                    <p><strong>Mobile Number: </strong> ${pb.getMobile()}</p>
+                                    <p><strong>Telephone Number: </strong> ${pb.getTelephone()}</p>
+                                    <p><strong>Address: </strong> ${pb.getAddress()}</p>
+                                  </c:if>
                                </c:forEach>
                            </div>
                        </div>            
@@ -53,6 +55,9 @@
                            <c:if test="${job_position == 'Inventory Officer'}">
                                <div class="col-xs-12 col-sm-4 emphasis">
                                    <a href="addproduct" class="btn btn-success btn-block"><span class="fa fa-plus-circle"></span> Add Product</a>
+                               </div>
+                               <div class="col-xs-12 col-sm-4 emphasis">
+                                   <a href="productapproval" class="btn btn-info btn-block"><span class="fa fa-user"></span> Approve Products </a>
                                </div>
                            </c:if>
                        </div>

@@ -5,8 +5,16 @@
  */
 package com.tsppi.dynamic.page;
 
+import com.tsppi.bean.ProductCategoryBean;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +39,41 @@ public class AddProductPage extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        request.getRequestDispatcher("/WEB-INF/auth-page/add-product.jsp").forward(request, response);
+        Connection conn = null;
+        PreparedStatement ps;
+        ServletContext context;
+        ResultSet rs;
+        int i;
+        try{
+            context = request.getSession().getServletContext();
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
+        }catch(ClassNotFoundException | SQLException e){
+            e.printStackTrace();
+        }
+        try{
+            ps = conn.prepareStatement("SELECT * FROM product_category");
+            rs = ps.executeQuery();
+            
+            ArrayList<ProductCategoryBean> pcb = new ArrayList<>();
+            ProductCategoryBean pc;
+            while(rs.next()){
+                pc = new ProductCategoryBean();
+                pc.setCategoryID(rs.getInt("category_id"));
+                pc.setCategoryName(rs.getString("category_name"));
+                pcb.add(pc);
+            }
+            rs.close();
+            request.setAttribute("pcb", pcb);
+            
+            request.getRequestDispatcher("/WEB-INF/auth-page/add-product.jsp").forward(request, response);
+      
+        }catch(SQLException e){
+            out.println(e);
+            e.printStackTrace();
+        }
+        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

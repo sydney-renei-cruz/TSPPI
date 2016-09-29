@@ -63,7 +63,7 @@ public class EditAccountPage extends HttpServlet {
         ServletContext context;
         ResultSet rs;
         HttpSession session = request.getSession();
-        
+        String inText;
         int i;
         try{
             context = request.getSession().getServletContext();
@@ -74,7 +74,13 @@ public class EditAccountPage extends HttpServlet {
         }
         
         try{
-            ps = conn.prepareStatement("SELECT a.*, t.account_type FROM account a RIGHT JOIN type_of_account t ON a.account_type_id = t.account_type_id WHERE a.account_num=?");
+            if(session.getAttribute("account_type").equals("client")){
+                inText = "SELECT a.*, c.mobile, c.telephone, c.address FROM account a JOIN client c ON a.account_num = c.account_num WHERE a.account_num=?";
+            }
+            else{
+                inText = "SELECT * FROM account WHERE account_num=?";
+            }
+            ps = conn.prepareStatement(inText);
             ps.setString(1, (String)session.getAttribute("account_num"));;
             rs = ps.executeQuery();
             
@@ -87,10 +93,11 @@ public class EditAccountPage extends HttpServlet {
                 aa.setEmail(rs.getString("email"));
                 aa.setFirstName(rs.getString("first_name"));
                 aa.setLastName(rs.getString("last_name"));
-                aa.setAccountType(rs.getString("account_type"));
-                aa.setMobile(rs.getString("mobile"));
-                aa.setTelephone(rs.getString("telephone"));
-                aa.setAddress(rs.getString("address"));
+                if(session.getAttribute("account_type").equals("client")){
+                    aa.setMobile(rs.getString("mobile"));
+                    aa.setTelephone(rs.getString("telephone"));
+                    aa.setAddress(rs.getString("address"));
+                }
                 pb.add(aa);
             }
             rs.close();

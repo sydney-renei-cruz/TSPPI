@@ -88,7 +88,7 @@ public class RegisterServlet extends HttpServlet {
         //                  Hash the password
         try{
         
-            //              Salts for the hashing
+        //Salts for the hashing
         String[] salts = new String[10];
         salts[0] = "7LsDFJ9oHjDnfUr12";
         salts[1] = "K8oMilIOi0ji43amS";
@@ -141,36 +141,46 @@ public class RegisterServlet extends HttpServlet {
             e.printStackTrace();
         }   
         
-        try{              
-            ps =  conn.prepareStatement("INSERT INTO account (username, password, first_name, last_name, email, mobile, telephone, address, account_type_id, account_status) VALUES (?,?,?,?,?,?,?,?,?,?)");
-            ps.setString(1, username);
-            ps.setString(2, password);
-            ps.setString(3, first_name);
-            ps.setString(4, last_name);
-            ps.setString(5, email);
-            ps.setString(6, mobile);
-            ps.setString(7, telephone);
-            ps.setString(8, address);
-            ps.setString(9, account_type_id);
-            ps.setBoolean(10, account_status);
-            i = ps.executeUpdate();
-            
-            if(form_identifier.equals("Employee") ){
-                ps = conn.prepareStatement("INSERT INTO " + form_identifier + "(account_num, job_id) VALUES (LAST_INSERT_ID(), ?)");
-                ps.setString(1, job_id);
+        try{
+            if (!username.isEmpty() || !password.isEmpty() || !first_name.isEmpty() || !last_name.isEmpty() || !email.isEmpty() || !account_type_id.isEmpty()){
+                ps =  conn.prepareStatement("INSERT INTO account (username, password, first_name, last_name, email, account_type_id, account_status) VALUES (?,?,?,?,?,?,?)");
+                ps.setString(1, username);
+                ps.setString(2, password);
+                ps.setString(3, first_name);
+                ps.setString(4, last_name);
+                ps.setString(5, email);
+                ps.setString(6, account_type_id);
+                ps.setBoolean(7, account_status);
                 i = ps.executeUpdate();
-            }else{
-                ps = conn.prepareStatement("INSERT INTO " + form_identifier + "(account_num) VALUES (LAST_INSERT_ID())");
-                i = ps.executeUpdate();
-            }
-            
-            
-            if(i>0){
+                
+                if(!form_identifier.isEmpty()){
+                    if(form_identifier.equals("Employee")){
+                        if(!job_id.isEmpty()){
+                            ps = conn.prepareStatement("INSERT INTO " + form_identifier + "(account_num, job_id) VALUES (LAST_INSERT_ID(), ?)");
+                            ps.setString(1, job_id);
+                            i = ps.executeUpdate(); 
+                        }
+                    }else if(form_identifier.equals("Admin")){
+                        ps = conn.prepareStatement("INSERT INTO " + form_identifier + "(account_num) VALUES (LAST_INSERT_ID())");
+                        i = ps.executeUpdate();
+                    }else{
+                        if(!mobile.isEmpty() || !telephone.isEmpty() || !address.isEmpty()){
+                            ps = conn.prepareStatement("INSERT INTO " + form_identifier + "(account_num, mobile, telephone, address) VALUES (LAST_INSERT_ID(),?,?,?)");
+                            ps.setString(1, mobile);
+                            ps.setString(2, telephone);
+                            ps.setString(3, address);
+                            i = ps.executeUpdate(); 
+                        }
+                    }
+                }
+                if(i>0){
                 response.sendRedirect(request.getContextPath() + "/login");
-            } 
-            else{
-                response.sendRedirect(request.getContextPath() + "/register");
+                } 
+                else{
+                    response.sendRedirect(request.getContextPath() + "/register");
+                }
             }
+
         }catch(SQLException | IOException e){
             out.println(e);
             out.println(form_identifier);

@@ -34,7 +34,6 @@
                         <div class="nav navbar-left">
                             <a href="home" class="btn btn-link navbar-btn">HOME</a>
                             <a href="#" class="btn btn-link navbar-btn">ABOUT US</a>
-                            <a href="#" class="btn btn-link navbar-btn">FAQS</a>
                         </div>
                         
                     </div>
@@ -86,7 +85,7 @@
                             
                         </ul>   
                         <ul class="nav navbar-nav  navbar-left">
-                            <li><a href="products.php">PRODUCTS</a></li>
+                            <li><a href="#">PRODUCTS</a></li>
                             <li><a href="#">SERVICES</a></li>
                         </ul>
                     </div>

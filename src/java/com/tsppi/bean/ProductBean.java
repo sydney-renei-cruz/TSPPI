@@ -14,6 +14,8 @@ import java.io.Serializable;
 public class ProductBean implements Serializable{
     
     private int product_id;
+    private int category_id;
+    private String category_name;
     private String product_name;
     private float msrp;
     private int stock;
@@ -22,6 +24,8 @@ public class ProductBean implements Serializable{
     
     public ProductBean(){
         product_id = 0;
+        category_id = 0;
+        category_name = "";
         product_name = "";
         msrp = (float) 0.0;
         stock = 0;
@@ -29,8 +33,10 @@ public class ProductBean implements Serializable{
         for_sale = false;
     }
     
-    public ProductBean(int pid, String pn, float m, int s, String pd, boolean fs){
+    public ProductBean(int pid, int cid, String cn, String pn, float m, int s, String pd, boolean fs){
         product_id = pid;
+        category_id = cid;
+        category_name = cn;
         product_name = pn;
         msrp = m;
         stock = s;
@@ -40,6 +46,12 @@ public class ProductBean implements Serializable{
     
     public void setProductID(int pid){
         product_id = pid;
+    }
+    public void setCategoryID(int cid){
+        category_id = cid;
+    }
+    public void setCategoryName(String cn){
+        category_name = cn;
     }
     public void setProductName(String pn){
         product_name = pn;
@@ -59,6 +71,12 @@ public class ProductBean implements Serializable{
     
     public int getProductID(){
         return product_id;
+    }
+    public int getCategoryID(){
+        return category_id;
+    }
+    public String getCategoryName(){
+        return category_name;
     }
     public String getProductName(){
         return product_name;
