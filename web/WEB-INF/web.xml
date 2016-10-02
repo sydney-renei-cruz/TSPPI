@@ -114,6 +114,10 @@
         <servlet-name>ProductApprovalServlet</servlet-name>
         <servlet-class>com.tsppi.servlet.function.ProductApprovalServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AboutPage</servlet-name>
+        <servlet-class>com.tsppi.dynamic.page.AboutPage</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/registerservlet</url-pattern>
@@ -181,6 +185,10 @@
     <servlet-mapping>
         <servlet-name>ProductApprovalServlet</servlet-name>
         <url-pattern>/productapprovalservlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AboutPage</servlet-name>
+        <url-pattern>/AboutPage</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
