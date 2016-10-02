@@ -127,6 +127,10 @@
         <url-pattern>/loginservlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>SearchServlet</servlet-name>
+        <url-pattern>/searchservlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>EmployeeRegisterPage</servlet-name>
         <url-pattern>/emrp</url-pattern>
     </servlet-mapping>
@@ -190,6 +194,10 @@
         <servlet-name>AboutPage</servlet-name>
         <url-pattern>/AboutPage</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductSearchPage</servlet-name>
+        <url-pattern>/ProductSearchPage</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
@@ -202,11 +210,11 @@
     </context-param>
     <context-param>
         <param-name>password</param-name>
-        <param-value>tsppi_password</param-value>
+        <param-value></param-value>
     </context-param>
     <context-param>
         <param-name>dbURL</param-name>
-        <param-value>jdbc:mysql://localhost:3306/com_tsppi</param-value>
+        <param-value>jdbc:mysql://localhost:3306/tsppi</param-value>
     </context-param>
     <welcome-file-list>
         <welcome-file>home</welcome-file>

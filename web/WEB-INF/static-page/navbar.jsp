@@ -53,7 +53,7 @@
                     <div class="collapse navbar-collapse bot-nav">
                         <ul class="nav navbar-nav navbar-right">
                             <li style="overflow: hidden;">
-                                <form class="search-bar navbar-form" role="search" style="border: 1px solid transparent;">
+                                <form class="search-bar navbar-form" role="search" style="border: 1px solid transparent;" action="searchservlet">
                                     <div class="input-group">
                                         <input type="text" class="form-control" placeholder="Search Me!" name="srch" id="srch">
                                         <div class="input-group-btn">
