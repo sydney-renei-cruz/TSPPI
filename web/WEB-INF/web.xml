@@ -118,6 +118,18 @@
         <servlet-name>AboutPage</servlet-name>
         <servlet-class>com.tsppi.dynamic.page.AboutPage</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SearchServlet</servlet-name>
+        <servlet-class>com.tsppi.servlet.function.SearchServlet</servlet-class>
+    </servlet>
+        <servlet>
+        <servlet-name>CartServlet</servlet-name>
+        <servlet-class>com.tsppi.servlet.function.CartServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductsPage</servlet-name>
+        <servlet-class>com.tsppi.dynamic.page.ProductsPage</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/registerservlet</url-pattern>
@@ -192,11 +204,19 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AboutPage</servlet-name>
-        <url-pattern>/AboutPage</url-pattern>
+        <url-pattern>/about</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ProductSearchPage</servlet-name>
         <url-pattern>/ProductSearchPage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CartServlet</servlet-name>
+        <url-pattern>/cart</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductsPage</servlet-name>
+        <url-pattern>/products</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
