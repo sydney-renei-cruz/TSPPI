@@ -1,3 +1,4 @@
+
 <%-- 
     Document   : navbar
     Created on : Aug 14, 2016, 8:56:19 PM
@@ -33,7 +34,7 @@
                         
                         <div class="nav navbar-left">
                             <a href="home" class="btn btn-link navbar-btn">HOME</a>
-                            <a href="#" class="btn btn-link navbar-btn">ABOUT US</a>
+                            <a href="about" class="btn btn-link navbar-btn">ABOUT US</a>
                         </div>
                         
                     </div>
@@ -67,7 +68,42 @@
                             <c:choose>
                                 <c:when test="${user != null}">
                                     <c:if test="${account_type == 'client'}">
-                                        <li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span> Cart - ₱</a></li>
+                                         <jsp:useBean id="cart" scope="session" class="com.tsppi.bean.CartBean" />
+                                        <c:choose>
+                                            <c:when test="${cart.getCartSize() == 0}">
+                                                <li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span> Cart - ₱0</a></li>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <li class="dropdown">
+                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                                        <span class="glyphicon glyphicon-shopping-cart"></span> Cart - ₱${cart.getOrderTotal()}
+                                                    </a>
+                                                    <ul class="dropdown-menu dropdown-cart" role="menu">
+                                                        <c:forEach var="cart_item" items="${cart.getCartItems()}" varStatus="counter">
+                                                        <li>
+                                                            <form name="item" action="cart" method="POST">
+                                                                <span class="item">
+                                                                  <span class="item-left">
+                                                                      <span class="item-info">
+                                                                          <span>${cart_item.getItemName()}</span>
+                                                                          <span>${cart_item.getQuantity()} - ₱${cart_item.getTotalCost()}</span>
+                                                                      </span>
+                                                                  </span>
+
+                                                                        <span class="item-right">
+                                                                            <input type='hidden' name='item_number' value='<c:out value="${counter.count}"/>'>
+                                                                            <input type="submit" name="action" class="btn btn-xs btn-danger pull-right" value="x">
+                                                                        </span>
+
+                                                              </span>
+                                                            </form>
+                                                        </li>
+                                                        </c:forEach>
+                                                        <li><a class="text-center" href="#">View and Edit Cart</a></li>
+                                                    </ul>
+                                                </li>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </c:if>
                                     <li class="dropdown">
                                         <a class="dropdown-toggle" data-toggle="dropdown" href=""><span class="glyphicon glyphicon-user"></span> ${user} <span class="caret"></span></a>
@@ -85,7 +121,7 @@
                             
                         </ul>   
                         <ul class="nav navbar-nav  navbar-left">
-                            <li><a href="#">PRODUCTS</a></li>
+                            <li><a href="products">PRODUCTS</a></li>
                             <li><a href="#">SERVICES</a></li>
                         </ul>
                     </div>

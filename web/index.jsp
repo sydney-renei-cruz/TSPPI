@@ -43,7 +43,7 @@
                 <div class="col-md-12"><img src="img/front-image-1.png" class="front-image-1"></div>
                 
                 <div class="col-md-3 col-md-offset-2 front-div">
-                    <a href="#">
+                    <a href="products">
                         <div class="col-md-12">
                             <img src="img/front-image-2.png" class="front-image-1">
                             <h2>PRODUCTS</h2><hr>

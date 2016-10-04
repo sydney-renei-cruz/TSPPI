@@ -115,6 +115,18 @@
         <servlet-class>com.tsppi.servlet.function.ProductApprovalServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>CartServlet</servlet-name>
+        <servlet-class>com.tsppi.servlet.function.CartServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductsPage</servlet-name>
+        <servlet-class>com.tsppi.dynamic.page.ProductsPage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchServlet</servlet-name>
+        <servlet-class>com.tsppi.servlet.function.SearchServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>AboutPage</servlet-name>
         <servlet-class>com.tsppi.dynamic.page.AboutPage</servlet-class>
     </servlet>
@@ -192,11 +204,19 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AboutPage</servlet-name>
-        <url-pattern>/AboutPage</url-pattern>
+        <url-pattern>/about</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ProductSearchPage</servlet-name>
         <url-pattern>/ProductSearchPage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CartServlet</servlet-name>
+        <url-pattern>/cart</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductsPage</servlet-name>
+        <url-pattern>/products</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -210,11 +230,11 @@
     </context-param>
     <context-param>
         <param-name>password</param-name>
-        <param-value></param-value>
+        <param-value>tsppi_password</param-value>
     </context-param>
     <context-param>
         <param-name>dbURL</param-name>
-        <param-value>jdbc:mysql://localhost:3306/tsppi</param-value>
+        <param-value>jdbc:mysql://localhost:3306/com_tsppi</param-value>
     </context-param>
     <welcome-file-list>
         <welcome-file>home</welcome-file>
