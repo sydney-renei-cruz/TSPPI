@@ -40,11 +40,11 @@
 
             table {
                 border-collapse: collapse;
-                width: 100%;
+                width: 40%;
             }
 
             th, td {
-                padding: 15px;
+                padding: 50px;
             }       
         </style>
         
