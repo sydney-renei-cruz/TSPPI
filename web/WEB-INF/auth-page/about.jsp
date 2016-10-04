@@ -40,7 +40,8 @@
 
             table {
                 border-collapse: collapse;
-                width: 100%;
+                width: 40%;
+                padding: 10px;
             }
 
             th, td {
@@ -85,7 +86,7 @@
                         <h1 class="boxTitle">Contact Us</h1>
                         <hr>
                     </div>
-                        <table align="center"; style="color:black; font-size:130%">
+                        <table align="center"; style="color:black; font-size:120%">
                             <tr>
                                 <td>Telephone:</td>
                                 <td>521-5002<br>521-3062<br>524-1434</td>
