@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.*;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletContext;
@@ -51,7 +52,7 @@ public class SearchServlet extends HttpServlet {
 
             ArrayList al = null;
             ArrayList pid_list = new ArrayList();
-            String query = "SELECT * FROM product WHERE product_name LIKE '%"+ srch +"%'";
+            String query = "SELECT product_name,product_detail,for_sale FROM product WHERE product_name LIKE '%"+srch+"%'";
 
             st = conn.createStatement();
             ResultSet rs = st.executeQuery(query);
@@ -62,10 +63,11 @@ public class SearchServlet extends HttpServlet {
                 al.add(rs.getString(1));
                 al.add(rs.getString(2));
                 al.add(rs.getString(3));
-                al.add(rs.getString(4));
 
                 pid_list.add(al);
             }
+           
+            
             request.setAttribute("piList", pid_list);
             request.getRequestDispatcher("/WEB-INF/auth-page/ProductSearchPage.jsp").forward(request,response);
             conn.close();
