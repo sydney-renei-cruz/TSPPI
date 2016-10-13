@@ -234,7 +234,7 @@
     </context-param>
     <context-param>
         <param-name>dbURL</param-name>
-        <param-value>jdbc:mysql://localhost:3306/com_tsppi</param-value>
+        <param-value>jdbc:mysql://localhost:3306/tsppi_db</param-value>
     </context-param>
     <welcome-file-list>
         <welcome-file>home</welcome-file>
