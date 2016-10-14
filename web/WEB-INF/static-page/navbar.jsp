@@ -1,3 +1,4 @@
+
 <%-- 
     Document   : navbar
     Created on : Aug 14, 2016, 8:56:19 PM
@@ -68,6 +69,7 @@
                                 <c:when test="${user != null}">
                                     <c:if test="${account_type == 'client'}">
                                         <jsp:useBean id="cart" scope="session" class="com.tsppi.bean.CartBean" />
+
                                         <c:choose>
                                             <c:when test="${cart.getCartSize() == 0}">
                                                 <li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span> Cart - ₱0</a></li>
