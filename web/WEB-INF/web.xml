@@ -130,6 +130,10 @@
         <servlet-name>AboutPage</servlet-name>
         <servlet-class>com.tsppi.dynamic.page.AboutPage</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServicePage</servlet-name>
+        <servlet-class>com.tsppi.dynamic.page.ServicePage</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/registerservlet</url-pattern>
@@ -218,6 +222,10 @@
         <servlet-name>ProductsPage</servlet-name>
         <url-pattern>/products</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServicePage</servlet-name>
+        <url-pattern>/ServicePage</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
@@ -234,7 +242,7 @@
     </context-param>
     <context-param>
         <param-name>dbURL</param-name>
-        <param-value>jdbc:mysql://localhost:3306/com_tsppi</param-value>
+        <param-value>jdbc:mysql://localhost:3306/tsppi</param-value>
     </context-param>
     <welcome-file-list>
         <welcome-file>home</welcome-file>
