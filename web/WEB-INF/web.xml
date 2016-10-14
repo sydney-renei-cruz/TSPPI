@@ -134,6 +134,10 @@
         <servlet-name>ServicePage</servlet-name>
         <servlet-class>com.tsppi.dynamic.page.ServicePage</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddServicePage</servlet-name>
+        <servlet-class>com.tsppi.dynamic.page.AddServicePage</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/registerservlet</url-pattern>
@@ -225,6 +229,10 @@
     <servlet-mapping>
         <servlet-name>ServicePage</servlet-name>
         <url-pattern>/ServicePage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddServicePage</servlet-name>
+        <url-pattern>/AddServicePage</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
