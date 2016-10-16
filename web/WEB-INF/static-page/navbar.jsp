@@ -54,7 +54,7 @@
                     <div class="collapse navbar-collapse bot-nav">
                         <ul class="nav navbar-nav navbar-right">
                             <li style="overflow: hidden;">
-                                <form class="search-bar navbar-form" role="search" style="border: 1px solid transparent;" action="searchservlet">
+                                <form class="search-bar navbar-form" role="search" style="border: 1px solid transparent;" action="search">
                                     <div class="input-group">
                                         <input type="text" class="form-control" placeholder="Search Me!" name="srch" id="srch">
                                         <div class="input-group-btn">
@@ -82,12 +82,12 @@
                                                     <ul class="dropdown-menu dropdown-cart" role="menu">
                                                         <c:forEach var="cart_item" items="${cart.getCartItems()}" varStatus="counter">
                                                         <li>
-                                                            <form name="item" action="cart" method="POST">
+                                                            <form name="item" action="cartservlet" method="POST">
                                                                 <span class="item">
                                                                   <span class="item-left">
                                                                       <span class="item-info">
                                                                           <span>${cart_item.getItemName()}</span>
-                                                                          <span>${cart_item.getQuantity()} - ₱${cart_item.getTotalCost()}</span>
+                                                                          <span>x${cart_item.getQuantity()} - ₱${cart_item.getTotalCost()}</span>
                                                                       </span>
                                                                   </span>
 
@@ -100,7 +100,7 @@
                                                             </form>
                                                         </li>
                                                         </c:forEach>
-                                                        <li><a class="text-center" href="#">View and Edit Cart</a></li>
+                                                        <li><a class="text-center" href="cart">View and Edit Cart</a></li>
                                                     </ul>
                                                 </li>
                                             </c:otherwise>
@@ -123,7 +123,7 @@
                         </ul>   
                         <ul class="nav navbar-nav  navbar-left">
                             <li><a href="products">PRODUCTS</a></li>
-                            <li><a href="#">SERVICES</a></li>
+                            <li><a href="services">SERVICES</a></li>
                         </ul>
                     </div>
                 </div>

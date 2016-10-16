@@ -11,70 +11,43 @@ import java.io.Serializable;
  *
  * @author cruzsyd
  */
-public class AllAccountBean implements Serializable{
+public class ClientBean implements Serializable{
     private int account_num;
-    private int account_type_id;
-    private int job_id;
-    private String username;
-    private String password;
+    private int client_id;
     private String first_name;
     private String last_name;
     private String email;
     private String mobile;
     private String telephone;
     private String address;
-    private String account_type;
-    private String job_type;
-    private boolean account_status;
-        
-    public AllAccountBean(){
+    
+    public ClientBean(){
         account_num = 0;
-        account_type_id = 0;
-        job_id = 0;
-        username = "";
-        password = "";
+        client_id = 0;
         first_name = "";
         last_name = "";
         email = "";
         mobile = "";
         telephone = "";
         address = "";
-        account_type = "";
-        job_type = "";
-        account_status = false;
     }
     
-    public AllAccountBean(int an, int ati, int jid, String u, String p, String fn, String ln, String e, String m,String t, String a, String at, String jt, boolean as){
+    public ClientBean(int an, int ci, String fn, String ln, String e, String m, String t, String a){
         account_num = an;
-        account_type_id = ati;
-        job_id = jid;
-        username = u;
-        password = p;
+        client_id = ci;
         first_name = fn;
         last_name = ln;
         email = e;
         mobile = m;
         telephone = t;
         address = a;
-        account_type = at;
-        job_type = jt;
-        account_status = as;
     }
     
     public int getAccountNum(){
         return account_num;
     }
-    public int getAccountTypeID(){
-        return account_type_id;
-    }
-    public int getJobID(){
-        return job_id;
-    }
-    public String getUsername(){
-        return username;
-    }
-    public String getPassword(){
-        return password;
+    public int getClientID(){
+        return client_id;
     }
     public String getFirstName(){
         return first_name;
@@ -94,35 +67,15 @@ public class AllAccountBean implements Serializable{
     public String getTelephone(){
         return telephone;
     }
-    
     public String getAddress(){
         return address;
     }
-
-    public String getAccountType(){
-        return account_type;
-    }
-    public String getJobType(){
-        return job_type;
-    }
-    public boolean getAccountStatus(){
-        return account_status;
-    }
-
+    
     public void setAccountNum(int an){
         account_num = an;
     }
-    public void setAccountTypeID(int ati){
-        account_type_id = ati;
-    }
-    public void setJobID(int jid){
-        job_id = jid;
-    }
-    public void setUsername(String u){
-        username = u;
-    }
-    public void setPassword(String p){
-        password = p;
+    public void setClientID(int ci){
+        client_id = ci;
     }
     public void setFirstName(String fn){
         first_name = fn;
@@ -141,14 +94,5 @@ public class AllAccountBean implements Serializable{
     }
     public void setAddress(String a){
         address = a;
-    }
-    public void setAccountType(String at){
-        account_type = at;
-    }
-    public void setJobType(String jt){
-        job_type = jt;
-    }
-    public void setAccountStatus(boolean as){
-        account_status = as;
     }
 }

@@ -11,3 +11,9 @@ body {
 .col-md-4{
     padding-bottom: 25px;
 }
+.product-title, .product-card{
+    color: #fff;
+}
+#quantity{
+    color: #000;
+}

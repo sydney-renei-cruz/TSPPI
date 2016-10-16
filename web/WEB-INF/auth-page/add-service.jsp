@@ -15,7 +15,7 @@
     <body>
         <%@include file="../static-page/navbar.jsp" %>
         
-        <header id="login-header" style="background-image: url(img/Sandberg-wallpaper.jpg); background-size: cover;">
+        <header id="login-header" style="background-image: url(img/print-factory.jpg); background-size: cover;">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12 text-center">
@@ -41,12 +41,12 @@
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <form id="register-form" action="addproductservlet" method="post" autocomplete="off">
+                                            <form id="register-form" action="addserviceservlet" method="post" autocomplete="off">
                                                 <div class="form-group">
                                                     <input type="text" name="service_name" id="service_name" class="form-control" placeholder="Service Name">
                                                 </div>	
                                                 <div class="form-group">
-                                                    <textarea rows="4" cols="50" name="service_detail" id="product_detail" class="form-control" placeholder="Details about the service"></textarea>
+                                                    <textarea rows="4" cols="50" name="service_description" id="product_detail" class="form-control" placeholder="Details about the service"></textarea>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="row">
@@ -59,16 +59,7 @@
                                                     <div class="row">
                                                         <div class="col-lg-12">
                                                             <div class="text-center">
-                                                                <a href="#" class="forgot-password">Approve Services.</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-lg-12">
-                                                            <div class="text-center">
-                                                                <a href="#" class="forgot-password">See all products.</a>
+                                                                <a href="services" class="forgot-password">See all services.</a>
                                                             </div>
                                                         </div>
                                                     </div>

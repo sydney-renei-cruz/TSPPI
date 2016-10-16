@@ -10,8 +10,6 @@
 <html lang="en">
 
 <head>
-    <link href="imports/bootstrap.css" rel="stylesheet">
-
     <link href="css/3-col-portfolio.css" rel="stylesheet">
 
 </head>
@@ -43,6 +41,7 @@
                 <img class="img-responsive" src="img/car-placeholder.png" alt="">
                 <h1 class="product-title">${pb.getProductName()}</h1>
                 <div>
+                    <form action="cartservlet" id="cart-form" method="POST">
                     <table class="product-card">
                         <tr>
                             <th>
@@ -68,8 +67,30 @@
                                 ${pb.getProductDetail()}
                             </td>
                         </tr>
-                        
+                        <c:if test="${account_type == 'client'}">
+                        <tr>
+                            <th>
+                                Quantity: 
+                            </th>
+                            <td>
+                                <input type="number" id="quantity" name="quantity">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> 
+                            </th>
+                            <td>
+                                <input type="hidden" name="item_number" value="${pb.getProductID()}">
+                                <input type="hidden" name="item_name" value="${pb.getProductName()}">
+                                <input type="hidden" name="item_stock" value="${pb.getStock()}">
+                                <input type="hidden" name="item_cost" value="${pb.getMSRP()}">
+                                <input type="hidden" name="action" value="add">
+                                <input type="submit" name="submit" class="btn btn-warning" value="Add to Cart">
+                            </td>
+                        </tr>
+                        </c:if>
                     </table>
+                    </form>
                 </div>
             </div>
                 
@@ -83,7 +104,6 @@
         <hr>
     </div>
     <!-- /.container -->
-
     <script src="imports/jquery.matchHeight-min.js"></script>
     <script>
         $(function(){

@@ -65,18 +65,20 @@ public class CartServlet extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
         
+        String quantity = request.getParameter("quantity");
         String action = request.getParameter("action");
-        
         if(action != null && !action.equals("")){
             if(action.equals("add")){
-                addToCart(request);
+                if(!quantity.isEmpty()){
+                    addToCart(request);                    
+                }
             }else if(action.equals("update")){
                 updateCart(request);
             }else if(action.equals("x")){ //delete
                 deleteCart(request);
             }
         }
-        response.sendRedirect("products");
+        response.sendRedirect(request.getHeader("referer"));
     }
     
     protected void deleteCart(HttpServletRequest request){
@@ -116,6 +118,7 @@ public class CartServlet extends HttpServlet {
         
         int item_number = Integer.parseInt(request.getParameter("item_number"));
         String item_name = request.getParameter("item_name");
+        int item_stock = Integer.parseInt(request.getParameter("item_stock"));
         int quantity = Integer.parseInt(request.getParameter("quantity"));
         float item_cost = Float.parseFloat(request.getParameter("item_cost"));
         
@@ -127,9 +130,10 @@ public class CartServlet extends HttpServlet {
         }else{
             cb = new CartBean();
             session.setAttribute("cart", cb);
+            session.setAttribute("quantity", quantity);
         }
         
-        cb.addCartItem(item_number, item_name, quantity, item_cost);
+        cb.addCartItem(item_number, item_name, item_stock, quantity, item_cost);
     }
 
     /**

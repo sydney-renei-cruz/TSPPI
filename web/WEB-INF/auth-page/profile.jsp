@@ -1,4 +1,4 @@
-<%-- 
+    <%-- 
     Document   : profile
     Created on : Sep 7, 2016, 10:54:13 PM
     Author     : cruzsyd
@@ -25,7 +25,7 @@
                            </div>
                            <div class="col-xs-12 col-sm-8">
                                <c:forEach var="pb" items="${pb}">
-                                   <b style="font-size: 3.5em;">${pb.getFirstName()} ${pb.getLastName()}</b>
+                                   <b style="font-size: 3.5em;">${pb.getFullName()}</b>
 
                                    <p><strong>Username:</strong> ${pb.getUsername()}</p>
                                    <p><strong>Email: </strong> ${pb.getEmail()}</p>
@@ -55,6 +55,9 @@
                            <c:if test="${job_position == 'Inventory Officer'}">
                                <div class="col-xs-12 col-sm-4 emphasis">
                                    <a href="addproduct" class="btn btn-success btn-block"><span class="fa fa-plus-circle"></span> Add Product</a>
+                               </div>
+                               <div class="col-xs-12 col-sm-4 emphasis">
+                                   <a href="addservices" class="btn btn-warning btn-block"><span class="fa fa-user"></span> Add Services</a>
                                </div>
                                <div class="col-xs-12 col-sm-4 emphasis">
                                    <a href="productapproval" class="btn btn-info btn-block"><span class="fa fa-user"></span> Approve Products </a>

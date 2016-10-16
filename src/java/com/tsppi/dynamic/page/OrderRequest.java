@@ -5,7 +5,7 @@
  */
 package com.tsppi.dynamic.page;
 
-import com.tsppi.bean.ServiceBean;
+import com.tsppi.bean.ClientBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -19,12 +19,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author cruzsyd
  */
-public class ServicePage extends HttpServlet {
+public class OrderRequest extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,39 +39,6 @@ public class ServicePage extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        Connection conn = null;
-        PreparedStatement ps;
-        ServletContext context;
-        ResultSet rs;
-        int i;
-        try{
-            context = request.getSession().getServletContext();
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
-        }catch(ClassNotFoundException | SQLException e){
-            e.printStackTrace();
-        }
-        try{
-            ps = conn.prepareStatement("SELECT * FROM services");
-            rs = ps.executeQuery();
-            
-            ArrayList<ServiceBean> sb = new ArrayList<>();
-            ServiceBean s;
-            while(rs.next()){
-                s = new ServiceBean();
-                s.setServiceID(rs.getInt("service_id"));
-                s.setServiceName(rs.getString("service_name"));
-                s.setServiceDesc(rs.getString("service_description"));
-                sb.add(s);
-            }
-            request.setAttribute("sb", sb);
-            
-            
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        request.getRequestDispatcher("/WEB-INF/auth-page/service.jsp").forward(request,response);       
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -86,6 +54,48 @@ public class ServicePage extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        PrintWriter out = response.getWriter();
+        
+        HttpSession session = request.getSession();
+        Connection conn = null;
+        PreparedStatement ps;
+        ServletContext context;
+        ResultSet rs;
+        int i;
+        try{
+            context = request.getSession().getServletContext();
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
+        }catch(ClassNotFoundException | SQLException e){
+            e.printStackTrace();
+        }
+        
+        try{
+            //client accounts retrieval
+            ps = conn.prepareStatement("SELECT a.*, t.account_type, c.* FROM account a RIGHT JOIN client c ON a.account_num = c.account_num RIGHT JOIN type_of_account t ON a.account_type_id = t.account_type_id WHERE t.account_type='client' AND a.account_num=?");
+            ps.setString(1, (String) session.getAttribute("account_num"));
+            rs = ps.executeQuery();
+            
+            ArrayList<ClientBean> al = new ArrayList<>();
+            ClientBean cb;
+            while(rs.next()){
+                cb = new ClientBean();
+                cb.setAccountNum(rs.getInt("account_num"));
+                cb.setClientID(rs.getInt("client_id"));
+                cb.setFirstName(rs.getString("first_name"));
+                cb.setLastName(rs.getString("last_name"));
+                cb.setEmail(rs.getString("email"));
+                cb.setMobile(rs.getString("mobile"));
+                cb.setTelephone(rs.getString("telephone"));
+                cb.setAddress(rs.getString("address"));
+                al.add(cb);
+            }
+            request.setAttribute("al", al);
+            //client accounts retrieval
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        request.getRequestDispatcher("/WEB-INF/auth-page/order-request.jsp").forward(request, response);
     }
 
     /**

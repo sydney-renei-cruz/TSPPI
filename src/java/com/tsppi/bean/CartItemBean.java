@@ -15,6 +15,7 @@ import java.io.Serializable;
 public class CartItemBean implements Serializable{
     private int item_number;
     private String item_name;
+    private int item_stock;
     private int quantity;
     private float item_cost;
     private float total_cost;
@@ -22,13 +23,15 @@ public class CartItemBean implements Serializable{
     public CartItemBean(){
         item_number = 0;
         item_name = "";
+        item_stock = 0;
         quantity = 0;
         item_cost = 0;
         total_cost = 0;
     }
-    public CartItemBean(int in, String inm, int q, float ic, float tc){
+    public CartItemBean(int in, String inm, int is, int q, float ic, float tc){
         item_number = in;
         item_name = inm;
+        item_stock = is;
         quantity = q;
         item_cost = ic;
         total_cost = tc;
@@ -38,6 +41,9 @@ public class CartItemBean implements Serializable{
     }
     public String getItemName(){
         return item_name;
+    }
+    public int getItemStock(){
+        return item_stock;
     }
     public int getQuantity(){
         return quantity;
@@ -54,6 +60,9 @@ public class CartItemBean implements Serializable{
     }
     public void setItemName(String in){
         item_name = in;
+    }
+    public void setItemStock(int is){
+        item_stock = is;
     }
     public void setQuantity(int q){
         quantity = q;

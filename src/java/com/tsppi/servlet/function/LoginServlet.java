@@ -161,6 +161,7 @@ public class LoginServlet extends HttpServlet {
                     session.setAttribute("account_type", account_type);
                     session.setAttribute("account_status", status);
                     session.setAttribute("user", username);
+                    
                     session.setMaxInactiveInterval(30*60);
 
                 }

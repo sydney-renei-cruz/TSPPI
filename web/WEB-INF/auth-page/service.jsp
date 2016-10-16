@@ -46,17 +46,6 @@
                 <div>
                     <table class="product-card">
                         <tr>
-                            <th>
-                                ID#: 
-                            </th>
-                            <td>
-                                ${sb.getServiceID()}
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                Description: 
-                            </th>
                             <td>
                                 ${sb.getServiceDesc()}
                             </td>
@@ -64,11 +53,12 @@
                     </table>
                 </div>
         </div>
+        <hr>
         </c:forEach>            
 
         <!-- /.row -->
 
-        <hr>
+        
     </div>
     <!-- /.container -->
 

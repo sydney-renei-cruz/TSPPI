@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 29, 2016 at 03:50 PM
+-- Generation Time: Oct 16, 2016 at 12:57 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 7.0.8
 
@@ -44,7 +44,7 @@ CREATE TABLE `account` (
 INSERT INTO `account` (`account_num`, `username`, `password`, `first_name`, `last_name`, `email`, `account_type_id`, `account_status`) VALUES
 (1, 'admin', 'e9e7bc6d99654544ec10ce7dc5f04084dd2973277b1b779e2cbaccfb0aa1dfb9', 'Sydney', 'Cruz', 'sydney_renei.cruz@uap.asia', 2, 1),
 (3, 'admin2', 'e321f61779936151500e569355addf81ed0f9743b868833c23bc8abec1598093', 'admin', 'password', 'admin@yahoo.com', 2, 1),
-(4, 'client', '47e75faa97d8e1a8aabac371d96f8dd518a28a18307c2271ee17801a8092eca0', 'client', 'password', 'client@yahoo.com', 3, 1),
+(4, 'client', '47e75faa97d8e1a8aabac371d96f8dd518a28a18307c2271ee17801a8092eca0', 'client', 'test', 'client@yahoo.com', 3, 1),
 (5, 'employee1', '55aded98cba9c30053e9a03c97f24bc68f20e3a56cb83c9bc6821ca50ef3fabd', 'employee', 'password', 'employee@yahoo.com', 1, 1),
 (6, 'employee2', 'e9e7bc6d99654544ec10ce7dc5f04084dd2973277b1b779e2cbaccfb0aa1dfb9', 'employee2', 'password', 'employee2@yahoo.com', 1, 1);
 
@@ -107,6 +107,73 @@ CREATE TABLE `employee` (
 INSERT INTO `employee` (`account_num`, `employee_id`, `job_id`) VALUES
 (5, 1, 1),
 (6, 2, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `invoice`
+--
+
+CREATE TABLE `invoice` (
+  `invoice_id` int(11) NOT NULL,
+  `client_id` int(11) NOT NULL,
+  `status_id` int(11) NOT NULL,
+  `total_amount` float NOT NULL,
+  `invoice_date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `invoice`
+--
+
+INSERT INTO `invoice` (`invoice_id`, `client_id`, `status_id`, `total_amount`, `invoice_date`) VALUES
+(1, 1, 1, 280, '2016-10-16'),
+(2, 1, 1, 400, '2016-10-16');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `invoice_item`
+--
+
+CREATE TABLE `invoice_item` (
+  `item_id` int(11) NOT NULL,
+  `invoice_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `item_quantity` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `invoice_item`
+--
+
+INSERT INTO `invoice_item` (`item_id`, `invoice_id`, `product_id`, `item_quantity`) VALUES
+(1, 1, 12, 1),
+(2, 1, 13, 2),
+(3, 1, 14, 3),
+(4, 1, 17, 8),
+(5, 2, 12, 20);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `invoice_status`
+--
+
+CREATE TABLE `invoice_status` (
+  `status_id` int(11) NOT NULL,
+  `status_name` varchar(9) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `invoice_status`
+--
+
+INSERT INTO `invoice_status` (`status_id`, `status_name`) VALUES
+(1, 'Pending'),
+(2, 'Approved'),
+(3, 'Rejected'),
+(4, 'Cancelled');
 
 -- --------------------------------------------------------
 
@@ -187,6 +254,26 @@ INSERT INTO `product_category` (`category_id`, `category_name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `services`
+--
+
+CREATE TABLE `services` (
+  `service_id` int(11) NOT NULL,
+  `service_name` varchar(50) NOT NULL,
+  `service_description` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `services`
+--
+
+INSERT INTO `services` (`service_id`, `service_name`, `service_description`) VALUES
+(1, 'Bookbinding', 'We will bookbind the face of your enemy if you want to.'),
+(2, 'Printing', 'We will print the blood of your enemy.');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `type_of_account`
 --
 
@@ -238,6 +325,24 @@ ALTER TABLE `employee`
   ADD KEY `job_id` (`job_id`);
 
 --
+-- Indexes for table `invoice`
+--
+ALTER TABLE `invoice`
+  ADD PRIMARY KEY (`invoice_id`);
+
+--
+-- Indexes for table `invoice_item`
+--
+ALTER TABLE `invoice_item`
+  ADD PRIMARY KEY (`item_id`);
+
+--
+-- Indexes for table `invoice_status`
+--
+ALTER TABLE `invoice_status`
+  ADD PRIMARY KEY (`status_id`);
+
+--
 -- Indexes for table `job_position`
 --
 ALTER TABLE `job_position`
@@ -255,6 +360,12 @@ ALTER TABLE `product`
 --
 ALTER TABLE `product_category`
   ADD PRIMARY KEY (`category_id`);
+
+--
+-- Indexes for table `services`
+--
+ALTER TABLE `services`
+  ADD PRIMARY KEY (`service_id`);
 
 --
 -- Indexes for table `type_of_account`
@@ -287,6 +398,21 @@ ALTER TABLE `client`
 ALTER TABLE `employee`
   MODIFY `employee_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
+-- AUTO_INCREMENT for table `invoice`
+--
+ALTER TABLE `invoice`
+  MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `invoice_item`
+--
+ALTER TABLE `invoice_item`
+  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT for table `invoice_status`
+--
+ALTER TABLE `invoice_status`
+  MODIFY `status_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
 -- AUTO_INCREMENT for table `job_position`
 --
 ALTER TABLE `job_position`
@@ -301,6 +427,11 @@ ALTER TABLE `product`
 --
 ALTER TABLE `product_category`
   MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT for table `services`
+--
+ALTER TABLE `services`
+  MODIFY `service_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `type_of_account`
 --

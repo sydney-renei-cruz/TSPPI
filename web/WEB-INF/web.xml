@@ -138,6 +138,22 @@
         <servlet-name>AddServicePage</servlet-name>
         <servlet-class>com.tsppi.dynamic.page.AddServicePage</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddServiceServlet</servlet-name>
+        <servlet-class>com.tsppi.servlet.function.AddServiceServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CartPage</servlet-name>
+        <servlet-class>com.tsppi.dynamic.page.CartPage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OrderRequest</servlet-name>
+        <servlet-class>com.tsppi.dynamic.page.OrderRequest</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GenerateInvoiceServlet</servlet-name>
+        <servlet-class>com.tsppi.servlet.function.GenerateInvoiceServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/registerservlet</url-pattern>
@@ -215,12 +231,8 @@
         <url-pattern>/about</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ProductSearchPage</servlet-name>
-        <url-pattern>/ProductSearchPage</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>CartServlet</servlet-name>
-        <url-pattern>/cart</url-pattern>
+        <url-pattern>/cartservlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ProductsPage</servlet-name>
@@ -228,11 +240,27 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ServicePage</servlet-name>
-        <url-pattern>/ServicePage</url-pattern>
+        <url-pattern>/services</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AddServicePage</servlet-name>
-        <url-pattern>/AddServicePage</url-pattern>
+        <url-pattern>/addservices</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddServiceServlet</servlet-name>
+        <url-pattern>/addserviceservlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CartPage</servlet-name>
+        <url-pattern>/cart</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderRequest</servlet-name>
+        <url-pattern>/order</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GenerateInvoiceServlet</servlet-name>
+        <url-pattern>/generateinvoice</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -250,7 +278,7 @@
     </context-param>
     <context-param>
         <param-name>dbURL</param-name>
-        <param-value>jdbc:mysql://localhost:3306/tsppi</param-value>
+        <param-value>jdbc:mysql://localhost:3306/com_tsppi</param-value>
     </context-param>
     <welcome-file-list>
         <welcome-file>home</welcome-file>

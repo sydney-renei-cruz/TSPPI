@@ -82,7 +82,7 @@
                                                     <div class="row">
                                                         <div class="col-lg-12">
                                                             <div class="text-center">
-                                                                <a href="#" class="forgot-password">See all products.</a>
+                                                                <a href="products" class="forgot-password">See all products.</a>
                                                             </div>
                                                         </div>
                                                     </div>

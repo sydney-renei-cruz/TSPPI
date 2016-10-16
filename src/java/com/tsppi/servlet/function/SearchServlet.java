@@ -5,6 +5,7 @@
  */
 package com.tsppi.servlet.function;
 
+import com.tsppi.bean.ProductBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
@@ -50,26 +51,23 @@ public class SearchServlet extends HttpServlet {
             conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
             String srch = request.getParameter("srch");
 
-            ArrayList al = null;
-            ArrayList pid_list = new ArrayList();
+           
             String query = "SELECT product_name,product_detail,for_sale FROM product WHERE product_name LIKE '%"+srch+"%'";
 
             st = conn.createStatement();
             ResultSet rs = st.executeQuery(query);
-
-            while (rs.next()) {
-                al = new ArrayList();
-
-                al.add(rs.getString(1));
-                al.add(rs.getString(2));
-                al.add(rs.getString(3));
-
-                pid_list.add(al);
-            }
-           
             
-            request.setAttribute("piList", pid_list);
-            request.getRequestDispatcher("/WEB-INF/auth-page/ProductSearchPage.jsp").forward(request,response);
+            ArrayList<ProductBean> al = new ArrayList<>();
+            ProductBean pb;
+            while (rs.next()) {
+                pb = new ProductBean();
+                pb.setProductName(rs.getString("product_name"));
+                pb.setProductDetail(rs.getString("product_detail"));
+                pb.setForSale(rs.getBoolean("for_sale"));
+                al.add(pb);
+            }
+            request.setAttribute("al", al);
+            request.getRequestDispatcher("/WEB-INF/auth-page/search-result.jsp").forward(request,response);
             conn.close();
         } catch (Exception e) {
             e.printStackTrace();

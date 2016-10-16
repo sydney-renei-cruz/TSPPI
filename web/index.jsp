@@ -55,7 +55,7 @@
                 </div>
                 
                 <div class="col-md-3 col-md-offset-2 front-div">
-                    <a href="#">
+                    <a href="services">
                         <div class="col-md-12">
                             <img src="img/front-image-3.png" class="front-image-1">
                             <h2>SERVICES</h2><hr>

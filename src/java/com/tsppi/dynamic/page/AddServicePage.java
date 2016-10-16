@@ -39,42 +39,7 @@ public class AddServicePage extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        Connection conn = null;
-        PreparedStatement ps;
-        ServletContext context;
-        ResultSet rs;
-        int i;
-        try{
-            context = request.getSession().getServletContext();
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
-        }catch(ClassNotFoundException | SQLException e){
-            e.printStackTrace();
-        }
-        try{
-            ps = conn.prepareStatement("SELECT * FROM services");
-            rs = ps.executeQuery();
-            
-            ArrayList<ServiceBean> sb = new ArrayList<>();
-            ServiceBean s;
-            while(rs.next()){
-                s = new ServiceBean();
-                s.setServiceID(rs.getInt("id"));
-                s.setServiceName(rs.getString("name"));
-                s.setServiceDesc(rs.getString("description"));
-                sb.add(s);
-            }
-            rs.close();
-            request.setAttribute("sb", sb);
-            
-            request.getRequestDispatcher("/WEB-INF/auth-page/add-service.jsp").forward(request, response);
-      
-        }catch(SQLException e){
-            out.println(e);
-            e.printStackTrace();
-        }
-        
-        
+        request.getRequestDispatcher("/WEB-INF/auth-page/add-service.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

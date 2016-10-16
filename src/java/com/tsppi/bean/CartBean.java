@@ -54,7 +54,7 @@ public class CartBean {
         setOrderTotal(total);
     }
    
-    public void addCartItem(int in, String inm, int q, float ic){
+    public void addCartItem(int in, String inm, int is, int q, float ic){
         
         int quantity = 0;
         float item_cost = 0;
@@ -68,6 +68,7 @@ public class CartBean {
                 total_cost = item_cost * quantity;
                 cib.setItemNumber(in);
                 cib.setItemName(inm);
+                cib.setItemStock(is);
                 cib.setQuantity(quantity);
                 cib.setItemCost(item_cost);
                 cib.setTotalCost(total_cost);
