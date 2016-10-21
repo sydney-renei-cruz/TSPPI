@@ -5,7 +5,7 @@
  */
 package com.tsppi.dynamic.page;
 
-import com.tsppi.bean.ProductBean;
+import com.tsppi.bean.ServiceBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -25,7 +25,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author cruzsyd
  */
-public class ProductsPage extends HttpServlet {
+public class EditServicePage extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,45 +40,6 @@ public class ProductsPage extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        Connection conn = null;
-        PreparedStatement ps;
-        ServletContext context;
-        ResultSet rs;
-        
-        int i;
-        try{
-            context = request.getSession().getServletContext();
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
-        }catch(ClassNotFoundException | SQLException e){
-            e.printStackTrace();
-        }
-        try{
-            ps = conn.prepareStatement("SELECT p.*, c.category_name FROM product p RIGHT JOIN product_category c ON p.category_id = c.category_id");
-            rs = ps.executeQuery();
-            
-            int stock = 0;
-            ArrayList<ProductBean> pb = new ArrayList<>();
-            ProductBean p;
-            while(rs.next()){
-                p = new ProductBean();
-                p.setProductID(rs.getInt("product_id"));
-                p.setCategoryName(rs.getString("category_name"));
-                p.setProductName(rs.getString("product_name"));
-                p.setMSRP(rs.getFloat("msrp"));
-                p.setStock(rs.getInt("stock"));
-                p.setProductDetail(rs.getString("product_detail"));
-                p.setForSale(rs.getBoolean("for_sale"));
-                if(rs.getBoolean("for_sale") != false){
-                    pb.add(p);
-                }
-                stock = rs.getInt("stock");
-            }
-            request.setAttribute("pb", pb);          
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        request.getRequestDispatcher("/WEB-INF/auth-page/products.jsp").forward(request,response);       
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -94,6 +55,42 @@ public class ProductsPage extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        PrintWriter out = response.getWriter();
+        Connection conn = null;
+        PreparedStatement ps;
+        ServletContext context;
+        ResultSet rs;
+        HttpSession session = request.getSession();
+        String inText;
+        int i;
+        try{
+            context = request.getSession().getServletContext();
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
+        }catch(ClassNotFoundException | SQLException e){
+            e.printStackTrace();
+        }
+        String service_id = request.getParameter("service_id");
+        try{
+            ps = conn.prepareStatement("SELECT * FROM services WHERE service_id=?");
+            ps.setString(1, service_id);
+            rs = ps.executeQuery();
+            
+            ArrayList<ServiceBean> sb = new ArrayList<>();
+            ServiceBean s;
+            while(rs.next()){
+                s = new ServiceBean();
+                s.setServiceID(rs.getInt("service_id"));
+                s.setServiceName(rs.getString("service_name"));
+                s.setServiceDesc(rs.getString("service_description"));
+                sb.add(s);
+            }
+            request.setAttribute("sb", sb);
+            
+             request.getRequestDispatcher("/WEB-INF/auth-page/edit-service.jsp").forward(request,response);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     /**

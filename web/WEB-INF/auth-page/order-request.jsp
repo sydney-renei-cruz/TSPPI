@@ -12,11 +12,11 @@
     </head>
     <body>
         <%@include file="../static-page/navbar.jsp" %>
-        <header id="login-header" style="background-image: url(img/login-register-header.png); background-size: cover;">
+        <header id="login-header" style="background-image: url(img/invoice.jpg); background-size: cover;">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12 text-center">
-                        <h1>My Account</h1>
+                        <h1>Invoice Request</h1>
                     </div>
                 </div>
             </div>

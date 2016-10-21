@@ -7,7 +7,17 @@
 body {
     padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
 }
+/*header*/
+#header{
+    padding: 75px 0;
+    color: #fff;
+    font-family: rsb;
+    text-transform: uppercase;
 
+}
+.row .portfolio-item{
+    padding-top: 25px;
+}
 .col-md-4{
     padding-bottom: 25px;
 }

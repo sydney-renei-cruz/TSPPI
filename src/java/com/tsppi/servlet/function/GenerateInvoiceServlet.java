@@ -5,6 +5,7 @@
  */
 package com.tsppi.servlet.function;
 
+import com.tsppi.bean.InvoiceItemBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -136,8 +137,30 @@ public class GenerateInvoiceServlet extends HttpServlet {
                     throw new SQLException("No invoice retrieved");
                 }
             }
-
+            
             session.setAttribute("cart", null);
+            
+            ps = conn.prepareStatement("select * from invoice_item where invoice_id=?");
+            ps.setInt(1, invoice_id);
+            
+            ResultSet rs = ps.executeQuery();
+            ArrayList<InvoiceItemBean> al = new ArrayList<InvoiceItemBean>();
+            InvoiceItemBean ib;
+            while(rs.next()){
+                ib= new InvoiceItemBean();
+                ib.setProductID(rs.getInt("product_id"));
+                al.add(ib);
+            }
+            
+            for(InvoiceItemBean iib : al){
+                ps = conn.prepareStatement("UPDATE product JOIN invoice_item ON product.product_id = invoice_item.product_id "
+                        + "SET product.stock = product.stock - invoice_item.item_quantity "
+                        + "WHERE product.product_id=? and invoice_item.invoice_id=?");
+                ps.setInt(1, iib.getProductId());
+                ps.setInt(2, invoice_id);
+                ps.executeUpdate();
+            }
+            
             response.sendRedirect("profile");
         }catch(Exception e){
             out.println(e);

@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link href="${pageContext.request.contextPath}/css/form.css" rel="stylesheet" type="text/css">
+        <link href="css/form.css" rel="stylesheet" type="text/css">
     </head>
     <body>
         
@@ -81,6 +81,6 @@
                 </div>
             </div>
 	</section>
-	<script>
+	
     </body>
 </html>

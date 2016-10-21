@@ -62,6 +62,12 @@
                                <div class="col-xs-12 col-sm-4 emphasis">
                                    <a href="productapproval" class="btn btn-info btn-block"><span class="fa fa-user"></span> Approve Products </a>
                                </div>
+                               <div class="col-xs-12 col-sm-4 emphasis">
+                                   <a href="productapproval" class="btn btn-primary btn-block"><span class="fa fa-user"></span> Edit Products </a>
+                               </div>
+                               <div class="col-xs-12 col-sm-4 emphasis">
+                                   <a href="allservices" class="btn btn-danger btn-block"><span class="fa fa-user"></span> Edit Services </a>
+                               </div>
                            </c:if>
                        </div>
                     </div>                 

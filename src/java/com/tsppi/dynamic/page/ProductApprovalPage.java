@@ -19,6 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -39,7 +40,7 @@ public class ProductApprovalPage extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        
+        HttpSession session = request.getSession();
         Connection conn = null;
         PreparedStatement ps;
         ServletContext context;
@@ -68,6 +69,7 @@ public class ProductApprovalPage extends HttpServlet {
                 p.setProductDetail(rs.getString("product_detail"));
                 p.setForSale(rs.getBoolean("for_sale"));
                 pb.add(p);
+                session.setAttribute("product_id", rs.getInt("product_id"));
             }
             request.setAttribute("pb", pb);
             

@@ -64,16 +64,25 @@ public class CartServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
+        HttpSession session = request.getSession();
         String quantity = request.getParameter("quantity");
+        int stock = 0;
         String action = request.getParameter("action");
         if(action != null && !action.equals("")){
             if(action.equals("add")){
+                stock = Integer.parseInt(request.getParameter("item_stock"));
                 if(!quantity.isEmpty()){
-                    addToCart(request);                    
+                    if(stock >= Integer.parseInt(quantity)){
+                        addToCart(request);   
+                    }
                 }
             }else if(action.equals("update")){
-                updateCart(request);
+                stock = Integer.parseInt(request.getParameter("item_stock"));
+                if(!quantity.isEmpty()){
+                    if(stock >= Integer.parseInt(quantity)){
+                        updateCart(request);
+                    }
+                }
             }else if(action.equals("x")){ //delete
                 deleteCart(request);
             }

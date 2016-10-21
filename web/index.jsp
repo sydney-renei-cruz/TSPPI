@@ -17,21 +17,13 @@
             <ol class="carousel-indicators">
                 <li data-target="#home-carousel" data-slide-to="0" class="active"></li>
                 <li data-target="#home-carousel" data-slide-to="1"></li>
-                <li data-target="#home-carousel" data-slide-to="2"></li>
             </ol>
             <div class="carousel-inner" role="list-box">
                 <div class="item active"><a href="#"><img src="img/TSPPI Logo.png" alt="" class="center-block"></a></div>
-                <div class="item"><a href="#">
-                    <img src="img/car-placeholder.png" alt="" class="center-block"></a>
-                    <div class="carousel-caption">
-                        <h3>Second</h3>
-                    </div>
-                </div>
+                
                 <div class="item">
-                    <a href="#"><img src="img/car-placeholder.png" alt="" class="center-block"></a>
-                    <div class="carousel-caption">
-                        <h3>Third</h3>
-                    </div>
+                    <a href="register"><img src="img/index-slide2.png" alt="" class="center-block"></a>
+                    
                 </div>
             </div>
         </div>

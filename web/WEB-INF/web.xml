@@ -5,45 +5,57 @@
         <filter-name>CommonFilter</filter-name>
         <filter-class>com.tsppi.session.filter.CommonFilter</filter-class>
     </filter>
+    <filter>
+        <filter-name>AuthenticatedFilter</filter-name>
+        <filter-class>com.tsppi.session.filter.AuthenticatedFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>AdminFilter</filter-name>
+        <filter-class>com.tsppi.session.filter.AdminFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>ClientFilter</filter-name>
+        <filter-class>com.tsppi.session.filter.ClientFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>SpecAdVpFilter</filter-name>
+        <filter-class>com.tsppi.session.filter.SpecAdVpFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>InventoryOfficerFilter</filter-name>
+        <filter-class>com.tsppi.session.filter.InventoryOfficerFilter</filter-class>
+    </filter>
     <filter-mapping>
         <filter-name>CommonFilter</filter-name>
         <url-pattern>/profile</url-pattern>
         <url-pattern>/editaccount</url-pattern>
     </filter-mapping>
-    <filter>
-        <filter-name>AuthenticatedFilter</filter-name>
-        <filter-class>com.tsppi.session.filter.AuthenticatedFilter</filter-class>
-    </filter>
     <filter-mapping>
         <filter-name>AuthenticatedFilter</filter-name>
         <url-pattern>/register</url-pattern>
         <url-pattern>/adrp</url-pattern>
         <url-pattern>/login</url-pattern>
     </filter-mapping>
-    <filter>
-        <filter-name>AdminFilter</filter-name>
-        <filter-class>com.tsppi.session.filter.AdminFilter</filter-class>
-    </filter>
     <filter-mapping>
         <filter-name>AdminFilter</filter-name>
         <url-pattern>/emrp</url-pattern>
     </filter-mapping>
-    <filter>
-        <filter-name>SpecAdVpFilter</filter-name>
-        <filter-class>com.tsppi.session.filter.SpecAdVpFilter</filter-class>
-    </filter>
+    <filter-mapping>
+        <filter-name>ClientFilter</filter-name>
+        <url-pattern>/cart</url-pattern>
+        <url-pattern>/order</url-pattern>
+    </filter-mapping>
     <filter-mapping>
         <filter-name>SpecAdVpFilter</filter-name>
         <url-pattern>/allaccounts</url-pattern>
     </filter-mapping>
-    <filter>
-        <filter-name>InventoryOfficerFilter</filter-name>
-        <filter-class>com.tsppi.session.filter.InventoryOfficerFilter</filter-class>
-    </filter>
     <filter-mapping>
         <filter-name>InventoryOfficerFilter</filter-name>
         <url-pattern>/addproduct</url-pattern>
+        <url-pattern>/addservices</url-pattern>
         <url-pattern>/productapproval</url-pattern>
+        <url-pattern>/editproduct</url-pattern>
+        <url-pattern>/allservices</url-pattern>
     </filter-mapping>
     <!--Filter-->
     <servlet>
@@ -147,12 +159,32 @@
         <servlet-class>com.tsppi.dynamic.page.CartPage</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>OrderRequest</servlet-name>
-        <servlet-class>com.tsppi.dynamic.page.OrderRequest</servlet-class>
+        <servlet-name>OrderRequestPage</servlet-name>
+        <servlet-class>com.tsppi.dynamic.page.OrderRequestPage</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>GenerateInvoiceServlet</servlet-name>
         <servlet-class>com.tsppi.servlet.function.GenerateInvoiceServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditProductPage</servlet-name>
+        <servlet-class>com.tsppi.dynamic.page.EditProductPage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditProductServlet</servlet-name>
+        <servlet-class>com.tsppi.servlet.function.EditProductServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AllServicesIOPage</servlet-name>
+        <servlet-class>com.tsppi.dynamic.page.AllServicesIOPage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditServicePage</servlet-name>
+        <servlet-class>com.tsppi.dynamic.page.EditServicePage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditServiceServlet</servlet-name>
+        <servlet-class>com.tsppi.servlet.function.EditServiceServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>RegisterServlet</servlet-name>
@@ -164,7 +196,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SearchServlet</servlet-name>
-        <url-pattern>/searchservlet</url-pattern>
+        <url-pattern>/search</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>EmployeeRegisterPage</servlet-name>
@@ -255,12 +287,32 @@
         <url-pattern>/cart</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>OrderRequest</servlet-name>
+        <servlet-name>OrderRequestPage</servlet-name>
         <url-pattern>/order</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>GenerateInvoiceServlet</servlet-name>
         <url-pattern>/generateinvoice</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditProductPage</servlet-name>
+        <url-pattern>/editproduct</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditProductServlet</servlet-name>
+        <url-pattern>/editproductservlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AllServicesIOPage</servlet-name>
+        <url-pattern>/allservices</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditServicePage</servlet-name>
+        <url-pattern>/editservice</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditServiceServlet</servlet-name>
+        <url-pattern>/editserviceservlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
