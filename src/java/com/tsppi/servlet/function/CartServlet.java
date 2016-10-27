@@ -6,8 +6,10 @@
 package com.tsppi.servlet.function;
 
 import com.tsppi.bean.CartBean;
+import com.tsppi.bean.CartItemBean;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +23,7 @@ import javax.servlet.http.HttpSession;
  * 
  */
 public class CartServlet extends HttpServlet {
-
+    ArrayList<CartBean> cart_bean = new ArrayList<>();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -118,9 +120,9 @@ public class CartServlet extends HttpServlet {
         }else {
             cb = new CartBean();
         }
-        
         cb.updateCartItem(item_number, quantity);
     }
+    
     
     protected void addToCart(HttpServletRequest request){
         HttpSession session = request.getSession();
@@ -134,6 +136,9 @@ public class CartServlet extends HttpServlet {
         CartBean cb = null;
         Object ocb = session.getAttribute("cart");
         
+        for(int i=0; i<cart_bean.size(); i++){
+            CartBean newcb = cart_bean.get(i);
+        }
         if(ocb != null){
             cb = (CartBean) ocb;
         }else{

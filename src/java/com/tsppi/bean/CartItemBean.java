@@ -16,7 +16,7 @@ public class CartItemBean implements Serializable{
     private int item_number;
     private String item_name;
     private int item_stock;
-    private int quantity;
+    protected int quantity;
     private float item_cost;
     private float total_cost;
     

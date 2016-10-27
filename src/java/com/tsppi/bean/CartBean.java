@@ -64,6 +64,7 @@ public class CartBean {
         try{
             item_cost = ic;
             quantity = q;
+            
             if(quantity > 0){
                 total_cost = item_cost * quantity;
                 cib.setItemNumber(in);
