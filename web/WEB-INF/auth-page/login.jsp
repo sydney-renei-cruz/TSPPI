@@ -13,6 +13,7 @@
     </head>
     <body>
         
+        <!-- Hello World -->
 	<%@include file="../static-page/navbar.jsp" %>
 	<header id="login-header" style="background-image: url(img/login-register-header.png); background-size: cover;">
             <div class="container">
