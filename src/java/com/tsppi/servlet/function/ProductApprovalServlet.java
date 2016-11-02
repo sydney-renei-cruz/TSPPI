@@ -94,7 +94,7 @@ public class ProductApprovalServlet extends HttpServlet {
             ps.setString(2, product_id);
             i = ps.executeUpdate();
             if(i>0){
-                response.sendRedirect("productapproval");
+                response.sendRedirect(request.getHeader("referer"));
             }else{
                 response.sendRedirect("productapproval?result=failed");
             }

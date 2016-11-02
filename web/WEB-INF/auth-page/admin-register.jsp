@@ -14,11 +14,11 @@
     </head>
     <body>
 	<%@include file="../static-page/navbar.jsp" %>
-	<header id="login-header" style="background-image: url(img/login-register-header.png); background-size: cover;">
+	<header id="login-header">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12 text-center">
-                        <h1>My Account</h1>
+                        <h1>Admin Register</h1>
                     </div>
                 </div>
             </div>
@@ -30,11 +30,6 @@
                         <div class="col-md-6 col-md-offset-3">
                             <div class="panel panel-login">
                                 <div class="panel-heading">
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            <a class="active" id="login-form-link">Register</a>
-                                        </div>
-                                    </div>
                                     <hr>
                                 </div>
                                 <div class="panel-body">

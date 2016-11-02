@@ -8,22 +8,18 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <style>
-            footer .container-fluid{
-                border-top: 1px solid #fff;
-            }
-        </style>
             
     </head>
     <body>
         <footer>
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h1 style="color: #fff;">Footer</h1>
-                    </div>
-                </div>
-            </div>
+            <div class="container">
+                <img src="img/TSPPI Logo.png" alt="" style="width: 20% !important;">
+                <p>
+                    <strong>Telephone:</strong> 521-5002 | 521-3062 | 524-1434 ||||
+                    <strong>Fax:</strong> 521-5003 ||||
+                    <strong>Mobile:</strong> 0917-8005410 ||||
+                    <strong>Email:</strong> tsppi_tristar@yahoo.com
+                </p>
         </footer>
     </body>
 </html>

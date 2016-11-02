@@ -37,10 +37,10 @@
         <c:forEach var="sb" items="${sb}">
         <div class="row">
             
-            <div class="col-md-4 portfolio-item">
+            <div class="col-md-4 service-item">
                 <img class="img-responsive" src="img/car-placeholder.png" alt="">
             </div>
-                            <h1 class="product-title">${sb.getServiceName()}</h1>
+                <h1 class="product-title">${sb.getServiceName()}</h1>
                 <div>
                     <table class="product-card">
                         <tr>

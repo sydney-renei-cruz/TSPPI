@@ -5,6 +5,7 @@
  */
 package com.tsppi.session.filter;
 
+import com.tsppi.bean.CartBean;
 import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -20,7 +21,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author cruzsyd
  */
-public class ClientFilter implements Filter{
+public class CartFilter implements Filter{
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -33,13 +34,18 @@ public class ClientFilter implements Filter{
         HttpServletResponse response = (HttpServletResponse) res;
 
         HttpSession session = request.getSession();
+        CartBean cb = (CartBean) session.getAttribute("cart");
         if (session == null || session.getAttribute("user") == null) {
             response.sendRedirect("login");
         }else {
             if(!session.getAttribute("account_type").equals("client")){
                 request.getRequestDispatcher("/WEB-INF/err-page/authpage-error.jsp").forward(request, response);
             }else{
-                chain.doFilter(request, response);
+                if(cb.getCartSize() > 0 ){
+                    chain.doFilter(request, response);
+                }else{
+                    response.sendRedirect("products");
+                }
             }
         }
     }

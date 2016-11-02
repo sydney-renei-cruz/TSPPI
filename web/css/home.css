@@ -4,34 +4,87 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 */
 /* 
-Created on : Aug 14, 2016, 9:13:59 PM
-Author     : cruzsyd
+<<<<<<< OURS
+    Created on : 11 2, 16, 8:17:06 PM
+    Author     : Sydney Cruz
+    ref: https://www.script-tutorials.com/bootstrap-one-page-template-with-parallax-effect/
 */
+/* general styles */
+html, body{
+    height: 100%;
+    width: 100%;
+}
+/*padded section*/
+.pad-section{
+    padding: 50px 0;
+}
+/* vertical-centered text */
+.text-vcenter{
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
 
-@CHARSET "ISO-8859-1";
-
-@font-face{
-    font-family: candara;
-    src: url(CANDARA.ttf) format("truetype");
+}
+#home span.border{
+    background-color: #306d9f;
+    color: #fff;
+    padding: 18px;
+    letter-spacing: 10px;
+    opacity: 0.8;
+}
+#information span.border{
+    background-color: #111;
+    color: #fff;
+    padding: 18px;
+    letter-spacing: 10px;
+    opacity: 0.9;
 }
 
-body{font-family: candara;}
-
-/*carousel img size*/
-.carousel img{height: 350px !important;}
-#home-carousel{
-    padding-top: 5px;
-    padding-bottom: 5px;
+#home h1, #information h1{
+    font-size: 5em;
+    font-weight: 700;
+    margin: 0;
+    padding: 0;
 }
 
-/*main content*/
-.col-md-12{background-color: rgb(248, 248, 248) !important;}
-#contents{padding-bottom: 25px;}
-.col-md-12 .front-image-1{
-    width: 150px; 
-    padding-top: 5px; 
-    padding-bottom: 5px;
+
+/* additional sections */
+#home{
+    background: url(../img/home.jpg) no-repeat center center fixed;
+    display: table;
+    height: 100%;
+    position: relative;
+    width: 100%;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
 }
 
-.front-div{border: 10px solid black;}
-.front-button{border-top: 5px solid black;}
+#comp-offer{
+    background-color: #306d9f;
+    color: #fff;
+}
+#comp-offer a, #information a{
+    color: #fff;
+    text-decoration: none;
+}
+#comp-offer .glyphicon{
+    border: 2px solid #fff;
+    border-radius: 50%;
+    display: inline-block;
+    font-size: 80px;
+    height: 160px;
+    line-height: 160px;
+    width: 160px;
+}
+
+#information{
+    background: url(../img/information.jpg) no-repeat center center fixed;
+    display: table;
+    height: 100%;
+    position: relative;
+    width: 100%;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+}

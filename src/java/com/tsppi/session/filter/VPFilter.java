@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author cruzsyd
  */
-public class ClientFilter implements Filter{
+public class VPFilter implements Filter{
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -36,7 +36,7 @@ public class ClientFilter implements Filter{
         if (session == null || session.getAttribute("user") == null) {
             response.sendRedirect("login");
         }else {
-            if(!session.getAttribute("account_type").equals("client")){
+            if(!session.getAttribute("job_position").equals("Vice President")){
                 request.getRequestDispatcher("/WEB-INF/err-page/authpage-error.jsp").forward(request, response);
             }else{
                 chain.doFilter(request, response);

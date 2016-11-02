@@ -16,11 +16,11 @@
     <body>
         <%@include file="../static-page/navbar.jsp" %>
         
-        <header id="login-header" style="background-image: url(img/login-register-header.png); background-size: cover;">
+        <header id="login-header">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12 text-center">
-                        <h1>My Account</h1>
+                        <h1>Edit Profile</h1>
                     </div>
                 </div>
             </div>
@@ -34,7 +34,6 @@
                                 <div class="panel-heading">
                                     <div class="row">
                                         <div class="col-xs-12">
-                                            <a class="active" id="login-form-link">Edit Profile</a>
                                             <h6 class="active">Please fill up the items you want to change</h6>
                                         </div>
                                     </div>
@@ -98,6 +97,5 @@
 	</section>
         <script src="imports/jquery.validate.js" type="text/javascript"></script>
         <script src="js/edit-prof-validation.js" type="text/javascript"></script>
-        <%@include file="/WEB-INF/static-page/footer.jsp" %>
     </body>
 </html>

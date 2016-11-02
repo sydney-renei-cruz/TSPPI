@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -72,10 +73,13 @@ public class AddProductServlet extends HttpServlet {
         String product_detail = request.getParameter("product_detail");
         String category_id = request.getParameter("product_category");
         Boolean for_sale = false;
+        String category_name = "";
+        String search_string;
         
         Connection conn = null;
         PreparedStatement ps;
         ServletContext context;
+        ResultSet rs;
         int i;
         try{
             context = request.getSession().getServletContext();
@@ -86,6 +90,9 @@ public class AddProductServlet extends HttpServlet {
         }   
         
         try{
+
+            
+           
             ps = conn.prepareStatement("INSERT INTO product (category_id, product_name, product_detail, msrp, stock, for_sale) VALUES (?,?,?,?,?,?)");
             ps.setString(1, category_id);
             ps.setString(2, product_name);
@@ -94,7 +101,7 @@ public class AddProductServlet extends HttpServlet {
             ps.setInt(5, stock);
             ps.setBoolean(6, for_sale);
             i = ps.executeUpdate();
-            
+                       
             if(i>0){
                 response.sendRedirect("profile");
             }else{

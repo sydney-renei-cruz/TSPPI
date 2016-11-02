@@ -7,6 +7,7 @@ package com.tsppi.dynamic.page;
 
 import com.tsppi.bean.InvoiceBean;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -22,9 +23,9 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author cruzsyd
+ * @author Sydney Cruz
  */
-public class AllInvoicesPage extends HttpServlet {
+public class ClientInvoicesPage extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -57,30 +58,72 @@ public class AllInvoicesPage extends HttpServlet {
         //session activated client
         try{
             String active_user = (String) session.getAttribute("account_num");
-            inText = "SELECT i.invoice_id, s.status_name, i.total_amount, i.invoice_date"
+            inText = "SELECT i.invoice_id, i.total_amount, i.invoice_date, s.status_name "
                     + "from invoice i "
-                    + "JOIN client c ON i.client_id = c.client_id "
-                    + "JOIN invoice_status s ON i.status_id = s.status_id"
-                    + "WHERE c.account_num=?";
+                    + "join invoice_status s on s.status_id = i.status_id "
+                    + "join client c on c.client_id = i.client_id "
+                    + "where c.account_num=? AND s.status_name='Pending'";
             ps = conn.prepareStatement(inText);
             ps.setString(1, active_user);
             rs = ps.executeQuery();
             
-            ArrayList<InvoiceBean> al = new ArrayList<>();
-            InvoiceBean ib;
+            ArrayList<InvoiceBean> al1 = new ArrayList<>();
+            InvoiceBean ib1;
             while(rs.next()){
-                ib = new InvoiceBean();
-                ib.setInvoiceID(rs.getInt("invoice_id"));
-                ib.setStatusName(rs.getString("status_name"));
-                ib.setTotalAmount(rs.getFloat("total_amount"));
-                ib.setInvoiceDate(rs.getDate("invoice_date"));
-                al.add(ib);
+                ib1 = new InvoiceBean();
+                ib1.setInvoiceID(rs.getInt("invoice_id"));
+                ib1.setTotalAmount(rs.getFloat("total_amount"));
+                ib1.setInvoiceDate(rs.getDate("invoice_date"));
+                ib1.setStatusName(rs.getString("status_name"));
+                al1.add(ib1);
             }
-            request.setAttribute("al", al);
+            
+            inText = "SELECT i.invoice_id, i.total_amount, i.invoice_date, s.status_name "
+                    + "from invoice i "
+                    + "join invoice_status s on s.status_id = i.status_id "
+                    + "join client c on c.client_id = i.client_id "
+                    + "where c.account_num=? AND s.status_name='Approved'";
+            ps = conn.prepareStatement(inText);
+            ps.setString(1, active_user);
+            rs = ps.executeQuery();
+            InvoiceBean ib2;
+            ArrayList<InvoiceBean> al2 = new ArrayList<>();
+            while(rs.next()){
+                ib2 = new InvoiceBean();
+                ib2.setInvoiceID(rs.getInt("invoice_id"));
+                ib2.setTotalAmount(rs.getFloat("total_amount"));
+                ib2.setInvoiceDate(rs.getDate("invoice_date"));
+                ib2.setStatusName(rs.getString("status_name"));
+                al2.add(ib2);
+            }
+            
+            inText = "SELECT i.invoice_id, i.total_amount, i.invoice_date, s.status_name "
+                    + "from invoice i "
+                    + "join invoice_status s on s.status_id = i.status_id "
+                    + "join client c on c.client_id = i.client_id "
+                    + "where c.account_num=? AND (s.status_name='Canceled' OR s.status_name='Rejected')";
+            ps = conn.prepareStatement(inText);
+            ps.setString(1, active_user);
+            rs = ps.executeQuery();
+            
+            ArrayList<InvoiceBean> al3 = new ArrayList<>();
+            InvoiceBean ib3;
+            while(rs.next()){
+                ib3 = new InvoiceBean();
+                ib3.setInvoiceID(rs.getInt("invoice_id"));
+                ib3.setTotalAmount(rs.getFloat("total_amount"));
+                ib3.setInvoiceDate(rs.getDate("invoice_date"));
+                ib3.setStatusName(rs.getString("status_name"));
+                al3.add(ib3);
+            }
+            request.setAttribute("al1", al1);           
+            request.setAttribute("al2", al2);           
+            request.setAttribute("al3", al3);           
         }catch(Exception e){
             e.printStackTrace();
         }
-        request.getRequestDispatcher("/WEB-INF/auth-page/all-invoices.jsp").include(request, response);
+        request.getRequestDispatcher("/WEB-INF/auth-page/client-invoices.jsp").include(request, response);
+    
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

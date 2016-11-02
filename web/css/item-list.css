@@ -10,14 +10,26 @@ and open the template in the editor.
 */
 
 
-
+/*header*/
+#login-header{
+    
+	padding-top: 75px;
+	color: #fff;
+	font-family: rsb;
+	text-transform: uppercase;
+        
+}
+#all-acc a{
+    text-decoration: none;
+    color: #fff;
+}
 .team{
     padding:75px 0;
 }
 h3.description{
 	font-weight: bold;
 	letter-spacing: 2px;
-	color: #999;
+	color: #fff;
 	border-bottom: 1px solid rgb(248, 248, 248);
 	padding-bottom: 5px;
 }

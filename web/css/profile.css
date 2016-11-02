@@ -9,21 +9,21 @@ and open the template in the editor.
 */
 /*ref= http://bootsnipp.com/snippets/featured/flat-user-profile-ui */
 @import url(http://fonts.googleapis.com/css?family=Lato:400,700);
-    body{
-        padding-top: 150px !important;
-        font-family: 'Lato', 'sans-serif';
-    }
-    figure{
-        padding-bottom: 20px;
-    }
-    .profile{
-        min-height: 355px;
-        display: inline-block;
-    }
-    .divider{
-        padding-top: 15px;
-        border-top:1px solid rgba(0,0,0,0.1);
-    }
-    .emphasis{
-        border-top: 4px solid transparent;
-    }
+body{ 
+    padding-top: 150px !important;
+    font-family: 'Lato', 'sans-serif';
+}
+figure{
+    padding-bottom: 20px;
+}
+.profile{
+    min-height: 355px;
+    display: inline-block;
+}
+.divider{
+    padding-top: 15px;
+    border-top:1px solid rgba(0,0,0,0.1);
+}
+.emphasis{
+    border-top: 4px solid transparent;
+}

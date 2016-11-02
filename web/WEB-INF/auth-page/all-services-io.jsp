@@ -12,6 +12,15 @@
     </head>
     <body>
         <%@include file="/WEB-INF/static-page/navbar.jsp" %>
+        <header id="login-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <h1>Edit Service</h1>
+                    </div>
+                </div>
+            </div>
+	</header>
         <section class="team">            
             <div class="container">
               <div class="row">

@@ -14,12 +14,12 @@
     <body>
         
         <!-- Hello World -->
-	<%@include file="../static-page/navbar.jsp" %>
-	<header id="login-header" style="background-image: url(img/login-register-header.png); background-size: cover;">
+	<%@include file="../static-page/navbar.jsp"%>
+	<header id="login-header">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12 text-center">
-                        <h1>My Account</h1>
+                        <h1>Login</h1>
                     </div>
                 </div>
             </div>
@@ -31,11 +31,6 @@
                         <div class="col-md-6 col-md-offset-3">
                             <div class="panel panel-login">
                                 <div class="panel-heading">
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            <a class="active" id="login-form-link">Login</a>
-                                        </div>
-                                    </div>
                                     <hr>
                                 </div>
                                 <div class="panel-body">
@@ -54,7 +49,7 @@
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-sm-6 col-sm-offset-3">
-                                                            <input type="submit" name="login-submit" id="login-submit" class="form-control btn btn-login" value="Log In">
+                                                            <input type="submit" name="login-submit" id="login-submit" class="form-control btn btn-login" value="Sign in">
                                                         </div>
                                                     </div>
                                                 </div>

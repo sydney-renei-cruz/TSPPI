@@ -7,6 +7,7 @@ package com.tsppi.dynamic.page;
 
 import com.tsppi.bean.ProductBean;
 import com.tsppi.bean.ProductCategoryBean;
+import com.tsppi.bean.ServiceBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -59,7 +60,60 @@ public class EditProductPage extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
+        PrintWriter out = response.getWriter();
+        Connection conn = null;
+        PreparedStatement ps;
+        ServletContext context;
+        ResultSet rs;
+        HttpSession session = request.getSession();
+        String inText;
+        int i;
+        try{
+            context = request.getSession().getServletContext();
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
+        }catch(ClassNotFoundException | SQLException e){
+            e.printStackTrace();
+        }
+        String product_id = request.getParameter("product_id");
+        try{
+            ps = conn.prepareStatement("SELECT p.*, c.category_name FROM product p JOIN product_category c ON p.category_id = c.category_id WHERE p.product_id=?");
+            ps.setString(1, product_id);
+            rs = ps.executeQuery();
+            
+            ArrayList<ProductBean> pb = new ArrayList<>();
+            ProductBean p;
+            while(rs.next()){
+                p = new ProductBean();
+                p.setProductID(rs.getInt("product_id"));
+                p.setCategoryID(rs.getInt("category_id"));
+                p.setCategoryName(rs.getString("category_name"));
+                p.setProductName(rs.getString("product_name"));
+                p.setMSRP(rs.getFloat("msrp"));
+                p.setStock(rs.getInt("stock"));
+                p.setProductDetail(rs.getString("product_detail"));
+                pb.add(p);
+            }
+            request.setAttribute("pb", pb);
+            
+            ps = conn.prepareStatement("SELECT * FROM product_category");
+            rs = ps.executeQuery();
+            
+            ArrayList<ProductCategoryBean> pcb = new ArrayList<>();
+            ProductCategoryBean pc;
+            while(rs.next()){
+                pc = new ProductCategoryBean();
+                pc.setCategoryID(rs.getInt("category_id"));
+                pc.setCategoryName(rs.getString("category_name"));
+                pcb.add(pc);
+            }
+            rs.close();
+            request.setAttribute("pcb", pcb);
+            
+             request.getRequestDispatcher("/WEB-INF/auth-page/edit-product.jsp").forward(request,response);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     /**

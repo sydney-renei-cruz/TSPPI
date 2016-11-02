@@ -8,59 +8,55 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="css/home.css" type="text/css"/>
 </head>
 <body>
     <%@include file="/WEB-INF/static-page/navbar.jsp" %>
-
-    <section id="myCarousel">
-        <div id="home-carousel" class="carousel slide col-lg-8 col-lg-offset-2" data-ride="carousel">
-            <ol class="carousel-indicators">
-                <li data-target="#home-carousel" data-slide-to="0" class="active"></li>
-                <li data-target="#home-carousel" data-slide-to="1"></li>
-            </ol>
-            <div class="carousel-inner" role="list-box">
-                <div class="item active"><a href="#"><img src="img/TSPPI Logo.png" alt="" class="center-block"></a></div>
-                
-                <div class="item">
-                    <a href="register"><img src="img/index-slide2.png" alt="" class="center-block"></a>
-                    
+    
+    <!-- first section -->
+    <div id="home" class="home">
+        <div class="text-vcenter">
+            <h1><span class="border">Tri-Star Paper Products, Inc.</span></h1>
+        </div>
+    </div>
+    <!-- first section -->
+    <!-- second section -->
+    <div id="comp-offer" class="pad-section">
+        <div class="container">
+            <h2 class="text-center"> What we offer </h2><hr>
+            <div clas="row">
+                <div class="col-sm-6 col-xs-6 text-center">
+                    <a href="products">
+                        <i class="glyphicon glyphicon-briefcase"></i>
+                        <h4>Products</h4>
+                        <p>We offer the best of the best paper products at an
+                        affordable price.</p>
+                    </a>
+                </div>
+                <div class="col-sm-6 col-xs-6 text-center">
+                    <a href="services">
+                        <i class="glyphicon glyphicon-cog"></i>
+                        <h4>Services</h4>
+                        <p>Our paper services will not fail you. We use high technologies
+                        to produce high quality paper products.</p>
+                    </a>
                 </div>
             </div>
         </div>
-    </section>
-
-    <div class="container-fluid">
-        <div class="row">
-            <div id="contents" class="col-md-12 col-sm-12 text-center">
-                <div class="col-md-12"><img src="img/front-image-1.png" class="front-image-1"></div>
-                
-                <div class="col-md-3 col-md-offset-2 front-div">
-                    <a href="products">
-                        <div class="col-md-12">
-                            <img src="img/front-image-2.png" class="front-image-1">
-                            <h2>PRODUCTS</h2><hr>
-                        </div>
-                        <div class="col-md-12">
-                            <h3>*Description*</h3>
-                        </div>
-                    </a>
-                </div>
-                
-                <div class="col-md-3 col-md-offset-2 front-div">
-                    <a href="services">
-                        <div class="col-md-12">
-                            <img src="img/front-image-3.png" class="front-image-1">
-                            <h2>SERVICES</h2><hr>
-                        </div>
-                        <hr>
-                        <div class="col-md-12">
-                            <h3>*Description*</h3>
-                        </div>
-                    </a>
-                </div>
-            </div>5
+    </div>
+    <!-- second section -->
+    <!-- third section -->
+    <div id="information" class="home">
+        <div class="text-vcenter">
+            <h1><span class="border">Want to shop?</span></h1>
+            <h3>
+                <span class="border"><a href="register">Register now!</a></span>
+            </h3>
         </div>
     </div>
-    <%@include file="/WEB-INF/static-page/footer.jsp" %>
+    <!-- third section -->
+    <!-- footer section -->
+    <%--<%@include file="/WEB-INF/static-page/footer.jsp"%>--%>
+    <!-- footer section -->
 </body>
 </html>

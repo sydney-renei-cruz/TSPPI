@@ -15,8 +15,8 @@ and open the template in the editor.
 }
 
 body{
+    background-color: #306d9f !important;
     padding-top: 104px;
-    background-color: #282828 !important;
 }
 
 /*fonts*/
@@ -40,7 +40,7 @@ nav a{
     border: 1px solid black;
 }
 /*position and style of two nav*/
-.nav-top{background-color: #282828 !important;}
+.nav-top{background-color: #306d9f !important;}
 .nav-bot{
     top: 51px !important;
     background-color: rgb(248, 248, 248) !important;

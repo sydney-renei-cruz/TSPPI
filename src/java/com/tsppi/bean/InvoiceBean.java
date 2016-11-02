@@ -17,6 +17,8 @@ public class InvoiceBean implements Serializable{
     protected int invoice_id;
     protected int client_id;
     protected int status_id;
+    protected String first_name;
+    protected String last_name;
     protected String status_name;
     protected float total_amount;
     protected Date invoice_date;
@@ -25,14 +27,18 @@ public class InvoiceBean implements Serializable{
        invoice_id = 0;
        client_id = 0;
        status_id = 0;
+       first_name = "";
+       last_name = "";
        status_name = "";
        total_amount = 0;
        invoice_date = new Date();
     }
-    public InvoiceBean(int ii, int ci, int si, String sn, float ta, Date id){
+    public InvoiceBean(int ii, int ci, int si, String fn, String ln,String sn, float ta, Date id){
         invoice_id = ii;
         client_id = ci;
         status_id = si;
+        first_name = fn;
+        last_name = ln;
         status_name = sn;
         total_amount = ta;
         invoice_date = id;
@@ -45,6 +51,12 @@ public class InvoiceBean implements Serializable{
     }
     public void setStatusID(int si){
         status_id = si;
+    }
+    public void setFirstName(String fn){
+        first_name = fn;
+    }
+    public void setLastName(String ln){
+        last_name = ln;
     }
     public void setStatusName(String sn){
         status_name = sn;
@@ -63,6 +75,15 @@ public class InvoiceBean implements Serializable{
     }
     public int getStatusID(){
         return status_id;
+    }
+    public String getFullName(){
+        return first_name + " " + last_name;
+    }
+    public String getFirstName(){
+        return first_name;
+    }
+    public String getLastName(){
+        return last_name;
     }
     public String getStatusName(){
         return status_name;

@@ -15,7 +15,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">	
 	<title>Tri-Star Paper Products, Inc.</title>
         <!--home css-->
-        <link href="css/home.css" rel="stylesheet" type="text/css">
+        
         <!-- navbar css -->
 	<link href="css/navbar.css" rel="stylesheet" type="text/css">
         <!-- Bootstrap css -->
@@ -54,11 +54,11 @@
                     <div class="collapse navbar-collapse bot-nav">
                         <ul class="nav navbar-nav navbar-right">
                             <li style="overflow: hidden;">
-                                <form class="search-bar navbar-form" role="search" style="border: 1px solid transparent;" action="search">
+                                <form class="search-bar navbar-form" style="border: 1px solid transparent;" action="search">
                                     <div class="input-group">
                                         <input type="text" class="form-control" placeholder="Search Me!" name="srch" id="srch">
                                         <div class="input-group-btn">
-                                            <button class="btn btn-default" type="submit" onClick="location.href='productPage.html'">
+                                            <button class="btn btn-default" type="submit">
                                                 <i class="glyphicon glyphicon-search"></i>
                                             </button>
                                         </div>

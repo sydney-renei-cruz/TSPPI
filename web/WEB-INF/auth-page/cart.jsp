@@ -12,7 +12,7 @@
     </head>
     <body>
         <%@include file="../static-page/navbar.jsp" %>
-        <header id="login-header" style="background-image: url(img/cart.jpg); background-size: cover;">
+        <header id="login-header">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12 text-center">

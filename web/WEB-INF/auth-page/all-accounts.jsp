@@ -15,7 +15,20 @@
     </head>
     <body>
         <%@include file="../static-page/navbar.jsp" %>
-     
+        <header id="login-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <c:if test="${job_position == 'Vice President'}">
+                        <h1>All Client Accounts</h1>
+                        </c:if>
+                        <c:if test="${account_type == 'admin'}">
+                        <h1>All Accounts</h1>
+                        </c:if>
+                    </div>
+                </div>
+            </div>
+	</header>
         <section class="team">            
             <div class="container">
               <div class="row">
@@ -109,9 +122,10 @@
                                   </tbody>
                               </table>
                           </div>
-                    
-                </div>
-                    
+                    </div>
+                    <div class="col-lg-12 text-center" id="all-acc">
+                        <a href="profile">Go back to profile.</a>
+                    </div>
                 </div>
               </div>
             </div>

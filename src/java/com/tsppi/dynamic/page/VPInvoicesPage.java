@@ -5,7 +5,7 @@
  */
 package com.tsppi.dynamic.page;
 
-import com.tsppi.bean.ProductBean;
+import com.tsppi.bean.InvoiceBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -23,9 +23,9 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author cruzsyd
+ * @author Sydney Cruz
  */
-public class ProductApprovalPage extends HttpServlet {
+public class VPInvoicesPage extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,12 +39,13 @@ public class ProductApprovalPage extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
         Connection conn = null;
         PreparedStatement ps;
         ServletContext context;
+        
         ResultSet rs;
+        String inText;
         int i;
         try{
             context = request.getSession().getServletContext();
@@ -53,50 +54,73 @@ public class ProductApprovalPage extends HttpServlet {
         }catch(ClassNotFoundException | SQLException e){
             e.printStackTrace();
         }
+        
+        //session activated client
         try{
-            ps = conn.prepareStatement("SELECT p.*, c.category_name FROM product p JOIN product_category c ON p.category_id = c.category_id");
+            String active_user = (String) session.getAttribute("account_num");
+            inText = "SELECT i.invoice_id, i.total_amount, i.invoice_date, s.status_name "
+                    + "from invoice i "
+                    + "join invoice_status s on s.status_id = i.status_id "
+                    + "join client c on c.client_id = i.client_id "
+                    + "where s.status_name='Pending'";
+            ps = conn.prepareStatement(inText);
             rs = ps.executeQuery();
             
-            ArrayList<ProductBean> pb = new ArrayList<>();
-            ProductBean p;
+            ArrayList<InvoiceBean> al1 = new ArrayList<>();
+            InvoiceBean ib1;
             while(rs.next()){
-                p = new ProductBean();
-                p.setProductID(rs.getInt("product_id"));
-                p.setCategoryName(rs.getString("category_name"));
-                p.setProductName(rs.getString("product_name"));
-                p.setMSRP(rs.getFloat("msrp"));
-                p.setStock(rs.getInt("stock"));
-                p.setProductDetail(rs.getString("product_detail"));
-                p.setForSale(rs.getBoolean("for_sale"));
-                pb.add(p);
-                session.setAttribute("product_id", rs.getInt("product_id"));
+                ib1 = new InvoiceBean();
+                ib1.setInvoiceID(rs.getInt("invoice_id"));
+                ib1.setTotalAmount(rs.getFloat("total_amount"));
+                ib1.setInvoiceDate(rs.getDate("invoice_date"));
+                ib1.setStatusName(rs.getString("status_name"));
+                al1.add(ib1);
             }
-            request.setAttribute("pb", pb);
             
-            ps = conn.prepareStatement("SELECT p.*, c.category_name FROM product p JOIN product_category c ON p.category_id = c.category_id WHERE p.for_sale=?");
-            ps.setBoolean(1, true);
+            inText = "SELECT i.invoice_id, i.total_amount, i.invoice_date, s.status_name "
+                    + "from invoice i "
+                    + "join invoice_status s on s.status_id = i.status_id "
+                    + "join client c on c.client_id = i.client_id "
+                    + "where s.status_name='Approved'";
+            ps = conn.prepareStatement(inText);
+            rs = ps.executeQuery();
+            InvoiceBean ib2;
+            ArrayList<InvoiceBean> al2 = new ArrayList<>();
+            while(rs.next()){
+                ib2 = new InvoiceBean();
+                ib2.setInvoiceID(rs.getInt("invoice_id"));
+                ib2.setTotalAmount(rs.getFloat("total_amount"));
+                ib2.setInvoiceDate(rs.getDate("invoice_date"));
+                ib2.setStatusName(rs.getString("status_name"));
+                al2.add(ib2);
+            }
+            
+            inText = "SELECT i.invoice_id, i.total_amount, i.invoice_date, s.status_name "
+                    + "from invoice i "
+                    + "join invoice_status s on s.status_id = i.status_id "
+                    + "join client c on c.client_id = i.client_id "
+                    + "where s.status_name='Canceled' OR s.status_name='Rejected'";
+            ps = conn.prepareStatement(inText);
             rs = ps.executeQuery();
             
-            ArrayList<ProductBean> pb2 = new ArrayList<>();
-            ProductBean p2;
+            ArrayList<InvoiceBean> al3 = new ArrayList<>();
+            InvoiceBean ib3;
             while(rs.next()){
-                p2 = new ProductBean();
-                p2.setProductID(rs.getInt("product_id"));
-                p2.setCategoryName(rs.getString("category_name"));
-                p2.setProductName(rs.getString("product_name"));
-                p2.setMSRP(rs.getFloat("msrp"));
-                p2.setStock(rs.getInt("stock"));
-                p2.setProductDetail(rs.getString("product_detail"));
-                p2.setForSale(rs.getBoolean("for_sale"));
-                pb2.add(p2);
+                ib3 = new InvoiceBean();
+                ib3.setInvoiceID(rs.getInt("invoice_id"));
+                ib3.setTotalAmount(rs.getFloat("total_amount"));
+                ib3.setInvoiceDate(rs.getDate("invoice_date"));
+                ib3.setStatusName(rs.getString("status_name"));
+                al3.add(ib3);
             }
-            request.setAttribute("pb2", pb2);
-            
-            
+            request.setAttribute("al1", al1);           
+            request.setAttribute("al2", al2);           
+            request.setAttribute("al3", al3);           
         }catch(Exception e){
             e.printStackTrace();
         }
-        request.getRequestDispatcher("/WEB-INF/auth-page/product-approval.jsp").forward(request,response);
+        request.getRequestDispatcher("/WEB-INF/auth-page/client-invoices.jsp").include(request, response);
+    
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -126,8 +150,6 @@ public class ProductApprovalPage extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        
-        
     }
 
     /**

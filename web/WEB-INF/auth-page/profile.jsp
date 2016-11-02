@@ -42,9 +42,17 @@
                            <div class="col-xs-12 col-sm-4 emphasis">
                                <a href="editaccount" class="btn btn-danger btn-block"><span class="fa fa-user"></span> Edit Profile </a>
                            </div>
+                           <c:if test="${account_type == 'client'}">
+                               <div class="col-xs-12 col-sm-4 emphasis">
+                                   <a href="allinvoices" class="btn btn-info btn-block"><span class="fa fa-user"></span> View All Invoices </a>
+                               </div>
+                           </c:if>
                            <c:if test="${(job_position == 'Vice President') || (account_type == 'admin')}">
                                <div class="col-xs-12 col-sm-4 emphasis">
                                    <a href="allaccounts" class="btn btn-info btn-block"><span class="fa fa-user"></span> View All Accounts </a>
+                               </div>
+                               <div class="col-xs-12 col-sm-4 emphasis">
+                                   <a href="vpinvoices" class="btn btn-success btn-block"><span class="fa fa-user"></span> View All Invoices </a>
                                </div>
                            </c:if>
                            <c:if test="${account_type == 'admin'}">

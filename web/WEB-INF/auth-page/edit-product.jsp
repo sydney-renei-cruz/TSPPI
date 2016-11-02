@@ -15,7 +15,7 @@
     <body>
         <%@include file="../static-page/navbar.jsp" %>
         
-        <header id="login-header" style="background-image: url(img/Sandberg-wallpaper.jpg); background-size: cover;">
+        <header id="login-header">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12 text-center">
@@ -31,11 +31,6 @@
                         <div class="col-md-6 col-md-offset-3">
                             <div class="panel panel-login">
                                 <div class="panel-heading">
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            <a class="active" id="login-form-link">Edit Product</a>
-                                        </div>
-                                    </div>
                                     <hr>
                                 </div>
                                 <div class="panel-body">

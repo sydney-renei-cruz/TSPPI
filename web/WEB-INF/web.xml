@@ -18,8 +18,16 @@
         <filter-class>com.tsppi.session.filter.AdminFilter</filter-class>
     </filter>
     <filter>
+        <filter-name>CartFilter</filter-name>
+        <filter-class>com.tsppi.session.filter.CartFilter</filter-class>
+    </filter>
+    <filter>
         <filter-name>ClientFilter</filter-name>
         <filter-class>com.tsppi.session.filter.ClientFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>VPFilter</filter-name>
+        <filter-class>com.tsppi.session.filter.VPFilter</filter-class>
     </filter>
     <filter>
         <filter-name>SpecAdVpFilter</filter-name>
@@ -45,9 +53,17 @@
         <url-pattern>/emrp</url-pattern>
     </filter-mapping>
     <filter-mapping>
-        <filter-name>ClientFilter</filter-name>
+        <filter-name>CartFilter</filter-name>
         <url-pattern>/cart</url-pattern>
         <url-pattern>/order</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>ClientFilter</filter-name>
+        <url-pattern>/allinvoices</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>VPFilter</filter-name>
+        <url-pattern>/vpinvoices</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>SpecAdVpFilter</filter-name>
@@ -194,8 +210,12 @@
         <servlet-class>com.tsppi.servlet.function.EditServiceServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AllInvoicesPage</servlet-name>
-        <servlet-class>com.tsppi.dynamic.page.AllInvoicesPage</servlet-class>
+        <servlet-name>ClientInvoicesPage</servlet-name>
+        <servlet-class>com.tsppi.dynamic.page.ClientInvoicesPage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>VPInvoicesPage</servlet-name>
+        <servlet-class>com.tsppi.dynamic.page.VPInvoicesPage</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>dispatcher</servlet-name>
@@ -331,8 +351,12 @@
         <url-pattern>/editserviceservlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AllInvoicesPage</servlet-name>
+        <servlet-name>ClientInvoicesPage</servlet-name>
         <url-pattern>/allinvoices</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VPInvoicesPage</servlet-name>
+        <url-pattern>/vpinvoices</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>

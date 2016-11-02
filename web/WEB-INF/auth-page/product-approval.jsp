@@ -12,6 +12,15 @@
     </head>
     <body>
         <%@include file="/WEB-INF/static-page/navbar.jsp" %>
+        <header id="login-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <h1>Approve/Edit Products</h1>
+                    </div>
+                </div>
+            </div>
+	</header>
         <section class="team">            
             <div class="container">
               <div class="row">
@@ -85,14 +94,14 @@
                                     </tr>
                                   </thead>
                                   <tbody>
-                                      <c:forEach var="pb" items="${pb}">
+                                      <c:forEach var="pb2" items="${pb2}">
                                           <tr>
                                               <td><img src="img/car-placeholder.png" alt="" class="img-responsive" style="width: 100%;"></td>
-                                              <td>${pb.getProductName()}</td>
-                                              <td>${pb.getCategoryName()}</td>
-                                              <td>${pb.getMSRP()}</td>
-                                              <td>${pb.getStock()}</td>
-                                              <td>${pb.getProductDetail()}</td>
+                                              <td>${pb2.getProductName()}</td>
+                                              <td>${pb2.getCategoryName()}</td>
+                                              <td>${pb2.getMSRP()}</td>
+                                              <td>${pb2.getStock()}</td>
+                                              <td>${pb2.getProductDetail()}</td>
                                           </tr>
                                       </c:forEach>
                                   </tbody>

@@ -69,7 +69,6 @@ public class AddServiceServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         String service_name = request.getParameter("service_name");
         String service_description = request.getParameter("service_description");
-        
         Connection conn = null;
         PreparedStatement ps;
         ServletContext context;
@@ -88,6 +87,7 @@ public class AddServiceServlet extends HttpServlet {
             ps.setString(1, service_name);
             ps.setString(2, service_description);
             i = ps.executeUpdate();
+            
             
             if(i>0){
                 response.sendRedirect("profile");
