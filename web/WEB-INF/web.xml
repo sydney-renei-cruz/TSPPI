@@ -218,6 +218,10 @@
         <servlet-class>com.tsppi.dynamic.page.VPInvoicesPage</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>TicketingPage</servlet-name>
+        <servlet-class>com.tsppi.dynamic.page.TicketingPage</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>dispatcher</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <load-on-startup>2</load-on-startup>
@@ -331,6 +335,10 @@
         <url-pattern>/generateinvoice</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>TicketingServlet</servlet-name>
+        <url-pattern>/ticketingservlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>EditProductPage</servlet-name>
         <url-pattern>/editproduct</url-pattern>
     </servlet-mapping>
@@ -359,6 +367,10 @@
         <url-pattern>/vpinvoices</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>TicketingPage</servlet-name>
+        <url-pattern>/ticket</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.htm</url-pattern>
     </servlet-mapping>
@@ -374,11 +386,11 @@
     </context-param>
     <context-param>
         <param-name>password</param-name>
-        <param-value>tsppi_password</param-value>
+        <param-value></param-value>
     </context-param>
     <context-param>
         <param-name>dbURL</param-name>
-        <param-value>jdbc:mysql://localhost:3306/com_tsppi</param-value>
+        <param-value>jdbc:mysql://localhost:3306/tsppi</param-value>
     </context-param>
     <welcome-file-list>
         <welcome-file>home</welcome-file>
