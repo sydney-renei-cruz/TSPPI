@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 02, 2016 at 05:01 PM
+-- Generation Time: Nov 03, 2016 at 07:21 AM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 7.0.5
 
@@ -47,7 +47,7 @@ INSERT INTO `account` (`account_num`, `username`, `password`, `first_name`, `las
 (4, 'Tera06', '47e75faa97d8e1a8aabac371d96f8dd518a28a18307c2271ee17801a8092eca0', 'Sydney', 'Cruz', 'sydneyrenei.cruz@uap.asia', 3, 1),
 (5, 'rosalie_cms', '55aded98cba9c30053e9a03c97f24bc68f20e3a56cb83c9bc6821ca50ef3fabd', 'Rosalie', 'Cruz', 'rosalie.cruz@gmail.com', 1, 1),
 (6, 'vincent_arciga', 'e9e7bc6d99654544ec10ce7dc5f04084dd2973277b1b779e2cbaccfb0aa1dfb9', 'Vincent', 'Arciga', 'vincent.arciga@gmail.com', 1, 1),
-(7, 'client2', '55aded98cba9c30053e9a03c97f24bc68f20e3a56cb83c9bc6821ca50ef3fabd', 'client', 'pascal', 'sydneyrenei.cruz@uap.asia', 3, 1);
+(7, 'client2', '55aded98cba9c30053e9a03c97f24bc68f20e3a56cb83c9bc6821ca50ef3fabd', 'Christian', 'Arciga', 'sydneyrenei.cruz@uap.asia', 3, 1);
 
 -- --------------------------------------------------------
 
@@ -120,6 +120,7 @@ CREATE TABLE `invoice` (
   `invoice_id` int(11) NOT NULL,
   `client_id` int(11) NOT NULL,
   `status_id` int(11) NOT NULL,
+  `pm_id` int(11) NOT NULL,
   `total_amount` float NOT NULL,
   `invoice_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -128,11 +129,11 @@ CREATE TABLE `invoice` (
 -- Dumping data for table `invoice`
 --
 
-INSERT INTO `invoice` (`invoice_id`, `client_id`, `status_id`, `total_amount`, `invoice_date`) VALUES
-(1, 1, 1, 80, '2016-11-01'),
-(2, 1, 1, 80, '2016-11-01'),
-(3, 2, 1, 100, '2016-11-01'),
-(4, 1, 1, 20, '2016-11-02');
+INSERT INTO `invoice` (`invoice_id`, `client_id`, `status_id`, `pm_id`, `total_amount`, `invoice_date`) VALUES
+(1, 1, 2, 1, 40, '2016-11-03'),
+(2, 1, 1, 2, 40, '2016-11-03'),
+(3, 1, 3, 3, 440, '2016-11-03'),
+(4, 2, 1, 1, 120, '2016-11-03');
 
 -- --------------------------------------------------------
 
@@ -156,7 +157,38 @@ INSERT INTO `invoice_item` (`item_id`, `invoice_id`, `product_id`, `item_quantit
 (2, 2, 3, 2),
 (3, 3, 1, 3),
 (4, 3, 3, 2),
-(5, 4, 2, 1);
+(5, 4, 2, 1),
+(6, 5, 2, 2),
+(7, 5, 9, 2),
+(8, 5, 8, 3),
+(9, 1, 2, 2),
+(10, 2, 2, 2),
+(11, 3, 1, 17),
+(12, 3, 2, 2),
+(13, 3, 3, 3),
+(14, 4, 3, 2),
+(15, 4, 1, 1),
+(16, 4, 5, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `invoice_pm`
+--
+
+CREATE TABLE `invoice_pm` (
+  `pm_id` int(11) NOT NULL,
+  `payment_method` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `invoice_pm`
+--
+
+INSERT INTO `invoice_pm` (`pm_id`, `payment_method`) VALUES
+(1, 'Cash on Delivery'),
+(2, 'Credit Card'),
+(3, 'Debit Card');
 
 -- --------------------------------------------------------
 
@@ -219,15 +251,15 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`product_id`, `category_id`, `product_name`, `product_detail`, `msrp`, `stock`, `for_sale`) VALUES
-(1, 1, 'Laser Copy Paper', 'SIZE	A4, LETTER & LEGAL\r\nPACKING	500 Sheets/ream\r\nSUBSTANCE  Sub 20 (70 gsm)\r\n	            Sub 24 ( 80 gsm)\r\n', 20, 17, 1),
-(2, 2, 'Letter Envelope', '6 3/4XX & No.10xx\r\n', 20, 17, 1),
-(3, 2, 'Document Envelope', 'Letter and Legal\r\n150# & 200#\r\n', 20, 16, 1),
+(1, 1, 'Laser Copy Paper', 'SIZE	A4, LETTER & LEGAL\r\nPACKING	500 Sheets/ream\r\nSUBSTANCE  Sub 20 (70 gsm)\r\n	            Sub 24 ( 80 gsm)\r\n', 20, 10, 1),
+(2, 2, 'Letter Envelope', '6 3/4XX & No.10xx\r\n', 20, 6, 1),
+(3, 2, 'Document Envelope', 'Letter and Legal\r\n150# & 200#\r\n', 20, 8, 1),
 (4, 2, 'Expanding Envelop', 'Legal', 20, 20, 1),
-(5, 2, 'Peel & Seal Envelope', 'Legal', 20, 20, 1),
+(5, 2, 'Peel & Seal Envelope', 'Legal', 20, 17, 1),
 (6, 2, 'Bill Envelope ', 'Customized: With or without window', 20, 20, 1),
 (7, 3, 'Thermal Roll Paper', 'Customized Thermal Roll', 20, 20, 1),
-(8, 4, 'File Folder', 'Letter and Legal\r\n11 PTS & 14 PTS', 20, 20, 1),
-(9, 5, 'Bookpaper', 'Imported Bookpaper', 20, 20, 1),
+(8, 4, 'File Folder', 'Letter and Legal\r\n11 PTS & 14 PTS', 20, 17, 1),
+(9, 5, 'Bookpaper', 'Imported Bookpaper', 20, 18, 1),
 (10, 5, 'Bookpaper', 'Imported Bookpaper', 20, 20, 1),
 (11, 5, 'Claycoated Board', '', 20, 20, 1),
 (12, 5, 'Foldcote Board', '', 20, 20, 1),
@@ -366,6 +398,12 @@ ALTER TABLE `invoice_item`
   ADD PRIMARY KEY (`item_id`);
 
 --
+-- Indexes for table `invoice_pm`
+--
+ALTER TABLE `invoice_pm`
+  ADD PRIMARY KEY (`pm_id`);
+
+--
 -- Indexes for table `invoice_status`
 --
 ALTER TABLE `invoice_status`
@@ -440,7 +478,12 @@ ALTER TABLE `invoice`
 -- AUTO_INCREMENT for table `invoice_item`
 --
 ALTER TABLE `invoice_item`
-  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+--
+-- AUTO_INCREMENT for table `invoice_pm`
+--
+ALTER TABLE `invoice_pm`
+  MODIFY `pm_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `invoice_status`
 --
