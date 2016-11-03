@@ -20,7 +20,7 @@
     <!-- Navigation -->
     <%@include file="../static-page/navbar.jsp"%>
     
-    <header id="header" style="background-image: url(img/print-factory.jpg); background-size: cover;">
+    <header id="header">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -29,43 +29,66 @@
             </div>
         </div>
     </header>
-    
-    <!-- Page Content -->
-    <div class="container">
-        <!-- Projects Row -->
-        
-        <c:forEach var="sb" items="${sb}">
-        <div class="row">
-            
-            <div class="col-md-4 service-item">
-                <img class="img-responsive" src="img/car-placeholder.png" alt="">
-            </div>
-                <h1 class="product-title">${sb.getServiceName()}</h1>
-                <div>
-                    <table class="product-card">
-                        <tr>
-                            <td>
-                                ${sb.getServiceDesc()}
-                            </td>
-                        </tr>
-                    </table>
+    <section>
+        <div class="container">
+            <div class="well well-sm">
+                <strong>View As: </strong>
+                <div class="btn-group">
+                    <a href="#" id="list" class="btn btn-default btn-sm">
+                        <span class="glyphicon glyphicon-th-list"></span>
+                    </a>
+                    <a href="#" id="grid" class="btn btn-default btn-sm">
+                        <span class="glyphicon glyphicon-th"></span>
+                    </a>
                 </div>
+            </div>
+            <div id="products" class="row list-group">
+                <c:forEach var="sb" items="${sb}">
+                <div class="item col-xs-4 col-lg-4 content">
+                    <img class="img-responsive" src="img/car-placeholder.png" alt="">
+                    <div class="thumbnail">
+                        <div class="caption">
+                            <h4 class="group inner list-group-item-heading">${sb.getServiceName()}</h4>
+                            <div class="info">
+                                <p class="group inner list-group-item-text">${sb.getServiceDesc()}</p>
+                            </div>
+                            <c:if test="${account_type == 'client'}">
+                                <a class="btn btn-danger">Inquire this service</a>
+                            </c:if>
+                            <c:if test="${job_position == 'Inventory Officer'}">
+                            <form action="editservice" method="GET">
+                                <input type="hidden" name="service_id" id="service_id" value="${sb.getServiceID()}">
+                                <input type="submit" name="submit" id="submit" value="Edit Service" class="btn btn-warning">
+                            </form>
+                            </c:if>
+                        </div>
+                    </div>
+                </div>
+                </c:forEach>
+            </div>
         </div>
-        <hr>
-        </c:forEach>            
-
-        <!-- /.row -->
-
-        
-    </div>
-    <!-- /.container -->
-
-    <script src="imports/jquery.matchHeight-min.js"></script>
-    <script>
-        $(function(){
-            $('.portfolio-item').matchHeight();
-        });
-    </script>
+    </section>
+    
+    <!-- pagination -->
+    <nav class="text-center">
+            <div class="col-lg-12">
+                    <ul class="pagination">
+                            <li class="pag_prev">
+                                    <a href="#" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                            </li>
+                            <li class="pag_next">
+                                    <a href="#" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                            </li>
+                    </ul>
+            </div>
+    </nav>
+    <script src="js/pagination.js"></script>
+    <script src="js/grid-list-display.js"></script>
+    <script src="js/grid-height.js"></script>
 </body>
 
 </html>

@@ -93,6 +93,7 @@ public class GenerateInvoiceServlet extends HttpServlet {
         float total_amount = Float.parseFloat(request.getParameter("total_amount"));
         String[] pi = request.getParameterValues("item_number");
         String[] q = request.getParameterValues("quantity");
+        int pm_id = Integer.parseInt(request.getParameter("payment_method"));
         int invoice_status = 1;
         Date date = new Date();
         String invoice_date = new SimpleDateFormat("yyyy-MM-dd").format(date);
@@ -106,13 +107,14 @@ public class GenerateInvoiceServlet extends HttpServlet {
                 return;
             }
             
-            ps = conn.prepareStatement("insert into invoice(client_id, status_id, total_amount, invoice_date)"
-                    + "values(?,?,?,?)", 
+            ps = conn.prepareStatement("insert into invoice(client_id, status_id, pm_id, total_amount, invoice_date)"
+                    + "values(?,?,?,?,?)", 
                     Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, client_id);
             ps.setInt(2, invoice_status);
-            ps.setFloat(3, total_amount);
-            ps.setString(4, invoice_date);
+            ps.setInt(3, pm_id);
+            ps.setFloat(4, total_amount);
+            ps.setString(5, invoice_date);
             ps.executeUpdate();
             
             int invoice_id;

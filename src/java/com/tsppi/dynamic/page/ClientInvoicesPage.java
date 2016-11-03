@@ -58,11 +58,12 @@ public class ClientInvoicesPage extends HttpServlet {
         //session activated client
         try{
             String active_user = (String) session.getAttribute("account_num");
-            inText = "SELECT i.invoice_id, i.total_amount, i.invoice_date, s.status_name "
+            inText = "SELECT i.invoice_id, p.payment_method, i.total_amount, i.invoice_date, s.status_name "
                     + "from invoice i "
                     + "join invoice_status s on s.status_id = i.status_id "
+                    + "join invoice_pm p on p.pm_id = i.pm_id "
                     + "join client c on c.client_id = i.client_id "
-                    + "where c.account_num=? AND s.status_name='Pending'";
+                    + "where c.account_num=? AND i.status_id = 1";
             ps = conn.prepareStatement(inText);
             ps.setString(1, active_user);
             rs = ps.executeQuery();
@@ -72,36 +73,41 @@ public class ClientInvoicesPage extends HttpServlet {
             while(rs.next()){
                 ib1 = new InvoiceBean();
                 ib1.setInvoiceID(rs.getInt("invoice_id"));
+                ib1.setPaymentMethod(rs.getString("payment_method"));
                 ib1.setTotalAmount(rs.getFloat("total_amount"));
                 ib1.setInvoiceDate(rs.getDate("invoice_date"));
                 ib1.setStatusName(rs.getString("status_name"));
                 al1.add(ib1);
             }
             
-            inText = "SELECT i.invoice_id, i.total_amount, i.invoice_date, s.status_name "
+            inText = "SELECT i.invoice_id, p.payment_method, i.total_amount, i.invoice_date, s.status_name "
                     + "from invoice i "
                     + "join invoice_status s on s.status_id = i.status_id "
+                    + "join invoice_pm p on p.pm_id = i.pm_id "
                     + "join client c on c.client_id = i.client_id "
-                    + "where c.account_num=? AND s.status_name='Approved'";
+                    + "where c.account_num=? AND i.status_id=2";
             ps = conn.prepareStatement(inText);
             ps.setString(1, active_user);
             rs = ps.executeQuery();
-            InvoiceBean ib2;
+            
             ArrayList<InvoiceBean> al2 = new ArrayList<>();
+            InvoiceBean ib2;
             while(rs.next()){
                 ib2 = new InvoiceBean();
                 ib2.setInvoiceID(rs.getInt("invoice_id"));
+                ib2.setPaymentMethod(rs.getString("payment_method"));
                 ib2.setTotalAmount(rs.getFloat("total_amount"));
                 ib2.setInvoiceDate(rs.getDate("invoice_date"));
                 ib2.setStatusName(rs.getString("status_name"));
                 al2.add(ib2);
             }
             
-            inText = "SELECT i.invoice_id, i.total_amount, i.invoice_date, s.status_name "
+            inText = "SELECT i.invoice_id, p.payment_method, i.total_amount, i.invoice_date, s.status_name "
                     + "from invoice i "
                     + "join invoice_status s on s.status_id = i.status_id "
+                    + "join invoice_pm p on p.pm_id = i.pm_id "
                     + "join client c on c.client_id = i.client_id "
-                    + "where c.account_num=? AND (s.status_name='Canceled' OR s.status_name='Rejected')";
+                    + "where c.account_num=? AND (i.status_id=3 OR i.status_id=4)";
             ps = conn.prepareStatement(inText);
             ps.setString(1, active_user);
             rs = ps.executeQuery();
@@ -111,6 +117,7 @@ public class ClientInvoicesPage extends HttpServlet {
             while(rs.next()){
                 ib3 = new InvoiceBean();
                 ib3.setInvoiceID(rs.getInt("invoice_id"));
+                ib3.setPaymentMethod(rs.getString("payment_method"));
                 ib3.setTotalAmount(rs.getFloat("total_amount"));
                 ib3.setInvoiceDate(rs.getDate("invoice_date"));
                 ib3.setStatusName(rs.getString("status_name"));

@@ -24,6 +24,7 @@
         <section class="team">            
             <div class="container">
               <div class="row">
+                  <c:if test="${al1.size() != 0}">
                 <div class="col-md-10 col-md-offset-1">
                     <div class="col-lg-12">
                       <h3 class="description">Pending Orders</h3>
@@ -33,9 +34,10 @@
                                   <tr>
                                     <th class="text-center">Tracking ID</th>
                                     <c:if test="${job_position == 'Vice President'}">
-                                    <th class="text-center">Client ID</th>
+                                    <th class="text-center">Client Name</th>
                                     </c:if>
                                     <th class="text-center">Products</th>
+                                    <th class="text-center">PaymentMethod</th>
                                     <th class="text-center">Total Amount</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center">Invoice Created</th>
@@ -47,9 +49,10 @@
                                   <tr>
                                         <td>${al1.getInvoiceID()}</td>
                                         <c:if test="${job_position == 'Vice President'}">
-                                        <td class="text-center">${al1.getClientID()}</td>
+                                        <td class="text-center">${al1.getFullName()}</td>
                                         </c:if>
                                         <td><a href="#"> View Ordered Products</a></td>
+                                        <td>${al1.getPaymentMethod()}</td>
                                         <td>${al1.getTotalAmount()}</td>
                                         <td>${al1.getStatusName()}</td>
                                         <td>${al1.getInvoiceDate()}</td>
@@ -66,6 +69,8 @@
                       </div>
                     </div>                  
                 </div>
+                  </c:if>
+                <c:if test="${al2.size() != 0}">
                   <div class="col-md-10 col-md-offset-1">
                     <div class="col-lg-12">
                       <h3 class="description">Approved Orders</h3>
@@ -75,6 +80,7 @@
                                   <tr>
                                     <th class="text-center">Tracking ID</th>
                                     <th class="text-center">Products</th>
+                                    <th class="text-center">Payment Method</th>
                                     <th class="text-center">Total Amount</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center">Invoice Created</th>
@@ -86,6 +92,7 @@
                                   <tr>
                                       <td>${al2.getInvoiceID()}</td>
                                       <td><a href="#"> View Ordered Products</a></td>
+                                      <td>${al2.getPaymentMethod()}</td>
                                       <td>${al2.getTotalAmount()}</td>
                                       <td>${al2.getStatusName()}</td>
                                       <td>${al2.getInvoiceDate()}</td>
@@ -99,6 +106,8 @@
                       </div>
                     </div>                  
                 </div>
+                  </c:if>
+                  <c:if test="${al3.size() != 0}">
                   <div class="col-md-10 col-md-offset-1">
                     <div class="col-lg-12">
                       <h3 class="description">Canceled and Rejected Orders</h3>
@@ -108,6 +117,7 @@
                                   <tr>
                                     <th class="text-center">Tracking ID</th>
                                     <th class="text-center">Products</th>
+                                    <th class="text-center">Payment Method</th>
                                     <th class="text-center">Total Amount</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center">Invoice Created</th>
@@ -119,6 +129,7 @@
                                   <tr>
                                       <td>${al3.getInvoiceID()}</td>
                                       <td><a href="#"> View Ordered Products</a></td>
+                                      <td>${al3.getPaymentMethod()}</td>
                                       <td>${al3.getTotalAmount()}</td>
                                       <td>${al3.getStatusName()}</td>
                                       <td>${al3.getInvoiceDate()}</td>
@@ -129,6 +140,7 @@
                       </div>
                     </div>                  
                 </div>
+                  </c:if>
               </div>
             </div>
           </section>

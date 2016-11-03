@@ -46,14 +46,28 @@
     </div>
     <!-- second section -->
     <!-- third section -->
-    <div id="information" class="home">
-        <div class="text-vcenter">
-            <h1><span class="border">Want to shop?</span></h1>
-            <h3>
-                <span class="border"><a href="register">Register now!</a></span>
-            </h3>
-        </div>
-    </div>
+    <c:choose>
+        <c:when test="${user != null && account_type == 'client'}">
+            <div id="information-2" class="home">
+                <div class="text-vcenter">
+                    <h1><span class="border">Show Now!</span></h1>
+                    <h3>
+                        <span class="border"><a href="products">Go to Products!</a></span>
+                    </h3>
+                </div>
+            </div>
+        </c:when>
+        <c:otherwise>
+            <div id="information" class="home">
+                <div class="text-vcenter">
+                    <h1><span class="border">Want to shop?</span></h1>
+                    <h3>
+                        <span class="border"><a href="register">Register now!</a></span>
+                    </h3>
+                </div>
+            </div>
+        </c:otherwise>
+    </c:choose>
     <!-- third section -->
     <!-- footer section -->
     <%--<%@include file="/WEB-INF/static-page/footer.jsp"%>--%>

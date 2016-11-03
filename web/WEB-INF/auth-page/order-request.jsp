@@ -109,6 +109,13 @@
                                                     <input type="hidden" name="total_amount" value="${cart.getOrderTotal()}">
                                                     <input type="hidden" name="quantity" value="${cart_item.getQuantity()}">
                                                 </c:forEach>
+                                                
+                                                <label>Payment Method: </label>
+                                                <select name="payment_method">
+                                                    <c:forEach var="al2" items="${al2}">
+                                                        <option value="${al2.getPMID()}">${al2.getPaymentMethod()}</option>
+                                                    </c:forEach>
+                                                </select><hr>
                                                 <button type="submit" class="btn btn-success">
                                                     Generate Invoice Request <span class="glyphicon glyphicon-play"></span>
                                                 </button>

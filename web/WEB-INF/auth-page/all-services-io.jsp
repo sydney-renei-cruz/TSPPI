@@ -44,10 +44,10 @@
                                         <td>${sb.getServiceName()}</td>
                                         <td>${sb.getServiceDesc()}</td>
                                         <td>
-                                              <form action="editservice" method="GET">
-                                                  <input type="hidden" name="service_id" id="service_id" value="${sb.getServiceID()}">
-                                                  <input type="submit" name="submit" id="submit" value="Edit Service" class="btn btn-warning">
-                                              </form>
+                                            <form action="editservice" method="GET">
+                                                <input type="hidden" name="service_id" id="service_id" value="${sb.getServiceID()}">
+                                                <input type="submit" name="submit" id="submit" value="Edit Service" class="btn btn-warning">
+                                            </form>
                                         </td>
                                     </tr>
                                   </c:forEach>

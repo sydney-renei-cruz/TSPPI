@@ -58,10 +58,12 @@ public class VPInvoicesPage extends HttpServlet {
         //session activated client
         try{
             String active_user = (String) session.getAttribute("account_num");
-            inText = "SELECT i.invoice_id, i.total_amount, i.invoice_date, s.status_name "
+            inText = "SELECT i.invoice_id, a.first_name, a.last_name, p.payment_method, i.total_amount, i.invoice_date, s.status_name "
                     + "from invoice i "
                     + "join invoice_status s on s.status_id = i.status_id "
+                    + "join invoice_pm p on p.pm_id = i.pm_id "
                     + "join client c on c.client_id = i.client_id "
+                    + "join account a on a.account_num = c.account_num "
                     + "where s.status_name='Pending'";
             ps = conn.prepareStatement(inText);
             rs = ps.executeQuery();
@@ -71,15 +73,19 @@ public class VPInvoicesPage extends HttpServlet {
             while(rs.next()){
                 ib1 = new InvoiceBean();
                 ib1.setInvoiceID(rs.getInt("invoice_id"));
+                ib1.setFirstName(rs.getString("first_name"));
+                ib1.setLastName(rs.getString("last_name"));
+                ib1.setPaymentMethod(rs.getString("payment_method"));
                 ib1.setTotalAmount(rs.getFloat("total_amount"));
                 ib1.setInvoiceDate(rs.getDate("invoice_date"));
                 ib1.setStatusName(rs.getString("status_name"));
                 al1.add(ib1);
             }
             
-            inText = "SELECT i.invoice_id, i.total_amount, i.invoice_date, s.status_name "
+            inText = "SELECT i.invoice_id, p.payment_method, i.total_amount, i.invoice_date, s.status_name "
                     + "from invoice i "
                     + "join invoice_status s on s.status_id = i.status_id "
+                    + "join invoice_pm p on p.pm_id = i.pm_id "
                     + "join client c on c.client_id = i.client_id "
                     + "where s.status_name='Approved'";
             ps = conn.prepareStatement(inText);
@@ -89,15 +95,17 @@ public class VPInvoicesPage extends HttpServlet {
             while(rs.next()){
                 ib2 = new InvoiceBean();
                 ib2.setInvoiceID(rs.getInt("invoice_id"));
+                ib2.setPaymentMethod(rs.getString("payment_method"));
                 ib2.setTotalAmount(rs.getFloat("total_amount"));
                 ib2.setInvoiceDate(rs.getDate("invoice_date"));
                 ib2.setStatusName(rs.getString("status_name"));
                 al2.add(ib2);
             }
             
-            inText = "SELECT i.invoice_id, i.total_amount, i.invoice_date, s.status_name "
+            inText = "SELECT i.invoice_id, p.payment_method, i.total_amount, i.invoice_date, s.status_name "
                     + "from invoice i "
                     + "join invoice_status s on s.status_id = i.status_id "
+                    + "join invoice_pm p on p.pm_id = i.pm_id "
                     + "join client c on c.client_id = i.client_id "
                     + "where s.status_name='Canceled' OR s.status_name='Rejected'";
             ps = conn.prepareStatement(inText);
@@ -108,6 +116,7 @@ public class VPInvoicesPage extends HttpServlet {
             while(rs.next()){
                 ib3 = new InvoiceBean();
                 ib3.setInvoiceID(rs.getInt("invoice_id"));
+                ib3.setPaymentMethod(rs.getString("payment_method"));
                 ib3.setTotalAmount(rs.getFloat("total_amount"));
                 ib3.setInvoiceDate(rs.getDate("invoice_date"));
                 ib3.setStatusName(rs.getString("status_name"));

@@ -6,6 +6,7 @@
 package com.tsppi.dynamic.page;
 
 import com.tsppi.bean.ClientBean;
+import com.tsppi.bean.PaymentMethodBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -91,6 +92,19 @@ public class OrderRequestPage extends HttpServlet {
                 al.add(cb);
             }
             request.setAttribute("al", al);
+            
+            ps = conn.prepareStatement("SELECT * FROM invoice_pm");
+            rs = ps.executeQuery();
+            
+            ArrayList<PaymentMethodBean> al2 = new ArrayList<>();
+            PaymentMethodBean pm;
+            while(rs.next()){
+                pm = new PaymentMethodBean();
+                pm.setPMID(rs.getInt("pm_id"));
+                pm.setPaymentMethod(rs.getString("payment_method"));
+                al2.add(pm);
+            }
+            request.setAttribute("al2", al2);
             //client accounts retrieval
         }catch(Exception e){
             e.printStackTrace();
