@@ -51,7 +51,12 @@
                                         <c:if test="${job_position == 'Vice President'}">
                                         <td class="text-center">${al1.getFullName()}</td>
                                         </c:if>
-                                        <td><a href="#"> View Ordered Products</a></td>
+                                        <td>
+                                            <button type="button" class="btn btn-link vib">
+                                                View Ordered Products
+                                                <span class="invoice_id">${al1.getInvoiceID()}</span>
+                                            </button>
+                                        </td>
                                         <td>${al1.getPaymentMethod()}</td>
                                         <td>${al1.getTotalAmount()}</td>
                                         <td>${al1.getStatusName()}</td>
@@ -91,7 +96,12 @@
                                   <c:forEach var="al2" items="${al2}">
                                   <tr>
                                       <td>${al2.getInvoiceID()}</td>
-                                      <td><a href="#"> View Ordered Products</a></td>
+                                      <td>
+                                          <button type="button" class="btn btn-link vib">
+                                                View Ordered Products
+                                                <span class="invoice_id">${al2.getInvoiceID()}</span>
+                                            </button>
+                                      </td>
                                       <td>${al2.getPaymentMethod()}</td>
                                       <td>${al2.getTotalAmount()}</td>
                                       <td>${al2.getStatusName()}</td>
@@ -128,7 +138,12 @@
                                   <c:forEach var="al3" items="${al3}">
                                   <tr>
                                       <td>${al3.getInvoiceID()}</td>
-                                      <td><a href="#"> View Ordered Products</a></td>
+                                      <td>
+                                          <button type="button" class="btn btn-link vib">
+                                                View Ordered Products
+                                                <span class="invoice_id">${al3.getInvoiceID()}</span>
+                                            </button>
+                                      </td>
                                       <td>${al3.getPaymentMethod()}</td>
                                       <td>${al3.getTotalAmount()}</td>
                                       <td>${al3.getStatusName()}</td>
@@ -145,5 +160,52 @@
             </div>
           </section>
         
+        <!-- modal -->
+        <div class="modal fade bd-example-modal-sm" id="productModal" tabindex="1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Items Purchased</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableContent">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+            $(document).ready(function(){
+                $(".invoice_id").hide();
+                $(".vib").click(function(){
+                    var $id = $(this).find(".invoice_id").text();
+                    $("#tableContent").empty();
+                    $.getJSON('retrieveitems', {invoice_id: $id})
+//                    $.getJSON('retrieveitems')
+                        .done(function(json){
+                            var $tableData = "";
+                            for(var i = 0; i<json.length; i++){
+                                $tableData = $('<tr/>');
+                                $tableData.append('<td>' + json[i].product_name + '</td>');
+                                $tableData.append('<td>' + json[i].item_quantity + '</td>');
+                                $('#tableContent').append($tableData);
+                            }
+                            $("#productModal").modal('show');
+                        });
+                });
+            });
+        </script>
     </body>
 </html>

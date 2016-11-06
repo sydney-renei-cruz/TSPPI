@@ -68,7 +68,7 @@ public class TicketingServlet extends HttpServlet {
               msg.setSentDate(new Date());
               // -- Send the message --
               Transport.send(msg);
-              request.getRequestDispatcher("/WEB-INF/auth-page/profile.jsp").forward(request,response);
+              response.sendRedirect("profile");
         }
         catch (Exception ex)
         {

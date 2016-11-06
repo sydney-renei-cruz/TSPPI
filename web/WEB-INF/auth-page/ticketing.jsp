@@ -8,27 +8,60 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Bug Report</title>
+        <link href="css/form.css" rel="stylesheet" type="text/css">
     </head>
     <body>
-        <form action="ticketingservlet" method="POST">
-            <table align="center" cellpadding="5">
-                <tbody>
-                    <tr> <td colspan="3" align="center">
-                    <b> Send Bug Report </b> </td> </tr>
-                    <tr>
-                        <td> Message </td> <td> : </td>
-                        <td> <textarea name="message" rows="8" cols="30">
-                        </textarea></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" align="center">
-                        <input type="submit" value="Send" />                             
-                        <td>
-                    </tr>
-                </tbody>
-            </table>
-        </form>
+        <%@include file="/WEB-INF/static-page/navbar.jsp"%>
+        <header id="login-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <h1>Report a Bug</h1>
+                    </div>
+                </div>
+            </div>
+	</header>
+        <section>
+            <div id="login-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-3">
+                            <div class="panel panel-login">
+                                <div class="panel-heading">
+                                    <hr>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <form id="register-form" action="ticketingservlet" method="post" autocomplete="off">
+                                                <div class="form-group">
+                                                    <textarea rows="4" cols="50" name="message" id="message" class="form-control" placeholder="Details of the Problem"></textarea>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-sm-6 col-sm-offset-3"> 
+                                                            <input type="submit" name="submit" id="register-submit" class="form-control btn btn-register" value="Send Bug Ticket">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="text-center">
+                                                                <a href="profile" class="forgot-password">Go back to profile</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>                 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+	</section>
     </body>
 </html>

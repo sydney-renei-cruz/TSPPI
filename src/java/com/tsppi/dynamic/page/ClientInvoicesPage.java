@@ -6,6 +6,7 @@
 package com.tsppi.dynamic.page;
 
 import com.tsppi.bean.InvoiceBean;
+import com.tsppi.bean.InvoiceItemBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -125,7 +126,7 @@ public class ClientInvoicesPage extends HttpServlet {
             }
             request.setAttribute("al1", al1);           
             request.setAttribute("al2", al2);           
-            request.setAttribute("al3", al3);           
+            request.setAttribute("al3", al3);
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -146,6 +147,7 @@ public class ClientInvoicesPage extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        
     }
 
     /**

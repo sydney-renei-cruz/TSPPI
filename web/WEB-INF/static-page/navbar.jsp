@@ -21,14 +21,14 @@
         <!-- Bootstrap css -->
 	<link href="imports/bootstrap.min.css" rel="stylesheet">
         <!-- Jquery plugin -->
-	<script src="imports/jquery-2.2.2.js"></script>
+	<script src="imports/jquery-2.2.4.js"></script>
 	<!-- Bootstrap plugin -->
 	<script src="imports/bootstrap.js"></script>
     </head>
     <body>
         <header>
             <nav class="navbar navbar-fixed-top navbar-inverse nav-top">
-                <div class="container">
+                <div class="container-fluid">
                     <div class="navbar-header">
                         <a class="navbar-brand" href="home"><img alt="" src="img/tsppi.png" id="nav-img"></a>
                         
@@ -41,7 +41,7 @@
                 </div>
             </nav>
             <nav class="navbar navbar-fixed-top nav-bot">
-                <div class="container">
+                <div class="container-fluid">
                     <div class="navbar-header">
                         <a class="navbar-brand" href="home"><img alt="" src="img/whitespace.png"></a>
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".bot-nav">
