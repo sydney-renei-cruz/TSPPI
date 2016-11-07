@@ -20,23 +20,34 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Jasteen
  */
-@WebServlet(name = "TicketingServlet", urlPatterns = {"/TicketingServlet"})
-public class TicketingServlet extends HttpServlet {
+@WebServlet(name = "InquiryServlet", urlPatterns = {"/InquiryServlet"})
+public class InquiryServlet extends HttpServlet {
 
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException{
+        HttpSession session1 = request.getSession();
         String userName = "TSPPIauto@gmail.com";
         String password = "3$tarPaper!";
         String to = "sydneyrenei.cruz@uap.asia";
         String from = "TSPPIauto@gmail.com";
-        String message = request.getParameter("message");
-        String subject = "***BUG REPORT***";
+        String message = "From: " + (String)session1.getAttribute("user") + "\n" + request.getParameter("message");
+        String subject = "***SERVICE INQUIRY*** - " + request.getParameter("subject");
         String smtpServ = "smtp.gmail.com";
         int port = 465;
         try
@@ -91,6 +102,7 @@ private class SMTPAuthenticator extends javax.mail.Authenticator {
             return new PasswordAuthentication(username, password);
         }
   }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -100,10 +112,7 @@ private class SMTPAuthenticator extends javax.mail.Authenticator {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-    }
+
 
     /**
      * Handles the HTTP <code>POST</code> method.
