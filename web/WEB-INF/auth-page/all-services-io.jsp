@@ -9,6 +9,14 @@
 <html>
     <head>
         <link rel="stylesheet" href="css/item-list.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $("input:last").click(function(){
+                    alert("Service Added!");
+                });
+            });
+        </script>
     </head>
     <body>
         <%@include file="/WEB-INF/static-page/navbar.jsp" %>

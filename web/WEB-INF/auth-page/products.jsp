@@ -11,6 +11,16 @@
 
 <head>
     <link href="css/display.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
+        
+    </script>   
+    <script>
+        $(document).ready(function(){
+            $("button").click(function(){
+                $("#products").load("http://localhost:8080/TSPPI/printProductPage");
+            });
+        });
+    </script>
     
 </head>
 
@@ -39,10 +49,23 @@
                     <a href="#" id="grid" class="btn btn-default btn-sm">
                         <span class="glyphicon glyphicon-th"></span>
                     </a>
+                    
+                        <select>
+                            <c:forEach var="pb" items="${pb}">
+                                <option value="${pb.getCategoryName()}">${pb.getCategoryName()}</option>
+                            </c:forEach>
+                        </select>
+                    
+                        <button>Filter</button>
                 </div>
                 
             </div>
             <div id="products" class="row list-group">
+                
+                <input type="hidden" id="category_val" name="x" value="Thermal Rolls">
+                
+                <c:set var="category" value="Envelopes"/>
+                
                 <c:forEach var="pb" items="${pb}">
                 <div class="item col-xs-4 col-lg-4 content">
                     <img class="img-responsive" src="img/car-placeholder.png" alt="">

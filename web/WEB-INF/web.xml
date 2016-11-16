@@ -234,6 +234,10 @@
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <load-on-startup>2</load-on-startup>
     </servlet>
+    <servlet>
+        <servlet-name>printProductPage</servlet-name>
+        <servlet-class>com.tsppi.dynamic.page.printProductPage</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/registerservlet</url-pattern>
@@ -386,6 +390,10 @@
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.htm</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>printProductPage</servlet-name>
+        <url-pattern>/printProductPage</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
@@ -398,7 +406,7 @@
     </context-param>
     <context-param>
         <param-name>password</param-name>
-        <param-value></param-value>
+        <param-value>tsppi_password</param-value>
     </context-param>
     <context-param>
         <param-name>dbURL</param-name>

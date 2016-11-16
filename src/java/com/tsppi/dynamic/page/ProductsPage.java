@@ -6,6 +6,7 @@
 package com.tsppi.dynamic.page;
 
 import com.tsppi.bean.ProductBean;
+import com.tsppi.bean.ProductCategoryBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -46,6 +47,8 @@ public class ProductsPage extends HttpServlet {
         ResultSet rs;
         
         int i;
+        String filterCategory = request.getParameter("category_filter");
+        
         try{
             context = request.getSession().getServletContext();
             Class.forName("com.mysql.jdbc.Driver");
@@ -53,6 +56,9 @@ public class ProductsPage extends HttpServlet {
         }catch(ClassNotFoundException | SQLException e){
             e.printStackTrace();
         }
+        
+        String selectCategory = request.getParameter("category_filter");
+        
         try{
             ps = conn.prepareStatement("SELECT p.*, c.category_name FROM product p RIGHT JOIN product_category c ON p.category_id = c.category_id");
             rs = ps.executeQuery();
@@ -78,6 +84,9 @@ public class ProductsPage extends HttpServlet {
         }catch(Exception e){
             e.printStackTrace();
         }
+        
+        String filter_val = request.getParameter("category_filter");
+                
         request.getRequestDispatcher("/WEB-INF/auth-page/products.jsp").forward(request,response);       
     }
 

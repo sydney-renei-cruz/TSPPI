@@ -10,6 +10,22 @@
 <html>
     <head>
         <link href="css/form.css" rel="stylesheet" type="text/css">
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $("input:last").click(function(){
+                    var x = ${error_message};
+                    
+                    if(x === '')
+                    {
+                        alert("Log in success!");
+                    }else{
+                        alert("${error_message}");
+                    }
+                });
+            });
+        </script>
     </head>
     <body>
         
