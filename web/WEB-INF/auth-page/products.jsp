@@ -13,14 +13,26 @@
     <link href="css/display.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
         
-    </script>   
-    <script>
+    </script>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript">
         $(document).ready(function(){
             $("button").click(function(){
-                $("#products").load("http://localhost:8080/TSPPI/printProductPage");
+                var qty = document.getElementById('quantity');
+                var qtyInput = parseInt(qty, 10);
+                
+                if (qtyInput > 0)
+                {
+                    alert(qty);
+                }else{
+                    alert("Please input a number");
+                }
+                
             });
         });
     </script>
+    
     
 </head>
 

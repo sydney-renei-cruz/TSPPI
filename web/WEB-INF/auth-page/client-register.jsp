@@ -11,6 +11,36 @@
     <head>
         <link href="css/form.css" rel="stylesheet" type="text/css">
         <link href="css/form-error-validation.css" rel="stylesheet" type="text/css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $("#register-submit").click(function(){
+                    var urname = document.getElementById('username');
+                    var psswrd = document.getElementById('password');
+                    var cnfmpsswrd = document.getElementById('confirm-password');
+                    var fn = document.getElementById('first_name');
+                    var ln = document.getElementById('last_name');
+                    var mail = document.getElementById('email');
+                    
+                    if (urname.value === ''){
+                        alert("Please enter a username.");
+                    }else if (psswrd.value === ''){
+                        alert("Please enter a password.");
+                    }else if (cnfmpsswrd.value === '' || psswrd.value !== cnfmpsswrd.value){
+                        alert("Re-enter password.");
+                    }else if (fn.value === ''){
+                        alert("Plese enter your first name.");
+                    }else if (ln.value === ''){
+                        alert("Plese enter your last name.");
+                    }else if (mail.value === ''){
+                        alert("Please enter an email adress.");
+                    }else{
+                        alert("Account registration successful.");
+                    }
+                    
+                });
+            });
+        </script>
     </head>
     <body>
 	<%@include file="../static-page/navbar.jsp" %>

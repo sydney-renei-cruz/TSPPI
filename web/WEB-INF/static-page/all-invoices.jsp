@@ -9,6 +9,19 @@
 <html>
     <head>
         <link rel="stylesheet" href="css/item-list.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        
+        <script type="text/javascript">
+        $(document).ready(function(){
+            $("#conf-order").click(function(){
+                alert("Please check e-mail to confirm");
+            });
+            
+            $("#cancel-order").click(function(){
+                alert("Order has been canceled");
+            });
+        });
+        </script>
     </head>
     <body>
         <%@include file="/WEB-INF/static-page/navbar.jsp" %>
@@ -57,10 +70,10 @@
                                         <td>${al1.getStatusName()}</td>
                                         <td>${al1.getInvoiceDate()}</td>
                                         <c:if test="${account_type == 'client'}">
-                                        <td><a href="#"> Cancel Order </a></td>
+                                        <td><a id="cancel-order" href="#"> Cancel Order </a></td>
                                         </c:if>
                                         <c:if test="${job_position == 'Vice President'}">
-                                            <td><a href="#"> Confirm? </a></td>
+                                            <td><a id="conf-order" href="#"> Confirm? </a></td>
                                         </c:if>
                                   </tr>
                                   </c:forEach>

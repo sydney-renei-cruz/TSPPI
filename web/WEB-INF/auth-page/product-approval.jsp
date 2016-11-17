@@ -9,6 +9,20 @@
 <html>
     <head>
         <link rel="stylesheet" href="css/item-list.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $("#remForSale").click(function(){
+                    alert("Product remove from sale");
+                });
+            });
+            
+            $(document).ready(function(){
+                $("#addForSale").click(function(){
+                    alert("Product added to sale");
+                });
+            });
+        </script>
     </head>
     <body>
         <%@include file="/WEB-INF/static-page/navbar.jsp" %>
@@ -61,10 +75,10 @@
                                                     <input type="hidden" name="product_id" id="product_id" value="${pb.getProductID()}">
                                                     <input type="hidden" name="for_sale" id="for_sale" value="${pb.getForSale()}">
                                                     <c:if test="${pb.getForSale()}">
-                                                        <input type="submit" name="submit" id="submit" value="Remove from For-Sale List" class="btn btn-danger">
+                                                        <input type="submit" name="submit" id="remForSale" value="Remove from For-Sale List" class="btn btn-danger">
                                                     </c:if>
                                                     <c:if test="${!pb.getForSale()}">                                                     
-                                                        <input type="submit" name="submit" id="submit" value="Add to For-Sale List" class="btn btn-danger">
+                                                        <input type="submit" name="submit" id="addForSale" value="Add to For-Sale List" class="btn btn-danger">
                                                     </c:if>
                                                 </form>
                                             </td>

@@ -11,7 +11,22 @@
 <html>
     <head>
         <link rel="stylesheet" href="css/item-list.css">
-
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        
+        <script type="text/javascript">
+        $(document).ready(function(){
+            $("#deactivate").click(function(){
+                alert("Account Deactivated");
+            });
+        });
+        
+        $(document).ready(function(){
+            $("#activate").click(function(){
+                alert("Account Activated");
+            });
+        });
+        </script>
+    
     </head>
     <body>
         <%@include file="../static-page/navbar.jsp" %>
@@ -59,10 +74,10 @@
                                                     <input type="hidden" name="account_num" id="account_num" value="${eb.getAccountNum()}">
                                                     <input type="hidden" name="account_status" id="account_status" value="${eb.getAccountStatus()}">
                                                     <c:if test="${eb.getAccountStatus()}">
-                                                        <input type="submit" name="submit" id="submit" value="Deactivate Account" class="btn btn-danger">
+                                                        <input type="submit" name="submit" id="deactivate" value="Deactivate Account" class="btn btn-danger">
                                                     </c:if>
                                                     <c:if test="${!eb.getAccountStatus()}">                                                     
-                                                        <input type="submit" name="submit" id="submit" value="Activate Account" class="btn btn-primary">
+                                                        <input type="submit" name="submit" id="activate" value="Activate Account" class="btn btn-primary">
                                                     </c:if>
                                                 </form>
                                               </td>
