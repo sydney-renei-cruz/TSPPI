@@ -53,7 +53,10 @@
                                 <p class="group inner list-group-item-text">${sb.getServiceDesc()}</p>
                             </div>
                             <c:if test="${account_type == 'client'}">
-                                <a class="btn btn-danger">Inquire this service</a>
+                                <form action="serviceinquiry" method="GET">
+                                    <input type="hidden" name="service_id" id="service_id" value="${sb.getServiceID()}">
+                                    <input type="submit" name="submit" id="submit" value="Inquire this Service" class="btn btn-warning">
+                                </form>
                             </c:if>
                             <c:if test="${job_position == 'Inventory Officer'}">
                             <form action="editservice" method="GET">

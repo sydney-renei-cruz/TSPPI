@@ -170,6 +170,7 @@ public class LoginServlet extends HttpServlet {
             if(!rs.previous()){
                 session.setAttribute("error_message", "Incorrect username or password");
                 response.sendRedirect("login");
+            }else{
             }
         }catch(Exception e){
             e.printStackTrace();

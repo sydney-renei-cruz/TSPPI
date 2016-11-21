@@ -15,6 +15,7 @@ public class InvoiceItemBean implements Serializable{
     private int item_id;
     private int invoice_id;
     private int product_id;
+    private String product_name;
     private int item_quantity;
     
     
@@ -22,23 +23,28 @@ public class InvoiceItemBean implements Serializable{
         item_id = 0 ;
         invoice_id = 0;
         product_id = 0;
+        product_name = "";
         item_quantity = 0;
     }   
-    public InvoiceItemBean(int it, int in, int pi, int iq){
+    public InvoiceItemBean(int it, int in, int pi, String pn, int iq){
         item_id = it;
         invoice_id = in;
         product_id = pi;
+        product_name = pn;
         item_quantity = iq;
     }
     
-    public int getItemId(){
+    public int getItemID(){
         return item_id;
     }
-    public int getInvoiceId(){
+    public int getInvoiceID(){
         return invoice_id;
     }
-    public int getProductId(){
+    public int getProductID(){
         return product_id;
+    }
+    public String getProductName(){
+        return product_name;
     }
     public int getItemQuantity(){
         return item_quantity;
@@ -51,6 +57,9 @@ public class InvoiceItemBean implements Serializable{
     }
     public void setProductID(int pi){
         product_id = pi;
+    }
+    public void setProductName(String pn){
+        product_name = pn;
     }
     public void setItemQuantity(int iq){
         item_quantity = iq;

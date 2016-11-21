@@ -12,14 +12,6 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/form.css" rel="stylesheet" type="text/css">
         <link href="css/form-error-validation.css" rel="stylesheet" type="text/css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <script type="text/javascript">
-            $(document).ready(function(){
-                $("input:last").click(function(){
-                    alert("Changes have been saved.");
-                });
-            });
-        </script>
     </head>
     <body>
         <%@include file="../static-page/navbar.jsp" %>
@@ -63,6 +55,9 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <input type="email" name="email" id="email" class="form-control" placeholder="Email Address" value="${pb.getEmail()}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="password" name="password" id="password" class="form-control" placeholder="Password" value="">
                                                 </div>
                                                 <c:if test="${account_type == 'client'}">
                                                     <div class="form-group">

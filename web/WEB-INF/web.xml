@@ -60,6 +60,7 @@
     <filter-mapping>
         <filter-name>ClientFilter</filter-name>
         <url-pattern>/allinvoices</url-pattern>
+        <url-pattern>/serviceinquiry</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>VPFilter</filter-name>
@@ -218,16 +219,28 @@
         <servlet-class>com.tsppi.dynamic.page.VPInvoicesPage</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>TicketingPage</servlet-name>
-        <servlet-class>com.tsppi.dynamic.page.TicketingPage</servlet-class>
+        <servlet-name>ServiceInquiryPage</servlet-name>
+        <servlet-class>com.tsppi.dynamic.page.ServiceInquiryPage</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>InquiryPage</servlet-name>
-        <servlet-class>com.tsppi.dynamic.page.InquiryPage</servlet-class>
+        <servlet-name>ServiceInquiryServlet</servlet-name>
+        <servlet-class>com.tsppi.servlet.function.ServiceInquiryServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>InquiryServlet</servlet-name>
-        <servlet-class>com.tsppi.servlet.function.InquiryServlet</servlet-class>
+        <servlet-name>ForgotPasswordPage</servlet-name>
+        <servlet-class>com.tsppi.dynamic.page.ForgotPasswordPage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ForgotPassword2Page</servlet-name>
+        <servlet-class>com.tsppi.dynamic.page.ForgotPassword2Page</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ForgotPasswordServlet</servlet-name>
+        <servlet-class>com.tsppi.servlet.function.ForgotPasswordServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ForgotPassword2Servlet</servlet-name>
+        <servlet-class>com.tsppi.servlet.function.ForgotPassword2Servlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>dispatcher</servlet-name>
@@ -235,8 +248,8 @@
         <load-on-startup>2</load-on-startup>
     </servlet>
     <servlet>
-        <servlet-name>printProductPage</servlet-name>
-        <servlet-class>com.tsppi.dynamic.page.printProductPage</servlet-class>
+        <servlet-name>RetrieveInvoiceItemServlet</servlet-name>
+        <servlet-class>com.tsppi.servlet.function.RetrieveInvoiceItemServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>RegisterServlet</servlet-name>
@@ -347,10 +360,6 @@
         <url-pattern>/generateinvoice</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>TicketingServlet</servlet-name>
-        <url-pattern>/ticketingservlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>EditProductPage</servlet-name>
         <url-pattern>/editproduct</url-pattern>
     </servlet-mapping>
@@ -379,20 +388,36 @@
         <url-pattern>/vpinvoices</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>TicketingPage</servlet-name>
-        <url-pattern>/ticket</url-pattern>
+        <servlet-name>ServiceInquiryPage</servlet-name>
+        <url-pattern>/serviceinquiry</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>InquiryPage</servlet-name>
-        <url-pattern>/inquiry</url-pattern>
+        <servlet-name>ServiceInquiryServlet</servlet-name>
+        <url-pattern>/serviceinquiryservlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ForgotPasswordPage</servlet-name>
+        <url-pattern>/forgot</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ForgotPassword2Page</servlet-name>
+        <url-pattern>/forgot2</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ForgotPasswordServlet</servlet-name>
+        <url-pattern>/forgotpasswordservlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ForgotPassword2Servlet</servlet-name>
+        <url-pattern>/forgotpassword2servlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.htm</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>printProductPage</servlet-name>
-        <url-pattern>/printProductPage</url-pattern>
+        <servlet-name>RetrieveInvoiceItemServlet</servlet-name>
+        <url-pattern>/retrieveitems</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -410,7 +435,7 @@
     </context-param>
     <context-param>
         <param-name>dbURL</param-name>
-        <param-value>jdbc:mysql://localhost:3306/tsppi</param-value>
+        <param-value>jdbc:mysql://localhost:3306/com_tsppi</param-value>
     </context-param>
     <welcome-file-list>
         <welcome-file>home</welcome-file>

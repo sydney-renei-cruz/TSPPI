@@ -5,7 +5,15 @@
  */
 package com.tsppi.servlet.function;
 
+import com.tsppi.bean.AllAccountBean;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
 import javax.mail.Authenticator;
@@ -15,6 +23,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,7 +36,7 @@ import javax.servlet.http.HttpSession;
  * @author Jasteen
  */
 @WebServlet(name = "InquiryServlet", urlPatterns = {"/InquiryServlet"})
-public class InquiryServlet extends HttpServlet {
+public class ServiceInquiryServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,16 +51,72 @@ public class InquiryServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException{
         HttpSession session1 = request.getSession();
-        String userName = "TSPPIauto@gmail.com";
-        String password = "3$tarPaper!";
-        String to = "sydneyrenei.cruz@uap.asia";
-        String from = "TSPPIauto@gmail.com";
-        String message = "From: " + (String)session1.getAttribute("user") + "\n" + request.getParameter("message");
-        String subject = "***SERVICE INQUIRY*** - " + request.getParameter("subject");
-        String smtpServ = "smtp.gmail.com";
-        int port = 465;
-        try
-        {
+        PrintWriter out = response.getWriter();
+        Connection conn = null;
+        PreparedStatement ps;
+        ServletContext context;
+        ResultSet rs;
+        try{
+            context = request.getSession().getServletContext();
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
+        }catch(ClassNotFoundException | SQLException e){
+            e.printStackTrace();
+        }
+        
+        try{
+            String account_num = (String) session1.getAttribute("account_num");
+            String service_name = request.getParameter("service_name");
+            String inText = "";
+            
+            inText = "SELECT a.first_name, a.last_name, a.email, c.mobile, c.telephone "
+                    + "FROM account a "
+                    + "JOIN client c ON c.account_num = a.account_num "
+                    + "WHERE a.account_num=?";
+            ps = conn.prepareStatement(inText);
+            ps.setString(1, account_num);
+            rs = ps.executeQuery();
+            
+            ArrayList<AllAccountBean> al = new ArrayList<>();
+            AllAccountBean aab;
+            while(rs.next()){
+                aab = new AllAccountBean();
+                aab.setFirstName(rs.getString("first_name"));
+                aab.setLastName(rs.getString("last_name"));
+                aab.setEmail(rs.getString("email"));
+                aab.setMobile(rs.getString("mobile"));
+                aab.setTelephone(rs.getString("telephone"));
+                al.add(aab);
+            }
+            
+            
+            String full_name = "";
+            String mobile = "";
+            String telephone = "";
+            String email = "";
+            for(int i=0; i<al.size(); i++){
+                full_name = al.get(i).getFullName();
+                email = al.get(i).getEmail();
+                mobile = al.get(i).getMobile();
+                telephone = al.get(i).getTelephone();
+            }
+            String content = request.getParameter("message");
+            String message = "Hi,\n\n"
+                    + "I would like to inquire for your service, " + service_name +".\n"
+                    + content + "\n\n"
+                    + "Regards,\n"
+                    + full_name + " - " + email +"\n"
+                    + "Mobile No. " + mobile +"\n"
+                    + "Telephone No. " + telephone;
+            
+            String userName = "TSPPIauto@gmail.com";
+            String password = "3$tarPaper!";
+            String to = "sydneyrenei.cruz@uap.asia";
+            String from = "TSPPIauto@gmail.com";
+            String subject = "***SERVICE INQUIRY***";
+            String smtpServ = "smtp.gmail.com";
+            int port = 465;
+            
             Properties props = System.getProperties();
               // -- Attaching to default Session, or we could start a new one --
               props.put("mail.transport.protocol", "smtp" );
@@ -84,12 +149,9 @@ public class InquiryServlet extends HttpServlet {
               msg.setSentDate(new Date());
               // -- Send the message --
               Transport.send(msg);
-              request.getRequestDispatcher("/WEB-INF/auth-page/profile.jsp").forward(request,response);
-        }
-        catch (Exception ex)
-        {
-          ex.printStackTrace();
-          System.out.println("Exception "+ex);
+              response.sendRedirect("services");
+        }catch(Exception e){
+            e.printStackTrace();
         }
   }
 

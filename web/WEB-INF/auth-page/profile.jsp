@@ -77,16 +77,6 @@
                                    <a href="allservices" class="btn btn-danger btn-block"><span class="fa fa-user"></span> Edit Services </a>
                                </div>
                            </c:if>
-                           <c:if test="${account_type != 'admin'}">
-                               <div class="col-xs-12 col-sm-4 emphasis">
-                                   <a href="ticket" class="btn btn-success btn-block"><span class="fa fa-plus-circle"></span> Report a Bug </a>
-                               </div>
-                           </c:if>
-                           <c:if test="${account_type != 'employee'}">
-                               <div class="col-xs-12 col-sm-4 emphasis">
-                                   <a href="inquiry" class="btn btn-success btn-block"><span class="fa fa-plus-circle"></span> Inquire About a Service </a>
-                               </div>
-                           </c:if>
                        </div>
                     </div>                 
                 </div>

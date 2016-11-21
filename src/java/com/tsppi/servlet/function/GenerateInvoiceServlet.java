@@ -158,7 +158,7 @@ public class GenerateInvoiceServlet extends HttpServlet {
                 ps = conn.prepareStatement("UPDATE product JOIN invoice_item ON product.product_id = invoice_item.product_id "
                         + "SET product.stock = product.stock - invoice_item.item_quantity "
                         + "WHERE product.product_id=? and invoice_item.invoice_id=?");
-                ps.setInt(1, iib.getProductId());
+                ps.setInt(1, iib.getProductID());
                 ps.setInt(2, invoice_id);
                 ps.executeUpdate();
             }

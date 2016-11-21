@@ -17,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Jasteen
  */
-@WebServlet(name = "InquiryPage", urlPatterns = {"/InquiryPage"})
-public class InquiryPage extends HttpServlet {
+@WebServlet(name = "ForgotPassword2Page", urlPatterns = {"/ForgotPassword2Page"})
+public class ForgotPassword2Page extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,7 +33,7 @@ public class InquiryPage extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        request.getRequestDispatcher("/WEB-INF/auth-page/service-inquiry.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/auth-page/forgot-password2.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

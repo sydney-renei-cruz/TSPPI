@@ -9,9 +9,9 @@
 <html>
     <head>
         <link rel="stylesheet" href="css/item-list.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>-->
         
-        <script type="text/javascript">
+<!--        <script type="text/javascript">
         $(document).ready(function(){
             $("#conf-order").click(function(){
                 alert("Please check e-mail to confirm");
@@ -21,7 +21,7 @@
                 alert("Order has been canceled");
             });
         });
-        </script>
+        </script>-->
     </head>
     <body>
         <%@include file="/WEB-INF/static-page/navbar.jsp" %>
@@ -64,7 +64,12 @@
                                         <c:if test="${job_position == 'Vice President'}">
                                         <td class="text-center">${al1.getFullName()}</td>
                                         </c:if>
-                                        <td><a href="#"> View Ordered Products</a></td>
+                                        <td>
+                                            <button class="btn btn-link view-items">
+                                                View Ordered Products
+                                                <input type="hidden" class="main-item" value="${al1.getInvoiceID()}">
+                                            </button>
+                                        </td>
                                         <td>${al1.getPaymentMethod()}</td>
                                         <td>${al1.getTotalAmount()}</td>
                                         <td>${al1.getStatusName()}</td>
@@ -104,7 +109,12 @@
                                   <c:forEach var="al2" items="${al2}">
                                   <tr>
                                       <td>${al2.getInvoiceID()}</td>
-                                      <td><a href="#"> View Ordered Products</a></td>
+                                      <td>
+                                            <button class="btn btn-link view-items">
+                                                View Ordered Products
+                                                <input type="hidden" class="main-item" value="${al2.getInvoiceID()}">
+                                            </button>
+                                        </td>
                                       <td>${al2.getPaymentMethod()}</td>
                                       <td>${al2.getTotalAmount()}</td>
                                       <td>${al2.getStatusName()}</td>
@@ -141,7 +151,12 @@
                                   <c:forEach var="al3" items="${al3}">
                                   <tr>
                                       <td>${al3.getInvoiceID()}</td>
-                                      <td><a href="#"> View Ordered Products</a></td>
+                                      <td>
+                                            <button class="btn btn-link view-items">
+                                                View Ordered Products
+                                                <input type="hidden" class="main-item" value="${al3.getInvoiceID()}">
+                                            </button>
+                                        </td>
                                       <td>${al3.getPaymentMethod()}</td>
                                       <td>${al3.getTotalAmount()}</td>
                                       <td>${al3.getStatusName()}</td>
@@ -157,6 +172,50 @@
               </div>
             </div>
           </section>
+        <div id="itemmodal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Items Purchased</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Products</th>
+                                    <th>Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody id="showitems">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         
+        <script>
+            $(document).ready(function(){
+                $('.view-items').click(function(){
+                    $('#show-items').empty();
+                    var $invoice_id = $(this).find('.main-item').val();
+                    $.getJSON('retrieveitems', {invoice_id: $invoice_id})
+                        .done(function(json){
+                            var $tableData = "";
+                            for(var i=0; i<json.length; i++){
+                                $tableData = $('<tr/>');
+                                $tableData.append('<td>' + json[i].product_name + '</td>');
+                                $tableData.append('<td>' + json[i].item_quantity + '</td>');
+                                $('#showitems').append($tableData);s
+                            }
+                        });
+                        $('#itemmodal').show();
+                });
+            });
+        </script>
     </body>
 </html>

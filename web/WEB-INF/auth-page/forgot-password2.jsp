@@ -1,31 +1,27 @@
 <%-- 
-    Document   : login
-    Created on : Aug 16, 2016, 10:22:36 PM
-    Author     : cruzsyd
+    Document   : forgot-password2
+    Created on : Nov 16, 2016, 9:46:50 PM
+    Author     : Jasteen
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
         <link href="css/form.css" rel="stylesheet" type="text/css">
-        
     </head>
     <body>
-        
-        <!-- Hello World -->
-	<%@include file="../static-page/navbar.jsp"%>
-	<header id="login-header">
+        <%@include file="/WEB-INF/static-page/navbar.jsp"%>
+        <header id="login-header">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12 text-center">
-                        <h1>Login</h1>
+                        <h1>Reset Your Password</h1>
                     </div>
                 </div>
             </div>
 	</header>
-	<section>
+        <section>
             <div id="login-body">
                 <div class="container">
                     <div class="row">
@@ -37,20 +33,14 @@
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <form id="login-form" action="loginservlet" method="post" role="form" autocomplete="off">
+                                            <form id="register-form" action="forgotpassword2servlet" method="post" autocomplete="off">
                                                 <div class="form-group">
-                                                    <input type="text" name="username" id="username" class="form-control" placeholder="Username" value="">
-                                                </div>
-                                                <div class="form-group">
-                                                    <input type="password" name="password" id="log-password" class="form-control" placeholder="Password">
-                                                </div>
-                                                <div class="form-group text-center">
-                                                    <div style="color: #FF0000;">${error_message}</div>
+                                                    <input type="password" name="password" id="password" class="form-control" placeholder="Password">
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="row">
-                                                        <div class="col-sm-6 col-sm-offset-3">
-                                                            <input type="submit" name="login-submit" id="login-submit" class="form-control btn btn-login" value="Sign in">
+                                                        <div class="col-sm-6 col-sm-offset-3"> 
+                                                            <input type="submit" name="submit" id="register-submit" class="form-control btn btn-register" value="Send">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -58,17 +48,12 @@
                                                     <div class="row">
                                                         <div class="col-lg-12">
                                                             <div class="text-center">
-                                                                <a href="forgot" class="forgot-password">Forgot Password?</a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-12">
-                                                            <div class="text-center">
-                                                                <a href="register" class="forgot-password">Need an account? Click Here!</a>
+                                                                <a href="login" class="forgot-password">Login</a>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </form>                     
+                                            </form>                 
                                         </div>
                                     </div>
                                 </div>

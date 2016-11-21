@@ -7,10 +7,13 @@ package com.tsppi.servlet.function;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Random;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -60,6 +63,7 @@ public class EditProfileServlet extends HttpServlet {
         String mobile = request.getParameter("mobile");
         String telephone = request.getParameter("telephone");
         String address = request.getParameter("address");
+        String password = request.getParameter("password");
         int b;
         
         HttpSession session = request.getSession();
@@ -97,6 +101,55 @@ public class EditProfileServlet extends HttpServlet {
             if(!email.equals("")){
                 ps = conn.prepareStatement("UPDATE account SET email = ? WHERE account_num = ?");
                 ps.setString(1, email);
+                ps.setString(2, currentUsername);
+                b = ps.executeUpdate();
+            }
+            
+            if(!password.equals("")){
+            //                  Hash the password
+                try{
+        
+                //Salts for the hashing
+                String[] salts = new String[10];
+                salts[0] = "7LsDFJ9oHjDnfUr12";
+                salts[1] = "K8oMilIOi0ji43amS";
+                salts[2] = "AFIOUVAJNONVASJja";
+                salts[3] = "nVaWIdsj19Aij63df";
+                salts[4] = "uahRksD47kljnJN9k";
+                salts[5] = "dMna7sY01jfIoaPlY";
+                salts[6] = "Wg480ioAjEdsf31Ka";
+                salts[7] = "gMutRHj70ubQnjB67";
+                salts[8] = "gnQiaOhfXquh82z74";
+                salts[9] = "mKvqn7834wHjk1kLa";
+        
+                Random rand = new Random();
+        
+                password = password + salts[rand.nextInt(10)];
+        
+                //              End Salting
+            
+                MessageDigest md = MessageDigest.getInstance("SHA-256");
+                md.update(password.getBytes());
+        
+                byte byteData[] = md.digest();
+        
+                StringBuffer sb = new StringBuffer();
+        
+                for(int i = 0; i < byteData.length; i++){
+                    sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+                }
+        
+                password = sb.toString();
+                }
+                catch(NoSuchAlgorithmException e){
+                    e.printStackTrace();
+                }
+                //      End Hashing
+                
+                //      CHANGE PASSWORD
+                
+                ps = conn.prepareStatement("UPDATE account SET password = ? WHERE account_num = ?");
+                ps.setString(1, password);
                 ps.setString(2, currentUsername);
                 b = ps.executeUpdate();
             }
