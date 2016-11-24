@@ -1,46 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
-    <!--Filter-->
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>/WEB-INF/applicationContext.xml</param-value>
     </context-param>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <!--Filter-->
     <filter>
         <filter-name>CommonFilter</filter-name>
-        <filter-class>com.tsppi.session.filter.CommonFilter</filter-class>
+        <filter-class>com.tsppi.controller.session.filter.CommonFilter</filter-class>
     </filter>
     <filter>
         <filter-name>AuthenticatedFilter</filter-name>
-        <filter-class>com.tsppi.session.filter.AuthenticatedFilter</filter-class>
+        <filter-class>com.tsppi.controller.session.filter.AuthenticatedFilter</filter-class>
     </filter>
     <filter>
         <filter-name>AdminFilter</filter-name>
-        <filter-class>com.tsppi.session.filter.AdminFilter</filter-class>
+        <filter-class>com.tsppi.controller.session.filter.AdminFilter</filter-class>
     </filter>
     <filter>
         <filter-name>CartFilter</filter-name>
-        <filter-class>com.tsppi.session.filter.CartFilter</filter-class>
+        <filter-class>com.tsppi.controller.session.filter.CartFilter</filter-class>
     </filter>
     <filter>
         <filter-name>ClientFilter</filter-name>
-        <filter-class>com.tsppi.session.filter.ClientFilter</filter-class>
+        <filter-class>com.tsppi.controller.session.filter.ClientFilter</filter-class>
     </filter>
     <filter>
         <filter-name>VPFilter</filter-name>
-        <filter-class>com.tsppi.session.filter.VPFilter</filter-class>
+        <filter-class>com.tsppi.controller.session.filter.VPFilter</filter-class>
     </filter>
     <filter>
         <filter-name>SpecAdVpFilter</filter-name>
-        <filter-class>com.tsppi.session.filter.SpecAdVpFilter</filter-class>
+        <filter-class>com.tsppi.controller.session.filter.SpecAdVpFilter</filter-class>
     </filter>
     <filter>
         <filter-name>InventoryOfficerFilter</filter-name>
-        <filter-class>com.tsppi.session.filter.InventoryOfficerFilter</filter-class>
+        <filter-class>com.tsppi.controller.session.filter.InventoryOfficerFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>CommonFilter</filter-name>
         <url-pattern>/profile</url-pattern>
-        <url-pattern>/editaccount</url-pattern>
+        <url-pattern>/editprofile</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>AuthenticatedFilter</filter-name>
@@ -55,7 +58,7 @@
     <filter-mapping>
         <filter-name>CartFilter</filter-name>
         <url-pattern>/cart</url-pattern>
-        <url-pattern>/order</url-pattern>
+        <url-pattern>/invoicerequest</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>ClientFilter</filter-name>
@@ -74,310 +77,253 @@
         <filter-name>InventoryOfficerFilter</filter-name>
         <url-pattern>/addproduct</url-pattern>
         <url-pattern>/addservices</url-pattern>
-        <url-pattern>/productapproval</url-pattern>
+        <url-pattern>/approveproducts</url-pattern>
         <url-pattern>/editproduct</url-pattern>
         <url-pattern>/allservices</url-pattern>
     </filter-mapping>
     <!--Filter-->
-    <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
-    <servlet>
-        <servlet-name>RegisterServlet</servlet-name>
-        <servlet-class>com.tsppi.servlet.function.RegisterServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>com.tsppi.servlet.function.LoginServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>EmployeeRegisterPage</servlet-name>
-        <servlet-class>com.tsppi.dynamic.page.EmployeeRegisterPage</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>AdminRegisterPage</servlet-name>
-        <servlet-class>com.tsppi.dynamic.page.AdminRegisterPage</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ClientRegisterPage</servlet-name>
-        <servlet-class>com.tsppi.dynamic.page.ClientRegisterPage</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>LogoutServlet</servlet-name>
-        <servlet-class>com.tsppi.servlet.function.LogoutServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>LoginPage</servlet-name>
-        <servlet-class>com.tsppi.dynamic.page.LoginPage</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ProfilePage</servlet-name>
-        <servlet-class>com.tsppi.dynamic.page.ProfilePage</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>HomePage</servlet-name>
-        <servlet-class>com.tsppi.dynamic.page.HomePage</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>AllAccountsPage</servlet-name>
-        <servlet-class>com.tsppi.dynamic.page.AllAccountsPage</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>EditAccountPage</servlet-name>
-        <servlet-class>com.tsppi.dynamic.page.EditAccountPage</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>EditProfileServlet</servlet-name>
-        <servlet-class>com.tsppi.servlet.function.EditProfileServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>AccountActivationBServlet</servlet-name>
-        <servlet-class>com.tsppi.servlet.function.AccountActivationBServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>AddProductPage</servlet-name>
-        <servlet-class>com.tsppi.dynamic.page.AddProductPage</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>AddProductServlet</servlet-name>
-        <servlet-class>com.tsppi.servlet.function.AddProductServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ProductApprovalPage</servlet-name>
-        <servlet-class>com.tsppi.dynamic.page.ProductApprovalPage</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ProductApprovalServlet</servlet-name>
-        <servlet-class>com.tsppi.servlet.function.ProductApprovalServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>CartServlet</servlet-name>
-        <servlet-class>com.tsppi.servlet.function.CartServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ProductsPage</servlet-name>
-        <servlet-class>com.tsppi.dynamic.page.ProductsPage</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>SearchServlet</servlet-name>
-        <servlet-class>com.tsppi.servlet.function.SearchServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>AboutPage</servlet-name>
-        <servlet-class>com.tsppi.dynamic.page.AboutPage</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ServicePage</servlet-name>
-        <servlet-class>com.tsppi.dynamic.page.ServicePage</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>AddServicePage</servlet-name>
-        <servlet-class>com.tsppi.dynamic.page.AddServicePage</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>AddServiceServlet</servlet-name>
-        <servlet-class>com.tsppi.servlet.function.AddServiceServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>CartPage</servlet-name>
-        <servlet-class>com.tsppi.dynamic.page.CartPage</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>OrderRequestPage</servlet-name>
-        <servlet-class>com.tsppi.dynamic.page.OrderRequestPage</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>GenerateInvoiceServlet</servlet-name>
-        <servlet-class>com.tsppi.servlet.function.GenerateInvoiceServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>EditProductPage</servlet-name>
-        <servlet-class>com.tsppi.dynamic.page.EditProductPage</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>EditProductServlet</servlet-name>
-        <servlet-class>com.tsppi.servlet.function.EditProductServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>AllServicesIOPage</servlet-name>
-        <servlet-class>com.tsppi.dynamic.page.AllServicesIOPage</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>EditServicePage</servlet-name>
-        <servlet-class>com.tsppi.dynamic.page.EditServicePage</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>EditServiceServlet</servlet-name>
-        <servlet-class>com.tsppi.servlet.function.EditServiceServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ClientInvoicesPage</servlet-name>
-        <servlet-class>com.tsppi.dynamic.page.ClientInvoicesPage</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>VPInvoicesPage</servlet-name>
-        <servlet-class>com.tsppi.dynamic.page.VPInvoicesPage</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ServiceInquiryPage</servlet-name>
-        <servlet-class>com.tsppi.dynamic.page.ServiceInquiryPage</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ServiceInquiryServlet</servlet-name>
-        <servlet-class>com.tsppi.servlet.function.ServiceInquiryServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ForgotPasswordPage</servlet-name>
-        <servlet-class>com.tsppi.dynamic.page.ForgotPasswordPage</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ForgotPassword2Page</servlet-name>
-        <servlet-class>com.tsppi.dynamic.page.ForgotPassword2Page</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ForgotPasswordServlet</servlet-name>
-        <servlet-class>com.tsppi.servlet.function.ForgotPasswordServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ForgotPassword2Servlet</servlet-name>
-        <servlet-class>com.tsppi.servlet.function.ForgotPassword2Servlet</servlet-class>
-    </servlet>
+    <!--Servlet-->
     <servlet>
         <servlet-name>dispatcher</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <load-on-startup>2</load-on-startup>
     </servlet>
     <servlet>
-        <servlet-name>RetrieveInvoiceItemServlet</servlet-name>
-        <servlet-class>com.tsppi.servlet.function.RetrieveInvoiceItemServlet</servlet-class>
+        <servlet-name>HomePage</servlet-name>
+        <servlet-class>com.tsppi.controller.general.page.HomePage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AboutPage</servlet-name>
+        <servlet-class>com.tsppi.controller.general.page.AboutPage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductsPage</servlet-name>
+        <servlet-class>com.tsppi.controller.general.page.ProductsPage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServicesPage</servlet-name>
+        <servlet-class>com.tsppi.controller.general.page.ServicesPage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchResultPage</servlet-name>
+        <servlet-class>com.tsppi.controller.general.page.SearchResultPage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoginPage</servlet-name>
+        <servlet-class>com.tsppi.controller.account.login.page.LoginPage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ClientRegisterPage</servlet-name>
+        <servlet-class>com.tsppi.controller.account.register.page.ClientRegisterPage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminRegisterPage</servlet-name>
+        <servlet-class>com.tsppi.controller.account.register.page.AdminRegisterPage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EmployeeRegisterPage</servlet-name>
+        <servlet-class>com.tsppi.controller.account.register.page.EmployeeRegisterPage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ForgotPasswordPage</servlet-name>
+        <servlet-class>com.tsppi.controller.account.login.page.ForgotPasswordPage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoginController</servlet-name>
+        <servlet-class>com.tsppi.controller.account.login.function.LoginController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProfilePage</servlet-name>
+        <servlet-class>com.tsppi.controller.account.profile.page.ProfilePage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LogoutController</servlet-name>
+        <servlet-class>com.tsppi.controller.account.login.function.LogoutController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductApprovalPage</servlet-name>
+        <servlet-class>com.tsppi.controller.io.page.ProductApprovalPage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AllServicesIOPage</servlet-name>
+        <servlet-class>com.tsppi.controller.io.page.AllServicesIOPage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddProductPage</servlet-name>
+        <servlet-class>com.tsppi.controller.io.form.page.AddProductPage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddServicePage</servlet-name>
+        <servlet-class>com.tsppi.controller.io.form.page.AddServicePage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ClientInvoicesPage</servlet-name>
+        <servlet-class>com.tsppi.controller.client.invoice.page.ClientInvoicesPage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>VPInvoicesPage</servlet-name>
+        <servlet-class>com.tsppi.controller.vp.invoice.VPInvoicesPage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AllAccountPage</servlet-name>
+        <servlet-class>com.tsppi.controller.vp.page.AllAccountPage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditProfilePage</servlet-name>
+        <servlet-class>com.tsppi.controller.account.profile.page.EditProfilePage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditProductPage</servlet-name>
+        <servlet-class>com.tsppi.controller.io.form.page.EditProductPage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditServicePage</servlet-name>
+        <servlet-class>com.tsppi.controller.io.form.page.EditServicePage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServiceInquiryPage</servlet-name>
+        <servlet-class>com.tsppi.controller.client.form.page.ServiceInquiryPage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RegisterController</servlet-name>
+        <servlet-class>com.tsppi.controller.account.register.function.RegisterController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ForgotPasswordPage2</servlet-name>
+        <servlet-class>com.tsppi.controller.account.login.page.ForgotPasswordPage2</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ForgotPasswordController</servlet-name>
+        <servlet-class>com.tsppi.controller.account.login.function.ForgotPasswordController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ForgotPassword2Controller</servlet-name>
+        <servlet-class>com.tsppi.controller.account.login.function.ForgotPassword2Controller</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditProfileController</servlet-name>
+        <servlet-class>com.tsppi.controller.account.profile.function.EditProfileController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CartController</servlet-name>
+        <servlet-class>com.tsppi.controller.client.invoice.function.CartController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CartPage</servlet-name>
+        <servlet-class>com.tsppi.controller.client.invoice.page.CartPage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>InvoiceRequestPage</servlet-name>
+        <servlet-class>com.tsppi.controller.client.invoice.page.InvoiceRequestPage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GenerateInvoiceRequestController</servlet-name>
+        <servlet-class>com.tsppi.controller.client.invoice.function.GenerateInvoiceRequestController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServiceInquiryController</servlet-name>
+        <servlet-class>com.tsppi.controller.client.form.function.ServiceInquiryController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddProductController</servlet-name>
+        <servlet-class>com.tsppi.controller.io.form.function.AddProductController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddServiceController</servlet-name>
+        <servlet-class>com.tsppi.controller.io.form.function.AddServiceController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditProductController</servlet-name>
+        <servlet-class>com.tsppi.controller.io.form.function.EditProductController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditServiceController</servlet-name>
+        <servlet-class>com.tsppi.controller.io.form.function.EditServiceController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductApprovalController</servlet-name>
+        <servlet-class>com.tsppi.controller.io.page.function.ProductApprovalController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RetrieveInvoiceItemsController</servlet-name>
+        <servlet-class>com.tsppi.controller.client.invoice.function.RetrieveInvoiceItemsController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AccountActivationBController</servlet-name>
+        <servlet-class>com.tsppi.controller.vp.page.function.AccountActivationBController</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>RegisterServlet</servlet-name>
-        <url-pattern>/registerservlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>LoginServlet</servlet-name>
-        <url-pattern>/loginservlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SearchServlet</servlet-name>
-        <url-pattern>/search</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>EmployeeRegisterPage</servlet-name>
-        <url-pattern>/emrp</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AdminRegisterPage</servlet-name>
-        <url-pattern>/adrp</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ClientRegisterPage</servlet-name>
-        <url-pattern>/register</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>LogoutServlet</servlet-name>
-        <url-pattern>/logoutservlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>LoginPage</servlet-name>
-        <url-pattern>/login</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ProfilePage</servlet-name>
-        <url-pattern>/profile</url-pattern>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>*.htm</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>HomePage</servlet-name>
         <url-pattern>/home</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AllAccountsPage</servlet-name>
-        <url-pattern>/allaccounts</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>EditAccountPage</servlet-name>
-        <url-pattern>/editaccount</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>EditProfileServlet</servlet-name>
-        <url-pattern>/editprofileservlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AccountActivationBServlet</servlet-name>
-        <url-pattern>/activationB</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AddProductPage</servlet-name>
-        <url-pattern>/addproduct</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AddProductServlet</servlet-name>
-        <url-pattern>/addproductservlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ProductApprovalPage</servlet-name>
-        <url-pattern>/productapproval</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ProductApprovalServlet</servlet-name>
-        <url-pattern>/productapprovalservlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>AboutPage</servlet-name>
         <url-pattern>/about</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CartServlet</servlet-name>
-        <url-pattern>/cartservlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ProductsPage</servlet-name>
         <url-pattern>/products</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ServicePage</servlet-name>
+        <servlet-name>ServicesPage</servlet-name>
         <url-pattern>/services</url-pattern>
     </servlet-mapping>
+    <!--Servlet-->
     <servlet-mapping>
-        <servlet-name>AddServicePage</servlet-name>
-        <url-pattern>/addservices</url-pattern>
+        <servlet-name>SearchResultPage</servlet-name>
+        <url-pattern>/search</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AddServiceServlet</servlet-name>
-        <url-pattern>/addserviceservlet</url-pattern>
+        <servlet-name>LoginPage</servlet-name>
+        <url-pattern>/login</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>CartPage</servlet-name>
-        <url-pattern>/cart</url-pattern>
+        <servlet-name>ClientRegisterPage</servlet-name>
+        <url-pattern>/register</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>OrderRequestPage</servlet-name>
-        <url-pattern>/order</url-pattern>
+        <servlet-name>AdminRegisterPage</servlet-name>
+        <url-pattern>/adrp</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>GenerateInvoiceServlet</servlet-name>
-        <url-pattern>/generateinvoice</url-pattern>
+        <servlet-name>EmployeeRegisterPage</servlet-name>
+        <url-pattern>/emrp</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>EditProductPage</servlet-name>
-        <url-pattern>/editproduct</url-pattern>
+        <servlet-name>ForgotPasswordPage</servlet-name>
+        <url-pattern>/forgotpassword</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>EditProductServlet</servlet-name>
-        <url-pattern>/editproductservlet</url-pattern>
+        <servlet-name>LoginController</servlet-name>
+        <url-pattern>/logincontroller</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProfilePage</servlet-name>
+        <url-pattern>/profile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogoutController</servlet-name>
+        <url-pattern>/logoutcontroller</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductApprovalPage</servlet-name>
+        <url-pattern>/approveproducts</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AllServicesIOPage</servlet-name>
         <url-pattern>/allservices</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>EditServicePage</servlet-name>
-        <url-pattern>/editservice</url-pattern>
+        <servlet-name>AddProductPage</servlet-name>
+        <url-pattern>/addproduct</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>EditServiceServlet</servlet-name>
-        <url-pattern>/editserviceservlet</url-pattern>
+        <servlet-name>AddServicePage</servlet-name>
+        <url-pattern>/addservice</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ClientInvoicesPage</servlet-name>
@@ -388,43 +334,102 @@
         <url-pattern>/vpinvoices</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>AllAccountPage</servlet-name>
+        <url-pattern>/allaccounts</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditProfilePage</servlet-name>
+        <url-pattern>/editprofile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditProductPage</servlet-name>
+        <url-pattern>/editproduct</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditServicePage</servlet-name>
+        <url-pattern>/editservice</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ServiceInquiryPage</servlet-name>
         <url-pattern>/serviceinquiry</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ServiceInquiryServlet</servlet-name>
-        <url-pattern>/serviceinquiryservlet</url-pattern>
+        <servlet-name>RegisterController</servlet-name>
+        <url-pattern>/registercontroller</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ForgotPasswordPage</servlet-name>
-        <url-pattern>/forgot</url-pattern>
+        <servlet-name>ForgotPasswordPage2</servlet-name>
+        <url-pattern>/forgotpassword2</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ForgotPassword2Page</servlet-name>
-        <url-pattern>/forgot2</url-pattern>
+        <servlet-name>ForgotPasswordController</servlet-name>
+        <url-pattern>/forgotpasswordcontroller</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ForgotPasswordServlet</servlet-name>
-        <url-pattern>/forgotpasswordservlet</url-pattern>
+        <servlet-name>ForgotPassword2Controller</servlet-name>
+        <url-pattern>/forgotpassword2controller</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ForgotPassword2Servlet</servlet-name>
-        <url-pattern>/forgotpassword2servlet</url-pattern>
+        <servlet-name>EditProfileController</servlet-name>
+        <url-pattern>/editprofilecontroller</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>dispatcher</servlet-name>
-        <url-pattern>*.htm</url-pattern>
+        <servlet-name>CartController</servlet-name>
+        <url-pattern>/cartcontroller</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>RetrieveInvoiceItemServlet</servlet-name>
+        <servlet-name>CartPage</servlet-name>
+        <url-pattern>/cart</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InvoiceRequestPage</servlet-name>
+        <url-pattern>/invoicerequest</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GenerateInvoiceRequestController</servlet-name>
+        <url-pattern>/generateinvoicerequest</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServiceInquiryController</servlet-name>
+        <url-pattern>/serviceinquirycontroller</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddProductController</servlet-name>
+        <url-pattern>/addproductcontroller</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddServiceController</servlet-name>
+        <url-pattern>/addservicecontroller</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditProductController</servlet-name>
+        <url-pattern>/editproductcontroller</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditServiceController</servlet-name>
+        <url-pattern>/editservicecontroller</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductApprovalController</servlet-name>
+        <url-pattern>/approveproduct</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RetrieveInvoiceItemsController</servlet-name>
         <url-pattern>/retrieveitems</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccountActivationBController</servlet-name>
+        <url-pattern>/activationb</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
-    <!-- Database connection -->
+    <welcome-file-list>
+        <welcome-file>redirect.jsp</welcome-file>
+    </welcome-file-list>
+    <!--DB Connection-->
     <context-param>
         <param-name>user</param-name>
         <param-value>root</param-value>
@@ -437,7 +442,5 @@
         <param-name>dbURL</param-name>
         <param-value>jdbc:mysql://localhost:3306/com_tsppi</param-value>
     </context-param>
-    <welcome-file-list>
-        <welcome-file>home</welcome-file>
-    </welcome-file-list>
+    <!--DB Connection-->
 </web-app>
