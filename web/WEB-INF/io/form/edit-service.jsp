@@ -29,6 +29,12 @@
                         <div class="col-md-6 col-md-offset-3">
                             <div class="panel panel-login">
                                 <div class="panel-heading">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <h4 class="active">Please fill up the items you want to change</h4>
+                                            <h6 class="active">Leaving the fields blank, or as is, will not change the record</h6>
+                                        </div>
+                                    </div>
                                     <hr>
                                 </div>
                                 <div class="panel-body">

@@ -10,7 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/form.css" rel="stylesheet" type="text/css">
-        
+        <link href="css/form-error-validation.css" rel="stylesheet" type="text/css">
     </head>
     <body>
         <%@include file="/WEB-INF/source/navigation/navbar.jsp" %>
@@ -36,7 +36,7 @@
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <form id="register-form" action="addservicecontroller" method="post" autocomplete="off">
+                                            <form id="service-product-form" action="addservicecontroller" method="post" autocomplete="off">
                                                 <div class="form-group">
                                                     <input type="text" name="service_name" id="service_name" class="form-control" placeholder="Service Name">
                                                 </div>	
@@ -69,5 +69,8 @@
                 </div>
             </div>
 	</section>
+        <script src="imports/jquery.validate.js" type="text/javascript"></script>
+        <script src="js/add-product-service-validation.js" type="text/javascript"></script>
+        
     </body>
 </html>

@@ -9,6 +9,7 @@
 <html>
     <head>
         <link href="css/form.css" rel="stylesheet" type="text/css">
+        
     </head>
     <body>
         <%@include file="/WEB-INF/source/navigation/navbar.jsp" %>
@@ -97,7 +98,7 @@
                                     </div>
                                     <div class="row text-center">
                                         <div class="col-lg-12">
-                                            <form action="generateinvoicerequest" method="POST">
+                                            <form class="cart-form" action="generateinvoicerequest" method="POST">
                                                 <c:forEach var="al" items="${al}">
                                                     <input type="hidden" name="client_id" value="${al.getClientID()}">
                                                 </c:forEach>
@@ -126,5 +127,6 @@
                 </div>
             </div>
 	</section>
+        
     </body>
 </html>

@@ -5,7 +5,6 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -34,7 +33,8 @@
                                 <div class="panel-heading">
                                     <div class="row">
                                         <div class="col-xs-12">
-                                            <h6 class="active">Please fill up the items you want to change</h6>
+                                            <h4 class="active">Please fill up the items you want to change</h4>
+                                            <h6 class="active">Leaving the fields blank, or as is, will not change the record</h6>
                                         </div>
                                     </div>
                                     <hr>

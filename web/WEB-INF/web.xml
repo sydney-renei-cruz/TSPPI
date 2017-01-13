@@ -252,6 +252,26 @@
         <servlet-name>AccountActivationBController</servlet-name>
         <servlet-class>com.tsppi.controller.vp.page.function.AccountActivationBController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UsernameCheckerController</servlet-name>
+        <servlet-class>com.tsppi.controller.account.register.function.RegisterUsernameCheckerController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EmailCheckerController</servlet-name>
+        <servlet-class>com.tsppi.controller.account.register.function.RegisterEmailCheckerController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProfileUsenameCheckerController</servlet-name>
+        <servlet-class>com.tsppi.controller.account.profile.function.ProfileUsenameCheckerController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProfileEmailCheckerController</servlet-name>
+        <servlet-class>com.tsppi.controller.account.profile.function.ProfileEmailCheckerController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CartStockCheckerController</servlet-name>
+        <servlet-class>com.tsppi.controller.client.invoice.function.CartStockCheckerController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.htm</url-pattern>
@@ -420,6 +440,26 @@
     <servlet-mapping>
         <servlet-name>AccountActivationBController</servlet-name>
         <url-pattern>/activationb</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UsernameCheckerController</servlet-name>
+        <url-pattern>/checkusername</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EmailCheckerController</servlet-name>
+        <url-pattern>/checkemail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProfileUsenameCheckerController</servlet-name>
+        <url-pattern>/checkusername2</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProfileEmailCheckerController</servlet-name>
+        <url-pattern>/checkemail2</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CartStockCheckerController</servlet-name>
+        <url-pattern>/checkstock</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

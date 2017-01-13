@@ -9,6 +9,7 @@
 <html>
     <head>
         <link href="css/form.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" type="text/css" href="imports/tooltipster.bundle.min.css" />
     </head>
     <body>
         <%@include file="/WEB-INF/source/navigation/navbar.jsp" %>
@@ -48,10 +49,10 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <form action="cartcontroller" method="POST">
+                                            <form class="cart-form" action="cartcontroller" method="POST">
                                                 <td class="col-md-1" style="text-align: center">
-                                                    <input type="number" class="form-control" name="quantity" id="item_quantity" value="${cart_item.getQuantity()}">
-                                                    <input type='hidden' name='item_number' value='<c:out value="${counter.count}"/>'><br>
+                                                    <input type="number" class="form-control quantity" name="quantity" value="${cart_item.getQuantity()}">
+                                                    <input type='hidden' class="item_number" name='item_number' value='<c:out value="${counter.count}"/>'><br>
                                                 </td>
                                                 <td class="col-md-1 text-center"><strong>₱${cart_item.getItemCost()}</strong></td>
                                                 <td class="col-md-1 text-center"><strong>₱${cart_item.getTotalCost()}</strong></td>
@@ -111,5 +112,8 @@
                 </div>
             </div>
 	</section>
+        <script type="text/javascript" src="imports/tooltipster.bundle.min.js"></script>
+        <script src="imports/jquery.validate.js" type="text/javascript"></script>
+        <script src="js/to-cart-validation.js" type="text/javascript"></script>
     </body>
 </html>

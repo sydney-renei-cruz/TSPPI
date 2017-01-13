@@ -10,11 +10,13 @@
 
 <head>
     <link href="css/display.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="imports/tooltipster.bundle.min.css" />
 </head>
 <body>
 
     <!-- Navigation -->
     <%@include file="../source/navigation/navbar.jsp"%>
+    
     <header id="header">
         <div class="container">
             <div class="row">
@@ -57,21 +59,24 @@
                             <p class="group inner list-group-item-text">Stock: ${pb.getStock()}</p>
                             <p class="lead">₱${pb.getMSRP()}</p>
                             <c:if test="${account_type == 'client'}">
-                            <form method="POST" class="search-bar navbar-form" style="border: 1px solid transparent;" action="cartcontroller">
+                                
+                                <form  method="POST" class="search-bar navbar-form cart-form" style="border: 1px solid transparent;" action="cartcontroller">
+
                                     <div class="input-group">
-                                        <input type="hidden" name="item_number" value="${pb.getProductID()}">
+                                        <input type="hidden" class="item_number" name="item_number" value="${pb.getProductID()}">
                                         <input type="hidden" name="item_name" value="${pb.getProductName()}">
                                         <input type="hidden" name="item_stock" value="${pb.getStock()}">
                                         <input type="hidden" name="item_cost" value="${pb.getMSRP()}">
                                         <input type="hidden" name="action" value="add">
-                                        <input type="number" class="form-control" placeholder="Quantity..." name="quantity" id="quantity">
+                                        <input type="number" class="form-control quantity" placeholder="Quantity..." name="quantity">
                                         <div class="input-group-btn">
-                                            <button class="btn btn-default" type="submit">
+                                            <button class="btn btn-default add-product-btn" type="submit">
                                                 <i class="glyphicon glyphicon-plus"></i>
                                             </button>
                                         </div>
                                     </div>
                                 </form>
+                                
                             </c:if>
                             <c:if test="${job_position == 'Inventory Officer'}">
                                 <form action="editproduct" method="GET">
@@ -115,6 +120,9 @@
             </div>
     </nav>
     <script src="js/pagination.js"></script>
+    <script type="text/javascript" src="imports/tooltipster.bundle.min.js"></script>
+    <script src="imports/jquery.validate.js" type="text/javascript"></script>
+    <script src="js/to-cart-validation.js" type="text/javascript"></script>
     <script src="js/grid-list-display.js"></script>
     <script src="js/grid-height.js"></script>
     

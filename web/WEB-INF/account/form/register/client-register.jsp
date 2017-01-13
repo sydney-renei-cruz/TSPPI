@@ -38,6 +38,7 @@
                                             <form id="register-form" action="registercontroller" method="post" autocomplete="off">
                                                 <div class="form-group">
                                                     <input type="text" name="username" id="username" class="form-control" placeholder="Username" >
+                                                    <div id="username_message"></div>
                                                 </div>
                                                 <div class="form-group">
                                                     <input type="password" name="password" id="password" class="form-control" placeholder="Password" >
@@ -95,5 +96,6 @@
 	</section>
         <script src="imports/jquery.validate.js" type="text/javascript"></script>
         <script src="js/reg-form-validation.js" type="text/javascript"></script>
+        
     </body>
 </html>

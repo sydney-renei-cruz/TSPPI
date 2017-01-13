@@ -59,7 +59,14 @@ $(document).ready(function(){
        rules: {
             username: {
                 required: true,
-                minlength: 4
+                minlength: 4,
+                remote: {
+                   url: 'checkusername', //UsernameCheckerController
+                   type: 'post',
+                   data: {
+                       'username': function() { return $('#username').val(); }
+                   }
+               }
             },
             password: {
                 required: true,
@@ -73,7 +80,14 @@ $(document).ready(function(){
             last_name: "required",
             email: {
                 required: true,
-                email: true
+                email: true,
+                remote: {
+                   url: 'checkemail', //EmailCheckerController
+                   type: 'post',
+                   data: {
+                       'email': function() { return $('#email').val();}
+                   }
+               }
             },
             mobile_number: {
                 required: true,
@@ -90,8 +104,9 @@ $(document).ready(function(){
        messages: {
            username:{
                required: "Please enter a username",
-               minlength: "Username must be atleast 4 characters"
-           },
+               minlength: "Username must be atleast 4 characters",
+               remote: "Username already exists"
+            },
            password: {
                required: "Please enter a password",
                minlength: "Password must be atleast 6 characters"
@@ -104,7 +119,8 @@ $(document).ready(function(){
            last_name: "Please enter your last name",
            email: {
                required: "Please enter an email adress",
-               email: "Please enter a valid email address"
+               email: "Please enter a valid email address",
+               remote: "Email already exists"
            },
            mobile_number: {
                required: "Please enter mobile number",
