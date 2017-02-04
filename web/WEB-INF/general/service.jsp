@@ -29,47 +29,66 @@
     </header>
     <section>
         <div class="container">
-            <div class="well well-sm">
-                <strong>View As: </strong>
-                <div class="btn-group">
-                    <a href="#" id="list" class="btn btn-default btn-sm">
-                        <span class="glyphicon glyphicon-th-list"></span>
-                    </a>
-                    <a href="#" id="grid" class="btn btn-default btn-sm">
-                        <span class="glyphicon glyphicon-th"></span>
-                    </a>
-                </div>
-            </div>
             <div id="products" class="row list-group">
-                <c:forEach var="sb" items="${sb}">
-                <div class="item col-xs-4 col-lg-4 content">
-                    <img class="img-responsive" src="img/car-placeholder.png" alt="">
-                    <div class="thumbnail">
-                        <div class="caption">
-                            <h4 class="group inner list-group-item-heading">${sb.getServiceName()}</h4>
-                            <div class="info">
-                                <p class="group inner list-group-item-text">${sb.getServiceDesc()}</p>
-                            </div>
-                            <c:if test="${account_type == 'client'}">
-                                <form action="serviceinquiry" method="GET">
-                                    <input type="hidden" name="service_id" id="service_id" value="${sb.getServiceID()}">
-                                    <input type="submit" name="submit" id="submit" value="Inquire this Service" class="btn btn-warning">
-                                </form>
-                            </c:if>
-                            <c:if test="${job_position == 'Inventory Officer'}">
-                            <form action="editservice" method="GET">
-                                <input type="hidden" name="service_id" id="service_id" value="${sb.getServiceID()}">
-                                <input type="submit" name="submit" id="submit" value="Edit Service" class="btn btn-warning">
-                            </form>
-                            </c:if>
+                <div id="columns">
+                    <c:forEach var="sb" items="${sb}">
+                        <div class="content">
+                            <figure class="item">
+                                <img src="img?si=${sb.getServiceID()}">
+                                <figcaption>
+                                    <div class="view-product">
+                                        <h4>${sb.getServiceName()}</h4>
+                                        <button class="btn btn-link vib">
+                                            <h5>View Details</h5>
+                                            <input type="hidden" class="main-service" value="${sb.getServiceID()}">
+                                        </button>
+                                    </div>
+                                </figcaption>
+                            </figure>
                         </div>
-                    </div>
+                    </c:forEach>
                 </div>
-                </c:forEach>
             </div>
         </div>
     </section>
-    
+    <!--Service Details Modal-->
+    <div id="service-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Service Description</th>
+                            </tr>
+                        </thead>
+                        <tbody id="show-services">
+                        </tbody>
+                    </table>
+                    <c:if test="${account_type == 'client'}">
+                        <form action="serviceinquiry" method="GET">
+                            <div class="inquiry-element"></div>
+                            <input type="submit" name="submit" id="submit" value="Inquire this Service" class="btn btn-warning">
+                        </form>
+                    </c:if>
+                    <c:if test="${job_position == 'Inventory Officer'}">
+                    <form action="editservice" method="GET">
+                        <div class="edit-element"></div>
+                        <input type="submit" name="submit" id="submit" value="Edit Service" class="btn btn-warning">
+                    </form>
+                    </c:if>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Service Details Modal-->
     <!-- pagination -->
     <nav class="text-center">
             <div class="col-lg-12">
@@ -88,8 +107,43 @@
             </div>
     </nav>
     <script src="js/pagination.js"></script>
-    <script src="js/grid-list-display.js"></script>
-    <script src="js/grid-height.js"></script>
+    <script>
+        $(document).ready(function(){
+                $('.vib').click(function(){
+                    $('#show-services').empty();
+                    $('.modal-title').empty();
+                    $('.edit-element').empty();
+                    $('.inquiry-element').empty();
+                    var $service_id = $(this).find('.main-service').val();
+                    $.getJSON('retrieveservice', {service_id: $service_id})
+                        .done(function(json){
+                            var $tableData = "";
+                            var $spanData = "";
+                            var $editData = "";
+                            var $inquiryData = "";
+                            for(var i=0; i<json.length; i++){
+                                $spanData = $('<span/>');
+                                $spanData.append(json[i].name);
+                                $('.modal-title').append($spanData);
+                                
+                                $tableData = $('<tr/>');
+                                $tableData.append('<td>' + json[i].description + '</td>');
+                                $('#show-services').append($tableData);
+                                
+                                $editData = $('<span/>');
+                                $editData.append('<input type="hidden" name="service_id" id="service_id" value="'+ json[i].id +'">');
+                                $('.edit-element').append($editData);
+                                
+                                $inquiryData = $('<span/>');
+                                $inquiryData.append('<input type="hidden" name="service_id" id="service_id" value="' + json[i].id + '">');
+                                $('.inquiry-element').append($inquiryData);
+                            }
+                        
+                        });
+                    $('#service-modal').modal('show');
+                });
+            });
+    </script>
 </body>
 
 </html>

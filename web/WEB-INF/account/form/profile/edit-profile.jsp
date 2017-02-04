@@ -43,34 +43,48 @@
                                     <div class="row">
                                         <c:forEach var="pb" items="${pb}">
                                         <div class="col-lg-12">
-                                            <form id="register-form" action="editprofilecontroller" method="get" autocomplete="off">
+                                            <form id="register-form" action="editprofilecontroller" method="post" autocomplete="off" enctype="multipart/form-data" onSubmit="return fileSize();">
                                                 <div class="form-group">
-                                                    <input type="text" name="username" id="username" class="form-control" placeholder="Username" value="${pb.getUsername()}">
+                                                    <label>Username </label>
+                                                    <input type="text" name="username" id="username" class="form-control" placeholder="Ex. MyUsername01" value="${pb.getUsername()}">
                                                 </div>                       
                                                 <div class="form-group">
-                                                        <input type="text" name="firstname" id="first_name" class="form-control" placeholder="First Name" value="${pb.getFirstName()}">
+                                                    <label>First Name </label>
+                                                        <input type="text" name="firstname" id="first_name" class="form-control" placeholder="Ex. John" value="${pb.getFirstName()}">
                                                 </div>
                                                 <div class="form-group">
-                                                    <input type="text" name="lastname" id="last_name" class="form-control" placeholder="Last Name" value="${pb.getLastName()}">
+                                                    <label>Last Name </label>
+                                                    <input type="text" name="lastname" id="last_name" class="form-control" placeholder="Ex. Doe" value="${pb.getLastName()}">
                                                 </div>
                                                 <div class="form-group">
-                                                    <input type="email" name="email" id="email" class="form-control" placeholder="Email Address" value="${pb.getEmail()}">
+                                                    <label>Email Address </label>
+                                                    <input type="email" name="email" id="email" class="form-control" placeholder="Ex. john.doe@gmail.com" value="${pb.getEmail()}">
                                                 </div>
                                                 <div class="form-group">
+                                                    <label>Password </label>
                                                     <input type="password" name="password" id="password" class="form-control" placeholder="Password" value="">
                                                 </div>
+                                                
                                                 <c:if test="${account_type == 'client'}">
                                                     <div class="form-group">
+                                                        <label>Mobile Number </label>
                                                         <input type="number" name="mobile" id="mobile_number" class="form-control" value="${pb.getMobile()}" placeholder="Mobile Number (The length of the number should be 11)" pattern=".{11,11}" title="Required length of number is 11">
                                                     </div>
 
                                                     <div class="form-group">
+                                                        <label>Telephone Number </label>
                                                         <input type="number" name="telephone" id="telephone_number" class="form-control" value="${pb.getTelephone()}" placeholder="Telephone Number (The length of the number should be 7)" pattern=".{7,7}" title="Required length of number is 7">
                                                     </div>
                                                     <div class="form-group">
-                                                        <textarea rows="4" cols="50" placeholder="Mailing Address" class="form-control" name="address" id="address">${pb.getAddress()}</textarea>
+                                                        <label>Home Address </label>
+                                                        <textarea rows="4" cols="50" placeholder="Home Address" class="form-control" name="address" id="address">${pb.getAddress()}</textarea>
                                                     </div>  
                                                 </c:if>
+                                                <div class="form-group">
+                                                    <h4>Please select image</h4>
+                                                    <input type="file" accept="image/*" name="account_image" id="account_image" class="form-control">
+                                                    <span id="image_size_error" style="color: #FF0000"></span>
+                                                </div>
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-sm-6 col-sm-offset-3"> 
@@ -99,6 +113,7 @@
             </div>
 	</section>
         <script src="imports/jquery.validate.js" type="text/javascript"></script>
+        <script src="imports/additional-methods.js" type="text/javascript"></script>
         <script src="js/edit-prof-validation.js" type="text/javascript"></script>
     </body>
 </html>

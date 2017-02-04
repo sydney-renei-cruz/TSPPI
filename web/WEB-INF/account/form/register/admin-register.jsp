@@ -35,25 +35,36 @@
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <form id="register-form" action="registerservlet" method="post" autocomplete="off">
+                                            <form id="register-form" action="registercontroller" method="post" autocomplete="off" enctype="multipart/form-data" onSubmit="return fileSize();">
                                                 <div class="form-group">
-                                                    <input type="text" name="username" id="username" class="form-control" placeholder="Username" >
+                                                    <label>Username </label>
+                                                    <input type="text" name="username" id="username" class="form-control" placeholder="Ex. MyUsername01" >
                                                 </div>
                                                 <div class="form-group">
+                                                    <label>Password </label>
                                                     <input type="password" name="password" id="password" class="form-control" placeholder="Password" >
                                                 </div>
                                                 <div class="form-group">
+                                                    <label>Confirm Password </label>
                                                     <input type="password" name="confirm_password" id="confirm-password" class="form-control" placeholder="Confirm Password" >
                                                 </div>                                                
                                                 <div class="form-group">
-                                                        <input type="text" name="first_name" id="first_name" class="form-control" placeholder="First Name" >
+                                                    <label>First Name </label>
+                                                    <input type="text" name="first_name" id="first_name" class="form-control" placeholder="Ex. John" >
                                                 </div>
                                                 <div class="form-group">
-                                                    <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Last Name" >
+                                                    <label>Last Name </label>
+                                                    <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Ex. Doe" >
                                                 </div>
                                                 <div class="form-group">
-                                                    <input type="email" name="email" id="email" class="form-control" placeholder="Email Address" >
-                                                </div>			
+                                                    <label>Email </label>
+                                                    <input type="email" name="email" id="email" class="form-control" placeholder="Ex. john.doe@gmail.com" >
+                                                </div>
+                                                <div class="form-group">
+                                                    <h4>Please select image</h4>
+                                                    <input type="file" accept="image/*" name="account_image" id="account_image" class="form-control">
+                                                    <span id="image_size_error" style="color: #FF0000"></span>
+                                                </div>
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-sm-6 col-sm-offset-3"> 
@@ -83,6 +94,7 @@
             </div>
 	</section>
         <script src="imports/jquery.validate.js" type="text/javascript"></script>
+        <script src="imports/additional-methods.js" type="text/javascript"></script>
         <script src="js/reg-form-validation.js" type="text/javascript"></script>
     </body>
 </html>

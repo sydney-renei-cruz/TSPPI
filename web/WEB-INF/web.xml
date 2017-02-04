@@ -7,6 +7,14 @@
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+    <listener>
+        <description>ServletContextListener</description>
+        <listener-class>com.tsppi.controller.image.handler.AutoImaging</listener-class>
+    </listener>
+    <listener>
+        <description>ServletContextListener</description>
+        <listener-class>com.tsppi.controller.invoice.handler.InvoiceTracker</listener-class>
+    </listener>
     <!--Filter-->
     <filter>
         <filter-name>CommonFilter</filter-name>
@@ -83,6 +91,14 @@
     </filter-mapping>
     <!--Filter-->
     <!--Servlet-->
+    <listener>
+        <description>ServletContextListener</description>
+        <listener-class>com.tsppi.controller.image.handler.AutoImaging</listener-class>
+    </listener>
+    <listener>
+        <description>ServletContextListener</description>
+        <listener-class>com.tsppi.controller.invoice.handler.InvoiceTracker</listener-class>
+    </listener>
     <servlet>
         <servlet-name>dispatcher</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -271,6 +287,34 @@
     <servlet>
         <servlet-name>CartStockCheckerController</servlet-name>
         <servlet-class>com.tsppi.controller.client.invoice.function.CartStockCheckerController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ImageRetrieve</servlet-name>
+        <servlet-class>com.tsppi.controller.image.handler.ImageRetrieve</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductsModal</servlet-name>
+        <servlet-class>com.tsppi.controller.general.page.ProductsModal</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServicesModal</servlet-name>
+        <servlet-class>com.tsppi.controller.general.page.ServicesModal</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CancelInvoiceController</servlet-name>
+        <servlet-class>com.tsppi.controller.client.invoice.function.CancelInvoiceController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ApproveInvoiceController</servlet-name>
+        <servlet-class>com.tsppi.controller.client.invoice.function.ApproveInvoiceController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ResubmitInvoiceController</servlet-name>
+        <servlet-class>com.tsppi.controller.client.invoice.function.ResubmitInvoiceController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeliverInvoiceController</servlet-name>
+        <servlet-class>com.tsppi.controller.client.invoice.function.DeliverInvoiceController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
@@ -461,6 +505,34 @@
         <servlet-name>CartStockCheckerController</servlet-name>
         <url-pattern>/checkstock</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ImageRetrieve</servlet-name>
+        <url-pattern>/img</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductsModal</servlet-name>
+        <url-pattern>/retrieveproducts</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServicesModal</servlet-name>
+        <url-pattern>/retrieveservice</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CancelInvoiceController</servlet-name>
+        <url-pattern>/cancelinvoice</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ApproveInvoiceController</servlet-name>
+        <url-pattern>/approveinvoice</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ResubmitInvoiceController</servlet-name>
+        <url-pattern>/resubmitinvoice</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeliverInvoiceController</servlet-name>
+        <url-pattern>/deliverinvoice</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
@@ -483,4 +555,10 @@
         <param-value>jdbc:mysql://localhost:3306/com_tsppi</param-value>
     </context-param>
     <!--DB Connection-->
+    <!--Image path-->
+    <context-param>
+        <param-name>imgPath</param-name>
+        <param-value>C:/Users/Sydney Cruz/Desktop/test folder/</param-value>
+    </context-param>
+    <!--Image path-->
 </web-app>

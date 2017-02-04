@@ -16,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -36,38 +37,53 @@ public class CartStockCheckerController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        
-        Connection conn = null;
-        PreparedStatement ps;
-        ServletContext context;
-        ResultSet rs;
-        String inText = "";
+        ServletContext context = request.getSession().getServletContext();
+        HttpSession session = request.getSession();
         try{
-            context = request.getSession().getServletContext();
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
-            
-            String item_number = request.getParameter("item_number");
             int quantity = Integer.parseInt(request.getParameter("quantity"));
-            
-            inText = "SELECT stock FROM product WHERE product_id=? LIMIT 1";
-            ps = conn.prepareStatement(inText);
-            ps.setString(1, item_number);
-            rs = ps.executeQuery();
-            
-            int currentStock;
-            while(rs.next()){
-                currentStock = rs.getInt("stock");
-                if(currentStock <  quantity){
-                    out.print("false");
-                }else{
-                    out.print("true");
-                }
+            int stock_onHand = (int) session.getAttribute("stock");
+//            out.print(stock_onHand);
+            if(quantity < stock_onHand){
+                out.print("false");
+            }else{
+                out.print("true");
             }
         }catch(Exception e){
             e.printStackTrace();
             out.print(e);
+            context.log("Exception: "+ e);
         }
+//        Connection conn = null;
+//        PreparedStatement ps;
+//        ServletContext context;
+//        ResultSet rs;
+//        String inText = "";
+//        try{
+//            context = request.getSession().getServletContext();
+//            Class.forName("com.mysql.jdbc.Driver");
+//            conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
+//            
+//            String item_number = request.getParameter("item_number");
+//            int quantity = Integer.parseInt(request.getParameter("quantity"));
+//            
+//            inText = "SELECT stock FROM product WHERE product_id=? LIMIT 1";
+//            ps = conn.prepareStatement(inText);
+//            ps.setString(1, item_number);
+//            rs = ps.executeQuery();
+//            
+//            int currentStock;
+//            while(rs.next()){
+//                currentStock = rs.getInt("stock");
+//                if(currentStock <  quantity){
+//                    out.print("false");
+//                }else{
+//                    out.print("true");
+//                }
+//            }
+//        }catch(Exception e){
+//            e.printStackTrace();
+//            out.print(e);
+//        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -5,12 +5,17 @@
  */
 package com.tsppi.controller.account.register.function;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.security.MessageDigest;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
@@ -19,6 +24,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 /**
  *
@@ -93,6 +99,11 @@ public class RegisterController extends HttpServlet {
             Date date = new Date();
             String time_registered = new SimpleDateFormat("yyyy-MM-dd").format(date);
             Boolean account_status = true;
+            InputStream inputStream = null;
+            Part filePart = request.getPart("account_image");
+            if(filePart.getSize() != 0){
+                inputStream = filePart.getInputStream();
+            }
             int x;
             
             //Salts for the hashing
@@ -119,9 +130,19 @@ public class RegisterController extends HttpServlet {
             }
             password = sb.toString();
             
-            inText = "INSERT INTO account (username, password, first_name, last_name, email, account_type_id, account_status, time_registered) "
+            
+            if(filePart.getSize() != 0){
+                inText = "INSERT INTO account "
+                    + "(username, password, first_name, last_name, email, account_type_id, account_status, time_registered, account_image) "
+                    + "VALUES (?,?,?,?,?,?,?,?,?)";
+                ps = conn.prepareStatement(inText, Statement.RETURN_GENERATED_KEYS);
+                ps.setBlob(9, inputStream);
+            }else{
+                inText = "INSERT INTO account "
+                    + "(username, password, first_name, last_name, email, account_type_id, account_status, time_registered) "
                     + "VALUES (?,?,?,?,?,?,?,?)";
-            ps = conn.prepareStatement(inText);
+                ps = conn.prepareStatement(inText, Statement.RETURN_GENERATED_KEYS);
+            }
             ps.setString(1, username);
             ps.setString(2, password);
             ps.setString(3, first_name);
@@ -131,6 +152,29 @@ public class RegisterController extends HttpServlet {
             ps.setBoolean(7, account_status);
             ps.setString(8, time_registered);
             x = ps.executeUpdate();
+            
+            int id;
+            try(ResultSet generated_keys = ps.getGeneratedKeys()){
+                if(generated_keys.next()){
+                    id = generated_keys.getInt(1);
+                    if(filePart.getSize() != 0){
+                        String imagePath = context.getInitParameter("imgPath") + "account\\" + id + ".png";
+                        File file = new File(imagePath);
+                        
+                        FileOutputStream outFile = new FileOutputStream(file);
+                        inputStream = filePart.getInputStream();
+                        
+                        int read = 0;
+                        int bufferSize = 1024;
+                        byte[] buffer = new byte[bufferSize];
+                        while((read = inputStream.read(buffer)) != -1){
+                            outFile.write(buffer, 0, read);
+                        }
+                        inputStream.close();
+                        outFile.close();
+                    }
+                }
+            }
             if(!form_identifier.isEmpty()){
                 if(form_identifier.equals("Employee")){
                     if(!job_id.isEmpty()){

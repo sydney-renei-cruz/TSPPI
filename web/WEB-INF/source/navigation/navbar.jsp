@@ -31,12 +31,10 @@
                 <div class="container">
                     <div class="navbar-header">
                         <a class="navbar-brand" href="home"><img alt="" src="img/tsppi.png" id="nav-img"></a>
-                        
                         <div class="nav navbar-left">
                             <a href="home" class="btn btn-link navbar-btn">HOME</a>
                             <a href="about" class="btn btn-link navbar-btn">ABOUT US</a>
                         </div>
-                        
                     </div>
                 </div>
             </nav>
@@ -56,7 +54,7 @@
                             <li style="overflow: hidden;">
                                 <form class="search-bar navbar-form" style="border: 1px solid transparent;" action="search">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Search Me!" name="srch" id="srch">
+                                        <input type="text" class="form-control" placeholder="Search a Product!" name="srch" id="srch">
                                         <div class="input-group-btn">
                                             <button class="btn btn-default" type="submit">
                                                 <i class="glyphicon glyphicon-search"></i>
@@ -105,18 +103,69 @@
                                                 </li>
                                             </c:otherwise>
                                         </c:choose>
+                                        <li class="dropdown">
+                                            <a class="dropdown-toggle" data-toggle="dropdown" href=""> Invoice Setting <span class="caret"></span></a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="allinvoices" class="text-center">Check All Invoices</a></li>
+                                            </ul>
+                                        </li>
+                                    </c:if>
+                                    <c:if test="${job_position == 'Inventory Officer'}">
+                                        <li class="dropdown">
+                                            <a class="dropdown-toggle" data-toggle="dropdown" href=""> P&S Setting<span class="caret"></span></a>
+                                            <ul class="dropdown-menu">
+                                                <li class="dropdown-submenu text-center">
+                                                    <a class="test" tabindex="-1" href="#">Product <span class="caret"></span></a>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a href="addproduct" class="text-center">Add Product</a></li>
+                                                        <li><a href="approveproducts" class="text-center">Edit Product</a></li>
+                                                        <li><a href="approveproducts" class="text-center">Approve Products</a></li>
+                                                        <li><a href="#" class="text-center">Add Product Category</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li class="dropdown-submenu text-center">
+                                                    <a class="test" tabindex="-1" href="#">Service <span class="caret"></span></a>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a href="addservice" class="text-center">Add Service</a></li>
+                                                        <li><a href="allservices" class="text-center">Edit Service</a></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </c:if>
+                                    <c:if test="${job_position == 'Vice President'}">
+                                        <li class="dropdown">
+                                            <a class="dropdown-toggle" data-toggle="dropdown" href=""> Invoice Setting <span class="caret"></span></a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="vpinvoices" class="text-center">Check All Invoices</a></li>
+                                            </ul>
+                                        </li>
+                                    </c:if>
+                                    <c:if test="${account_type == 'admin'}">
+                                        <li class="dropdown">
+                                            <a class="dropdown-toggle" data-toggle="dropdown" href=""> Admin Privileges <span class="caret"></span></a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="emrp" class="text-center">Register Employee</a></li>
+                                            </ul>
+                                        </li>
                                     </c:if>
                                     <li class="dropdown">
-                                        <a class="dropdown-toggle" data-toggle="dropdown" href=""><span class="glyphicon glyphicon-user"></span> ${user} <span class="caret"></span></a>
+                                        <a class="dropdown-toggle" data-toggle="dropdown" href=""> ${user} <span class="caret"></span></a>
                                         <ul class="dropdown-menu">
                                             <li><a href="profile" class="text-center">View Profile</a></li>
+                                            <li class="dropdown-submenu">
+                                                <a class="test" tabindex="-1" href="#">Account Setting <span class="caret"></span></a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="editprofile" class="text-center">Edit Profile</a></li>
+                                                    <li><a href="#" class="text-center">Change Password</a></li>
+                                                </ul>
+                                            </li>                                            
                                             <li><a href="logoutcontroller" class="text-center">Logout</a></li>
                                         </ul>
                                     </li>
-                                    
                                 </c:when>
                                 <c:otherwise>
-                                    <li><a href="login"><span class="glyphicon glyphicon-user"></span> Account</a></li>
+                                    <li><a href="login">Log in</a></li>
                                 </c:otherwise>
                             </c:choose>
                         </ul>   
@@ -128,6 +177,14 @@
                 </div>
             </nav>
         </header>
-        
+        <script>
+        $(document).ready(function(){
+          $('.dropdown-submenu a.test').on("click", function(e){
+            $(this).next('ul').toggle();
+            e.stopPropagation();
+            e.preventDefault();
+          });
+        });
+        </script>
     </body>
 </html>

@@ -101,6 +101,7 @@ public class GenerateInvoiceRequestController extends HttpServlet {
             String[] q = request.getParameterValues("quantity");
             int pm_id = Integer.parseInt(request.getParameter("payment_method"));
             int invoice_status = 1;
+            boolean verified = false;
             Date date = new Date();
             String invoice_date = new SimpleDateFormat("yyyy-MM-dd").format(date);
         
@@ -109,14 +110,15 @@ public class GenerateInvoiceRequestController extends HttpServlet {
                 return;
             }
             
-            inText = "insert into invoice(client_id, status_id, pm_id, total_amount, invoice_date) "
-                    + "values(?,?,?,?,?)";
+            inText = "insert into invoice(client_id, status_id, pm_id, total_amount, invoice_date, verified) "
+                    + "values(?,?,?,?,?,?)";
             ps = conn.prepareStatement(inText, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, client_id);
             ps.setInt(2, invoice_status);
             ps.setInt(3, pm_id);
             ps.setFloat(4, total_amount);
             ps.setString(5, invoice_date);
+            ps.setBoolean(6, verified);
             ps.executeUpdate();
             
             int invoice_id;
@@ -160,7 +162,7 @@ public class GenerateInvoiceRequestController extends HttpServlet {
                         al.add(ab);
                     }
                     
-                    inText = "SELECT p.product_name, p.msrp, ii.item_quantity "
+                    inText = "SELECT p.product_name, ii.item_quantity "
                             + "FROM invoice_item ii "
                             + "JOIN product p ON p.product_id = ii.product_id "
                             + "WHERE ii.invoice_id=?";
@@ -173,11 +175,9 @@ public class GenerateInvoiceRequestController extends HttpServlet {
                     while(rs.next()){
                         iib = new InvoiceItemBean();
                         iib.setProductName(rs.getString("product_name"));
-                        iib.setMSRP(rs.getFloat("msrp"));
                         iib.setItemQuantity(rs.getInt("item_quantity"));
                         al2.add(iib);
                     }
-                    
                     String full_name = "";
                     String mobile = "";
                     String telephone = "";
@@ -188,15 +188,27 @@ public class GenerateInvoiceRequestController extends HttpServlet {
                         mobile = al.get(i).getMobile();
                         telephone = al.get(i).getTelephone();
                     }
-                    String products = "";
+                    
+                    inText = "SELECT total_amount FROM invoice WHERE invoice_id = ?";
+                    ps = conn.prepareStatement(inText);
+                    ps.setInt(1, invoice_id);
+                    rs = ps.executeQuery();
+                    
                     float total_price = 0;
+                    while(rs.next())
+                        total_price = rs.getFloat("total_amount");
+                    StringBuilder sb = new StringBuilder();
                     for(int i=0; i<al2.size(); i++){
-                        products = "- " + al2.get(i).getProductName() + " - " + al2.get(i).getItemQuantity();
-                        total_price += al2.get(i).getMSRP();
+                        sb.append("- ");
+                        sb.append(al2.get(i).getProductName());
+                        sb.append(" - ");
+                        sb.append(al2.get(i).getItemQuantity());
+                        sb.append("x");
+                        sb.append("\n");
                     }
                     String message = "Hi, \n\n"
-                            + "These are the products, together with the quantity, that I want to buy from your company. \n\n"
-                            + products + "\n\n\n"
+                            + "These are the products, together with the quantity, that I want to buy from your company: \n\n"
+                            + sb.toString() + "\n\n"
                             + "Total price: " + total_price + "\n\n"
                             + "Regards, \n"
                             + full_name + " - " + email +"\n"

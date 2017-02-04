@@ -21,31 +21,6 @@
     </div>
     <!-- first section -->
     <!-- second section -->
-    <div id="comp-offer" class="pad-section">
-        <div class="container">
-            <h2 class="text-center"> What we offer </h2><hr>
-            <div class="row">
-                <div class="col-sm-6 col-xs-6 text-center">
-                    <a href="products">
-                        <i class="glyphicon glyphicon-briefcase"></i>
-                        <h4>Products</h4>
-                        <p>We offer the best of the best paper products at an
-                        affordable price.</p>
-                    </a>
-                </div>
-                <div class="col-sm-6 col-xs-6 text-center">
-                    <a href="services">
-                        <i class="glyphicon glyphicon-cog"></i>
-                        <h4>Services</h4>
-                        <p>Our paper services will not fail you. We use high technologies
-                        to produce high quality paper products.</p>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- second section -->
-    <!-- third section -->
     <c:choose>
         <c:when test="${user != null && account_type == 'client'}">
             <div id="information-2" class="home">
@@ -68,7 +43,7 @@
             </div>
         </c:otherwise>
     </c:choose>
-    <!-- third section -->
+    <!-- second section -->
     <!-- footer section -->
     <%--<%@include file="/WEB-INF/static-page/footer.jsp"%>--%>
     <!-- footer section -->

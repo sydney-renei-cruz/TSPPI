@@ -20,7 +20,7 @@
                        <div class="col-sm-12">
                            <div class="col-xs-12 col-sm-4 text-center">
                                <figure>
-                                   <img src="img/person-placeholder.jpg" alt="" class="img-circle img-responsive">
+                                   <img src="img?an=${account_num}" class="img-responsive">
                                </figure>
                            </div>
                            <div class="col-xs-12 col-sm-8">
@@ -40,45 +40,26 @@
                        </div>            
                        <div class="col-xs-12 divider text-center">
                            <div class="col-xs-12 col-sm-4 emphasis">
-                               <a href="editprofile" class="btn btn-danger btn-block"><span class="fa fa-user"></span> Edit Profile </a>
+                               <a href="editprofile" class="btn btn-primary btn-block"><span class="fa fa-user"></span> Edit Profile </a>
+                           </div>
+                           <div class="col-xs-12 col-sm-4 emphasis">
+                               <a href="#" class="btn btn-primary btn-block"><span class="fa fa-user"></span> Change Password </a>
                            </div>
                            <c:if test="${account_type == 'client'}">
                                <div class="col-xs-12 col-sm-4 emphasis">
-                                   <a href="allinvoices" class="btn btn-info btn-block"><span class="fa fa-user"></span> View All Invoices </a>
+                                   <a href="allinvoices" class="btn btn-primary btn-block"><span class="fa fa-user"></span> View All Invoices </a>
                                </div>
                            </c:if>
                            <c:if test="${job_position == 'Vice President'}">
                                <div class="col-xs-12 col-sm-4 emphasis">
-                                   <a href="allaccounts" class="btn btn-info btn-block"><span class="fa fa-user"></span> View All Accounts </a>
+                                   <a href="allaccounts" class="btn btn-primary btn-block"><span class="fa fa-user"></span> View Client Accounts </a>
                                </div>
-                               <div class="col-xs-12 col-sm-4 emphasis">
-                                   <a href="vpinvoices" class="btn btn-success btn-block"><span class="fa fa-user"></span> View All Invoices </a>
-                               </div>
-                           </c:if>
+                             </c:if>
                            <c:if test="${account_type == 'admin'}">
                                <div class="col-xs-12 col-sm-4 emphasis">
-                                   <a href="allaccounts" class="btn btn-info btn-block"><span class="fa fa-user"></span> View All Accounts </a>
+                                   <a href="allaccounts" class="btn btn-primary btn-block"><span class="fa fa-user"></span> View All Accounts </a>
                                </div>
-                               <div class="col-xs-12 col-sm-4 emphasis">
-                                   <a href="emrp" class="btn btn-success btn-block"><span class="fa fa-plus-circle"></span> Register Employee</a>
-                               </div>
-                           </c:if>
-                           <c:if test="${job_position == 'Inventory Officer'}">
-                               <div class="col-xs-12 col-sm-4 emphasis">
-                                   <a href="addproduct" class="btn btn-success btn-block"><span class="fa fa-plus-circle"></span> Add Product</a>
-                               </div>
-                               <div class="col-xs-12 col-sm-4 emphasis">
-                                   <a href="addservice" class="btn btn-warning btn-block"><span class="fa fa-user"></span> Add Services</a>
-                               </div>
-                               <div class="col-xs-12 col-sm-4 emphasis">
-                                   <a href="approveproducts" class="btn btn-info btn-block"><span class="fa fa-user"></span> Approve Products </a>
-                               </div>
-                               <div class="col-xs-12 col-sm-4 emphasis">
-                                   <a href="approveproducts" class="btn btn-primary btn-block"><span class="fa fa-user"></span> Edit Products </a>
-                               </div>
-                               <div class="col-xs-12 col-sm-4 emphasis">
-                                   <a href="allservices" class="btn btn-danger btn-block"><span class="fa fa-user"></span> Edit Services </a>
-                               </div>
+                               
                            </c:if>
                        </div>
                     </div>                 

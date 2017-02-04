@@ -44,7 +44,7 @@
                               <tbody>
                                   <c:forEach var="pb" items="${pb}">
                                       <tr>
-                                            <td><img src="img/car-placeholder.png" alt="" class="img-responsive" style="width: 100%;"></td>
+                                            <td><img src="img?pi=${pb.getProductID()}" alt="" class="img-responsive" style="width: 100%;"></td>
                                             <td>${pb.getProductName()}</td>
                                             <td>${pb.getCategoryName()}</td>
                                             <td>${pb.getMSRP()}</td>
@@ -96,7 +96,7 @@
                                   <tbody>
                                       <c:forEach var="pb2" items="${pb2}">
                                           <tr>
-                                              <td><img src="img/car-placeholder.png" alt="" class="img-responsive" style="width: 100%;"></td>
+                                              <td><img src="img?pi=${pb2.getProductID()}" class="img-responsive" style="width: 100%;"></td>
                                               <td>${pb2.getProductName()}</td>
                                               <td>${pb2.getCategoryName()}</td>
                                               <td>${pb2.getMSRP()}</td>

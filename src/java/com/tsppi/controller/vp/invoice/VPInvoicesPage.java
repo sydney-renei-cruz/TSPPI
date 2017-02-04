@@ -121,9 +121,81 @@ public class VPInvoicesPage extends HttpServlet {
                 al3.add(ib3);
             }
             //Retrieve Rejected or Canceled Invoices
+            
+            //Retrieve invoices that are in Process
+            inText = "SELECT i.invoice_id, p.payment_method, i.total_amount, i.invoice_date, s.status_name "
+                    + "from invoice i "
+                    + "join invoice_status s on s.status_id = i.status_id "
+                    + "join invoice_pm p on p.pm_id = i.pm_id "
+                    + "join client c on c.client_id = i.client_id "
+                    + "where i.status_id = 7";
+            ps = conn.prepareStatement(inText);
+            rs = ps.executeQuery();
+            
+            ArrayList<InvoiceBean> al4 = new ArrayList<>();
+            InvoiceBean ib4;
+            while(rs.next()){
+                ib4 = new InvoiceBean();
+                ib4.setInvoiceID(rs.getInt("invoice_id"));
+                ib4.setPaymentMethod(rs.getString("payment_method"));
+                ib4.setTotalAmount(rs.getFloat("total_amount"));
+                ib4.setInvoiceDate(rs.getDate("invoice_date"));
+                ib4.setStatusName(rs.getString("status_name"));
+                al4.add(ib4);
+            }
+            //Retrieve invoices that are in Process
+            
+            //Retrieve invoices that are in delivery
+            inText = "SELECT i.invoice_id, p.payment_method, i.total_amount, i.invoice_date, s.status_name "
+                    + "from invoice i "
+                    + "join invoice_status s on s.status_id = i.status_id "
+                    + "join invoice_pm p on p.pm_id = i.pm_id "
+                    + "join client c on c.client_id = i.client_id "
+                    + "where i.status_id = 6";
+            ps = conn.prepareStatement(inText);
+            rs = ps.executeQuery();
+            
+            ArrayList<InvoiceBean> al5 = new ArrayList<>();
+            InvoiceBean ib5;
+            while(rs.next()){
+                ib5 = new InvoiceBean();
+                ib5.setInvoiceID(rs.getInt("invoice_id"));
+                ib5.setPaymentMethod(rs.getString("payment_method"));
+                ib5.setTotalAmount(rs.getFloat("total_amount"));
+                ib5.setInvoiceDate(rs.getDate("invoice_date"));
+                ib5.setStatusName(rs.getString("status_name"));
+                al5.add(ib5);
+            }
+            //Retrieve invoices that are in delivery
+            
+//            Retrieve invoices that are expired
+            inText = "SELECT i.invoice_id, p.payment_method, i.total_amount, i.invoice_date, s.status_name "
+                    + "from invoice i "
+                    + "join invoice_status s on s.status_id = i.status_id "
+                    + "join invoice_pm p on p.pm_id = i.pm_id "
+                    + "join client c on c.client_id = i.client_id "
+                    + "where i.status_id = 5";
+            ps = conn.prepareStatement(inText);
+            rs = ps.executeQuery();
+            
+            ArrayList<InvoiceBean> al6 = new ArrayList<>();
+            InvoiceBean ib6;
+            while(rs.next()){
+                ib6 = new InvoiceBean();
+                ib6.setInvoiceID(rs.getInt("invoice_id"));
+                ib6.setPaymentMethod(rs.getString("payment_method"));
+                ib6.setTotalAmount(rs.getFloat("total_amount"));
+                ib6.setInvoiceDate(rs.getDate("invoice_date"));
+                ib6.setStatusName(rs.getString("status_name"));
+                al6.add(ib6);
+            }
+//            Retrieve invoices that are expired
             request.setAttribute("al1", al1);           
             request.setAttribute("al2", al2);           
             request.setAttribute("al3", al3);
+            request.setAttribute("al4", al4);
+            request.setAttribute("al5", al5);
+            request.setAttribute("al6", al6);
             request.getRequestDispatcher("/WEB-INF/vp/invoice/vp-invoices.jsp").include(request, response);
         }catch(Exception e){
             e.printStackTrace();

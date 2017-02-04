@@ -5,7 +5,10 @@
  */
 package com.tsppi.controller.account.profile.function;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -19,6 +22,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 /**
  *
@@ -53,6 +57,20 @@ public class EditProfileController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
         PrintWriter out = response.getWriter();
         
         HttpSession session = request.getSession();
@@ -74,6 +92,12 @@ public class EditProfileController extends HttpServlet {
             String address = request.getParameter("address");
             String password = request.getParameter("password");
             String currentUsername = (String)session.getAttribute("account_num");
+            InputStream inputStream = null;
+            Part filePart = request.getPart("account_image");
+            if(filePart.getSize() != 0){
+                inputStream = filePart.getInputStream();
+            }
+            int x;
             if(!first_name.equals("")){
                 ps = conn.prepareStatement("UPDATE account SET first_name = ? WHERE account_num = ?");
                 ps.setString(1, first_name);
@@ -94,6 +118,27 @@ public class EditProfileController extends HttpServlet {
                 ps.setString(2, currentUsername);
                 ps.executeUpdate();
             }
+             if(filePart.getSize() != 0){
+                ps = conn.prepareStatement("UPDATE account SET account_image = ? WHERE account_num = ?");
+                ps.setBlob(1, inputStream);
+                ps.setString(2, currentUsername);
+                ps.executeUpdate();
+                
+                String imagePath = context.getInitParameter("imgPath") + "account\\" + currentUsername + ".png";
+                File file = new File(imagePath);
+
+                FileOutputStream outFile = new FileOutputStream(file);
+                inputStream = filePart.getInputStream();
+
+                int read = 0;
+                int bufferSize = 1024;
+                byte[] buffer = new byte[bufferSize];
+                while((read = inputStream.read(buffer)) != -1){
+                    outFile.write(buffer, 0, read);
+                }
+                inputStream.close();
+                outFile.close();
+             }
             
             if(!password.equals("")){
             //                  Hash the password
@@ -181,21 +226,6 @@ public class EditProfileController extends HttpServlet {
             e.printStackTrace();
             out.print(e);
         }
-    }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-        
     }
 
     /**

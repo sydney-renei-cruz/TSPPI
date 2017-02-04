@@ -5,16 +5,21 @@
  */
 package com.tsppi.controller.io.form.function;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.Statement;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 /**
  *
@@ -81,6 +86,11 @@ public class EditProductController extends HttpServlet {
             String stock = request.getParameter("stock");
             String product_detail = request.getParameter("product_detail");
             String category_id = request.getParameter("product_category");
+            InputStream inputStream = null;
+            Part filePart = request.getPart("product_image");
+            if(filePart.getSize() != 0){
+                inputStream = filePart.getInputStream();
+            }
             
             if(!product_name.equals("")){
                 ps = conn.prepareStatement("UPDATE product SET product_name = ? WHERE product_id = ?");
@@ -111,7 +121,28 @@ public class EditProductController extends HttpServlet {
                 ps.setString(1, category_id);
                 ps.setString(2, product_id);
                 i = ps.executeUpdate();
-            } 
+            }
+            if(filePart.getSize() != 0){
+                ps = conn.prepareStatement("UPDATE product SET product_image = ? WHERE product_id = ?");
+                ps.setBlob(1, inputStream);
+                ps.setString(2, product_id);
+                i = ps.executeUpdate();
+                
+                String imagePath = context.getInitParameter("imgPath") + "product\\" + product_id + ".png";
+                File file = new File(imagePath);
+
+                FileOutputStream outFile = new FileOutputStream(file);
+                inputStream = filePart.getInputStream();
+
+                int read = 0;
+                int bufferSize = 1024;
+                byte[] buffer = new byte[bufferSize];
+                while((read = inputStream.read(buffer)) != -1){
+                    outFile.write(buffer, 0, read);
+                }
+                inputStream.close();
+                outFile.close();
+            }
             response.sendRedirect("approveproducts");
         }catch(Exception e){
             e.printStackTrace();

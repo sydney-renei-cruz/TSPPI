@@ -36,18 +36,27 @@
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <form id="service-product-form" action="addproductcontroller" method="post" autocomplete="off">
+                                            <form id="service-product-form" action="addproductcontroller" method="post" autocomplete="off" enctype="multipart/form-data" onSubmit="return fileSize();">
                                                 <div class="form-group">
+                                                    <label>Product Name </label>
                                                     <input type="text" name="product_name" id="product_name" class="form-control" placeholder="Product Name">
                                                 </div>                       
                                                 <div class="form-group">
-                                                        <input type="number" step="0.01" name="msrp" id="msrp" class="form-control" placeholder="MSRP">
+                                                    <label>Price </label>
+                                                    <input type="number" name="msrp" id="msrp" class="form-control" placeholder="MSRP">
                                                 </div>
                                                 <div class="form-group">
+                                                    <label>Product Stock </label>
                                                     <input type="number" name="stock" id="stock" class="form-control" placeholder="Stock">
                                                 </div>		
                                                 <div class="form-group">
+                                                    <label>Details of the Product</label>
                                                     <textarea rows="4" cols="50" name="product_detail" id="product_detail" class="form-control" placeholder="Details about the product"></textarea>
+                                                </div>
+                                                <div class="form-group">
+                                                    <h4>Please select image</h4>
+                                                    <input type="file" accept="image/*" name="product_image" id="product_service_image" class="form-control">
+                                                    <span id="image_size_error" style="color: #FF0000"></span>
                                                 </div>
                                                 <div class="form-group text-center">
                                                     <label>Product Category: </label>
@@ -93,6 +102,7 @@
             </div>
 	</section>
         <script src="imports/jquery.validate.js" type="text/javascript"></script>
+        <script src="imports/additional-methods.js" type="text/javascript"></script>
         <script src="js/add-product-service-validation.js" type="text/javascript"></script>
     </body>
 </html>

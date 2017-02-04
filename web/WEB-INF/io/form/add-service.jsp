@@ -36,12 +36,19 @@
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <form id="service-product-form" action="addservicecontroller" method="post" autocomplete="off">
+                                            <form id="service-product-form" action="addservicecontroller" method="post" autocomplete="off" enctype="multipart/form-data" onSubmit="return fileSize();">
                                                 <div class="form-group">
+                                                    <label>Service Name </label>
                                                     <input type="text" name="service_name" id="service_name" class="form-control" placeholder="Service Name">
                                                 </div>	
                                                 <div class="form-group">
+                                                    <label>Description of the Service </label>
                                                     <textarea rows="4" cols="50" name="service_description" id="product_detail" class="form-control" placeholder="Details about the service"></textarea>
+                                                </div>
+                                                <div class="form-group">
+                                                    <h4>Please select image</h4>
+                                                    <input type="file" accept="image/*" name="service_image" id="product_service_image" class="form-control">
+                                                    <span id="image_size_error" style="color: #FF0000"></span>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="row">
@@ -70,6 +77,7 @@
             </div>
 	</section>
         <script src="imports/jquery.validate.js" type="text/javascript"></script>
+        <script src="imports/additional-methods.js" type="text/javascript"></script>
         <script src="js/add-product-service-validation.js" type="text/javascript"></script>
         
     </body>

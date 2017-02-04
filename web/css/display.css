@@ -3,11 +3,13 @@
  * Copyright 2013-2016 Start Bootstrap
  * ref = http://bootsnipp.com/snippets/featured/list-grid-view
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
+ * Ref = https://codepen.io/dudleystorey/pen/yqrhw <<< pinterest grid view
  */
 
-body {
-    padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
-}
+/*body {
+    padding-top: 70px;  Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. 
+}*/
+body {min-height: 1000px;}
 /*header*/
 #header{
     padding: 75px 0;
@@ -21,61 +23,48 @@ body {
     padding-bottom: 15px;
     color: #fff;
 }
-
-.glyphicon { margin-right:5px; }
-.thumbnail
-{
-    margin-bottom: 20px;
-    padding: 0px;
-    -webkit-border-radius: 0px;
-    -moz-border-radius: 0px;
-    border-radius: 0px;
+#columns {
+    column-width: 320px;
+    column-gap: 15px;
+    width: 90%;
+    max-width: 1100px;
+    margin: 50px auto;
 }
 
-.item.list-group-item
-{
-    float: none;
-    width: 100%;
-    background-color: #fff;
-    margin-bottom: 20px;
-}
-.item.list-group-item:nth-of-type(odd):hover,.item.list-group-item:hover
-{
-    background: #428bca;
-}
-
-.item.list-group-item .list-group-image
-{
-    margin-right: 10px;
-}
-.item.list-group-item .thumbnail
-{
-    margin-bottom: 0px;
-}
-.item.list-group-item .caption
-{
-    padding: 9px 9px 0px 9px;
-}
-.item.list-group-item:nth-of-type(odd)
-{
-    background: #eeeeee;
+div#columns figure {
+    background: #fefefe;
+    border: 2px solid #fcfcfc;
+    box-shadow: 0 1px 2px rgba(34, 25, 25, 0.4);
+    margin: 0 2px 15px;
+    padding: 15px;
+    padding-bottom: 10px;
+    transition: opacity .4s ease-in-out;
+    display: inline-block;
+    column-break-inside: avoid;
 }
 
-.item.list-group-item:before, .item.list-group-item:after
-{
-    display: table;
-    content: " ";
+div#columns figure img {
+    width: 100%; 
+    height: auto;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 15px;
+    margin-bottom: 5px;
 }
 
-.item.list-group-item img
-{
-    float: left;
+div#columns figure figcaption {
+    font-size: .9rem;
+    color: #444;
+    line-height: 1.5;
 }
-.item.list-group-item:after
-{
-    clear: both;
+div#columns:hover figure:not(:hover) {
+    opacity: 0.4;
 }
-.list-group-item-text
-{
-    margin: 0 0 11px;
+.view-product{text-align: center;}
+@media screen and (max-width: 750px) { 
+  #columns { column-gap: 0px; }
+  #columns figure { width: 100%; }
+}
+.section-colored {
+  background-color: #e1e1e1;
+ /* change this to change the background color of a colored section */
 }

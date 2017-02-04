@@ -55,7 +55,8 @@ public class ProfilePage extends HttpServlet {
                 inText = "SELECT a.*, c.mobile, c.telephone, c.address "
                         + "FROM account a "
                         + "JOIN client c ON a.account_num = c.account_num "
-                        + "WHERE a.account_num=?";
+                        + "WHERE a.account_num=? "
+                        + "GROUP BY c.account_num";
             }
             else{
                 inText = "SELECT * FROM account "

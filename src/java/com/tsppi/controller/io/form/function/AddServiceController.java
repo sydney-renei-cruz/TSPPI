@@ -5,16 +5,22 @@
  */
 package com.tsppi.controller.io.form.function;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 /**
  *
@@ -78,13 +84,45 @@ public class AddServiceController extends HttpServlet {
             
             String service_name = request.getParameter("service_name");
             String service_description = request.getParameter("service_description");
-            
-            inText = "INSERT INTO services (service_name, service_description) VALUES (?,?)";
-            ps = conn.prepareStatement(inText);
+            InputStream inputStream = null;
+            Part filePart = request.getPart("service_image");
+            if(filePart.getSize() != 0){
+                inputStream = filePart.getInputStream();
+            }
+            if(filePart.getSize() != 0){
+                inText = "INSERT INTO services (service_name, service_description, service_image) VALUES (?,?,?)";
+                ps = conn.prepareStatement(inText, Statement.RETURN_GENERATED_KEYS);
+                ps.setBlob(3, inputStream);
+            }else{
+                inText = "INSERT INTO services (service_name, service_description) VALUES (?,?)";
+                ps = conn.prepareStatement(inText, Statement.RETURN_GENERATED_KEYS);
+            }
             ps.setString(1, service_name);
             ps.setString(2, service_description);
             i = ps.executeUpdate();
             
+            int id;
+            try(ResultSet generated_keys = ps.getGeneratedKeys()){
+                if(generated_keys.next()){
+                   id = generated_keys.getInt(1);
+                   if(filePart.getSize() != 0){
+                        String imagePath = context.getInitParameter("imgPath") + "service\\" + id + ".png";
+                        File file = new File(imagePath);
+                        
+                        FileOutputStream outFile = new FileOutputStream(file);
+                        inputStream = filePart.getInputStream();
+                        
+                        int read = 0;
+                        int bufferSize = 1024;
+                        byte[] buffer = new byte[bufferSize];
+                        while((read = inputStream.read(buffer)) != -1){
+                            outFile.write(buffer, 0, read);
+                        }
+                        inputStream.close();
+                        outFile.close();
+                    }
+                }
+            }
             if(i>0){
                 response.sendRedirect("profile");
             }else{

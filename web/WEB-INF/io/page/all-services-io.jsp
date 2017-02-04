@@ -40,7 +40,7 @@
                               <tbody>
                                     <c:forEach var="sb" items="${sb}">
                                     <tr>
-                                        <td><img src="img/car-placeholder.png" alt="" class="img-responsive" style="width: 100%;"></td>
+                                        <td><img src="img?si=${sb.getServiceID()}" class="img-responsive" style="width: 100%;"></td>
                                         <td>${sb.getServiceName()}</td>
                                         <td>${sb.getServiceDesc()}</td>
                                         <td>

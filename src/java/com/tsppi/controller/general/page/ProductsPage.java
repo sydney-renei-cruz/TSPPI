@@ -19,6 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -44,6 +45,7 @@ public class ProductsPage extends HttpServlet {
         ServletContext context;
         ResultSet rs;
         String inText = "";
+        
         try{
             context = request.getSession().getServletContext();
             Class.forName("com.mysql.jdbc.Driver");
@@ -68,6 +70,7 @@ public class ProductsPage extends HttpServlet {
                 if(rs.getBoolean("for_sale") != false){
                     pb.add(p);
                 }
+                
             }
             request.setAttribute("pb", pb);
             request.getRequestDispatcher("/WEB-INF/general/products.jsp").forward(request,response);
