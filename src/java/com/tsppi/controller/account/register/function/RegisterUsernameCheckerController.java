@@ -39,11 +39,11 @@ public class RegisterUsernameCheckerController extends HttpServlet {
         
         Connection conn = null;
         PreparedStatement ps;
-        ServletContext context;
+        ServletContext context = request.getSession().getServletContext();
         ResultSet rs;
         String inText = "";
         try{
-            context = request.getSession().getServletContext();
+            
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
             

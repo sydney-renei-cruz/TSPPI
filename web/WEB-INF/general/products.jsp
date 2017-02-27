@@ -44,7 +44,7 @@
                                             <h5>View Details</h5>
                                             <input type="hidden" class="main-product" value="${pb.getProductID()}">
                                         </button>
-                                        <c:if test="${job_position == 'Inventory Officer'}">
+                                        <c:if test="${inventory_score == true}">
                                         <form action="approveproduct" method="POST">
                                             <input type="hidden" name="product_id" id="product_id" value="${pb.getProductID()}">
                                             <input type="hidden" name="for_sale" id="for_sale" value="${pb.getForSale()}">
@@ -92,12 +92,12 @@
                         <div class="row text-center">
                             <div class="col-md-6 col-md-offset-3">
                                 <h4><strong>Add to Cart</strong></h4>
-                                <form method="POST" class="search-bar navbar-form cart-form" action="cartcontroller" autocomplete="off"> <!-- onChange="return maxStock();" -->
-                                    <div class="cart-element"></div>
+                                <form method="POST" class="search-bar navbar-form cart-form" action="cartcontroller" autocomplete="off">
+                                    <div class="form-group cart-element"></div>
                                     <div class="form-group">
                                         <input type="hidden" name="action" value="add">
                                         <input type="number" class="form-control quantity" placeholder="How many do you want?" name="quantity">
-                                        <span class="stock_error" style="color: #FF0000"></span>
+                                        <span class="err-msg" style="color: #FF0000"></span>
                                     </div>
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-primary add-product-btn" type="submit">

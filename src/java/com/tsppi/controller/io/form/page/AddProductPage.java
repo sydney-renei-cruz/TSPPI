@@ -43,13 +43,15 @@ public class AddProductPage extends HttpServlet {
         ServletContext context;
         ResultSet rs;
         String inText = "";
+        boolean status = false;
         try{
             context = request.getSession().getServletContext();
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
             
-            inText = "SELECT * FROM product_category";
+            inText = "SELECT * FROM product_category where show_category=?";
             ps = conn.prepareStatement(inText);
+            ps.setBoolean(1, status);
             rs = ps.executeQuery();
             
             ArrayList<ProductCategoryBean> pcb = new ArrayList<>();
@@ -58,10 +60,10 @@ public class AddProductPage extends HttpServlet {
                 pc = new ProductCategoryBean();
                 pc.setCategoryID(rs.getInt("category_id"));
                 pc.setCategoryName(rs.getString("category_name"));
+                pc.setShowCategory(rs.getBoolean("show_category"));
                 pcb.add(pc);
             }
             request.setAttribute("pcb", pcb);
-            
             request.getRequestDispatcher("/WEB-INF/io/form/add-product.jsp").forward(request, response);
         }catch(Exception e){
             e.printStackTrace();

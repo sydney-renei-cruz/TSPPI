@@ -52,7 +52,7 @@
                     <div class="collapse navbar-collapse bot-nav">
                         <ul class="nav navbar-nav navbar-right">
                             <li style="overflow: hidden;">
-                                <form class="search-bar navbar-form" style="border: 1px solid transparent;" action="search">
+                                <form class="search-bar navbar-form" style="border: 1px solid transparent;" action="search" autocomplete="off">
                                     <div class="input-group">
                                         <input type="text" class="form-control" placeholder="Search a Product!" name="srch" id="srch">
                                         <div class="input-group-btn">
@@ -80,15 +80,15 @@
                                                     <ul class="dropdown-menu dropdown-cart" role="menu">
                                                         <c:forEach var="cart_item" items="${cart.getCartItems()}" varStatus="counter">
                                                         <li>
-                                                            <form name="item" action="cartcontroller" method="POST">
+                                                            <form id="nav-cart" name="item" action="cartcontroller" method="POST">
                                                                 <span class="item">
                                                                   <span class="item-left">
                                                                       <span class="item-info">
                                                                           <span>${cart_item.getItemName()}</span>
                                                                           <span>x${cart_item.getQuantity()} - ₱${cart_item.getTotalCost()}</span>
+                                                                          <input type="hidden" id="cart-quantity" name="cart-quantity" value="${cart_item.getQuantity()}">
                                                                       </span>
                                                                   </span>
-
                                                                         <span class="item-right">
                                                                             <input type='hidden' name='item_number' value='<c:out value="${counter.count}"/>'>
                                                                             <input type="submit" name="action" class="btn btn-xs btn-danger pull-right" value="x">
@@ -110,7 +110,7 @@
                                             </ul>
                                         </li>
                                     </c:if>
-                                    <c:if test="${job_position == 'Inventory Officer'}">
+                                    <c:if test="${inventory_score == true}">
                                         <li class="dropdown">
                                             <a class="dropdown-toggle" data-toggle="dropdown" href=""> P&S Setting<span class="caret"></span></a>
                                             <ul class="dropdown-menu">
@@ -120,7 +120,8 @@
                                                         <li><a href="addproduct" class="text-center">Add Product</a></li>
                                                         <li><a href="approveproducts" class="text-center">Edit Product</a></li>
                                                         <li><a href="approveproducts" class="text-center">Approve Products</a></li>
-                                                        <li><a href="#" class="text-center">Add Product Category</a></li>
+                                                        <li><a href="addproductcategory" class="text-center">Add Product Category</a></li>
+                                                        <li><a href="allproductcategory" class="text-center">Edit Product Category</a></li>
                                                     </ul>
                                                 </li>
                                                 <li class="dropdown-submenu text-center">
@@ -133,11 +134,19 @@
                                             </ul>
                                         </li>
                                     </c:if>
-                                    <c:if test="${job_position == 'Vice President'}">
+                                    <c:if test="${management_score == true}">
                                         <li class="dropdown">
-                                            <a class="dropdown-toggle" data-toggle="dropdown" href=""> Invoice Setting <span class="caret"></span></a>
+                                            <a class="dropdown-toggle" data-toggle="dropdown" href=""> Management Privileges <span class="caret"></span></a>
                                             <ul class="dropdown-menu">
                                                 <li><a href="vpinvoices" class="text-center">Check All Invoices</a></li>
+                                                <li><a href="allaccounts" class="text-center">View Client Accounts </a></li>
+                                                <li class="dropdown-submenu text-center">
+                                                    <a class="test" tabindex="-1" href="#">Payment Method <span class="caret"></span></a>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a href="addpaymentmethod" class="text-center">Add Payment Method</a></li>
+                                                        <li><a href="allpaymentmethod" class="text-center">Edit Payment Method</a></li>
+                                                    </ul>
+                                                </li>
                                             </ul>
                                         </li>
                                     </c:if>
@@ -145,7 +154,22 @@
                                         <li class="dropdown">
                                             <a class="dropdown-toggle" data-toggle="dropdown" href=""> Admin Privileges <span class="caret"></span></a>
                                             <ul class="dropdown-menu">
-                                                <li><a href="emrp" class="text-center">Register Employee</a></li>
+                                                <li class="dropdown-submenu text-center">
+                                                    <a class="test" tabindex="-1" href="#">Employee Account <span class="caret"></span></a>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a href="emrp" class="text-center">Register Employee</a></li>
+                                                        <li><a href="allaccounts" class="text-center">View All Accounts </a></li>
+                                                    </ul>
+                                                </li>
+                                                
+                                                <li class="dropdown-submenu text-center">
+                                                    <a class="test" tabindex="-1" href="#">Job Position <span class="caret"></span></a>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a href="addjobposition" class="text-center">Add Job Position</a></li>
+                                                        <li><a href="alljobposition" class="text-center">All Job Position</a></li>
+                                                    </ul>
+                                                </li>
+                                                
                                             </ul>
                                         </li>
                                     </c:if>
@@ -177,14 +201,38 @@
                 </div>
             </nav>
         </header>
+        <div class="scroll-top-wrapper ">
+            <span class="scroll-top-inner">
+                <i class="glyphicon glyphicon-chevron-up"></i>
+            </span>
+        </div>
         <script>
-        $(document).ready(function(){
-          $('.dropdown-submenu a.test').on("click", function(e){
-            $(this).next('ul').toggle();
-            e.stopPropagation();
-            e.preventDefault();
-          });
-        });
+            $(document).ready(function(){
+                $(function(){
+                    $(document).on( 'scroll', function(){
+                        if ($(window).scrollTop() > 100) {
+                            $('.scroll-top-wrapper').addClass('show');
+                        } else {
+                            $('.scroll-top-wrapper').removeClass('show');
+                        }
+                    });
+                    $('.scroll-top-wrapper').on('click', scrollToTop);
+                });
+                function scrollToTop() {
+                    verticalOffset = typeof(verticalOffset) != 'undefined' ? verticalOffset : 0;
+                    element = $('body');
+                    offset = element.offset();
+                    offsetTop = offset.top;
+                    $('html, body').animate({scrollTop: offsetTop}, 500, 'linear');
+                }
+                
+                $('.dropdown-submenu a.test').on("click", function(e){
+                    $(this).next('ul').toggle();
+                e.stopPropagation();
+                e.preventDefault();
+              });
+            });
         </script>
+        
     </body>
 </html>

@@ -16,79 +16,88 @@
         <listener-class>com.tsppi.controller.invoice.handler.InvoiceTracker</listener-class>
     </listener>
     <!--Filter-->
-    <filter>
-        <filter-name>CommonFilter</filter-name>
-        <filter-class>com.tsppi.controller.session.filter.CommonFilter</filter-class>
-    </filter>
-    <filter>
-        <filter-name>AuthenticatedFilter</filter-name>
-        <filter-class>com.tsppi.controller.session.filter.AuthenticatedFilter</filter-class>
-    </filter>
-    <filter>
-        <filter-name>AdminFilter</filter-name>
-        <filter-class>com.tsppi.controller.session.filter.AdminFilter</filter-class>
-    </filter>
-    <filter>
-        <filter-name>CartFilter</filter-name>
-        <filter-class>com.tsppi.controller.session.filter.CartFilter</filter-class>
-    </filter>
-    <filter>
-        <filter-name>ClientFilter</filter-name>
-        <filter-class>com.tsppi.controller.session.filter.ClientFilter</filter-class>
-    </filter>
-    <filter>
-        <filter-name>VPFilter</filter-name>
-        <filter-class>com.tsppi.controller.session.filter.VPFilter</filter-class>
-    </filter>
-    <filter>
-        <filter-name>SpecAdVpFilter</filter-name>
-        <filter-class>com.tsppi.controller.session.filter.SpecAdVpFilter</filter-class>
-    </filter>
-    <filter>
-        <filter-name>InventoryOfficerFilter</filter-name>
-        <filter-class>com.tsppi.controller.session.filter.InventoryOfficerFilter</filter-class>
-    </filter>
     <filter-mapping>
-        <filter-name>CommonFilter</filter-name>
+        <filter-name>ProfileFilter</filter-name>
         <url-pattern>/profile</url-pattern>
         <url-pattern>/editprofile</url-pattern>
     </filter-mapping>
     <filter-mapping>
-        <filter-name>AuthenticatedFilter</filter-name>
+        <filter-name>LoggedInFilter</filter-name>
         <url-pattern>/register</url-pattern>
         <url-pattern>/adrp</url-pattern>
         <url-pattern>/login</url-pattern>
     </filter-mapping>
     <filter-mapping>
-        <filter-name>AdminFilter</filter-name>
+        <filter-name>WebAdminFilter</filter-name>
         <url-pattern>/emrp</url-pattern>
+        <url-pattern>/addjobposition</url-pattern>
+        <url-pattern>/editjobposition</url-pattern>
+        <url-pattern>/alljobposition</url-pattern>
     </filter-mapping>
     <filter-mapping>
-        <filter-name>CartFilter</filter-name>
+        <filter-name>ClientCartFilter</filter-name>
         <url-pattern>/cart</url-pattern>
         <url-pattern>/invoicerequest</url-pattern>
     </filter-mapping>
     <filter-mapping>
-        <filter-name>ClientFilter</filter-name>
+        <filter-name>ClientPrivilegeFilter</filter-name>
         <url-pattern>/allinvoices</url-pattern>
         <url-pattern>/serviceinquiry</url-pattern>
     </filter-mapping>
     <filter-mapping>
-        <filter-name>VPFilter</filter-name>
+        <filter-name>MgtPrivilegeFilter</filter-name>
         <url-pattern>/vpinvoices</url-pattern>
+        <url-pattern>/allpaymentmethod</url-pattern>
+        <url-pattern>/addpaymentmethod</url-pattern>
+        <url-pattern>/editpaymentmethod</url-pattern>
     </filter-mapping>
     <filter-mapping>
-        <filter-name>SpecAdVpFilter</filter-name>
+        <filter-name>AdVPPrivilegeFilter</filter-name>
         <url-pattern>/allaccounts</url-pattern>
     </filter-mapping>
     <filter-mapping>
-        <filter-name>InventoryOfficerFilter</filter-name>
+        <filter-name>IOPrivilegeFilter</filter-name>
         <url-pattern>/addproduct</url-pattern>
         <url-pattern>/addservices</url-pattern>
         <url-pattern>/approveproducts</url-pattern>
         <url-pattern>/editproduct</url-pattern>
         <url-pattern>/allservices</url-pattern>
+        <url-pattern>/allproductcategory</url-pattern>
+        <url-pattern>/addproductcategory</url-pattern>
+        <url-pattern>/editproductcategory</url-pattern>
     </filter-mapping>
+    <filter>
+        <filter-name>ProfileFilter</filter-name>
+        <filter-class>com.tsppi.controller.session.filter.page.ProfileFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>LoggedInFilter</filter-name>
+        <filter-class>com.tsppi.controller.session.filter.page.LoggedInFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>WebAdminFilter</filter-name>
+        <filter-class>com.tsppi.controller.session.filter.page.AdminPrivilegeFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>ClientCartFilter</filter-name>
+        <filter-class>com.tsppi.controller.session.filter.page.ClientCartFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>ClientPrivilegeFilter</filter-name>
+        <filter-class>com.tsppi.controller.session.filter.page.ClientPrivilegeFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>MgtPrivilegeFilter</filter-name>
+        <filter-class>com.tsppi.controller.session.filter.page.MgtPrivilegeFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>AdVPPrivilegeFilter</filter-name>
+        <filter-class>com.tsppi.controller.session.filter.page.AdVPPrivilegeFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>IOPrivilegeFilter</filter-name>
+        <filter-class>com.tsppi.controller.session.filter.page.IOPrivilegeFilter</filter-class>
+    </filter>
     <!--Filter-->
     <!--Servlet-->
     <listener>
@@ -138,7 +147,7 @@
     </servlet>
     <servlet>
         <servlet-name>EmployeeRegisterPage</servlet-name>
-        <servlet-class>com.tsppi.controller.account.register.page.EmployeeRegisterPage</servlet-class>
+        <servlet-class>com.tsppi.controller.admin.form.page.EmployeeRegisterPage</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ForgotPasswordPage</servlet-name>
@@ -315,6 +324,110 @@
     <servlet>
         <servlet-name>DeliverInvoiceController</servlet-name>
         <servlet-class>com.tsppi.controller.client.invoice.function.DeliverInvoiceController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddProductCategory</servlet-name>
+        <servlet-class>com.tsppi.controller.io.form.page.AddProductCategoryPage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddProductCategoryController</servlet-name>
+        <servlet-class>com.tsppi.controller.io.form.function.AddProductCategoryController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditProductCategoryPage</servlet-name>
+        <servlet-class>com.tsppi.controller.io.form.page.EditProductCategoryPage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AllProductCategoryPage</servlet-name>
+        <servlet-class>com.tsppi.controller.io.page.AllProductCategoryPage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditProductCategoryController</servlet-name>
+        <servlet-class>com.tsppi.controller.io.form.function.EditProductCategoryController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CheckCategoryNameController</servlet-name>
+        <servlet-class>com.tsppi.controller.io.form.function.CheckCategoryNameController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CheckCategoryName2Controller</servlet-name>
+        <servlet-class>com.tsppi.controller.io.form.function.CheckCategoryName2Controller</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProductCategoryVisibilityOptionController</servlet-name>
+        <servlet-class>com.tsppi.controller.io.page.function.ProductCategoryVisibilityOptionController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddPaymentMethodPage</servlet-name>
+        <servlet-class>com.tsppi.controller.vp.form.page.AddPaymentMethodPage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddPaymentMethodController</servlet-name>
+        <servlet-class>com.tsppi.controller.vp.form.function.AddPaymentMethodController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AllPaymentMethodPage</servlet-name>
+        <servlet-class>com.tsppi.controller.vp.page.AllPaymentMethodPage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditPaymentMethodPage</servlet-name>
+        <servlet-class>com.tsppi.controller.vp.form.page.EditPaymentMethodPage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditPaymentMethodController</servlet-name>
+        <servlet-class>com.tsppi.controller.vp.form.function.EditPaymentMethodController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PaymentMethodVisibilityoptionController</servlet-name>
+        <servlet-class>com.tsppi.controller.vp.page.function.PaymentMethodVisibilityoptionController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CheckMethodNameController</servlet-name>
+        <servlet-class>com.tsppi.controller.vp.form.function.CheckMethodNameController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CheckMethodName2Controller</servlet-name>
+        <servlet-class>com.tsppi.controller.vp.form.function.CheckMethodName2Controller</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddJobPositionPage</servlet-name>
+        <servlet-class>com.tsppi.controller.admin.form.page.AddJobPositionPage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddJobPositionController</servlet-name>
+        <servlet-class>com.tsppi.controller.admin.form.function.AddJobPositionController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AllJobPositionPage</servlet-name>
+        <servlet-class>com.tsppi.controller.admin.page.AllJobPositionPage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManagementPrivilegeController</servlet-name>
+        <servlet-class>com.tsppi.controller.admin.page.function.ManagementPrivilegeController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>InventoryPrivilegeController</servlet-name>
+        <servlet-class>com.tsppi.controller.admin.page.function.InventoryPrivilegeController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>JobVisisibilityOptionController</servlet-name>
+        <servlet-class>com.tsppi.controller.admin.page.function.JobVisisibilityOptionController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CheckPositionNameController</servlet-name>
+        <servlet-class>com.tsppi.controller.admin.form.function.CheckPositionNameController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditJobPositionPage</servlet-name>
+        <servlet-class>com.tsppi.controller.admin.form.page.EditJobPositionPage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditJobPositionController</servlet-name>
+        <servlet-class>com.tsppi.controller.admin.form.function.EditJobPositionController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CheckPositionName2Controller</servlet-name>
+        <servlet-class>com.tsppi.controller.admin.form.function.CheckPositionName2Controller</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
@@ -532,6 +645,110 @@
     <servlet-mapping>
         <servlet-name>DeliverInvoiceController</servlet-name>
         <url-pattern>/deliverinvoice</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddProductCategory</servlet-name>
+        <url-pattern>/addproductcategory</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddProductCategoryController</servlet-name>
+        <url-pattern>/addproductcategorycontroller</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditProductCategoryPage</servlet-name>
+        <url-pattern>/editproductcategory</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AllProductCategoryPage</servlet-name>
+        <url-pattern>/allproductcategory</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditProductCategoryController</servlet-name>
+        <url-pattern>/editproductcategorycontroller</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckCategoryNameController</servlet-name>
+        <url-pattern>/checkcategoryname</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckCategoryName2Controller</servlet-name>
+        <url-pattern>/checkcategoryname2</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProductCategoryVisibilityOptionController</servlet-name>
+        <url-pattern>/categoryvisibilityoption</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddPaymentMethodPage</servlet-name>
+        <url-pattern>/addpaymentmethod</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddPaymentMethodController</servlet-name>
+        <url-pattern>/addpaymentmethodcontroller</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AllPaymentMethodPage</servlet-name>
+        <url-pattern>/allpaymentmethod</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditPaymentMethodPage</servlet-name>
+        <url-pattern>/editpaymentmethod</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditPaymentMethodController</servlet-name>
+        <url-pattern>/editpaymentmethodcontroller</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PaymentMethodVisibilityoptionController</servlet-name>
+        <url-pattern>/paymentmethodvisibilityoption</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckMethodNameController</servlet-name>
+        <url-pattern>/checkmethodname</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckMethodName2Controller</servlet-name>
+        <url-pattern>/checkmethodname2</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddJobPositionPage</servlet-name>
+        <url-pattern>/addjobposition</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddJobPositionController</servlet-name>
+        <url-pattern>/addjobpositioncontroller</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AllJobPositionPage</servlet-name>
+        <url-pattern>/alljobposition</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManagementPrivilegeController</servlet-name>
+        <url-pattern>/managementprivilegecontroller</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InventoryPrivilegeController</servlet-name>
+        <url-pattern>/inventoryprivilegecontroller</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>JobVisisibilityOptionController</servlet-name>
+        <url-pattern>/jobvisibilityoption</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckPositionNameController</servlet-name>
+        <url-pattern>/checkpositionname</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditJobPositionPage</servlet-name>
+        <url-pattern>/editjobposition</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditJobPositionController</servlet-name>
+        <url-pattern>/editjobpositioncontroller</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckPositionName2Controller</servlet-name>
+        <url-pattern>/checkpositionname2</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

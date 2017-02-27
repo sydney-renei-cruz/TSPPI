@@ -14,15 +14,18 @@ import java.io.Serializable;
 public class ProductCategoryBean implements Serializable{
     private int category_id;
     private String category_name;
+    private boolean show_category;
     
     public ProductCategoryBean(){
         category_id = 0;
         category_name = "";
+        show_category = false;
     }
     
-    public ProductCategoryBean(int cid, String cn){
+    public ProductCategoryBean(int cid, String cn, boolean sc){
         category_id = cid;
         category_name = cn;
+        show_category = sc;
     }
     
     public void setCategoryID(int cid){
@@ -31,11 +34,17 @@ public class ProductCategoryBean implements Serializable{
     public void setCategoryName(String cn){
         category_name = cn;
     }
+    public void setShowCategory(boolean sc){
+        show_category = sc;
+    }
     
     public int getCategoryID(){
         return category_id;
     }
     public String getCategoryName(){
         return category_name;
+    }
+    public boolean getShowCategory(){
+        return show_category;
     }
 }

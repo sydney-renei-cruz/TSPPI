@@ -58,13 +58,13 @@ public class EditServicePage extends HttpServlet {
         
         Connection conn = null;
         PreparedStatement ps;
-        ServletContext context;
+        ServletContext context = request.getSession().getServletContext();
         ResultSet rs;
         HttpSession session = request.getSession();
         String inText = "";
         
         try{
-            context = request.getSession().getServletContext();
+            
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
             
@@ -88,6 +88,7 @@ public class EditServicePage extends HttpServlet {
         }catch(Exception e){
             e.printStackTrace();
             out.print(e);
+            context.log("Exception: " + e);
         }
     }
 

@@ -25,81 +25,98 @@
             </div>
 	</header>
         <section>
-            <div id="login-body">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-6 col-md-offset-3">
-                            <div class="panel panel-login">
-                                <div class="panel-heading">
-                                    <hr>
+            <c:choose>
+                <c:when test="${pcb.size() == 0}">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1" id="no-label">
+                                <div class="col-lg-12 text-center" style="color: #fff;">
+                                   <h2>No product categories to be shown</h2>
+                                    <h3><a href="allproductcategory" style="color: #fff;">Please add/edit the Product Category first.</a></h3>
                                 </div>
-                                <div class="panel-body">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <form id="service-product-form" action="addproductcontroller" method="post" autocomplete="off" enctype="multipart/form-data" onSubmit="return fileSize();">
-                                                <div class="form-group">
-                                                    <label>Product Name </label>
-                                                    <input type="text" name="product_name" id="product_name" class="form-control" placeholder="Product Name">
-                                                </div>                       
-                                                <div class="form-group">
-                                                    <label>Price </label>
-                                                    <input type="number" name="msrp" id="msrp" class="form-control" placeholder="MSRP">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Product Stock </label>
-                                                    <input type="number" name="stock" id="stock" class="form-control" placeholder="Stock">
-                                                </div>		
-                                                <div class="form-group">
-                                                    <label>Details of the Product</label>
-                                                    <textarea rows="4" cols="50" name="product_detail" id="product_detail" class="form-control" placeholder="Details about the product"></textarea>
-                                                </div>
-                                                <div class="form-group">
-                                                    <h4>Please select image</h4>
-                                                    <input type="file" accept="image/*" name="product_image" id="product_service_image" class="form-control">
-                                                    <span id="image_size_error" style="color: #FF0000"></span>
-                                                </div>
-                                                <div class="form-group text-center">
-                                                    <label>Product Category: </label>
-                                                    <select name="product_category">
-                                                        <c:forEach var="pcb" items="${pcb}">
-                                                            <option value="${pcb.getCategoryID()}">${pcb.getCategoryName()}</option>
-                                                        </c:forEach>
-                                                    </select>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-sm-6 col-sm-offset-3"> 
-                                                            <input type="submit" name="submit" id="register-submit" class="form-control btn btn-register" value="Add Product">
+                            </div>
+                        </div>
+                    </div>                      
+                </c:when>
+                <c:otherwise>
+                    <div id="login-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-6 col-md-offset-3">
+                                    <div class="panel panel-login">
+                                        <div class="panel-heading">
+                                            <hr>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <form id="service-product-form" action="addproductcontroller" method="post" autocomplete="off" enctype="multipart/form-data" onSubmit="return fileSize();">
+                                                        <div class="form-group">
+                                                            <label>Product Name </label>
+                                                            <input type="text" name="product_name" id="product_name" class="form-control" placeholder="Product Name">
+                                                        </div>                       
+                                                        <div class="form-group">
+                                                            <label>Price </label>
+                                                            <input type="number" name="msrp" id="msrp" class="form-control" placeholder="MSRP">
                                                         </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-lg-12">
-                                                            <div class="text-center">
-                                                                <a href="approveproducts" class="forgot-password">Approve products.</a>
+                                                        <div class="form-group">
+                                                            <label>Product Stock </label>
+                                                            <input type="number" name="stock" id="stock" class="form-control" placeholder="Stock">
+                                                        </div>		
+                                                        <div class="form-group">
+                                                            <label>Details of the Product</label>
+                                                            <textarea rows="4" cols="50" name="product_detail" id="product_detail" class="form-control" placeholder="Details about the product"></textarea>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <h4>Please select image</h4>
+                                                            <input type="file" accept="image/*" name="product_image" id="product_service_image" class="form-control">
+                                                            <span id="image_size_error" style="color: #FF0000"></span>
+                                                        </div>
+                                                        <div class="form-group text-center">
+                                                            <label>Product Category: </label>
+                                                            <select name="product_category">
+                                                                <c:forEach var="pcb" items="${pcb}">
+                                                                    <option value="${pcb.getCategoryID()}">${pcb.getCategoryName()}</option>
+                                                                </c:forEach>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="row">
+                                                                <div class="col-sm-6 col-sm-offset-3"> 
+                                                                    <input type="submit" name="submit" id="register-submit" class="form-control btn btn-register" value="Add Product">
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-lg-12">
-                                                            <div class="text-center">
-                                                                <a href="products" class="forgot-password">See all products.</a>
+                                                        <div class="form-group">
+                                                            <div class="row">
+                                                                <div class="col-lg-12">
+                                                                    <div class="text-center">
+                                                                        <a href="approveproducts" class="forgot-password">Approve products.</a>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                        <div class="form-group">
+                                                            <div class="row">
+                                                                <div class="col-lg-12">
+                                                                    <div class="text-center">
+                                                                        <a href="products" class="forgot-password">See all products.</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>  
                                                 </div>
-                                            </form>                 
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                </c:otherwise>
+            </c:choose>
+            
 	</section>
         <script src="imports/jquery.validate.js" type="text/javascript"></script>
         <script src="imports/additional-methods.js" type="text/javascript"></script>

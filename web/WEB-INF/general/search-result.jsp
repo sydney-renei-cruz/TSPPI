@@ -41,7 +41,7 @@
                                                 <h5>View Details</h5>
                                                 <input type="hidden" class="main-product" value="${al.getProductID()}">
                                             </button>
-                                            <c:if test="${job_position == 'Inventory Officer'}">
+                                            <c:if test="${inventory_score == true}">
                                                 <form action="approveproduct" method="POST">
                                                     <input type="hidden" name="product_id" id="product_id" value="${al.getProductID()}">
                                                     <input type="hidden" name="for_sale" id="for_sale" value="${al.getForSale()}">

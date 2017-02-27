@@ -39,14 +39,13 @@ public class AllServicesIOPage extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        HttpSession session = request.getSession();
         Connection conn = null;
         PreparedStatement ps;
-        ServletContext context;
+        ServletContext context = request.getSession().getServletContext();
         ResultSet rs;
         String inText = "";
         try{
-            context = request.getSession().getServletContext();
+            
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
             
@@ -69,6 +68,7 @@ public class AllServicesIOPage extends HttpServlet {
         }catch(Exception e){
             e.printStackTrace();
             out.print(e);
+            context.log("Exception: " + e);
         }
     }
 

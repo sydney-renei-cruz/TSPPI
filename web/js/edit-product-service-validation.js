@@ -41,6 +41,24 @@ $(document).ready(function(){
           service_image: {
               extension: "png|jpg|jpeg|gif",
               maxFile: 1
+          },
+          category_name: {
+            remote:{
+                url: 'checkcategoryname2', //EmailCheckerController
+                type: 'post',
+                data: {
+                    'category_name': function() { return $('#category_name').val();}
+                }
+            }
+          },
+          payment_method: {
+            remote:{
+                url: 'checkmethodname2', //EmailCheckerController
+                type: 'post',
+                data: {
+                    'payment_method': function() { return $('#payment_method').val();}
+                }
+            }
           }
       },
       messages: {
@@ -55,6 +73,12 @@ $(document).ready(function(){
            },
            service_image: {
                extension: "Only image type jpeg, gif, jpg, or png is accepted"
+           },
+           category_name: {
+               remote: "Category name already exists"
+           },
+           payment_method: {
+               remote: "Method name already exists"
            }
       }
    }); 

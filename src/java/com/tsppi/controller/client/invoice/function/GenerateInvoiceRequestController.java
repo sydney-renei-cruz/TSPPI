@@ -99,14 +99,30 @@ public class GenerateInvoiceRequestController extends HttpServlet {
             float total_amount = Float.parseFloat(request.getParameter("total_amount"));
             String[] pi = request.getParameterValues("item_number");
             String[] q = request.getParameterValues("quantity");
+            String[] is = request.getParameterValues("item_stock");
             int pm_id = Integer.parseInt(request.getParameter("payment_method"));
             int invoice_status = 1;
             boolean verified = false;
             Date date = new Date();
             String invoice_date = new SimpleDateFormat("yyyy-MM-dd").format(date);
-        
+            int invoice_id;
+            ArrayList<String> product_id = new ArrayList<String>(Arrays.asList(pi));
+            product_id.addAll(Arrays.asList(pi));
+            ArrayList<String> quantity = new ArrayList<String>(Arrays.asList(q));
+            quantity.addAll(Arrays.asList(q));
+            ArrayList<String> stock = new ArrayList<String>(Arrays.asList(is));
+            stock.addAll(Arrays.asList(is));
+            
+            //check if quantity is less than or equal to stock
+            for(int j=0; j<pi.length; j++){
+                if(Integer.parseInt(stock.get(j)) < Integer.parseInt(quantity.get(j))){
+                    response.sendRedirect("invoicerequest");
+                    return; //exits program
+                }
+            }
+            //check if cart session exists
             if(session.getAttribute("cart") == null){
-                request.setAttribute("message", "Invoice is nullified, no items found.");
+                response.sendRedirect("products");
                 return;
             }
             
@@ -121,147 +137,143 @@ public class GenerateInvoiceRequestController extends HttpServlet {
             ps.setBoolean(6, verified);
             ps.executeUpdate();
             
-            int invoice_id;
-            ArrayList<String> product_id = new ArrayList<String>(Arrays.asList(pi));
-            product_id.addAll(Arrays.asList(pi));
-            ArrayList<String> quantity = new ArrayList<String>(Arrays.asList(q));
-            quantity.addAll(Arrays.asList(q));
+            
             
             try(ResultSet generated_keys = ps.getGeneratedKeys()){
                 if(generated_keys.next()){
                     invoice_id = generated_keys.getInt(1);
                     
-                    for(int i=0; i<pi.length; i++){
-                        inText = "insert into invoice_item(invoice_id, product_id, item_quantity)"
-                                + "values (?,?,?)";
-                        ps = conn.prepareStatement(inText);
-                        ps.setInt(1, invoice_id);
-                        ps.setString(2, product_id.get(i));
-                        ps.setString(3, quantity.get(i));
-                        ps.executeUpdate();
-                    }
-                    
-                    inText = "SELECT i.client_id, c.mobile, c.telephone, c.address, a.first_name, a.last_name, a.email "
-                            + "FROM invoice i "
-                            + "JOIN client c ON c.client_id = i.client_id "
-                            + "JOIN account a ON a.account_num = c.account_num "
-                            + "WHERE i.invoice_id=?";
-                    ps = conn.prepareStatement(inText);
-                    ps.setInt(1, invoice_id);
-                    ResultSet rs = ps.executeQuery();
-                    
-                    ArrayList<AccountBean> al = new ArrayList<>();
-                    AccountBean ab;
-                    while(rs.next()){
-                        ab = new AccountBean();
-                        ab.setFirstName(rs.getString("first_name"));
-                        ab.setLastName(rs.getString("last_name"));
-                        ab.setEmail(rs.getString("email"));
-                        ab.setMobile(rs.getString("mobile"));
-                        ab.setTelephone(rs.getString("telephone"));
-                        al.add(ab);
-                    }
-                    
-                    inText = "SELECT p.product_name, ii.item_quantity "
-                            + "FROM invoice_item ii "
-                            + "JOIN product p ON p.product_id = ii.product_id "
-                            + "WHERE ii.invoice_id=?";
-                    ps = conn.prepareStatement(inText);
-                    ps.setInt(1, invoice_id);
-                    rs = ps.executeQuery();
-                    
-                    ArrayList<InvoiceItemBean> al2 = new ArrayList<>();
-                    InvoiceItemBean iib;
-                    while(rs.next()){
-                        iib = new InvoiceItemBean();
-                        iib.setProductName(rs.getString("product_name"));
-                        iib.setItemQuantity(rs.getInt("item_quantity"));
-                        al2.add(iib);
-                    }
-                    String full_name = "";
-                    String mobile = "";
-                    String telephone = "";
-                    String email = "";
-                    for(int i=0; i<al.size(); i++){
-                        full_name = al.get(i).getFullName();
-                        email = al.get(i).getEmail();
-                        mobile = al.get(i).getMobile();
-                        telephone = al.get(i).getTelephone();
-                    }
-                    
-                    inText = "SELECT total_amount FROM invoice WHERE invoice_id = ?";
-                    ps = conn.prepareStatement(inText);
-                    ps.setInt(1, invoice_id);
-                    rs = ps.executeQuery();
-                    
-                    float total_price = 0;
-                    while(rs.next())
-                        total_price = rs.getFloat("total_amount");
-                    StringBuilder sb = new StringBuilder();
-                    for(int i=0; i<al2.size(); i++){
-                        sb.append("- ");
-                        sb.append(al2.get(i).getProductName());
-                        sb.append(" - ");
-                        sb.append(al2.get(i).getItemQuantity());
-                        sb.append("x");
-                        sb.append("\n");
-                    }
-                    String message = "Hi, \n\n"
-                            + "These are the products, together with the quantity, that I want to buy from your company: \n\n"
-                            + sb.toString() + "\n\n"
-                            + "Total price: " + total_price + "\n\n"
-                            + "Regards, \n"
-                            + full_name + " - " + email +"\n"
-                            + "Mobile No. " + mobile +"\n"
-                            + "Telephone No. " + telephone;
-                    String userName = "TSPPIauto@gmail.com";
-                    String password = "3$tarPaper!";
-                    String to = "";
-                    inText = "SELECT a.email FROM account a "
-                            + "JOIN employee e ON e.account_num = a.account_num "
-                            + "JOIN job_position j ON j.job_id = e.job_id "
-                            + "WHERE j.job_type = 'Vice President'";
-                    ps = conn.prepareStatement(inText);
-                    rs = ps.executeQuery();
-                    while(rs.next()) to = rs.getString("email");
-
-                    String from = "TSPPIauto@gmail.com";
-                    String subject = "***INVOICE REQUEST***";
-                    String smtpServ = "smtp.gmail.com";
-                    int port = 465;
-
-                    Properties props = System.getProperties();
-                      // -- Attaching to default Session, or we could start a new one --
-                      props.put("mail.transport.protocol", "smtp" );
-                      props.put("mail.smtp.starttls.enable","true" );
-                      props.put("mail.imap.ssl.enable", "true");
-                      props.put("mail.imap.sasl.enable", "true");
-                      props.put("mail.imap.auth.login.disable", "true");
-                      props.put("mail.imap.auth.plain.disable", "true");
-                      props.put("mail.imap.auth.mechanisms", "XOAUTH2");
-                      props.put("mail.smtp.host",smtpServ);
-                      props.put("mail.smtp.auth", "true" );
-                      props.put("mail.smtp.port", "587");
-                      Authenticator auth;
-                        auth = new Authenticator() {
-                        @Override
-                        public PasswordAuthentication getPasswordAuthentication() {
-                            return new PasswordAuthentication(userName, password);
-                        }
-                        };
-                      Session session1 = Session.getInstance(props, auth);
-                      // -- Create a new message --
-                      Message msg = new MimeMessage(session1);
-                      // -- Set the FROM and TO fields --
-                      msg.setFrom(new InternetAddress(from));
-                      msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to, false));
-                      msg.setSubject(subject);
-                      msg.setText(message);
-                      // -- Set some other header information --
-                      msg.setHeader("MyMail", "Mr. XYZ" );
-                      msg.setSentDate(new Date());
-                      // -- Send the message --
-                      Transport.send(msg);
+//                    for(int i=0; i<pi.length; i++){
+//                        inText = "insert into invoice_item(invoice_id, product_id, item_quantity)"
+//                                + "values (?,?,?)";
+//                        ps = conn.prepareStatement(inText);
+//                        ps.setInt(1, invoice_id);
+//                        ps.setString(2, product_id.get(i));
+//                        ps.setString(3, quantity.get(i));
+//                        ps.executeUpdate();
+//                    }
+//                    
+//                    inText = "SELECT i.client_id, c.mobile, c.telephone, c.address, a.first_name, a.last_name, a.email "
+//                            + "FROM invoice i "
+//                            + "JOIN client c ON c.client_id = i.client_id "
+//                            + "JOIN account a ON a.account_num = c.account_num "
+//                            + "WHERE i.invoice_id=?";
+//                    ps = conn.prepareStatement(inText);
+//                    ps.setInt(1, invoice_id);
+//                    ResultSet rs = ps.executeQuery();
+//                    
+//                    ArrayList<AccountBean> al = new ArrayList<>();
+//                    AccountBean ab;
+//                    while(rs.next()){
+//                        ab = new AccountBean();
+//                        ab.setFirstName(rs.getString("first_name"));
+//                        ab.setLastName(rs.getString("last_name"));
+//                        ab.setEmail(rs.getString("email"));
+//                        ab.setMobile(rs.getString("mobile"));
+//                        ab.setTelephone(rs.getString("telephone"));
+//                        al.add(ab);
+//                    }
+//                    
+//                    inText = "SELECT p.product_name, ii.item_quantity "
+//                            + "FROM invoice_item ii "
+//                            + "JOIN product p ON p.product_id = ii.product_id "
+//                            + "WHERE ii.invoice_id=?";
+//                    ps = conn.prepareStatement(inText);
+//                    ps.setInt(1, invoice_id);
+//                    rs = ps.executeQuery();
+//                    
+//                    ArrayList<InvoiceItemBean> al2 = new ArrayList<>();
+//                    InvoiceItemBean iib;
+//                    while(rs.next()){
+//                        iib = new InvoiceItemBean();
+//                        iib.setProductName(rs.getString("product_name"));
+//                        iib.setItemQuantity(rs.getInt("item_quantity"));
+//                        al2.add(iib);
+//                    }
+//                    String full_name = "";
+//                    String mobile = "";
+//                    String telephone = "";
+//                    String email = "";
+//                    for(int i=0; i<al.size(); i++){
+//                        full_name = al.get(i).getFullName();
+//                        email = al.get(i).getEmail();
+//                        mobile = al.get(i).getMobile();
+//                        telephone = al.get(i).getTelephone();
+//                    }
+//                    
+//                    inText = "SELECT total_amount FROM invoice WHERE invoice_id = ?";
+//                    ps = conn.prepareStatement(inText);
+//                    ps.setInt(1, invoice_id);
+//                    rs = ps.executeQuery();
+//                    
+//                    float total_price = 0;
+//                    while(rs.next())
+//                        total_price = rs.getFloat("total_amount");
+//                    StringBuilder sb = new StringBuilder();
+//                    for(int i=0; i<al2.size(); i++){
+//                        sb.append("- ");
+//                        sb.append(al2.get(i).getProductName());
+//                        sb.append(" - ");
+//                        sb.append(al2.get(i).getItemQuantity());
+//                        sb.append("x");
+//                        sb.append("\n");
+//                    }
+//                    String message = "Hi, \n\n"
+//                            + "These are the products, together with the quantity, that I want to buy from your company: \n\n"
+//                            + sb.toString() + "\n\n"
+//                            + "Total price: " + total_price + "\n\n"
+//                            + "Regards, \n"
+//                            + full_name + " - " + email +"\n"
+//                            + "Mobile No. " + mobile +"\n"
+//                            + "Telephone No. " + telephone;
+//                    String userName = "TSPPIauto@gmail.com";
+//                    String password = "3$tarPaper!";
+//                    String to = "";
+//                    inText = "SELECT a.email FROM account a "
+//                            + "JOIN employee e ON e.account_num = a.account_num "
+//                            + "JOIN job_position j ON j.job_id = e.job_id "
+//                            + "WHERE j.job_type = 'Vice President'";
+//                    ps = conn.prepareStatement(inText);
+//                    rs = ps.executeQuery();
+//                    while(rs.next()) to = rs.getString("email");
+//
+//                    String from = "TSPPIauto@gmail.com";
+//                    String subject = "***INVOICE REQUEST***";
+//                    String smtpServ = "smtp.gmail.com";
+//                    int port = 465;
+//
+//                    Properties props = System.getProperties();
+//                      // -- Attaching to default Session, or we could start a new one --
+//                      props.put("mail.transport.protocol", "smtp" );
+//                      props.put("mail.smtp.starttls.enable","true" );
+//                      props.put("mail.imap.ssl.enable", "true");
+//                      props.put("mail.imap.sasl.enable", "true");
+//                      props.put("mail.imap.auth.login.disable", "true");
+//                      props.put("mail.imap.auth.plain.disable", "true");
+//                      props.put("mail.imap.auth.mechanisms", "XOAUTH2");
+//                      props.put("mail.smtp.host",smtpServ);
+//                      props.put("mail.smtp.auth", "true" );
+//                      props.put("mail.smtp.port", "587");
+//                      Authenticator auth;
+//                        auth = new Authenticator() {
+//                        @Override
+//                        public PasswordAuthentication getPasswordAuthentication() {
+//                            return new PasswordAuthentication(userName, password);
+//                        }
+//                        };
+//                      Session session1 = Session.getInstance(props, auth);
+//                      // -- Create a new message --
+//                      Message msg = new MimeMessage(session1);
+//                      // -- Set the FROM and TO fields --
+//                      msg.setFrom(new InternetAddress(from));
+//                      msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to, false));
+//                      msg.setSubject(subject);
+//                      msg.setText(message);
+//                      // -- Set some other header information --
+//                      msg.setHeader("MyMail", "Mr. XYZ" );
+//                      msg.setSentDate(new Date());
+//                      // -- Send the message --
+//                      Transport.send(msg);
                 }else{
                     throw new SQLException("No invoice retrieved");
                 }

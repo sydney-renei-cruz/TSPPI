@@ -74,11 +74,11 @@ public class AddServiceController extends HttpServlet {
         
         Connection conn = null;
         PreparedStatement ps;
-        ServletContext context;
+        ServletContext context = request.getSession().getServletContext();;
         String inText = "";
         int i;
         try{
-            context = request.getSession().getServletContext();
+            
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
             
@@ -131,6 +131,7 @@ public class AddServiceController extends HttpServlet {
         }catch(Exception e){
             e.printStackTrace();
             out.print(e);
+            context.log("Exception: " + e);
         }
     }
 

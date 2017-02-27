@@ -73,10 +73,9 @@ public class EditServiceController extends HttpServlet {
         
         Connection conn = null;
         PreparedStatement ps;
-        ServletContext context;
+        ServletContext context = request.getSession().getServletContext();
         int i;
         try{
-            context = request.getSession().getServletContext();
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
             
@@ -126,6 +125,7 @@ public class EditServiceController extends HttpServlet {
         }catch(Exception e){
             e.printStackTrace();
             out.print(e);
+            context.log("Exception: " + e);
         }
     }
 

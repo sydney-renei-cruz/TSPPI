@@ -59,11 +59,11 @@ public class InvoiceRequestPage extends HttpServlet {
         HttpSession session = request.getSession();
         Connection conn = null;
         PreparedStatement ps;
-        ServletContext context;
+        ServletContext context = request.getSession().getServletContext();;
         ResultSet rs;
         String inText = "";
+        boolean status = false;
         try{
-            context = request.getSession().getServletContext();
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
             
@@ -92,8 +92,9 @@ public class InvoiceRequestPage extends HttpServlet {
             }
             request.setAttribute("al", al);
             
-            inText = "SELECT * FROM invoice_pm";
+            inText = "SELECT * FROM invoice_pm WHERE show_method=?";
             ps = conn.prepareStatement(inText);
+            ps.setBoolean(1, status);
             rs = ps.executeQuery();
             ArrayList<PaymentMethodBean> al2 = new ArrayList<>();
             PaymentMethodBean pm;

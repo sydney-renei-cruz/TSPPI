@@ -23,26 +23,21 @@ html, body{
     display: table-cell;
     text-align: center;
     vertical-align: middle;
-
 }
 #home span.border{
-    background-color: #306d9f;
     color: #fff;
     padding: 18px;
-    letter-spacing: 10px;
-    opacity: 0.8;
+    letter-spacing: 5px;
 }
-#information span.border, #information-2 span.border{
-    background-color: #111;
+#information span.border, #information-2 span.border, #information-3 span.border{
     color: #fff;
     padding: 18px;
-    letter-spacing: 10px;
-    opacity: 0.9;
+    letter-spacing: 5px;
 }
 
-#home h1, #information h1{
-    font-size: 5em;
-    font-weight: 700;
+#home h1, #information h1, #information-2 h1, #information-3 h1{
+    font-size: 4em;
+    font-weight: 800;
     margin: 0;
     padding: 0;
 }
@@ -50,7 +45,7 @@ html, body{
 
 /* additional sections */
 #home{
-    background: url(../img/home.jpg) no-repeat center center fixed;
+    background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url(../img/home.jpg) no-repeat center center fixed;
     display: table;
     height: 100%;
     position: relative;
@@ -59,12 +54,11 @@ html, body{
     -moz-background-size: cover;
     background-size: cover;
 }
-
 #comp-offer{
     background-color: #306d9f;
     color: #fff;
 }
-#comp-offer a, #information a, #information-2 a{
+#comp-offer a, #information a, #information-2 a, #information-3 a{
     color: #fff;
     text-decoration: none;
 }
@@ -79,7 +73,7 @@ html, body{
 }
 
 #information{
-    background: url(../img/information.jpg) no-repeat center center fixed;
+    background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(../img/information.jpg) no-repeat center center fixed;
     display: table;
     height: 100%;
     position: relative;
@@ -89,7 +83,7 @@ html, body{
     background-size: cover;
 }
 #information-2{
-    background: url(../img/information-2.jpg) no-repeat center center fixed;
+    background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(../img/information-2.jpg) no-repeat center center fixed;
     display: table;
     height: 100%;
     position: relative;
@@ -97,4 +91,33 @@ html, body{
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
+}
+#information-3{
+    background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(../img/information-3.jpg) no-repeat center center fixed;
+    display: table;
+    height: 100%;
+    position: relative;
+    width: 100%;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+}
+
+
+.section-heading {margin-bottom: 30px;}
+.section-heading-spacer {
+    float: left;
+    width: 200px;
+    border-top: 3px solid #e7e7e7;
+}
+#about-image{
+    padding-top: 30px;
+}
+
+/*media-queries*/
+@media only screen and (max-width: 768px){
+    /*For mobile phones*/
+    #home h1, #information h1, #information-2 h1, #information-3 h1{
+        font-size: 2em;
+    }
 }

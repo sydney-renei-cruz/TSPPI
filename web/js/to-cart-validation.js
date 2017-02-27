@@ -20,8 +20,8 @@
 //    
 //    return true;
 //}
+
 $(document).ready(function(){
-    
     $.validator.addMethod("max_stock", function(value, element){
         var $stock = $('.cart-element').find('input[name="item_stock"]').val();
         return this.optional(element) || ($stock > parseInt(value));

@@ -54,7 +54,6 @@ public class CartItemBean implements Serializable{
     public float getTotalCost(){
         return total_cost;
     }
-    
     public void setItemNumber(int in){
         item_number = in;
     }

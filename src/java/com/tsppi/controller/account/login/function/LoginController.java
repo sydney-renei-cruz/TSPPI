@@ -83,14 +83,15 @@ public class LoginController extends HttpServlet {
         String account_num = "";
         String job_id = "";
         String job_position = "";
+        boolean management_score = false;
+        boolean inventory_score = false;
         //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         
         HttpSession session = request.getSession();
-        ServletContext context;
+        ServletContext context = request.getSession().getServletContext();
         Connection conn = null;
         
         try{
-            context = request.getSession().getServletContext();
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM account WHERE username = ?");
@@ -151,7 +152,13 @@ public class LoginController extends HttpServlet {
                         ps = conn.prepareStatement("SELECT * FROM job_position WHERE job_id=?");
                         ps.setString(1, job_id);
                         rs = ps.executeQuery();
-                        if(rs.next()) job_position = rs.getString("job_type");
+                        
+                        if(rs.next()){
+                            job_position = rs.getString("job_type");
+                            management_score = rs.getBoolean("management_score");
+                            inventory_score = rs.getBoolean("inventory_score");
+                        }
+                        
                     }
 
 
@@ -159,6 +166,8 @@ public class LoginController extends HttpServlet {
                     session.setAttribute("job_position", job_position);
                     session.setAttribute("account_type", account_type);
                     session.setAttribute("account_status", status);
+                    session.setAttribute("management_score", management_score);
+                    session.setAttribute("inventory_score", inventory_score);
                     session.setAttribute("user", username);
                     
                     session.setMaxInactiveInterval(30*60);
@@ -173,6 +182,7 @@ public class LoginController extends HttpServlet {
         }catch(Exception e){
             e.printStackTrace();
             out.print(e);
+            context.log("Exception: " + e);
         }
     }
 

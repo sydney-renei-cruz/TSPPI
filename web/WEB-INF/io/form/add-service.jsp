@@ -8,7 +8,6 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="css/form.css" rel="stylesheet" type="text/css">
         <link href="css/form-error-validation.css" rel="stylesheet" type="text/css">
     </head>

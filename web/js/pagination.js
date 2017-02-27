@@ -6,7 +6,7 @@
 
 
 $( document ).ready(function() { 
-       pageSize = 9;
+    pageSize = 9;
     pagesCount = $(".content").length;
     var currentPage = 1;
     

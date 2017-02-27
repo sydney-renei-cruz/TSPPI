@@ -39,6 +39,27 @@ $(document).ready(function(){
           product_detail: "required",
           service_name: "required",
           service_description: "required",
+          category_name: {
+              required: true,
+              remote:{
+                  url: 'checkcategoryname', //EmailCheckerController
+                   type: 'post',
+                   data: {
+                       'category_name': function() { return $('#category_name').val();}
+                   }
+              }
+          },
+          payment_method: {
+              required: true,
+              remote:{
+                  url: 'checkmethodname', //EmailCheckerController
+                   type: 'post',
+                   data: {
+                       'payment_method': function() { return $('#payment_method').val();}
+                   }
+              }
+          },
+//          category_name: "required",
           product_image: {
                 required: true,
                 extension: "png|jpg|jpeg|gif",
@@ -63,6 +84,15 @@ $(document).ready(function(){
           product_detail: "Please enter the details about the product",
           service_name: "Please enter the name of the service",
           service_description: "Please enter the details about the service",
+          category_name: {
+              required: "Please enter the name of the product category",
+              remote: "Category name already exists"
+          },
+          payment_method: {
+              required: "Please enter the name of the method",
+              remote: "Method name already exists"
+          },
+//          category_name: "Please enter the name of the product category",
            product_image: {
                required: "Please select an image for you profile",
                extension: "Only image type jpeg, gif, jpg, or png is accepted"

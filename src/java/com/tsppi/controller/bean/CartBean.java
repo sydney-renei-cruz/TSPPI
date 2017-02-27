@@ -6,6 +6,8 @@
 package com.tsppi.controller.bean;
 
 import java.util.ArrayList;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -54,18 +56,34 @@ public class CartBean {
         setOrderTotal(total);
     }
    
-    public void addCartItem(int in, String inm, int is, int q, float ic){
+    public void addCartItem(int in, String inm, int is, int q, float ic, HttpServletRequest request){
         
+        ServletContext context = request.getSession().getServletContext();
+        int item_number = 0;
         int quantity = 0;
         float item_cost = 0;
         float total_cost = 0;
         CartItemBean cib = new CartItemBean();
+        CartBean cb = new CartBean();
         
         try{
+            item_number = in;
             item_cost = ic;
             quantity = q;
-            
+
             if(quantity > 0){
+                for(int i=0; i<cart_items.size(); i++){
+                    CartItemBean cib2 = (CartItemBean) cart_items.get(i);
+                    if(cib2.getItemNumber() == item_number){
+                        quantity += cib2.getQuantity();
+                        item_cost = cib2.getItemCost();
+                        total_cost = item_cost * quantity;
+                        cib2.setQuantity(quantity);
+                        cib2.setTotalCost(total_cost);
+                        calculateOrderTotal();
+                        return;
+                    }
+                }
                 total_cost = item_cost * quantity;
                 cib.setItemNumber(in);
                 cib.setItemName(inm);
@@ -77,7 +95,7 @@ public class CartBean {
                 calculateOrderTotal();
             }
         }catch(Exception e){
-            System.out.println(e);
+            context.log("Exception: " + e);
             e.printStackTrace();
         }
     }

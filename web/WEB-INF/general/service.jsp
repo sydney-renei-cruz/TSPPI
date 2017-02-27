@@ -75,7 +75,7 @@
                             <input type="submit" name="submit" id="submit" value="Inquire this Service" class="btn btn-warning">
                         </form>
                     </c:if>
-                    <c:if test="${job_position == 'Inventory Officer'}">
+                    <c:if test="${inventory_score == true}">
                     <form action="editservice" method="GET">
                         <div class="edit-element"></div>
                         <input type="submit" name="submit" id="submit" value="Edit Service" class="btn btn-warning">

@@ -6,6 +6,7 @@
 package com.tsppi.controller.client.invoice.function;
 
 import com.tsppi.controller.bean.CartBean;
+import com.tsppi.controller.bean.CartItemBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -66,11 +67,11 @@ public class CartController extends HttpServlet {
         PrintWriter out = response.getWriter();
         
         HttpSession session = request.getSession();
+        
         try{
             String quantity = request.getParameter("quantity");
             int stock = 0;
             String action = request.getParameter("action");
-            
             if(action != null && !action.equals("")){
                 if(action.equals("add")){
                     stock = Integer.parseInt(request.getParameter("item_stock"));
@@ -136,10 +137,8 @@ public class CartController extends HttpServlet {
         
         CartBean cb = null;
         Object ocb = session.getAttribute("cart");
+        ArrayList<CartItemBean> al;
         
-        for(int i=0; i<cart_bean.size(); i++){
-            CartBean newcb = cart_bean.get(i);
-        }
         if(ocb != null){
             cb = (CartBean) ocb;
         }else{
@@ -148,7 +147,7 @@ public class CartController extends HttpServlet {
             session.setAttribute("quantity", quantity);
         }
         
-        cb.addCartItem(item_number, item_name, item_stock, quantity, item_cost);
+        cb.addCartItem(item_number, item_name, item_stock, quantity, item_cost, request);
     }
     /**
      * Returns a short description of the servlet.

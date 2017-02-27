@@ -11,7 +11,7 @@ and open the template in the editor.
 
 
 /*header*/
-#login-header{
+#login-header, #no-label{
     
 	padding-top: 75px;
 	color: #fff;
@@ -26,16 +26,11 @@ and open the template in the editor.
 .team{
     padding:75px 0;
 }
-h3.description{
-	font-weight: bold;
-	letter-spacing: 2px;
-	color: #fff;
-	border-bottom: 1px solid rgb(248, 248, 248);
-	padding-bottom: 5px;
-}
+h3.description{color: #fff !important;}
+h4.description{color: #337ab7;}
 .profile{
-	margin-top: 25px;
-        background-color: rgb(248, 248, 248);
+    margin-top: 25px;
+    background-color: rgb(248, 248, 248);
         
 }
 .profile h1{
@@ -60,3 +55,5 @@ h3.description{
 .profile .cont-btn .btn{
     width: 100%;
 }
+
+.appr-product{width: 100%;}
