@@ -79,6 +79,10 @@
                                                     <label>Country</label>
                                                     <input type="text" name="country" id="country" class="form-control" placeholder="Country" value="${al.getCountry()}">
                                                 </div>
+                                                <div class="form-group text-center">
+                                                    <div id="msg">${edit_error}</div>
+                                                    <c:remove var="edit_error" scope="session"/>
+                                                </div>
                                                     <div class="form-group">
                                                         <div class="row">
                                                             <div class="col-sm-6 col-sm-offset-3">

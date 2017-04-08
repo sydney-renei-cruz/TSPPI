@@ -5,6 +5,7 @@
  */
 package com.tsppi.controller.account.profile.page;
 
+import com.tsppi.controller.account.register.function.RegisterController;
 import com.tsppi.controller.bean.AccountBean;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,7 +13,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -41,22 +45,26 @@ public class ProfilePage extends HttpServlet {
         PrintWriter out = response.getWriter();
         
         Connection conn = null;
-        PreparedStatement ps;
-        ServletContext context;
-        ResultSet rs;
+        PreparedStatement ps = null;
+        ServletContext context = request.getSession().getServletContext();
+        ResultSet rs = null;
         HttpSession session = request.getSession();
         String inText = "";
         try{
-            context = request.getSession().getServletContext();
+            
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
             
             if(session.getAttribute("account_type").equals("client")){
-                inText = "SELECT a.*, c.mobile, c.telephone, c.address "
+                inText = "SELECT a.*, c.mobile, "
+                        + "co.company_id, co.company_name, co.company_branch, co.company_telephone, "
+                        + "ca.address_id, ca.street_line1, ca.street_line2, ca.spr, ca.city, ca.postal_code, ca.country "
                         + "FROM account a "
-                        + "JOIN client c ON a.account_num = c.account_num "
-                        + "WHERE a.account_num=? "
-                        + "GROUP BY c.account_num";
+                        + "JOIN client c ON c.account_num = a.account_num "
+                        + "JOIN company co ON co.company_id = c.company_id "
+                        + "JOIN company_address ca ON ca.company_id = co.company_id "
+                        + "WHERE a.account_num = ? "
+                        + "GROUP BY c.account_num ";
             }
             else{
                 inText = "SELECT * FROM account "
@@ -66,27 +74,63 @@ public class ProfilePage extends HttpServlet {
             ps.setString(1, (String)session.getAttribute("account_num"));
             rs = ps.executeQuery();
             
-            ArrayList<AccountBean> pb = new ArrayList<>();
+            ArrayList<AccountBean> al = new ArrayList<>();
             AccountBean aa;
             while(rs.next()){
                 aa = new AccountBean();
                 aa.setAccountNum(rs.getInt("account_num"));
                 aa.setUsername(rs.getString("username"));
-                aa.setEmail(rs.getString("email"));
                 aa.setFirstName(rs.getString("first_name"));
                 aa.setLastName(rs.getString("last_name"));
+                aa.setEmail(rs.getString("email"));
                 if(session.getAttribute("account_type").equals("client")){
                     aa.setMobile(rs.getString("mobile"));
-                    aa.setTelephone(rs.getString("telephone"));
-                    aa.setAddress(rs.getString("address"));
+                    aa.setCompanyID(rs.getInt("company_id"));
+                    aa.setCompanyName(rs.getString("company_name"));
+                    aa.setCompanyBranch(rs.getString("company_branch"));
+                    aa.setCompanyTelephone(rs.getString("company_telephone"));
+                    aa.setAddressID(rs.getInt("address_id"));
+                    aa.setStreetLine1(rs.getString("street_line1"));
+                    aa.setStreetLine2(rs.getString("street_line2"));
+                    aa.setSPR(rs.getString("spr"));
+                    aa.setCity(rs.getString("city"));
+                    aa.setPostalCode(rs.getInt("postal_code"));
+                    aa.setCountry(rs.getString("country"));
+//                    aa.setTelephone(rs.getString("telephone"));
+//                    aa.setAddress(rs.getString("address"));
                 }
-                pb.add(aa);
+                al.add(aa);
             }
-            request.setAttribute("pb", pb);
+            request.setAttribute("al", al);
             request.getRequestDispatcher("/WEB-INF/account/page/profile.jsp").forward(request, response);
         }catch(Exception e){
             e.printStackTrace();
             out.print(e);
+            context.log("Exception: " + e);
+            request.setAttribute("exception_error", e);
+            request.getRequestDispatcher("/WEB-INF/error/catch-error.jsp").forward(request, response);
+        }finally{
+            if(conn != null){
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if(ps != null){
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if(rs != null){
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }
 

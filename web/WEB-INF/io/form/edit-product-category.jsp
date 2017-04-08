@@ -45,7 +45,11 @@
                                                 <div class="form-group">
                                                     <label>Product Category Name </label>
                                                     <input type="text" name="category_name" id="category_name" class="form-control" placeholder="Product Category Name" value="${al.getCategoryName()}">
-                                                </div>	
+                                                </div>
+                                                <div class="form-group text-center">
+                                                    <div id="msg">${edit_error}</div>
+                                                    <c:remove var="edit_error" scope="session"/>
+                                                </div>
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-sm-6 col-sm-offset-3"> 

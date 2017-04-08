@@ -52,7 +52,7 @@
                     <div class="collapse navbar-collapse bot-nav">
                         <ul class="nav navbar-nav navbar-right">
                             <li style="overflow: hidden;">
-                                <form class="search-bar navbar-form" style="border: 1px solid transparent;" action="search" autocomplete="off">
+                                <form action="search" method="GET" class="search-bar navbar-form" style="border: 1px solid transparent;" autocomplete="off">
                                     <div class="input-group">
                                         <input type="text" class="form-control" placeholder="Search a Product!" name="srch" id="srch">
                                         <div class="input-group-btn">
@@ -104,7 +104,7 @@
                                             </c:otherwise>
                                         </c:choose>
                                         <li class="dropdown">
-                                            <a class="dropdown-toggle" data-toggle="dropdown" href=""> Invoice Setting <span class="caret"></span></a>
+                                            <a class="dropdown-toggle" data-toggle="dropdown" href=""> Invoice <span class="caret"></span></a>
                                             <ul class="dropdown-menu">
                                                 <li><a href="allinvoices" class="text-center">Check All Invoices</a></li>
                                             </ul>
@@ -136,10 +136,8 @@
                                     </c:if>
                                     <c:if test="${management_score == true}">
                                         <li class="dropdown">
-                                            <a class="dropdown-toggle" data-toggle="dropdown" href=""> Management Privileges <span class="caret"></span></a>
+                                            <a class="dropdown-toggle" data-toggle="dropdown" href=""> Management <span class="caret"></span></a>
                                             <ul class="dropdown-menu">
-                                                <li><a href="vpinvoices" class="text-center">Check All Invoices</a></li>
-                                                <li><a href="allaccounts" class="text-center">View Client Accounts </a></li>
                                                 <li class="dropdown-submenu text-center">
                                                     <a class="test" tabindex="-1" href="#">Payment Method <span class="caret"></span></a>
                                                     <ul class="dropdown-menu">
@@ -147,15 +145,38 @@
                                                         <li><a href="allpaymentmethod" class="text-center">Edit Payment Method</a></li>
                                                     </ul>
                                                 </li>
+                                                <li class="dropdown-submenu text-center">
+                                                    <a class="test" tabindex="-1" href="#">Client Company<span class="caret"></span></a>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a href="addcompany" class="text-center">Add Client Company</a></li>
+                                                        <li><a href="allcompany" class="text-center">Edit Client Company</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li class="dropdown-submenu text-center">
+                                                    <a class="test" tabindex="-1" href="#">Account <span class="caret"></span></a>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a href="allaccounts" class="text-center">View Client Accounts </a></li>
+                                                    </ul>
+                                                </li>
                                             </ul>
                                         </li>
                                     </c:if>
+                                    <c:if test="${sales_score == true}">
+                                        <li class="dropdown">
+                                            <a class="dropdown-toggle" data-toggle="dropdown" href=""> Sales <span class="caret"></span></a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="salesinvoices" class="text-center">Check All Invoices</a></li>
+                                                <li><a href="allaccounts" class="text-center">View Client Accounts </a></li>
+                                            </ul>
+                                        </li>
+                                    </c:if>
+                                    
                                     <c:if test="${account_type == 'admin'}">
                                         <li class="dropdown">
-                                            <a class="dropdown-toggle" data-toggle="dropdown" href=""> Admin Privileges <span class="caret"></span></a>
+                                            <a class="dropdown-toggle" data-toggle="dropdown" href=""> Admin <span class="caret"></span></a>
                                             <ul class="dropdown-menu">
                                                 <li class="dropdown-submenu text-center">
-                                                    <a class="test" tabindex="-1" href="#">Employee Account <span class="caret"></span></a>
+                                                    <a class="test" tabindex="-1" href="#">Account <span class="caret"></span></a>
                                                     <ul class="dropdown-menu">
                                                         <li><a href="emrp" class="text-center">Register Employee</a></li>
                                                         <li><a href="allaccounts" class="text-center">View All Accounts </a></li>
@@ -181,7 +202,7 @@
                                                 <a class="test" tabindex="-1" href="#">Account Setting <span class="caret"></span></a>
                                                 <ul class="dropdown-menu">
                                                     <li><a href="editprofile" class="text-center">Edit Profile</a></li>
-                                                    <li><a href="#" class="text-center">Change Password</a></li>
+                                                    <li><a href="changepassword" class="text-center">Change Password</a></li>
                                                 </ul>
                                             </li>                                            
                                             <li><a href="logoutcontroller" class="text-center">Logout</a></li>

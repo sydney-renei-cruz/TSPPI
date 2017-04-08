@@ -5,16 +5,21 @@
  */
 package com.tsppi.controller.admin.page.function;
 
+import com.tsppi.controller.account.register.function.RegisterController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -66,8 +71,9 @@ public class InventoryPrivilegeController extends HttpServlet {
         PrintWriter out = response.getWriter();
         
         Connection conn = null;
-        PreparedStatement ps;
+        PreparedStatement ps = null;
         ServletContext context = request.getSession().getServletContext();
+        HttpSession session = request.getSession();
         int i;
         String inText = "";
         try{
@@ -96,8 +102,24 @@ public class InventoryPrivilegeController extends HttpServlet {
             }
         }catch(Exception e){
             e.printStackTrace();
-            out.print(e);
             context.log("Exception: " + e);
+            request.setAttribute("exception_error", e);
+            request.getRequestDispatcher("/WEB-INF/error/catch-error.jsp").forward(request, response);
+        }finally{
+            if(conn != null){
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if(ps != null){
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }
 

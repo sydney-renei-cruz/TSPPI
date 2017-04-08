@@ -5,6 +5,7 @@
  */
 package com.tsppi.controller.io.form.function;
 
+import com.tsppi.controller.account.register.function.RegisterController;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -14,12 +15,16 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 /**
@@ -73,10 +78,11 @@ public class AddServiceController extends HttpServlet {
         PrintWriter out = response.getWriter();
         
         Connection conn = null;
-        PreparedStatement ps;
+        PreparedStatement ps = null;
         ServletContext context = request.getSession().getServletContext();;
         String inText = "";
         int i;
+        HttpSession session = request.getSession();
         try{
             
             Class.forName("com.mysql.jdbc.Driver");
@@ -89,14 +95,16 @@ public class AddServiceController extends HttpServlet {
             if(filePart.getSize() != 0){
                 inputStream = filePart.getInputStream();
             }
-            if(filePart.getSize() != 0){
-                inText = "INSERT INTO services (service_name, service_description, service_image) VALUES (?,?,?)";
-                ps = conn.prepareStatement(inText, Statement.RETURN_GENERATED_KEYS);
-                ps.setBlob(3, inputStream);
-            }else{
-                inText = "INSERT INTO services (service_name, service_description) VALUES (?,?)";
-                ps = conn.prepareStatement(inText, Statement.RETURN_GENERATED_KEYS);
-            }
+//            if(filePart.getSize() != 0){
+//                inText = "INSERT INTO services (service_name, service_description, service_image) VALUES (?,?,?)";
+//                ps = conn.prepareStatement(inText, Statement.RETURN_GENERATED_KEYS);
+//                ps.setBlob(3, inputStream);
+//            }else{
+//                inText = "INSERT INTO services (service_name, service_description) VALUES (?,?)";
+//                ps = conn.prepareStatement(inText, Statement.RETURN_GENERATED_KEYS);
+//            }
+            inText = "INSERT INTO services (service_name, service_description) VALUES (?,?)";
+            ps = conn.prepareStatement(inText, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, service_name);
             ps.setString(2, service_description);
             i = ps.executeUpdate();
@@ -130,8 +138,24 @@ public class AddServiceController extends HttpServlet {
             }
         }catch(Exception e){
             e.printStackTrace();
-            out.print(e);
             context.log("Exception: " + e);
+            request.setAttribute("exception_error", e);
+            request.getRequestDispatcher("/WEB-INF/error/catch-error.jsp").forward(request, response);
+        }finally{
+            if(conn != null){
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if(ps != null){
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }
 

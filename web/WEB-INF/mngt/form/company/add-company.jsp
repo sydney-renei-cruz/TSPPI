@@ -73,6 +73,10 @@
                                                     <label>Country</label>
                                                     <input type="text" name="country" id="country" class="form-control" placeholder="Country">
                                                 </div>
+                                                <div class="form-group text-center">
+                                                    <div id="msg">${add_error}</div>
+                                                    <c:remove var="add_error" scope="session"/>
+                                                </div>
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-sm-6 col-sm-offset-3"> 

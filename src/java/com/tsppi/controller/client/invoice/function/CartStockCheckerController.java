@@ -5,12 +5,16 @@
  */
 package com.tsppi.controller.client.invoice.function;
 
+import com.tsppi.controller.account.register.function.RegisterController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -50,8 +54,9 @@ public class CartStockCheckerController extends HttpServlet {
             }
         }catch(Exception e){
             e.printStackTrace();
-            out.print(e);
-            context.log("Exception: "+ e);
+            context.log("Exception: " + e);
+            request.setAttribute("exception_error", e);
+            request.getRequestDispatcher("/WEB-INF/error/catch-error.jsp").forward(request, response);
         }
 //        Connection conn = null;
 //        PreparedStatement ps;

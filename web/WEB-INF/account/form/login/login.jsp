@@ -10,11 +10,9 @@
 <html>
     <head>
         <link href="css/form.css" rel="stylesheet" type="text/css">
-        
+        <link href="css/form-error-validation.css" rel="stylesheet" type="text/css">
     </head>
     <body>
-        
-        <!-- Hello World -->
 	<%@include file="/WEB-INF/source/navigation/navbar.jsp"%>
 	<header id="login-header">
             <div class="container">
@@ -45,7 +43,8 @@
                                                     <input type="password" name="password" id="log-password" class="form-control" placeholder="Password">
                                                 </div>
                                                 <div class="form-group text-center">
-                                                    <div style="color: #FF0000;" id="msg"></div>
+                                                    <div id="msg">${login_error}</div>
+                                                    <c:remove var="login_error" scope="session"/>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="row">
@@ -63,7 +62,12 @@
                                                         </div>
                                                         <div class="col-lg-12">
                                                             <div class="text-center">
-                                                                <a href="register" class="forgot-password">Need an account? Click Here!</a>
+                                                                <a href="register" class="forgot-password">Need an account? Request for one now!</a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-12">
+                                                            <div class="text-center">
+                                                                <a href="requestcompany" class="forgot-password">Company's not yet registered? Request it now!</a>
                                                             </div>
                                                         </div>
                                                     </div>

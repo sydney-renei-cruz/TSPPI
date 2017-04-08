@@ -5,6 +5,7 @@
  */
 package com.tsppi.controller.account.profile.page;
 
+import com.tsppi.controller.account.register.function.RegisterController;
 import com.tsppi.controller.bean.AccountBean;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,7 +13,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -57,23 +61,22 @@ public class EditProfilePage extends HttpServlet {
         PrintWriter out = response.getWriter();
         
         Connection conn = null;
-        PreparedStatement ps;
-        ServletContext context;
-        ResultSet rs;
+        PreparedStatement ps = null;
+        ServletContext context = request.getSession().getServletContext();
+        ResultSet rs = null;
         HttpSession session = request.getSession();
         String inText = "";
         try{
-            context = request.getSession().getServletContext();
+            
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
             
             if(session.getAttribute("account_type").equals("client")){
-                inText = "SELECT a.*, c.mobile, c.telephone, c.address "
+                inText = "SELECT a.*, c.mobile "
                         + "FROM account a "
                         + "JOIN client c ON a.account_num = c.account_num "
                         + "WHERE a.account_num=?";
-            }
-            else{
+            }else{
                 inText = "SELECT * FROM account WHERE account_num=?";
             }
             
@@ -91,8 +94,8 @@ public class EditProfilePage extends HttpServlet {
                 aa.setLastName(rs.getString("last_name"));
                 if(session.getAttribute("account_type").equals("client")){
                     aa.setMobile(rs.getString("mobile"));
-                    aa.setTelephone(rs.getString("telephone"));
-                    aa.setAddress(rs.getString("address"));
+//                    aa.setTelephone(rs.getString("telephone"));
+//                    aa.setAddress(rs.getString("address"));
                 }
                 pb.add(aa);
             }
@@ -101,6 +104,31 @@ public class EditProfilePage extends HttpServlet {
         }catch(Exception e){
             e.printStackTrace();
             out.print(e);
+            context.log("Exception: " + e);
+            request.setAttribute("exception_error", e);
+            request.getRequestDispatcher("/WEB-INF/error/catch-error.jsp").forward(request, response);
+        }finally{
+            if(conn != null){
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if(ps != null){
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if(rs != null){
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }
 

@@ -49,7 +49,7 @@ public class AdVPPrivilegeFilter implements Filter {
         if (session == null || session.getAttribute("user") == null) {
             res.sendRedirect("login");
         }else {
-            if(!(session.getAttribute("account_type").equals("admin") || !(boolean) session.getAttribute("management_score").equals(false))){
+            if(!(session.getAttribute("account_type").equals("admin") || !(boolean) session.getAttribute("management_score").equals(false) || !(boolean) session.getAttribute("sales_score").equals(false))){
                 req.getRequestDispatcher("/WEB-INF/error/authpage-error.jsp").forward(req, res);
             }
         }

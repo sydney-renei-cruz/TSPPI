@@ -5,16 +5,21 @@
  */
 package com.tsppi.controller.io.form.function;
 
+import com.tsppi.controller.account.register.function.RegisterController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -66,9 +71,10 @@ public class EditProductCategoryController extends HttpServlet {
         PrintWriter out = response.getWriter();
         
         Connection conn = null;
-        PreparedStatement ps;
+        PreparedStatement ps = null;
         ServletContext context = request.getSession().getServletContext();
-        int i;
+        int success = 0;
+        HttpSession session = request.getSession();
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
@@ -80,13 +86,36 @@ public class EditProductCategoryController extends HttpServlet {
                 ps = conn.prepareStatement("UPDATE product_category SET category_name = ? WHERE category_id = ?");
                 ps.setString(1, category_name);
                 ps.setString(2, category_id);
-                i = ps.executeUpdate();
+                success = ps.executeUpdate();
             }
-            response.sendRedirect("allproductcategory");
+            
+            if(success > 0){
+                response.sendRedirect("allproductcategory");
+            }else{
+                session.setAttribute("edit_error", "Please review the fields");
+                response.sendRedirect(request.getHeader("referer"));
+            }
+            
         }catch(Exception e){
             e.printStackTrace();
-            out.print(e);
             context.log("Exception: " + e);
+            request.setAttribute("exception_error", e);
+            request.getRequestDispatcher("/WEB-INF/error/catch-error.jsp").forward(request, response);
+        }finally{
+            if(conn != null){
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if(ps != null){
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }
 

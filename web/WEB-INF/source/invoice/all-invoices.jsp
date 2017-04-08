@@ -74,7 +74,7 @@
                                                         </td>
                                                         <td>${al1.getPaymentMethod()}</td>
                                                         <td>${al1.getTotalAmount()}</td>
-                                                        <td>${al1.getStatusName()}</td>
+                                                        <td>${al1.getInvoiceStatus()}</td>
                                                         <td>${al1.getInvoiceDate()}</td>
                                                         <c:if test="${account_type == 'client'}">
                                                             <td>
@@ -84,7 +84,7 @@
                                                                 </form>
                                                             </td>
                                                         </c:if>
-                                                        <c:if test="${inventory_score == true}">
+                                                        <c:if test="${sales_score == true}">
                                                             <td>
                                                                 <form action="approveinvoice" method="POST">
                                                                     <input type="hidden" name="invoice_id" value="${al1.getInvoiceID()}">
@@ -137,7 +137,7 @@
                                                         </td>
                                                         <td>${al2.getPaymentMethod()}</td>
                                                         <td>${al2.getTotalAmount()}</td>
-                                                        <td>${al2.getStatusName()}</td>
+                                                        <td>${al2.getInvoiceStatus()}</td>
                                                         <td>${al2.getInvoiceDate()}</td>
                                                         <c:if test="${account_type == 'client'}">
                                                             <td>
@@ -184,7 +184,7 @@
                                                         </td>
                                                         <td>${al4.getPaymentMethod()}</td>
                                                         <td>${al4.getTotalAmount()}</td>
-                                                        <td>${al4.getStatusName()}</td>
+                                                        <td>${al4.getInvoiceStatus()}</td>
                                                         <td>${al4.getInvoiceDate()}</td>
                                                         <c:if test="${management_score == true}">
                                                             <td>
@@ -232,7 +232,7 @@
                                                         </td>
                                                         <td>${al5.getPaymentMethod()}</td>
                                                         <td>${al5.getTotalAmount()}</td>
-                                                        <td>${al5.getStatusName()}</td>
+                                                        <td>${al5.getInvoiceStatus()}</td>
                                                         <td>${al5.getInvoiceDate()}</td>
                                                     </tr>
                                                 </c:forEach>
@@ -271,7 +271,7 @@
                                                         </td>
                                                         <td>${al6.getPaymentMethod()}</td>
                                                         <td>${al6.getTotalAmount()}</td>
-                                                        <td>${al6.getStatusName()}</td>
+                                                        <td>${al6.getInvoiceStatus()}</td>
                                                         <td>${al6.getInvoiceDate()}</td>
                                                         <c:if test="${account_type == 'client'}">
                                                             <td>
@@ -300,7 +300,7 @@
                         <c:if test="${al3.size() != 0}">
                             <div class="col-md-10 col-md-offset-1">
                                 <div class="col-lg-12">
-                                    <h3 class="description">Canceled and Rejected Orders</h3>
+                                    <h3 class="description">Cancelled and Rejected Orders</h3>
                                     <div class="table text-center">
                                         <table class="table">
                                             <thead>
@@ -326,7 +326,7 @@
                                                         </td>
                                                         <td>${al3.getPaymentMethod()}</td>
                                                         <td>${al3.getTotalAmount()}</td>
-                                                        <td>${al3.getStatusName()}</td>
+                                                        <td>${al3.getInvoiceStatus()}</td>
                                                         <td>${al3.getInvoiceDate()}</td>
                                                     </tr>
                                                 </c:forEach>

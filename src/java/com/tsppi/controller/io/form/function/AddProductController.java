@@ -5,6 +5,7 @@
  */
 package com.tsppi.controller.io.form.function;
 
+import com.tsppi.controller.account.register.function.RegisterController;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -14,12 +15,16 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 /**
@@ -73,11 +78,12 @@ public class AddProductController extends HttpServlet {
         PrintWriter out = response.getWriter();
         
         Connection conn = null;
-        PreparedStatement ps;
-        ServletContext context;
+        PreparedStatement ps = null;
+        ServletContext context = request.getSession().getServletContext();
+        HttpSession session = request.getSession();
         String inText;
-        int i;
-        context = request.getSession().getServletContext();
+        int success = 0;
+        
         
         try{
             
@@ -85,8 +91,8 @@ public class AddProductController extends HttpServlet {
             conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
             
             String product_name = request.getParameter("product_name");
-            float msrp = Float.parseFloat(request.getParameter("msrp"));
-            int stock = Integer.parseInt(request.getParameter("stock"));
+            String msrp = request.getParameter("msrp");
+            String stock = request.getParameter("stock");
             String product_detail = request.getParameter("product_detail");
             String category_id = request.getParameter("product_category");
             Boolean for_sale = false;
@@ -95,57 +101,72 @@ public class AddProductController extends HttpServlet {
             if(filePart.getSize() != 0){
                 inputStream = filePart.getInputStream();
             }
-            
-            if(filePart.getSize() != 0){
-                inText = "INSERT INTO product "
-                    + "(category_id, product_name, product_detail, msrp, stock, for_sale, product_image) "
-                    + "VALUES (?,?,?,?,?,?,?)";
-                ps = conn.prepareStatement(inText, Statement.RETURN_GENERATED_KEYS);
-                ps.setBlob(7, inputStream);
-            }else{
+            if(!product_name.isEmpty() && !msrp.isEmpty() && !stock.isEmpty() && !product_detail.isEmpty()){
                 inText = "INSERT INTO product "
                     + "(category_id, product_name, product_detail, msrp, stock, for_sale) "
                     + "VALUES (?,?,?,?,?,?)";
                 ps = conn.prepareStatement(inText, Statement.RETURN_GENERATED_KEYS);
-            }
-            ps.setString(1, category_id);
-            ps.setString(2, product_name);
-            ps.setString(3, product_detail);
-            ps.setFloat(4, msrp);
-            ps.setInt(5, stock);
-            ps.setBoolean(6, for_sale);
-            i = ps.executeUpdate();
-            
-            int id;
-            try(ResultSet generated_keys = ps.getGeneratedKeys()){
-                if(generated_keys.next()){
-                   id = generated_keys.getInt(1);
-                   if(filePart.getSize() != 0){
-                        String imagePath = context.getInitParameter("imgPath") + "product\\" + id + ".png";
-                        File file = new File(imagePath);
-                        
-                        FileOutputStream outFile = new FileOutputStream(file);
-                        inputStream = filePart.getInputStream();
-                        
-                        int read = 0;
-                        int bufferSize = 1024;
-                        byte[] buffer = new byte[bufferSize];
-                        while((read = inputStream.read(buffer)) != -1){
-                            outFile.write(buffer, 0, read);
+                ps.setString(1, category_id);
+                ps.setString(2, product_name);
+                ps.setString(3, product_detail);
+                ps.setFloat(4, Float.parseFloat(msrp));
+                ps.setInt(5, Integer.parseInt(stock));
+                ps.setBoolean(6, for_sale);
+                success = ps.executeUpdate();
+
+                int id;
+                try(ResultSet generated_keys = ps.getGeneratedKeys()){
+                    if(generated_keys.next()){
+                       id = generated_keys.getInt(1);
+                       if(filePart.getSize() != 0){
+                            String imagePath = context.getInitParameter("imgPath") + "product\\" + id + ".png";
+                            File file = new File(imagePath);
+
+                            FileOutputStream outFile = new FileOutputStream(file);
+                            inputStream = filePart.getInputStream();
+
+                            int read = 0;
+                            int bufferSize = 1024;
+                            byte[] buffer = new byte[bufferSize];
+                            while((read = inputStream.read(buffer)) != -1){
+                                outFile.write(buffer, 0, read);
+                            }
+                            inputStream.close();
+                            outFile.close();
                         }
-                        inputStream.close();
-                        outFile.close();
                     }
                 }
+            }else{
+                session.setAttribute("add_error", "All fields are required");
+                response.sendRedirect(request.getHeader("referer"));
             }
-            if(i>0){
+            
+            if(success>0){
                 response.sendRedirect("profile");
             }else{
-                response.sendRedirect("addproduct");
+                session.setAttribute("add_error", "Please review the fields");
+                response.sendRedirect(request.getHeader("referer"));
             }
         }catch(Exception e){
             e.printStackTrace();
-            out.print(e);
+            context.log("Exception: " + e);
+            request.setAttribute("exception_error", e);
+            request.getRequestDispatcher("/WEB-INF/error/catch-error.jsp").forward(request, response);
+        }finally{
+            if(conn != null){
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if(ps != null){
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }
 

@@ -5,6 +5,7 @@
  */
 package com.tsppi.controller.io.form.function;
 
+import com.tsppi.controller.account.register.function.RegisterController;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -13,12 +14,16 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 /**
@@ -72,11 +77,12 @@ public class EditProductController extends HttpServlet {
         PrintWriter out = response.getWriter();
         
         Connection conn = null;
-        PreparedStatement ps;
-        ServletContext context;
-        int i;
+        PreparedStatement ps = null;
+        ServletContext context = request.getSession().getServletContext();
+        int success = 0;
+        HttpSession session = request.getSession();
         try{
-            context = request.getSession().getServletContext();
+            
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
             
@@ -96,37 +102,37 @@ public class EditProductController extends HttpServlet {
                 ps = conn.prepareStatement("UPDATE product SET product_name = ? WHERE product_id = ?");
                 ps.setString(1, product_name);
                 ps.setString(2, product_id);
-                i = ps.executeUpdate();
+                success = ps.executeUpdate();
             }
             if(!price.equals("")){
                 ps = conn.prepareStatement("UPDATE product SET msrp = ? WHERE product_id = ?");
                 ps.setString(1, price);
                 ps.setString(2, product_id);
-                i = ps.executeUpdate();
+                success = ps.executeUpdate();
             }
             if(!stock.equals("")){
                 ps = conn.prepareStatement("UPDATE product SET stock = ? WHERE product_id = ?");
                 ps.setInt(1, Integer.parseInt(stock));
                 ps.setString(2, product_id);
-                i = ps.executeUpdate();
+                success = ps.executeUpdate();
             }
             if(!product_detail.equals("")){
                 ps = conn.prepareStatement("UPDATE product SET product_detail = ? WHERE product_id = ?");
                 ps.setString(1, product_detail);
                 ps.setString(2, product_id);
-                i = ps.executeUpdate();
+                success = ps.executeUpdate();
             }
             if(!category_id.equals("")){
                 ps = conn.prepareStatement("UPDATE product SET category_id = ? WHERE product_id = ?");
                 ps.setString(1, category_id);
                 ps.setString(2, product_id);
-                i = ps.executeUpdate();
+                success = ps.executeUpdate();
             }
             if(filePart.getSize() != 0){
-                ps = conn.prepareStatement("UPDATE product SET product_image = ? WHERE product_id = ?");
-                ps.setBlob(1, inputStream);
-                ps.setString(2, product_id);
-                i = ps.executeUpdate();
+//                ps = conn.prepareStatement("UPDATE product SET product_image = ? WHERE product_id = ?");
+//                ps.setBlob(1, inputStream);
+//                ps.setString(2, product_id);
+//                i = ps.executeUpdate();
                 
                 String imagePath = context.getInitParameter("imgPath") + "product\\" + product_id + ".png";
                 File file = new File(imagePath);
@@ -143,10 +149,33 @@ public class EditProductController extends HttpServlet {
                 inputStream.close();
                 outFile.close();
             }
-            response.sendRedirect("approveproducts");
+            if(success > 0){
+                response.sendRedirect("approveproducts");
+            }else{
+                session.setAttribute("edit_error", "Please review the fields");
+                response.sendRedirect(request.getHeader("referer"));
+            }
+            
         }catch(Exception e){
             e.printStackTrace();
-            out.print(e);
+            context.log("Exception: " + e);
+            request.setAttribute("exception_error", e);
+            request.getRequestDispatcher("/WEB-INF/error/catch-error.jsp").forward(request, response);
+        }finally{
+            if(conn != null){
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if(ps != null){
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }
 

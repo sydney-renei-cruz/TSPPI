@@ -5,6 +5,7 @@
  */
 package com.tsppi.controller.client.invoice.function;
 
+import com.tsppi.controller.account.register.function.RegisterController;
 import com.tsppi.controller.bean.AccountBean;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,9 +13,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.PasswordAuthentication;
@@ -50,10 +54,10 @@ public class DeliverInvoiceController extends HttpServlet {
         PrintWriter out = response.getWriter();
         
         Connection conn = null;
-        PreparedStatement ps;
+        PreparedStatement ps = null;
         ServletContext context = request.getSession().getServletContext();
         String inText = "";
-        ResultSet rs;
+        ResultSet rs = null;
         HttpSession session = request.getSession();
         try{
             Class.forName("com.mysql.jdbc.Driver");
@@ -61,11 +65,11 @@ public class DeliverInvoiceController extends HttpServlet {
             
             int invoice_id = Integer.parseInt(request.getParameter("invoice_id"));
 //            int invoice_id = 1;
-            int status_id = 6;
+            String invoice_status = "Delivery";
             
-            inText = "UPDATE invoice SET status_id = ? WHERE invoice_id = ?";
+            inText = "UPDATE invoice SET invoice_status = ? WHERE invoice_id = ?";
             ps = conn.prepareStatement(inText);
-            ps.setInt(1, status_id);
+            ps.setString(1, invoice_status);
             ps.setInt(2, invoice_id);
             ps.executeUpdate();
             
@@ -105,7 +109,6 @@ public class DeliverInvoiceController extends HttpServlet {
                 + job_type;
             String userName = "TSPPIauto@gmail.com";
             String password = "3$tarPaper!";
-            String to = "";
             inText = "SELECT a.email FROM account a "
                 + "JOIN client c ON c.account_num = a.account_num "
                 + "JOIN invoice i ON i.client_id = c.client_id "
@@ -113,7 +116,19 @@ public class DeliverInvoiceController extends HttpServlet {
             ps = conn.prepareStatement(inText);
             ps.setInt(1, invoice_id);
             rs = ps.executeQuery();
-            while(rs.next()) to = rs.getString("email");
+            ArrayList<AccountBean> al2 = new ArrayList<>();
+            AccountBean acb;
+            while(rs.next()){
+                acb = new AccountBean();
+                acb.setEmail(rs.getString("email"));
+                al2.add(acb);
+                context.log("Email: " + rs.getString("email"));
+            }
+            StringBuilder to = new StringBuilder();
+            for(int i=0; i<al2.size(); i++){
+                to.append(al2.get(i).getEmail());
+                to.append(", ");
+            }
 
             String from = "TSPPIauto@gmail.com";
             String subject = "***INVOICE REQUEST***";
@@ -144,7 +159,7 @@ public class DeliverInvoiceController extends HttpServlet {
               Message msg = new MimeMessage(session1);
               // -- Set the FROM and TO fields --
               msg.setFrom(new InternetAddress(from));
-              msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to, false));
+              msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to.toString(), true));
               msg.setSubject(subject);
               msg.setText(message);
               // -- Set some other header information --
@@ -154,9 +169,32 @@ public class DeliverInvoiceController extends HttpServlet {
               Transport.send(msg);
             response.sendRedirect(request.getHeader("referer"));
         }catch(Exception e){
-            out.print(e);
             e.printStackTrace();
             context.log("Exception: " + e);
+            request.setAttribute("exception_error", e);
+            request.getRequestDispatcher("/WEB-INF/error/catch-error.jsp").forward(request, response);
+        }finally{
+            if(conn != null){
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if(ps != null){
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if(rs != null){
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }
 

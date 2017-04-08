@@ -60,30 +60,21 @@
                                                     <label>Email Address </label>
                                                     <input type="email" name="email" id="email" class="form-control" placeholder="Ex. john.doe@gmail.com" value="${pb.getEmail()}">
                                                 </div>
-                                                <div class="form-group">
-                                                    <label>Password </label>
-                                                    <input type="password" name="password" id="password" class="form-control" placeholder="Password" value="">
-                                                </div>
                                                 
                                                 <c:if test="${account_type == 'client'}">
                                                     <div class="form-group">
                                                         <label>Mobile Number </label>
                                                         <input type="number" name="mobile" id="mobile_number" class="form-control" value="${pb.getMobile()}" placeholder="Mobile Number (The length of the number should be 11)" pattern=".{11,11}" title="Required length of number is 11">
                                                     </div>
-
-                                                    <div class="form-group">
-                                                        <label>Telephone Number </label>
-                                                        <input type="number" name="telephone" id="telephone_number" class="form-control" value="${pb.getTelephone()}" placeholder="Telephone Number (The length of the number should be 7)" pattern=".{7,7}" title="Required length of number is 7">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Home Address </label>
-                                                        <textarea rows="4" cols="50" placeholder="Home Address" class="form-control" name="address" id="address">${pb.getAddress()}</textarea>
-                                                    </div>  
                                                 </c:if>
                                                 <div class="form-group">
                                                     <h4>Please select image</h4>
                                                     <input type="file" accept="image/*" name="account_image" id="account_image" class="form-control">
                                                     <span id="image_size_error" style="color: #FF0000"></span>
+                                                </div>
+                                                <div class="form-group text-center">
+                                                    <div id="msg">${change_error}</div>
+                                                    <c:remove var="change_error" scope="session"/>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="row">

@@ -12,40 +12,29 @@ import java.util.Date;
  *
  * @author cruzsyd
  */
-public class InvoiceBean implements Serializable{
-    
+public class InvoiceBean extends AccountBean implements Serializable{
     protected int invoice_id;
-    protected int client_id;
-    protected int status_id;
     protected int pm_id;
     protected String payment_method;
-    protected String first_name;
-    protected String last_name;
-    protected String status_name;
+    protected String invoice_status;
     protected float total_amount;
     protected Date invoice_date;
     
     public InvoiceBean(){
        invoice_id = 0;
        client_id = 0;
-       status_id = 0;
        pm_id = 0;
        payment_method = "";
-       first_name = "";
-       last_name = "";
-       status_name = "";
+       invoice_status = "";
        total_amount = 0;
        invoice_date = new Date();
     }
-    public InvoiceBean(int ii, int ci, int si, int pi, String pm, String fn, String ln,String sn, float ta, Date id){
+    public InvoiceBean(int ii, int ci, int pi, String pm, String is, float ta, Date id){
         invoice_id = ii;
         client_id = ci;
-        status_id = si;
         pm_id = pi;
         payment_method = pm;
-        first_name = fn;
-        last_name = ln;
-        status_name = sn;
+        invoice_status = is;
         total_amount = ta;
         invoice_date = id;
     }
@@ -55,23 +44,14 @@ public class InvoiceBean implements Serializable{
     public void setClientID(int ci){
         client_id = ci;
     }
-    public void setStatusID(int si){
-        status_id = si;
-    }
     public void setPMID(int pi){
         pm_id = pi;
     }
     public void setPaymentMethod(String pm){
         payment_method = pm;
     }
-    public void setFirstName(String fn){
-        first_name = fn;
-    }
-    public void setLastName(String ln){
-        last_name = ln;
-    }
-    public void setStatusName(String sn){
-        status_name = sn;
+    public void setInvoiceStatus(String is){
+        invoice_status = is;
     }
     public void setTotalAmount(float ta){
         total_amount = ta;
@@ -85,26 +65,14 @@ public class InvoiceBean implements Serializable{
     public int getClientID(){
         return client_id;
     }
-    public int getStatusID(){
-        return status_id;
-    }
     public int getPMID(){
         return pm_id;
     }
     public String getPaymentMethod(){
         return payment_method;
     }
-    public String getFullName(){
-        return first_name + " " + last_name;
-    }
-    public String getFirstName(){
-        return first_name;
-    }
-    public String getLastName(){
-        return last_name;
-    }
-    public String getStatusName(){
-        return status_name;
+    public String getInvoiceStatus(){
+        return invoice_status;
     }
     public float getTotalAmount(){
         return total_amount;

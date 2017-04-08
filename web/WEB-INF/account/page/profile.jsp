@@ -24,16 +24,17 @@
                                </figure>
                            </div>
                            <div class="col-xs-12 col-sm-8">
-                               <c:forEach var="pb" items="${pb}">
-                                   <b style="font-size: 3.5em;">${pb.getFullName()}</b>
+                               <c:forEach var="al" items="${al}">
+                                   <b style="font-size: 3.5em;">${al.getFullName()}</b>
 
-                                   <p><strong>Username:</strong> ${pb.getUsername()}</p>
-                                   <p><strong>Email: </strong> ${pb.getEmail()}</p>
+                                   <p><strong>Username:</strong> ${al.getUsername()}</p>
+                                   <p><strong>Email: </strong> ${al.getEmail()}</p>
                                   <c:if test="${account_type == 'employee'}"><p><strong>Role: </strong> ${job_position} </p></c:if> <!--used session-->
                                   <c:if test="${account_type == 'client'}">
-                                    <p><strong>Mobile Number: </strong> ${pb.getMobile()}</p>
-                                    <p><strong>Telephone Number: </strong> ${pb.getTelephone()}</p>
-                                    <p><strong>Address: </strong> ${pb.getAddress()}</p>
+                                    <p><strong>Mobile Number: </strong> ${al.getMobile()}</p>
+                                    <p><strong>Company: </strong> ${al.getCompanyName()} - ${al.getCompanyBranch()}</p>
+                                    <p><strong>Company Telephone Number: </strong> ${al.getCompanyTelephone()}</p>
+                                    <p><strong>Company Address: </strong> ${al.getCompanyAddress()}</p>
                                   </c:if>
                                </c:forEach>
                            </div>
@@ -43,7 +44,7 @@
                                <a href="editprofile" class="btn btn-primary btn-block"><span class="fa fa-user"></span> Edit Profile </a>
                            </div>
                            <div class="col-xs-12 col-sm-4 emphasis">
-                               <a href="#" class="btn btn-primary btn-block"><span class="fa fa-user"></span> Change Password </a>
+                               <a href="changepassword" class="btn btn-primary btn-block"><span class="fa fa-user"></span> Change Password </a>
                            </div>
                            <c:if test="${account_type == 'client'}">
                                <div class="col-xs-12 col-sm-4 emphasis">

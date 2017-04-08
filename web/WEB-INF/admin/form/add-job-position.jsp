@@ -41,21 +41,31 @@
                                                     <input type="text" name="job_type" id="job_type" class="form-control" placeholder="Ex. Vice President">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>Management Privilege?</label> <span style="font-size: 12px; color: #888;">Allows user to modify any invoice requests.</span><br>
+                                                    <label>Management Privilege?</label> <span style="font-size: 12px; color: #888;">Allows user to modify clients and client's company.</span><br>
                                                     <input type="radio" name="management_score" class="management_score" class="form-control" value="1"> Yes
                                                     <input type="radio" name="management_score" class="management_score" class="form-control" value="0"> No
                                                     <br><label for="management_score" class="my-error-class"></label>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>Inventory Officer Privilege? </label> <span style="font-size: 12px; color: #888;">Allows user to modify any products and services.</span><br>
+                                                    <label>Sales Privilege? </label> <span style="font-size: 12px; color: #888;">Allows user to modify any invoices.</span><br>
+                                                    <input type="radio" name="sales_score" class="sales_score" class="form-control" value="1"> Yes
+                                                    <input type="radio" name="sales_score" class="sales_score" class="form-control" value="0"> No
+                                                    <br><label for="inventory_score" class="my-error-class"></label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Inventory Privilege? </label> <span style="font-size: 12px; color: #888;">Allows user to modify any products and services.</span><br>
                                                     <input type="radio" name="inventory_score" class="inventory_score" class="form-control" value="1"> Yes
                                                     <input type="radio" name="inventory_score" class="inventory_score" class="form-control" value="0"> No
-                                                    <br><label for="inventory_score" class="my-error-class"></label>
+                                                    <br><label for="sales_score" class="my-error-class"></label>
+                                                </div>
+                                                <div class="form-group text-center">
+                                                    <div id="msg">${add_error}</div>
+                                                    <c:remove var="add_error" scope="session"/>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-sm-6 col-sm-offset-3"> 
-                                                            <input type="submit" name="submit" id="register-submit" class="form-control btn btn-register" value="Add Product Category">
+                                                            <input type="submit" name="submit" id="register-submit" class="form-control btn btn-register" value="Add Job Position">
                                                         </div>
                                                     </div>
                                                 </div>

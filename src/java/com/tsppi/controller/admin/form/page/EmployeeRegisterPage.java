@@ -5,19 +5,24 @@
  */
 package com.tsppi.controller.admin.form.page;
 
-import com.tsppi.controller.bean.JobTypeBean;
+import com.tsppi.controller.account.register.function.RegisterController;
+import com.tsppi.controller.bean.JobPositionBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -40,13 +45,14 @@ public class EmployeeRegisterPage extends HttpServlet {
         PrintWriter out = response.getWriter();
         
         Connection conn = null;
-        PreparedStatement ps;
-        ServletContext context;
-        ResultSet rs;
+        PreparedStatement ps = null;
+        ServletContext context = request.getSession().getServletContext();
+        ResultSet rs = null;
         boolean status = true;
         String inText = "";
+        HttpSession session = request.getSession();
         try{
-            context = request.getSession().getServletContext();
+            
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
             inText = "SELECT * FROM job_position WHERE show_job=?";
@@ -54,10 +60,10 @@ public class EmployeeRegisterPage extends HttpServlet {
             ps.setBoolean(1, status);
             rs = ps.executeQuery();
             
-            ArrayList<JobTypeBean> jt = new ArrayList<>();
-            JobTypeBean jtb;
+            ArrayList<JobPositionBean> jt = new ArrayList<>();
+            JobPositionBean jtb;
             while(rs.next()){
-                jtb = new JobTypeBean();
+                jtb = new JobPositionBean();
                 jtb.setJobID(rs.getInt("job_id"));
                 jtb.setJobType(rs.getString("job_type"));
                 jt.add(jtb);
@@ -68,7 +74,31 @@ public class EmployeeRegisterPage extends HttpServlet {
             request.getRequestDispatcher("/WEB-INF/admin/form/employee-register.jsp").forward(request, response);
         }catch(Exception e){
             e.printStackTrace();
-            out.print(e);
+            context.log("Exception: " + e);
+            request.setAttribute("exception_error", e);
+            request.getRequestDispatcher("/WEB-INF/error/catch-error.jsp").forward(request, response);
+        }finally{
+            if(conn != null){
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if(ps != null){
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if(rs != null){
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }
 

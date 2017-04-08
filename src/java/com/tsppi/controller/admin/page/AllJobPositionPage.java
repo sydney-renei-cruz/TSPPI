@@ -5,7 +5,8 @@
  */
 package com.tsppi.controller.admin.page;
 
-import com.tsppi.controller.bean.JobTypeBean;
+import com.tsppi.controller.account.register.function.RegisterController;
+import com.tsppi.controller.bean.JobPositionBean;
 import com.tsppi.controller.bean.ProductCategoryBean;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,12 +14,16 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -40,9 +45,10 @@ public class AllJobPositionPage extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         Connection conn = null;
-        PreparedStatement ps;
+        PreparedStatement ps = null;
         ServletContext context = request.getSession().getServletContext();
-        ResultSet rs;
+        ResultSet rs = null;
+        HttpSession session = request.getSession();
         String inText = "";
         try{
             
@@ -53,13 +59,14 @@ public class AllJobPositionPage extends HttpServlet {
             ps = conn.prepareStatement(inText);
             rs = ps.executeQuery();
             
-            ArrayList<JobTypeBean> al = new ArrayList<>();
-            JobTypeBean jt;
+            ArrayList<JobPositionBean> al = new ArrayList<>();
+            JobPositionBean jt;
             while(rs.next()){
-                jt = new JobTypeBean();
+                jt = new JobPositionBean();
                 jt.setJobID(rs.getInt("job_id"));
                 jt.setJobType(rs.getString("job_type"));
                 jt.setManagementScore(rs.getBoolean("management_score"));
+                jt.setSalesScore(rs.getBoolean("sales_score"));
                 jt.setInventoryScore(rs.getBoolean("inventory_score"));
                 jt.setShowJob(rs.getBoolean("show_job"));
                 al.add(jt);
@@ -69,8 +76,31 @@ public class AllJobPositionPage extends HttpServlet {
             request.getRequestDispatcher("/WEB-INF/admin/page/all-job-position.jsp").forward(request, response);
         }catch(Exception e){
             e.printStackTrace();
-            out.print(e);
             context.log("Exception: " + e);
+            request.setAttribute("exception_error", e);
+            request.getRequestDispatcher("/WEB-INF/error/catch-error.jsp").forward(request, response);
+        }finally{
+            if(conn != null){
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if(ps != null){
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if(rs != null){
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }
 

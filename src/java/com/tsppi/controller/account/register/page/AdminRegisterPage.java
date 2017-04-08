@@ -5,12 +5,17 @@
  */
 package com.tsppi.controller.account.register.page;
 
+import com.tsppi.controller.account.register.function.RegisterController;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -31,11 +36,14 @@ public class AdminRegisterPage extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        HttpSession session = request.getSession();
         try{
             request.getRequestDispatcher("/WEB-INF/account/form/register/admin-register.jsp").forward(request, response);
         }catch(Exception e){
-            out.print(e);
             e.printStackTrace();
+            out.print(e);
+            request.setAttribute("exception_error", e);
+            request.getRequestDispatcher("/WEB-INF/error/catch-error.jsp").forward(request, response);
         }
     }
 

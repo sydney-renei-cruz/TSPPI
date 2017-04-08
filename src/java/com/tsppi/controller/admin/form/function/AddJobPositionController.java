@@ -5,16 +5,21 @@
  */
 package com.tsppi.controller.admin.form.function;
 
+import com.tsppi.controller.account.register.function.RegisterController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -65,45 +70,75 @@ public class AddJobPositionController extends HttpServlet {
         processRequest(request, response);
         PrintWriter out = response.getWriter();
         Connection conn = null;
-        PreparedStatement ps;
+        PreparedStatement ps = null;
         ServletContext context = request.getSession().getServletContext();;
         String inText = "";
-        int i;
-        int management_score = Integer.parseInt(request.getParameter("management_score"));
-        int inventory_score = Integer.parseInt(request.getParameter("inventory_score"));
+        HttpSession session = request.getSession();
+        int success = 0;
+        
+        String management_score = request.getParameter("management_score");
+        String sales_score = request.getParameter("sales_score");
+        String inventory_score = request.getParameter("inventory_score");
         boolean ms = false;
+        boolean ss = false;
         boolean is = false;
         boolean show_job = true;
-        if(management_score != 0){
-            ms = true;
-        }
-        if(inventory_score != 0){
-            is = true;
-        }
         String job_type = request.getParameter("job_type");
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
             
-            
-            inText = "INSERT INTO job_position (job_type, management_score, inventory_score, show_job) VALUES (?,?,?,?)";
-            ps = conn.prepareStatement(inText);
-            ps.setString(1, job_type);
-            ps.setBoolean(2, ms);
-            ps.setBoolean(3, is);
-            ps.setBoolean(4, show_job);
-            i = ps.executeUpdate();
-            
-            response.sendRedirect("addjobposition");
-//            if(i>0){
-//                response.sendRedirect("alljobposition");
-//            }else{
-//                response.sendRedirect("addjobposition");
-//            }
+            if(!job_type.isEmpty() && !management_score.isEmpty() && !sales_score.isEmpty() && !inventory_score.isEmpty()){
+                if(Integer.parseInt(management_score) != 0){
+                    ms = true;
+                }
+                if(Integer.parseInt(inventory_score) != 0){
+                    is = true;
+                }
+                if(Integer.parseInt(sales_score) != 0){
+                    ss = true;
+                }
+                
+                inText = "INSERT INTO job_position (job_type, management_score, sales_score, inventory_score, show_job) VALUES (?,?,?,?,?)";
+                ps = conn.prepareStatement(inText);
+                ps.setString(1, job_type);
+                ps.setBoolean(2, ms);
+                ps.setBoolean(3, ss);
+                ps.setBoolean(4, is);
+                ps.setBoolean(5, show_job);
+                success = ps.executeUpdate();
+            }else{
+                session.setAttribute("add_error", "All fields are required");
+                response.sendRedirect(request.getHeader("referer"));
+                return;
+            }
+            if(success > 0){
+                response.sendRedirect("addjobposition");
+            }else{
+                session.setAttribute("add_error", "Please review the fields");
+                response.sendRedirect(request.getHeader("referer"));
+            }
         }catch(Exception e){
             e.printStackTrace();
             out.print(e);
             context.log("Exception: " + e);
+            request.setAttribute("exception_error", e);
+            request.getRequestDispatcher("/WEB-INF/error/catch-error.jsp").forward(request, response);
+        }finally{
+            if(conn != null){
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if(ps != null){
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }
 

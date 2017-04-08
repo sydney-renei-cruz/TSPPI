@@ -8,7 +8,6 @@ $(document).ready(function(){
       errorClass: "my-error-class", 
       rules: {
           job_type: {
-              required: true,
               remote:{
                   url: 'checkpositionname2', //EmailCheckerController
                    type: 'post',
@@ -20,7 +19,6 @@ $(document).ready(function(){
       },
       messages: {
           job_type: {
-              required: "Hello WOrld",
               remote: "Job name already exists"
           }
       }

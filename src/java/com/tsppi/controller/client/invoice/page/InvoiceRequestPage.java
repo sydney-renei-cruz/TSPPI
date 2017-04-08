@@ -5,6 +5,8 @@
  */
 package com.tsppi.controller.client.invoice.page;
 
+import com.tsppi.controller.account.register.function.RegisterController;
+import com.tsppi.controller.bean.AccountBean;
 import com.tsppi.controller.bean.ClientBean;
 import com.tsppi.controller.bean.PaymentMethodBean;
 import java.io.IOException;
@@ -13,7 +15,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -58,37 +63,51 @@ public class InvoiceRequestPage extends HttpServlet {
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
         Connection conn = null;
-        PreparedStatement ps;
+        PreparedStatement ps = null;
         ServletContext context = request.getSession().getServletContext();;
-        ResultSet rs;
+        ResultSet rs = null;
         String inText = "";
         boolean status = false;
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
             
-            inText = "SELECT a.*, t.account_type, c.* "
-                    + "FROM account a "
-                    + "JOIN client c ON a.account_num = c.account_num "
-                    + "JOIN type_of_account t ON a.account_type_id = t.account_type_id "
-                    + "WHERE t.account_type='client' AND a.account_num=?";
+            inText = "SELECT a.account_num, a.first_name, a.last_name, a.email, "
+                + "c.client_id,c.mobile, "
+                + "co.company_id, co.company_name, co.company_branch, co.company_telephone, "
+                + "ca.address_id, ca.street_line1, ca.street_line2, ca.spr, ca.city, ca.postal_code, ca.country "
+                + "FROM account a "
+                + "JOIN client c ON c.account_num = a.account_num "
+                + "JOIN company co ON co.company_id = c.company_id "
+                + "JOIN company_address ca ON ca.company_id = co.company_id "
+                + "WHERE a.account_num = ? "
+                + "GROUP BY c.account_num ";
             ps = conn.prepareStatement(inText);
             ps.setString(1, (String) session.getAttribute("account_num"));
             rs = ps.executeQuery();
             
-            ArrayList<ClientBean> al = new ArrayList<>();
-            ClientBean cb;
+            ArrayList<AccountBean> al = new ArrayList<>();
+            AccountBean ab;
             while(rs.next()){
-                cb = new ClientBean();
-                cb.setAccountNum(rs.getInt("account_num"));
-                cb.setClientID(rs.getInt("client_id"));
-                cb.setFirstName(rs.getString("first_name"));
-                cb.setLastName(rs.getString("last_name"));
-                cb.setEmail(rs.getString("email"));
-                cb.setMobile(rs.getString("mobile"));
-                cb.setTelephone(rs.getString("telephone"));
-                cb.setAddress(rs.getString("address"));
-                al.add(cb);
+                ab = new AccountBean();
+                ab.setAccountNum(rs.getInt("account_num"));
+                ab.setClientID(rs.getInt("client_id"));
+                ab.setFirstName(rs.getString("first_name"));
+                ab.setLastName(rs.getString("last_name"));
+                ab.setEmail(rs.getString("email"));
+                ab.setMobile(rs.getString("mobile"));
+                ab.setCompanyID(rs.getInt("company_id"));
+                ab.setCompanyName(rs.getString("company_name"));
+                ab.setCompanyBranch(rs.getString("company_branch"));
+                ab.setCompanyTelephone(rs.getString("company_telephone"));
+                ab.setAddressID(rs.getInt("address_id"));
+                ab.setStreetLine1(rs.getString("street_line1"));
+                ab.setStreetLine2(rs.getString("street_line2"));
+                ab.setSPR(rs.getString("spr"));
+                ab.setCity(rs.getString("city"));
+                ab.setPostalCode(rs.getInt("postal_code"));
+                ab.setCountry(rs.getString("country"));
+                al.add(ab);
             }
             request.setAttribute("al", al);
             
@@ -109,7 +128,31 @@ public class InvoiceRequestPage extends HttpServlet {
             request.getRequestDispatcher("/WEB-INF/client/invoice/invoice-request.jsp").forward(request, response);
         }catch(Exception e){
             e.printStackTrace();
-            out.print(e);
+            context.log("Exception: " + e);
+            request.setAttribute("exception_error", e);
+            request.getRequestDispatcher("/WEB-INF/error/catch-error.jsp").forward(request, response);
+        }finally{
+            if(conn != null){
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if(ps != null){
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if(rs != null){
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }
 

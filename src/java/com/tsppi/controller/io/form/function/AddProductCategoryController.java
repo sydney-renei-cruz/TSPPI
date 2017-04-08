@@ -5,17 +5,22 @@
  */
 package com.tsppi.controller.io.form.function;
 
+import com.tsppi.controller.account.register.function.RegisterController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -66,31 +71,55 @@ public class AddProductCategoryController extends HttpServlet {
         processRequest(request, response);
         PrintWriter out = response.getWriter();
         Connection conn = null;
-        PreparedStatement ps;
-        ServletContext context = request.getSession().getServletContext();;
+        PreparedStatement ps = null;
+        ServletContext context = request.getSession().getServletContext();
+        HttpSession session = request.getSession();
         String inText = "";
-        int i;
+        int success = 0;
         boolean show_category = true;
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
             
             String category_name = request.getParameter("category_name");
-            inText = "INSERT INTO product_category (category_name, show_category) VALUES (?,?)";
-            ps = conn.prepareStatement(inText);
-            ps.setString(1, category_name);
-            ps.setBoolean(2, show_category);
-            i = ps.executeUpdate();
+            if(!category_name.isEmpty()){
+                inText = "INSERT INTO product_category (category_name, show_category) VALUES (?,?)";
+                ps = conn.prepareStatement(inText);
+                ps.setString(1, category_name);
+                ps.setBoolean(2, show_category);
+                success = ps.executeUpdate();
+            }else{
+                session.setAttribute("add_error", "All fields are required");
+                response.sendRedirect(request.getHeader("referer"));
+            }
             
-            if(i>0){
+            
+            if(success>0){
                 response.sendRedirect("allproductcategory");
             }else{
-                response.sendRedirect("addproductcategory");
+                session.setAttribute("add_error", "Please review the fields");
+                response.sendRedirect(request.getHeader("referer"));
             }
         }catch(Exception e){
             e.printStackTrace();
-            out.print(e);
             context.log("Exception: " + e);
+            request.setAttribute("exception_error", e);
+            request.getRequestDispatcher("/WEB-INF/error/catch-error.jsp").forward(request, response);
+        }finally{
+            if(conn != null){
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if(ps != null){
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }
 

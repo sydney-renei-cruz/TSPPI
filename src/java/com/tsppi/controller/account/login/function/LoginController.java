@@ -5,6 +5,7 @@
  */
 package com.tsppi.controller.account.login.function;
 
+import com.tsppi.controller.account.register.function.RegisterController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.MessageDigest;
@@ -12,6 +13,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -78,25 +82,26 @@ public class LoginController extends HttpServlet {
         String pass = "";
         String newpass= "";
         //conditional if-else >>>> session
-        String account_type_id = "";
         String account_type = "";
         String account_num = "";
         String job_id = "";
         String job_position = "";
         boolean management_score = false;
+        boolean sales_score = false;
         boolean inventory_score = false;
         //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         
         HttpSession session = request.getSession();
         ServletContext context = request.getSession().getServletContext();
         Connection conn = null;
-        
+        PreparedStatement ps = null;
+        ResultSet rs = null;
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM account WHERE username = ?");
+            ps = conn.prepareStatement("SELECT * FROM account WHERE username = ?");
             ps.setString(1, username);
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
             
             //Try the 10 different Salts
             String[] salts = new String[10];
@@ -117,31 +122,22 @@ public class LoginController extends HttpServlet {
                 pass = rs.getString("password");
                 status = rs.getBoolean("account_status");
             }
-            
             for(int i = 0; i <= 9; i++){
                 pwplaceholder = password + salts[i];
                 
                 md.update(pwplaceholder.getBytes());
         
                 byte byteData[] = md.digest();
-        
-                StringBuffer sb = new StringBuffer();
-        
+                StringBuilder sb = new StringBuilder();
                 for(int y = 0; y < byteData.length; y++){
                     sb.append(Integer.toString((byteData[y] & 0xff) + 0x100, 16).substring(1));
                 }
-
-                
+                context.log("new password: " + sb.toString());
                 //      correct will become TRUE if a match is found
                 if(pass.equals(sb.toString())){
 
-                    account_type_id = rs.getString("account_type_id");
                     account_num = rs.getString("account_num");
-
-                    ps = conn.prepareStatement("SELECT * FROM type_of_account WHERE account_type_id=?");
-                    ps.setString(1, account_type_id);
-                    rs = ps.executeQuery();
-                    if(rs.next()) account_type = rs.getString("account_type");
+                    account_type = rs.getString("account_type");
 
                     if(account_type.equals("employee") ){
                         ps = conn.prepareStatement("SELECT * FROM employee WHERE account_num=?");
@@ -152,37 +148,59 @@ public class LoginController extends HttpServlet {
                         ps = conn.prepareStatement("SELECT * FROM job_position WHERE job_id=?");
                         ps.setString(1, job_id);
                         rs = ps.executeQuery();
-                        
                         if(rs.next()){
                             job_position = rs.getString("job_type");
                             management_score = rs.getBoolean("management_score");
+                            sales_score = rs.getBoolean("sales_score");
                             inventory_score = rs.getBoolean("inventory_score");
                         }
-                        
+                        session.setAttribute("management_score", management_score);
+                        session.setAttribute("sales_score", sales_score);
+                        session.setAttribute("inventory_score", inventory_score);
+                        session.setAttribute("job_position", job_position);
                     }
 
-
                     session.setAttribute("account_num", account_num);
-                    session.setAttribute("job_position", job_position);
                     session.setAttribute("account_type", account_type);
                     session.setAttribute("account_status", status);
-                    session.setAttribute("management_score", management_score);
-                    session.setAttribute("inventory_score", inventory_score);
                     session.setAttribute("user", username);
-                    
                     session.setMaxInactiveInterval(30*60);
 
                 }
             }
             
             if(!rs.previous()){
-                session.setAttribute("error_message", "Incorrect username or password");
-                response.sendRedirect("login");
+                session.setAttribute("login_error", "Incorrect username or password");
+                response.sendRedirect(request.getHeader("referer"));
             }
         }catch(Exception e){
             e.printStackTrace();
             out.print(e);
             context.log("Exception: " + e);
+            request.setAttribute("exception_error", e);
+            request.getRequestDispatcher("/WEB-INF/error/catch-error.jsp").forward(request, response);
+        }finally{
+            if(conn != null){
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if(ps != null){
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if(rs != null){
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }
 

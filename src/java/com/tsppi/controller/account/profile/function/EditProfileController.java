@@ -5,6 +5,7 @@
  */
 package com.tsppi.controller.account.profile.function;
 
+import com.tsppi.controller.account.register.function.RegisterController;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -15,7 +16,10 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -75,11 +79,10 @@ public class EditProfileController extends HttpServlet {
         
         HttpSession session = request.getSession();
         Connection conn = null;
-        PreparedStatement ps;
-        ServletContext context;
-        
+        PreparedStatement ps = null;
+        ServletContext context = request.getSession().getServletContext();
+        int success = 0;
         try{
-            context = request.getSession().getServletContext();
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
             
@@ -88,9 +91,6 @@ public class EditProfileController extends HttpServlet {
             String last_name = request.getParameter("lastname");
             String email = request.getParameter("email");
             String mobile = request.getParameter("mobile");
-            String telephone = request.getParameter("telephone");
-            String address = request.getParameter("address");
-            String password = request.getParameter("password");
             String currentUsername = (String)session.getAttribute("account_num");
             InputStream inputStream = null;
             Part filePart = request.getPart("account_image");
@@ -102,33 +102,48 @@ public class EditProfileController extends HttpServlet {
                 ps = conn.prepareStatement("UPDATE account SET first_name = ? WHERE account_num = ?");
                 ps.setString(1, first_name);
                 ps.setString(2, currentUsername);
-                ps.executeUpdate();
+                success = ps.executeUpdate();
+                if(success == 0){
+                    session.setAttribute("change", "Please review fields");
+                    response.sendRedirect(request.getHeader("referer"));
+                    return;
+                }
             }
             
             if(!last_name.equals("")){
                 ps = conn.prepareStatement("UPDATE account SET last_name = ? WHERE account_num = ?");
                 ps.setString(1, last_name);
                 ps.setString(2, currentUsername);
-                ps.executeUpdate();
+                success = ps.executeUpdate();
+                if(success == 0){
+                    session.setAttribute("change", "Please review fields");
+                    response.sendRedirect(request.getHeader("referer"));
+                    return;
+                }
             }
             
             if(!email.equals("")){
                 ps = conn.prepareStatement("UPDATE account SET email = ? WHERE account_num = ?");
                 ps.setString(1, email);
                 ps.setString(2, currentUsername);
-                ps.executeUpdate();
+                success = ps.executeUpdate();
+                if(success == 0){
+                    session.setAttribute("change", "Please review fields");
+                    response.sendRedirect(request.getHeader("referer"));
+                    return;
+                }
             }
              if(filePart.getSize() != 0){
-                ps = conn.prepareStatement("UPDATE account SET account_image = ? WHERE account_num = ?");
-                ps.setBlob(1, inputStream);
-                ps.setString(2, currentUsername);
-                ps.executeUpdate();
+//                ps = conn.prepareStatement("UPDATE account SET account_image = ? WHERE account_num = ?");
+//                ps.setBlob(1, inputStream);
+//                ps.setString(2, currentUsername);
+//                ps.executeUpdate();
                 
                 String imagePath = context.getInitParameter("imgPath") + "account\\" + currentUsername + ".png";
                 File file = new File(imagePath);
 
                 FileOutputStream outFile = new FileOutputStream(file);
-                inputStream = filePart.getInputStream();
+//                inputStream = filePart.getInputStream();
 
                 int read = 0;
                 int bufferSize = 1024;
@@ -139,75 +154,17 @@ public class EditProfileController extends HttpServlet {
                 inputStream.close();
                 outFile.close();
              }
-            
-            if(!password.equals("")){
-            //                  Hash the password
-                try{
-        
-                //Salts for the hashing
-                String[] salts = new String[10];
-                salts[0] = "7LsDFJ9oHjDnfUr12";
-                salts[1] = "K8oMilIOi0ji43amS";
-                salts[2] = "AFIOUVAJNONVASJja";
-                salts[3] = "nVaWIdsj19Aij63df";
-                salts[4] = "uahRksD47kljnJN9k";
-                salts[5] = "dMna7sY01jfIoaPlY";
-                salts[6] = "Wg480ioAjEdsf31Ka";
-                salts[7] = "gMutRHj70ubQnjB67";
-                salts[8] = "gnQiaOhfXquh82z74";
-                salts[9] = "mKvqn7834wHjk1kLa";
-        
-                Random rand = new Random();
-        
-                password = password + salts[rand.nextInt(10)];
-        
-                //              End Salting
-            
-                MessageDigest md = MessageDigest.getInstance("SHA-256");
-                md.update(password.getBytes());
-        
-                byte byteData[] = md.digest();
-        
-                StringBuffer sb = new StringBuffer();
-        
-                for(int i = 0; i < byteData.length; i++){
-                    sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
-                }
-        
-                password = sb.toString();
-                }
-                catch(NoSuchAlgorithmException e){
-                    e.printStackTrace();
-                }
-                //      End Hashing
-                
-                //      CHANGE PASSWORD
-                
-                ps = conn.prepareStatement("UPDATE account SET password = ? WHERE account_num = ?");
-                ps.setString(1, password);
-                ps.setString(2, currentUsername);
-                ps.executeUpdate();
-            }
             if(session.getAttribute("account_type").equals("client")){
                 if(!mobile.equals("")){
                     ps = conn.prepareStatement("UPDATE client SET mobile= ? WHERE account_num = ?");
                     ps.setString(1, mobile);
                     ps.setString(2, currentUsername);
-                    ps.executeUpdate();
+                    success = ps.executeUpdate();
                 }
-
-                if(!telephone.equals("")){
-                    ps = conn.prepareStatement("UPDATE client SET telephone = ? WHERE account_num = ?");
-                    ps.setString(1, telephone);
-                    ps.setString(2, currentUsername);
-                    ps.executeUpdate();
-                }
-
-                if(!address.equals("")){
-                    ps = conn.prepareStatement("UPDATE client SET address = ? WHERE account_num = ?");
-                    ps.setString(1, address);
-                    ps.setString(2, currentUsername);
-                    ps.executeUpdate();
+                if(success == 0){
+                    session.setAttribute("change", "Please review fields");
+                    response.sendRedirect(request.getHeader("referer"));
+                    return;
                 }
             }
             
@@ -216,15 +173,38 @@ public class EditProfileController extends HttpServlet {
                 ps = conn.prepareStatement("UPDATE account SET username = ? WHERE account_num = ?");
                 ps.setString(1, username);
                 ps.setString(2, currentUsername);
-                ps.executeUpdate();
-                
+                success = ps.executeUpdate();
                 session.setAttribute("user", username);
+                if(success == 0){
+                    session.setAttribute("change", "Please review fields");
+                    response.sendRedirect(request.getHeader("referer"));
+                    return;
+                }
             }
-        
             response.sendRedirect("profile");
+        
+            
         }catch(Exception e){
             e.printStackTrace();
             out.print(e);
+            context.log("Exception: " + e);
+            request.setAttribute("exception_error", e);
+            request.getRequestDispatcher("/WEB-INF/error/catch-error.jsp").forward(request, response);
+        }finally{
+            if(conn != null){
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if(ps != null){
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }
 

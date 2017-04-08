@@ -5,11 +5,16 @@
  */
 package com.tsppi.controller.client.invoice.function;
 
+import com.tsppi.controller.account.register.function.RegisterController;
 import com.tsppi.controller.bean.CartBean;
 import com.tsppi.controller.bean.CartItemBean;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -65,7 +70,7 @@ public class CartController extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
         PrintWriter out = response.getWriter();
-        
+        ServletContext context = request.getSession().getServletContext();
         HttpSession session = request.getSession();
         
         try{
@@ -94,7 +99,9 @@ public class CartController extends HttpServlet {
             response.sendRedirect(request.getHeader("referer"));
         }catch(Exception e){
             e.printStackTrace();
-            out.print(e);
+            context.log("Exception: " + e);
+            request.setAttribute("exception_error", e);
+            request.getRequestDispatcher("/WEB-INF/error/catch-error.jsp").forward(request, response);
         }
     }
     protected void deleteCart(HttpServletRequest request){

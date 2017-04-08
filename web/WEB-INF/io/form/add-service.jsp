@@ -49,6 +49,10 @@
                                                     <input type="file" accept="image/*" name="service_image" id="product_service_image" class="form-control">
                                                     <span id="image_size_error" style="color: #FF0000"></span>
                                                 </div>
+                                                <div class="form-group text-center">
+                                                    <div id="msg">${add_error}</div>
+                                                    <c:remove var="add_error" scope="session"/>
+                                                </div>
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-sm-6 col-sm-offset-3"> 

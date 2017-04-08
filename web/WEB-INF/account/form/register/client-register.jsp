@@ -1,10 +1,9 @@
 <%-- 
-    Document   : login
-    Created on : Aug 16, 2016, 10:22:36 PM
-    Author     : cruzsyd
+    Document   : client-register
+    Created on : 03 18, 17, 1:27:15 PM
+    Author     : Sydney Cruz
 --%>
 
-<%@page import="java.io.PrintWriter"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -18,7 +17,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12 text-center">
-                        <h1>Register</h1>
+                        <h1>Request for an Account</h1>
                     </div>
                 </div>
             </div>
@@ -35,56 +34,70 @@
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <form id="register-form" action="registercontroller" method="post" autocomplete="off" enctype="multipart/form-data" onSubmit="return fileSize();">
+                                            <form id="register-form" action="registercontroller" method="post" autocomplete="off" autocomplete="off" enctype="multipart/form-data">
+                                                <h4>Account Information</h4>
                                                 <div class="form-group">
-                                                    <label>Username </label>
-                                                    <input type="text" name="username" id="username" class="form-control" placeholder="Ex. MyUsername01" >
+                                                    <label>Username</label>
+                                                    <input type="text" name="username" id="username" class="form-control" placeholder="Username" >
                                                     <div id="username_message"></div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>Password </label>
+                                                    <label>Password</label>
                                                     <input type="password" name="password" id="password" class="form-control" placeholder="Password" >
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>Confirm Password </label>
+                                                    <label>Confirm Password</label>
                                                     <input type="password" name="confirm_password" id="confirm-password" class="form-control" placeholder="Confirm Password" >
-                                                </div>                                                
+                                                </div>
+                                                <hr>
+                                                <h4>Personal Information</h4>
                                                 <div class="form-group">
-                                                    <label>First Name </label>
-                                                    <input type="text" name="first_name" id="first_name" class="form-control" placeholder="Ex. John" >
+                                                    <label>First Name</label>
+                                                        <input type="text" name="first_name" id="first_name" class="form-control" placeholder="First Name" >
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>Last Name </label>
-                                                    <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Ex. Doe" >
+                                                    <label>Last Name</label>
+                                                    <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Last Name" >
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>Email Address </label>
-                                                    <input type="email" name="email" id="email" class="form-control" placeholder="Ex. john.doe@gmail.com" >
+                                                    <label>Email</label>
+                                                    <input type="email" name="email" id="email" class="form-control" placeholder="Email Address" >
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>Mobile Number </label>
+                                                    <label>Mobile Number</label>
                                                     <input type="number" name="mobile_number" id="mobile_number" class="form-control" placeholder="Mobile Number (ex. 09xxxxxxxxx)" >
                                                 </div>
-                                               
+                                                <hr>
+                                                <h4>Company Currently Employed</h4>
                                                 <div class="form-group">
-                                                    <label>Telephone Number </label>
+                                                    <label>Company Name</label> 
+                                                    <input type="text" name="company_name" id="company_name" class="form-control" placeholder="Company Name" >
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Company Branch</label> 
+                                                    <input type="text" name="company_branch" id="company_branch" class="form-control" placeholder="Company Branch" >
+<!--                                                    <p id="err-msg" style="color: #FF0000;"></p>-->
+                                                </div>
+<!--                                                <div class="form-group">
                                                     <input type="number" name="telephone_number" id="telephone_number" class="form-control" placeholder="Telephone Number" >
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>Home Address </label>
-                                                    <textarea rows="4" cols="50" class="form-control" name="address" id="address" placeholder="Home Address"></textarea>
-                                                </div>
-                                                <div class="form-group">
+                                                    <textarea rows="4" cols="50" placeholder="Mailing Address" class="form-control" name="address" id="address"></textarea>
+                                                </div>-->
+<!--                                                <div class="form-group">
                                                     <h4>Please select image</h4>
                                                     <input type="file" accept="image/*" name="account_image" id="account_image" class="form-control">
                                                     <span id="image_size_error" style="color: #FF0000"></span>
-                                                </div>			
+                                                </div>-->
+                                                <div class="form-group text-center">
+                                                    <div id="msg">${register_error}</div>
+                                                    <c:remove var="register_error" scope="session"/>
+                                                </div>
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-sm-6 col-sm-offset-3">
-                                                            <input type="hidden" name="type_of_account" id="form_identifier" value="3">
-                                                            <input type="hidden" name="form_identifier" value="Client">
-                                                            <input type="submit" name="submit" id="register-submit" class="form-control btn btn-register" value="Register Now">
+                                                            <input type="hidden" name="account_type" id="account_type" class="form-control" value="client">
+                                                            <input type="submit" name="submit" id="register-submit" class="form-control btn btn-register" value="Request Now">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -108,8 +121,6 @@
             </div>
 	</section>
         <script src="imports/jquery.validate.js" type="text/javascript"></script>
-        <script src="imports/additional-methods.js" type="text/javascript"></script>
         <script src="js/reg-form-validation.js" type="text/javascript"></script>
-        
     </body>
 </html>

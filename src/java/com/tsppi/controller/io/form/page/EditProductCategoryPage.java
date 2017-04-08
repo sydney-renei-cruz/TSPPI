@@ -5,6 +5,7 @@
  */
 package com.tsppi.controller.io.form.page;
 
+import com.tsppi.controller.account.register.function.RegisterController;
 import com.tsppi.controller.bean.ProductBean;
 import com.tsppi.controller.bean.ProductCategoryBean;
 import com.tsppi.controller.bean.ServiceBean;
@@ -14,7 +15,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -58,9 +62,9 @@ public class EditProductCategoryPage extends HttpServlet {
         PrintWriter out = response.getWriter();
         
         Connection conn = null;
-        PreparedStatement ps;
+        PreparedStatement ps = null;
         ServletContext context = request.getSession().getServletContext();
-        ResultSet rs;
+        ResultSet rs = null;
         String inText = "";
         HttpSession session = request.getSession();
         try{
@@ -86,8 +90,31 @@ public class EditProductCategoryPage extends HttpServlet {
             request.getRequestDispatcher("/WEB-INF/io/form/edit-product-category.jsp").forward(request,response);
         }catch(Exception e){
             e.printStackTrace();
-            out.print(e);
             context.log("Exception: " + e);
+            request.setAttribute("exception_error", e);
+            request.getRequestDispatcher("/WEB-INF/error/catch-error.jsp").forward(request, response);
+        }finally{
+            if(conn != null){
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if(ps != null){
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if(rs != null){
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }
 

@@ -8,6 +8,5 @@ and open the template in the editor.
     Author     : cruzsyd
 */
 
-.my-error-class{
-    color: #FF0000;
-}
+.my-error-class{color: #FF0000;}
+#msg{color: #FF0000;}

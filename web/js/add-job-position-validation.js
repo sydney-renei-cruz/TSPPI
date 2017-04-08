@@ -18,6 +18,7 @@ $(document).ready(function(){
               }
           },
           management_score: "required",
+          sales_score: "required",
           inventory_score: "required"
       },
       messages: {
@@ -26,6 +27,7 @@ $(document).ready(function(){
               remote: "Job name already exists"
           },
           management_score: "Please select yes or no",
+          sales_score: "Please select yes or no",
           inventory_score: "Please select yes or no"
       }
    }); 

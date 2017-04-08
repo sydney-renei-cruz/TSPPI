@@ -6,59 +6,55 @@
 package com.tsppi.controller.bean;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  *
  * @author cruzsyd
  */
-public class AccountBean implements Serializable{
+public class AccountBean extends ClientBean implements Serializable{
     private int account_num;
-    private int account_type_id;
     private int job_id;
     private String username;
     private String password;
     private String first_name;
     private String last_name;
     private String email;
-    private String mobile;
-    private String telephone;
-    private String address;
+//    private String mobile;
+//    private String telephone;
+//    private String address;
     private String account_type;
     private String job_type;
     private boolean account_status;
-    private Date time_registered;
+    private String time_registered;
         
     public AccountBean(){
         account_num = 0;
-        account_type_id = 0;
         job_id = 0;
         username = "";
         password = "";
         first_name = "";
         last_name = "";
         email = "";
-        mobile = "";
-        telephone = "";
-        address = "";
+//        mobile = "";
+//        telephone = "";
+//        address = "";
         account_type = "";
         job_type = "";
         account_status = false;
-        time_registered = new Date();
+        time_registered = "";
     }
     
-    public AccountBean(int an, int ati, int jid, String u, String p, String fn, String ln, String e, String m,String t, String a, String at, String jt, boolean as, Date tr){
+    public AccountBean(int an, int jid, String u, String p, String fn, String ln, String e, String m,String t, String a, String at, String jt, boolean as, String tr){
         account_num = an;
-        account_type_id = ati;
         job_id = jid;
         username = u;
         password = p;
         first_name = fn;
         last_name = ln;
         email = e;
-        mobile = m;
-        telephone = t;
-        address = a;
+//        mobile = m;
+//        telephone = t;
+//        address = a;
         account_type = at;
         job_type = jt;
         account_status = as;
@@ -67,9 +63,6 @@ public class AccountBean implements Serializable{
     
     public int getAccountNum(){
         return account_num;
-    }
-    public int getAccountTypeID(){
-        return account_type_id;
     }
     public int getJobID(){
         return job_id;
@@ -92,16 +85,15 @@ public class AccountBean implements Serializable{
     public String getEmail(){
         return email;
     }
-    public String getMobile(){
-        return mobile;
-    }
-    public String getTelephone(){
-        return telephone;
-    }
-    
-    public String getAddress(){
-        return address;
-    }
+//    public String getMobile(){
+//        return mobile;
+//    }
+//    public String getTelephone(){
+//        return telephone;
+//    } 
+//    public String getAddress(){
+//        return address;
+//    }
 
     public String getAccountType(){
         return account_type;
@@ -112,15 +104,12 @@ public class AccountBean implements Serializable{
     public boolean getAccountStatus(){
         return account_status;
     }
-    public Date getTimeRegistered(){
+    public String getTimeRegistered(){
         return time_registered;
     }
 
     public void setAccountNum(int an){
         account_num = an;
-    }
-    public void setAccountTypeID(int ati){
-        account_type_id = ati;
     }
     public void setJobID(int jid){
         job_id = jid;
@@ -140,15 +129,15 @@ public class AccountBean implements Serializable{
     public void setEmail(String e){
         email = e;
     }
-    public void setMobile(String m){
-        mobile = m;
-    }
-    public void setTelephone(String t){
-        telephone = t;
-    }
-    public void setAddress(String a){
-        address = a;
-    }
+//    public void setMobile(String m){
+//        mobile = m;
+//    }
+//    public void setTelephone(String t){
+//        telephone = t;
+//    }
+//    public void setAddress(String a){
+//        address = a;
+//    }
     public void setAccountType(String at){
         account_type = at;
     }
@@ -158,7 +147,7 @@ public class AccountBean implements Serializable{
     public void setAccountStatus(boolean as){
         account_status = as;
     }
-    public void setTimeRegistered(Date tr){
+    public void setTimeRegistered(String tr){
         time_registered = tr;
     }
 }

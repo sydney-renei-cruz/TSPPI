@@ -73,6 +73,24 @@
                                                   </td>
                                                   <td>
                                                       <c:choose>
+                                                          <c:when test="${al.getSalesScore() == true}">
+                                                                <form action="salesprivilegecontroller" method="POST">
+                                                                    <input type="hidden" name="job_id" class="job_id" value="${al.getJobID()}">
+                                                                    <input type="hidden" name="sales_score" class="management_score" value="${al.getSalesScore()}">
+                                                                    <input type="submit" name="submit" id="submit" value="Remove Sales Privilege" class="btn btn-primary" title="Remove Sales Privileges">
+                                                                </form>
+                                                          </c:when>
+                                                          <c:otherwise>
+                                                                <form action="salesprivilegecontroller" method="POST">
+                                                                    <input type="hidden" name="job_id" class="job_id" value="${al.getJobID()}">
+                                                                    <input type="hidden" name="sales_score" class="management_score" value="${al.getSalesScore()}">
+                                                                    <input type="submit" name="submit" id="submit" value="Add Sales Privilege" class="btn btn-primary" title="Allow Sales Privileges">
+                                                                </form>
+                                                          </c:otherwise>
+                                                      </c:choose>
+                                                  </td>
+                                                  <td>
+                                                      <c:choose>
                                                           <c:when test="${al.getInventoryScore() == true}">
                                                                 <form action="inventoryprivilegecontroller" method="POST">
                                                                     <input type="hidden" name="job_id" class="job_id" value="${al.getJobID()}">
@@ -91,7 +109,7 @@
                                                   </td>
                                                   <td>
                                                       <c:choose>
-                                                          <c:when test="${al.getShowJob() == false}">
+                                                          <c:when test="${al.getShowJob() == true}">
                                                                 <form action="jobvisibilityoption" method="POST">
                                                                     <input type="hidden" name="job_id" class="job_id" value="${al.getJobID()}">
                                                                     <input type="hidden" name="show_job" class="show_job" value="${al.getShowJob()}">

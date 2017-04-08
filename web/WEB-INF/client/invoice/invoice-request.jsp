@@ -64,10 +64,13 @@
                                                             Mobile: <strong>${al.getMobile()}</strong>
                                                         </div>
                                                         <div class="form-group">
-                                                            Telephone: <strong>${al.getTelephone()}</strong>
+                                                            Company: <strong>${al.getCompanyName()} - ${al.getCompanyBranch()}</strong>
                                                         </div>
                                                         <div class="form-group">
-                                                            Address: <strong>${al.getAddress ()}</strong>
+                                                            Company Telephone: <strong>${al.getCompanyTelephone()}</strong>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            Company Mailing Address: <strong>${al.getCompanyAddress()}</strong>
                                                         </div>
                                                     </c:forEach>
                                                 </div>                                        

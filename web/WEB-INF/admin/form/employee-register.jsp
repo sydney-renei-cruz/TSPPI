@@ -49,7 +49,7 @@
                                         <div class="panel-body">
                                             <div class="row">
                                                 <div class="col-lg-12">
-                                                    <form id="register-form" action="registercontroller" method="post" autocomplete="off" enctype="multipart/form-data" onSubmit="return fileSize();">
+                                                    <form id="register-form" action="registercontroller" method="post" autocomplete="off" enctype="multipart/form-data">
                                                         <div class="form-group">
                                                             <label>Username </label>
                                                             <input type="text" name="username" id="username" class="form-control" placeholder="Username" required>
@@ -74,24 +74,22 @@
                                                             <label>Email </label>
                                                             <input type="email" name="email" id="email" class="form-control" placeholder="Email Address" required>
                                                         </div>
-                                                        <div class="form-group">
-                                                            <h4>Please select image</h4>
-                                                            <input type="file" accept="image/*" name="account_image" id="account_image" class="form-control">
-                                                            <span id="image_size_error" style="color: #FF0000"></span>
-                                                        </div>
                                                         <div class="form-group text-center">
                                                             <label>Job Position: </label>
-                                                            <select name="job_type">
+                                                            <select name="job_id">
                                                                 <c:forEach var="jt" items="${jt}">
                                                                     <option value="${jt.getJobID()}">${jt.getJobType()}</option>
                                                                 </c:forEach>
                                                             </select>
                                                         </div>  
+                                                        <div class="form-group text-center">
+                                                            <div id="msg">${register_error}</div>
+                                                            <c:remove var="register_error" scope="session"/>
+                                                        </div>
                                                         <div class="form-group">
                                                             <div class="row">
                                                                 <div class="col-sm-6 col-sm-offset-3">
-                                                                    <input type="hidden" name="type_of_account" id="form_identifier" value="1">
-                                                                    <input type="hidden" name="form_identifier" id="form_identifier" value="Employee">
+                                                            <input type="hidden" name="account_type" id="account_type" class="form-control" value="employee">
                                                                     <input type="submit" name="submit" id="register-submit" class="form-control btn btn-register" value="Register Now">
                                                                 </div>
                                                             </div>

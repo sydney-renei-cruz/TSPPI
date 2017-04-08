@@ -52,26 +52,8 @@
 //       alert("Registration Complete! You will be redirected back to Log in Page");
 //   });
 //});
-function fileSize(){
-    var size = 1048576;
-    $('#image_size_error').html("");
-    var file_size = $('#account_image')[0].files[0].size;
-    if(file_size > size){
-        $('#image_size_error').html("File should not exceed 1mb");
-        $('#image_size_error').css("font-weight", "bold");
-        return false;
-    }
-    return true;
-}
 $(document).ready(function(){
-    $.validator.addMethod("maxFile", function(value, element, params){
-       var fileCount = element.files.length;
-       if(fileCount > params){
-           return false;
-       }else{
-           return true;
-       }
-   }, "Please select only 1 file");
+   
    $("#register-form").validate({
        errorClass: "my-error-class",
        rules: {
@@ -117,11 +99,18 @@ $(document).ready(function(){
                 minlength: 7,
                 maxlength: 11
             },
-            address: "required",
-            account_image: {
+            company_name: "required",
+            company_branch: {
                 required: true,
-                extension: "png|jpg|jpeg|gif",
-                maxFile: 1
+                remote: {
+                    url: 'checkcompany',
+                    type: 'post',
+                    data: {
+                        'company_name' : function() { return $('input[name="company_name"]').val(); },
+                        'company_branch' : function() { return $('input[name="company_branch"]').val(); }
+                    }
+                    
+                }
             }
        },
        messages: {
@@ -155,10 +144,10 @@ $(document).ready(function(){
                minlength: "Telephone number should be atleast 7 digits",
                maxlength: "Telephone number should not exceed 11 digits"
            },
-           address: "Please enter Mailing address",
-           account_image: {
-               required: "Please select an image for you profile",
-               extension: "Only image type jpeg, gif, jpg, or png is accepted"
+           company_name: "Please enter company name",
+           company_branch: {
+               required: "Please enter company's branch",
+               remote: "The Company is not yet registered in the system. To register the company, click <a href='requestcompany'>here</a>."
            }
        }
    }); 

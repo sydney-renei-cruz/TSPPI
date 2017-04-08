@@ -41,8 +41,7 @@
                                     <th class="text-center">Price</th>
                                     <th class="text-center">Stock</th>
                                     <th class="text-center">Details</th>
-                                    <th></th>
-                                    <th></th>
+                                    
                                 </tr>
                               </thead>
                               <tbody>
