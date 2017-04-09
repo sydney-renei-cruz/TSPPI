@@ -5,14 +5,31 @@
  */
 package com.tsppi.controller.account.login.function;
 
+import com.tsppi.controller.bean.AccountBean;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.MessageDigest;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Properties;
+import java.util.Random;
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMultipart;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -49,23 +66,79 @@ public class ForgotPasswordController extends HttpServlet {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
             
-            String username = request.getParameter("username");
             String email = request.getParameter("email");
-            inText = "SELECT * FROM account WHERE username = ? AND email = ?";
+            inText = "SELECT * FROM account WHERE email = ?";
             ps = conn.prepareStatement(inText);
-            ps.setString(1, username);
-            ps.setString(2, email);
+            ps.setString(1, email);
             rs = ps.executeQuery();
             
             if(rs.next()){
-                session.setAttribute("username", username);
-                response.sendRedirect("forgotpassword2");
+                String userName = "TSPPIauto@gmail.com";
+                String password = "3$tarPaper!";
+                String to = email;
+                String from = "TSPPIauto@gmail.com";
+                String subject = "***RESET PASSWORD***";
+                String smtpServ = "smtp.gmail.com";
+                //Salts for the hashing
+                
+                String hashedEmail = to;
+                MessageDigest md = MessageDigest.getInstance("SHA-256");
+                md.update(hashedEmail.getBytes());
+                byte byteData[] = md.digest();
+                StringBuffer sb = new StringBuffer();
+                for(int i = 0; i < byteData.length; i++){
+                    sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+                }
+                hashedEmail = sb.toString();
+                //End Hashing
+                inText = "UPDATE account SET forgot = ? WHERE email = ?";
+                ps = conn.prepareStatement(inText);
+                ps.setString(1, hashedEmail);
+                ps.setString(2, email);
+                ps.executeUpdate();
+                
+                String message = "Please click on the following link to change your TSPPI account password:\n <a href='http://localhost:8084/main_tsppi/forgotpassword2?id=" + hashedEmail + "'>Change Password</a>";
+                
+                Properties props = System.getProperties();
+                // -- Attaching to default Session, or we could start a new one --
+                props.put("mail.transport.protocol", "smtp" );
+                props.put("mail.smtp.starttls.enable","true" );
+                props.put("mail.imap.ssl.enable", "true");
+                props.put("mail.imap.sasl.enable", "true");
+                props.put("mail.imap.auth.login.disable", "true");
+                props.put("mail.imap.auth.plain.disable", "true");
+                props.put("mail.imap.auth.mechanisms", "XOAUTH2");
+                props.put("mail.smtp.host",smtpServ);
+                props.put("mail.smtp.auth", "true" );
+                props.put("mail.smtp.port", "587");
+                Authenticator auth;
+                auth = new Authenticator() {
+                    @Override
+                    public PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(userName, password);
+                    }
+                    };
+                //  -- Set Body part --
+                MimeBodyPart messageBodyPart = new MimeBodyPart();
+                Session session2 = Session.getInstance(props, auth);
+                Message msg = new MimeMessage(session2);
+                // -- Set the FROM and TO fields --
+                msg.setFrom(new InternetAddress(from));
+                to = "jasteen.reyes@uap.asia";
+                msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to, false));
+                msg.setSubject(subject);
+                messageBodyPart.setText(message, "UTF-8", "html");
+                // -- Put Body part in message --
+                MimeMultipart multipart = new MimeMultipart();
+                multipart.addBodyPart(messageBodyPart);
+                msg.setContent(multipart);
+                // -- Set some other header information --
+                msg.setHeader("MyMail", "Mr. XYZ" );
+                msg.setSentDate(new Date());
+                // -- Send the message --
+                Transport.send(msg);
             }
-            
-            if(!rs.previous()){
-                session.setAttribute("error_message", "Incorrect username or email");
-                response.sendRedirect("forgotpassword");
-            }
+            response.sendRedirect("forgotpassword3");
         }catch(Exception e){
             e.printStackTrace();
             out.print(e);

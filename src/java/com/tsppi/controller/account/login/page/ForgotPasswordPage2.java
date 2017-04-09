@@ -7,14 +7,20 @@ package com.tsppi.controller.account.login.page;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Sydney Cruz
+ * @author Jasteen
  */
 public class ForgotPasswordPage2 extends HttpServlet {
 
@@ -31,8 +37,32 @@ public class ForgotPasswordPage2 extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        
+        HttpSession session = request.getSession();
+        ServletContext context;
+        Connection conn = null;
+        PreparedStatement ps;
+        String inText = "";
+        ResultSet rs;
+        String hashedEmail = "";
+        
         try{
-            request.getRequestDispatcher("/WEB-INF/account/form/login/forgot-password2.jsp").forward(request, response);
+            hashedEmail = request.getParameter("id");
+            context = request.getSession().getServletContext();
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
+            inText = "SELECT * FROM account WHERE forgot = ?";
+            ps = conn.prepareStatement(inText);
+            ps.setString(1, hashedEmail);
+            rs = ps.executeQuery();
+            
+            if(rs.next() && !hashedEmail.isEmpty()){
+                request.getRequestDispatcher("/WEB-INF/account/form/login/forgot-password2.jsp").forward(request, response);
+            }
+            
+            else{
+                request.getRequestDispatcher("/WEB-INF/general/index.jsp").forward(request, response);
+            }
         }catch(Exception e){
             e.printStackTrace();
             out.print(e);

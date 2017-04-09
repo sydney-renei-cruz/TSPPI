@@ -28,16 +28,13 @@
                         <div class="col-md-6 col-md-offset-3">
                             <div class="panel panel-login">
                                 <div class="panel-heading">
-                                    <h4>Please tell us your username and email so we can help.</h4>
+                                    <h4>Please tell us your email so we can help.</h4>
                                     <hr>
                                 </div>
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <form id="register-form" action="forgotpasswordcontroller" method="post" autocomplete="off">
-                                                <div class="form-group">
-                                                    <textarea rows="1" cols="50" name="username" id="username" class="form-control" placeholder="Username"></textarea>
-                                                </div>
                                                 <div class="form-group">
                                                     <textarea rows="1" cols="50" name="email" id="email" class="form-control" placeholder="Email Address"></textarea>
                                                 </div>
