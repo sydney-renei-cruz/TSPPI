@@ -59,7 +59,7 @@ public class ForgotPasswordController extends HttpServlet {
         ServletContext context;
         Connection conn = null;
         PreparedStatement ps;
-        String inText = "";
+        String inText;
         ResultSet rs;
         try{
             context = request.getSession().getServletContext();
@@ -67,9 +67,11 @@ public class ForgotPasswordController extends HttpServlet {
             conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
             
             String email = request.getParameter("email");
-            inText = "SELECT * FROM account WHERE email = ?";
+            String username = request.getParameter("username");
+            inText = "SELECT * FROM account WHERE email = ? AND username = ?";
             ps = conn.prepareStatement(inText);
             ps.setString(1, email);
+            ps.setString(2, username);
             rs = ps.executeQuery();
             
             if(rs.next()){
@@ -124,7 +126,6 @@ public class ForgotPasswordController extends HttpServlet {
                 Message msg = new MimeMessage(session2);
                 // -- Set the FROM and TO fields --
                 msg.setFrom(new InternetAddress(from));
-                to = "jasteen.reyes@uap.asia";
                 msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to, false));
                 msg.setSubject(subject);
                 messageBodyPart.setText(message, "UTF-8", "html");

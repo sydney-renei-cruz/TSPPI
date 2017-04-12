@@ -12,7 +12,7 @@
         <title>Forgot Password</title>
     </head>
     <body>
-        <h1>If the email address you entered was correct, we will send you an email for further instructions.</h1>
+        <h1>If the username and email address you entered was correct, we will send you an email with further instructions.</h1>
         <a href="home">Click here to return to Home Page</a>
     </body>
 </html>

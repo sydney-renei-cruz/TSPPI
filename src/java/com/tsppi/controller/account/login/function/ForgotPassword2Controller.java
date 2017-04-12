@@ -49,7 +49,7 @@ public class ForgotPassword2Controller extends HttpServlet {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
             
-            String username = request.getParameter("username").toString();
+            String username = request.getParameter("username");
             String password = request.getParameter("password");
             
             //Salts for the hashing
