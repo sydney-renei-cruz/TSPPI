@@ -53,10 +53,10 @@
                                                     <input type="hidden" name="account_num" id="account_num" value="${eb.getAccountNum()}">
                                                     <input type="hidden" name="account_status" id="account_status" value="${eb.getAccountStatus()}">
                                                     <c:if test="${eb.getAccountStatus()}">
-                                                        <input type="submit" name="submit" id="deactivate" value="Deactivate Account" class="btn btn-danger">
+                                                        <input type="submit" name="submit" id="deactivate" value="Deactivate Account" class="btn btn-danger" data-toggle="modal" data-target="#mssgBox">
                                                     </c:if>
                                                     <c:if test="${!eb.getAccountStatus()}">                                                     
-                                                        <input type="submit" name="submit" id="activate" value="Activate Account" class="btn btn-primary">
+                                                        <input type="submit" name="submit" id="activate" value="Activate Account" class="btn btn-primary" data-toggle="modal" data-target="#mssgBox">
                                                     </c:if>
                                                 </form>
                                               </td>
@@ -101,10 +101,10 @@
                                                   <input type="hidden" name="account_num" id="account_num" value="${cb.getAccountNum()}">
                                                   <input type="hidden" name="account_status" id="account_status" value="${cb.getAccountStatus()}">
                                                   <c:if test="${cb.getAccountStatus()}">
-                                                      <input type="submit" name="submit" id="submit" value="Deactivate Account" class="btn btn-danger">
+                                                      <input type="submit" name="submit" id="submit" value="Deactivate Account" class="btn btn-danger" data-toggle="modal" data-target="#mssgBox">
                                                   </c:if>
                                                   <c:if test="${!cb.getAccountStatus()}">                                                     
-                                                      <input type="submit" name="submit" id="submit" value="Activate Account" class="btn btn-primary">
+                                                      <input type="submit" name="submit" id="submit" value="Activate Account" class="btn btn-primary" data-toggle="modal" data-target="#mssgBox">
                                                   </c:if>
                                               </form>
                                             </td>
@@ -121,5 +121,18 @@
               </div>
             </div>
           </section>
+        
+        <!--Alert Box Modal-->
+        <div id="mssgBox" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        Registration Successful!
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Alert Box Modal-->
+        
     </body>
 </html>

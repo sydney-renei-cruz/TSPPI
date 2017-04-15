@@ -7,6 +7,7 @@ package com.tsppi.controller.general.page;
 
 import com.tsppi.controller.account.register.function.RegisterController;
 import com.tsppi.controller.bean.ProductBean;
+import com.tsppi.controller.bean.ProductCategoryBean;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -49,16 +50,31 @@ public class ProductsPage extends HttpServlet {
         ResultSet rs = null;
         String inText = "";
         HttpSession session = request.getSession();
+        
+        String category = request.getParameter("sort-options");
+        if(category == null){
+            category = "All";
+        }
+        request.setAttribute("sort-category", category);
+        
         try{
             
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
-            inText = "SELECT p.*, c.category_name "
-                    + "FROM product p "
-                    + "JOIN product_category c ON c.category_id = p.category_id";
-            ps = conn.prepareStatement(inText);
-            rs = ps.executeQuery();
             
+            if(category.equals("All")){
+                inText = "SELECT p.*, c.category_name "
+                        + "FROM product p "
+                        + "JOIN product_category c ON c.category_id = p.category_id";
+                ps = conn.prepareStatement(inText);
+            }else{
+                inText = "SELECT p.*, c.category_name "
+                        + "FROM product p "
+                        + "JOIN product_category c ON c.category_id = p.category_id WHERE category_name=?";
+                ps = conn.prepareStatement(inText);
+                    ps.setString(1, category);
+            }
+            rs = ps.executeQuery();
             ArrayList<ProductBean> pb = new ArrayList<>();
             ProductBean p;
             while(rs.next()){
@@ -73,9 +89,23 @@ public class ProductsPage extends HttpServlet {
                 if(rs.getBoolean("for_sale") != false){
                     pb.add(p);
                 }
-                
             }
             request.setAttribute("pb", pb);
+            
+            //Get list of product cetegory
+            ps = conn.prepareStatement("SELECT category_name FROM product_category");
+            rs = ps.executeQuery();
+            ArrayList<ProductCategoryBean> pc = new ArrayList();
+            ProductCategoryBean pcb;
+            
+            while(rs.next()){
+                pcb = new ProductCategoryBean();
+                pcb.setCategoryName(rs.getString("category_name"));
+                pc.add(pcb);
+            }
+            request.setAttribute("pc", pc);
+            //Get list of product cetegory
+                        
             request.getRequestDispatcher("/WEB-INF/general/products.jsp").forward(request,response);
         }catch(Exception e){
             e.printStackTrace();

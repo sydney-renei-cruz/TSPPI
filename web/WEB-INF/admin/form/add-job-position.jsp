@@ -62,6 +62,7 @@
                                                     <div id="msg">${add_error}</div>
                                                     <c:remove var="add_error" scope="session"/>
                                                 </div>
+                                                </form>
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-sm-6 col-sm-offset-3"> 
@@ -78,7 +79,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </form>                 
+                                                             
                                         </div>
                                     </div>
                                 </div>
@@ -90,6 +91,25 @@
 	</section>
         <script src="imports/jquery.validate.js" type="text/javascript"></script>
         <script src="js/add-job-position-validation.js" type="text/javascript"></script>
+        
+        <!--Alert Box Modal-->
+        <div id="mssgBox" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <br>
+                        <h4 class="modal-title"></h4>
+                    </div>
+                    <div class="modal-body">
+                        Job position added!
+                    </div>
+                    <div class="modal-footer">
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Alert Box Modal-->
         
     </body>
 </html>

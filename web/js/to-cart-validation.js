@@ -21,6 +21,33 @@
 //    return true;
 //}
 
+function countdown( elementName, minutes, seconds )
+{
+    var element, endTime, hours, mins, msLeft, time;
+
+    function twoDigits( n )
+    {
+        return (n <= 9 ? "0" + n : n);
+    }
+
+    function updateTimer()
+    {
+        msLeft = endTime - (+new Date);
+        if ( msLeft < 1000 ) {
+            document.getElementById("addForm").submit();
+        } else {
+            time = new Date( msLeft );
+            hours = time.getUTCHours();
+            mins = time.getUTCMinutes();
+            setTimeout( updateTimer, time.getUTCMilliseconds() + 500 );
+        }
+    }
+
+    element = document.getElementById( elementName );
+    endTime = (+new Date) + 1000 * (60*minutes + seconds) + 500;
+    updateTimer();
+}
+
 $(document).ready(function(){
     $.validator.addMethod("max_stock", function(value, element){
         var $stock = $('.cart-element').find('input[name="item_stock"]').val();
@@ -42,6 +69,13 @@ $(document).ready(function(){
                 min: "Quantity should not be below 1"
             }
         }
-      }); 
+      });
    });
+   
+    $("#addToCart").click(function(){
+        if($("#addForm").valid()){
+            $("#mssgBox").modal({backdrop: 'static', keyboard: false});
+            countdown( "countdown", 0, 3 );
+        }
+    });
 });

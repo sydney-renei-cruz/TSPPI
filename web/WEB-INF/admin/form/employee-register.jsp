@@ -86,15 +86,15 @@
                                                             <div id="msg">${register_error}</div>
                                                             <c:remove var="register_error" scope="session"/>
                                                         </div>
-                                                        <div class="form-group">
-                                                            <div class="row">
-                                                                <div class="col-sm-6 col-sm-offset-3">
-                                                            <input type="hidden" name="account_type" id="account_type" class="form-control" value="employee">
-                                                                    <input type="submit" name="submit" id="register-submit" class="form-control btn btn-register" value="Register Now">
-                                                                </div>
+                                                        <input type="hidden" name="account_type" id="account_type" class="form-control" value="employee">
+                                                    </form>    
+                                                    <div class="form-group">
+                                                        <div class="row">
+                                                            <div class="col-sm-6 col-sm-offset-3">
+                                                                <input type="submit" name="submit" id="register-submit" class="form-control btn btn-register" value="Register Now">
                                                             </div>
                                                         </div>
-                                                    </form>                 
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

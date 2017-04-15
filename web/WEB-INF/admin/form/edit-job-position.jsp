@@ -39,8 +39,9 @@
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-lg-12">
+                                            <c:forEach var="al" items="${al}">
                                             <form id="edit-form" action="editjobpositioncontroller" method="post" autocomplete="off">
-                                                <c:forEach var="al" items="${al}">
+                                                
                                                 <c:set var="job_id" value="${al.getJobID()}" scope="session"/>   
                                                 <div class="form-group">
                                                     <label>Job Name </label>
@@ -50,15 +51,16 @@
                                                     <div id="msg">${edit_error}</div>
                                                     <c:remove var="edit_error" scope="session"/>
                                                 </div>
+                                                <input type="hidden" name="job_id" value="${al.getJobID()}">
+                                                </form>
                                                 <div class="form-group">
                                                     <div class="row">
-                                                        <div class="col-sm-6 col-sm-offset-3"> 
-                                                            <input type="hidden" name="job_id" value="${al.getJobID()}">
+                                                        <div class="col-sm-6 col-sm-offset-3">
                                                             <input type="submit" name="submit" id="register-submit" class="form-control btn btn-register" value="Save Changes">
                                                         </div>
                                                     </div>
                                                 </div>
-                                                </c:forEach>
+                                            </c:forEach>
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-lg-12">
@@ -68,7 +70,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </form>                 
+                                                            
                                         </div>
                                     </div>
                                 </div>
@@ -80,5 +82,25 @@
 	</section>
         <script src="imports/jquery.validate.js" type="text/javascript"></script>
         <script src="js/edit-job-position-validation.js" type="text/javascript"></script>
+        
+        <!--Alert Box Modal-->
+        <div id="mssgBox" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <br>
+                        <h4 class="modal-title"></h4>
+                    </div>
+                    <div class="modal-body">
+                        Your changes have been saved!
+                    </div>
+                    <div class="modal-footer">
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Alert Box Modal-->
+        
     </body>
 </html>

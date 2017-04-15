@@ -93,24 +93,24 @@
                                                     <div id="msg">${register_error}</div>
                                                     <c:remove var="register_error" scope="session"/>
                                                 </div>
-                                                <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-sm-6 col-sm-offset-3">
-                                                            <input type="hidden" name="account_type" id="account_type" class="form-control" value="client">
-                                                            <input type="submit" name="submit" id="register-submit" class="form-control btn btn-register" value="Request Now">
+                                                <input type="hidden" name="account_type" id="account_type" class="form-control" value="client">
+                                            </form>    
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-sm-6 col-sm-offset-3">
+                                                        <input type="submit" name="submit" id="register-submit" class="form-control btn btn-register" value="Request Now">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="text-center">
+                                                            <a href="login" class="forgot-password">Already have an account?</a>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <div class="row">
-                                                        <div class="col-lg-12">
-                                                            <div class="text-center">
-                                                                <a href="login" class="forgot-password">Already have an account?</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </form>                 
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -122,5 +122,25 @@
 	</section>
         <script src="imports/jquery.validate.js" type="text/javascript"></script>
         <script src="js/reg-form-validation.js" type="text/javascript"></script>
+        
+        <!--Alert Box Modal-->
+        <div id="mssgBox" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <br>
+                        <h4 class="modal-title"></h4>
+                    </div>
+                    <div class="modal-body">
+                        Registration successful!
+                    </div>
+                    <div class="modal-footer">
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Alert Box Modal-->
+        
     </body>
 </html>

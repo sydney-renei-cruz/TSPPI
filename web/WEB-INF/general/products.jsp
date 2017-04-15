@@ -29,13 +29,22 @@
     <!-- main content -->
     <section>
         <div class="container">
-            <div class="well well-sm">             
+            <div class="well well-sm">
+                <strong>Sort: </strong>
+                <form action="products" method="POST" id="product-filter">
+                    <select class="sort-options" id="sort-options" name="sort-options" onchange="filterProducts()"">
+                        <option value="All">All</option>
+                        <c:forEach var="pc" items="${pc}">
+                            <option value="${pc.getCategoryName()}">${pc.getCategoryName()}</option>
+                        </c:forEach>
+                    </select>
+                </form>
             </div>
             <div id="products" class="row list-group">
                 <div id="columns">
                     <c:forEach var="pb" items="${pb}">
                         <div class="content">
-                            <figure class="item">
+                            <figure class="item" data-groups='["${pb.getCategoryName()}"]' data-title='["${pb.getProductName()}"]'>
                                 <img src="img?pi=${pb.getProductID()}">
                                 <figcaption>
                                     <div class="view-product">
@@ -92,19 +101,19 @@
                         <div class="row text-center">
                             <div class="col-md-6 col-md-offset-3">
                                 <h4><strong>Add to Cart</strong></h4>
-                                <form method="POST" class="search-bar navbar-form cart-form" action="cartcontroller" autocomplete="off">
+                                <form method="POST" class="search-bar navbar-form cart-form" action="cartcontroller" autocomplete="off" id="addForm">
                                     <div class="form-group cart-element"></div>
                                     <div class="form-group">
                                         <input type="hidden" name="action" value="add">
                                         <input type="number" class="form-control quantity" placeholder="How many do you want?" name="quantity">
                                         <span class="err-msg" style="color: #FF0000"></span>
                                     </div>
-                                    <div class="form-group">
-                                        <button type="submit" class="btn btn-primary add-product-btn" type="submit">
+                                </form>
+                                <div class="form-group">
+                                        <button class="btn btn-primary add-product-btn" id="addToCart">
                                             <i class="glyphicon glyphicon-plus"></i> Add
                                         </button>
                                     </div>
-                                </form>
                             </div>
                         </div>
                     </c:if>
@@ -122,6 +131,26 @@
         </div>
     </div>
     <!--Product Details Modal-->
+        
+    <!--Alert Box Modal-->
+    <div id="mssgBox" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <br>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+                    Your order was filed successfully!
+                </div>
+                <div class="modal-footer">
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Alert Box Modal-->
+    
     <c:if test="${job_position == 'Inventory Officer'}">
     <div class="text-center">
         <a href="approveproducts" style="color: #fff;">Approve Products</a>
@@ -188,6 +217,52 @@
                         });
                     $('#product-modal').modal('show');
                 });
+                $('.mssg').click(function(){
+                    $('#mssgBox').modal('show');
+                });
+            });
+        </script>
+        
+        <script>
+            function createCookie(name,value,days) {
+                var expires = "";
+                if (days) {
+                    var date = new Date();
+                    date.setTime(date.getTime() + (days*24*60*60*1000));
+                    expires = "; expires=" + date.toUTCString();
+                }
+                document.cookie = name + "=" + value + expires + "; path=/";
+            }
+
+            function readCookie(name) {
+                var nameEQ = name + "=";
+                var ca = document.cookie.split(';');
+                for(var i=0;i < ca.length;i++) {
+                    var c = ca[i];
+                    while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+                }
+                return null;
+            }
+
+            function eraseCookie(name) {
+                createCookie(name,"",-1);
+            }
+            
+            function filterProducts(){
+                var e = document.getElementById("sort-options");
+                var strValue = e.options[e.selectedIndex].text;
+                createCookie('sort-category', strValue, 7);
+                document.getElementById("product-filter").submit();
+            }
+            
+            $(function(){
+                var x = readCookie('sort-category');
+                
+                if(x){
+                    
+                    $("#sort-options").val(x);
+                }
             });
         </script>
     
@@ -195,7 +270,8 @@
     <script src="imports/jquery.validate.js" type="text/javascript"></script>
     <script src="js/to-cart-validation.js" type="text/javascript"></script>
     
-    
+    <script src="imports/shuffle.js" type="text/javascript"></script>
+    <script src="js/shuffle-sort.js" type="text/javascript"></script>
 </body>
 
 </html>
