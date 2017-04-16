@@ -49,7 +49,7 @@ public class ForgotPassword2Controller extends HttpServlet {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
             
-            String username = request.getParameter("username");
+            String id = request.getParameter("id");
             String password = request.getParameter("password");
             
             //Salts for the hashing
@@ -78,10 +78,10 @@ public class ForgotPassword2Controller extends HttpServlet {
 
             password = sb.toString();
             
-            inText = "UPDATE account SET password = ? AND forgot = '' WHERE username = ?";
+            inText = "UPDATE account SET password = ? AND forgot = '' WHERE forgot = ?";
             ps = conn.prepareStatement(inText);
             ps.setString(1, password);
-            ps.setString(2, username);
+            ps.setString(2, id);
             ps.executeUpdate();
             
             // -- Remove session values --

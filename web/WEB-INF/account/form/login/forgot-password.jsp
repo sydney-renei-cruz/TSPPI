@@ -28,7 +28,7 @@
                         <div class="col-md-6 col-md-offset-3">
                             <div class="panel panel-login">
                                 <div class="panel-heading">
-                                    <h4>Please tell us your email so we can help.</h4>
+                                    <h4>Please tell us your username and email address so we can help.</h4>
                                     <hr>
                                 </div>
                                 <div class="panel-body">
