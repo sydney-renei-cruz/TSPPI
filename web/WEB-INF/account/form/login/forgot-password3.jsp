@@ -8,11 +8,25 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link href="css/plain-page.css" rel="stylesheet" type="text/css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Forgot Password</title>
+        <title>T.S.P.P.I.</title>
+        <!-- Bootstrap css -->
+	<link href="imports/bootstrap.min.css" rel="stylesheet">
+        <!-- Jquery plugin -->
+	<script src="imports/jquery-2.2.2.js"></script>
+	<!-- Bootstrap plugin -->
+	<script src="imports/bootstrap.js"></script>
     </head>
     <body>
-        <h1>If the username and email address you entered was correct, we will send you an email with further instructions.</h1>
-        <a href="home">Click here to return to Home Page</a>
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-lg-12">
+                    <h1>If the username and email address you entered was correct, we will send you an email with further instructions.</h1>
+                    <a href="login" class="forgot-password">&laquo; Go Back  to Login Page</a>
+                </div>
+            </div>
+        </div>
+        
     </body>
 </html>

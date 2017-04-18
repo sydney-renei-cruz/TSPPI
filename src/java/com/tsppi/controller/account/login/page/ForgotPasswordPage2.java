@@ -5,12 +5,16 @@
  */
 package com.tsppi.controller.account.login.page;
 
+import com.tsppi.controller.account.register.function.RegisterController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -39,16 +43,16 @@ public class ForgotPasswordPage2 extends HttpServlet {
         PrintWriter out = response.getWriter();
         
         HttpSession session = request.getSession();
-        ServletContext context;
+        ServletContext context = request.getSession().getServletContext();
         Connection conn = null;
-        PreparedStatement ps;
+        PreparedStatement ps = null;
         String inText = "";
-        ResultSet rs;
+        ResultSet rs = null;
         String hashedEmail = "";
         
         try{
             hashedEmail = request.getParameter("id");
-            context = request.getSession().getServletContext();
+            
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
             inText = "SELECT * FROM account WHERE forgot = ?";
@@ -57,15 +61,39 @@ public class ForgotPasswordPage2 extends HttpServlet {
             rs = ps.executeQuery();
             
             if(rs.next() && !hashedEmail.isEmpty()){
+                request.setAttribute("id", hashedEmail);
                 request.getRequestDispatcher("/WEB-INF/account/form/login/forgot-password2.jsp").forward(request, response);
             }
-            
             else{
                 request.getRequestDispatcher("/WEB-INF/general/index.jsp").forward(request, response);
             }
         }catch(Exception e){
             e.printStackTrace();
-            out.print(e);
+            context.log("Exception: " + e);
+            request.setAttribute("exception_error", e);
+            request.getRequestDispatcher("/WEB-INF/error/catch-error.jsp").forward(request, response);
+        }finally{
+            if(conn != null){
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if(ps != null){
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if(rs != null){
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }
 

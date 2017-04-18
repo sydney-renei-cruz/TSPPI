@@ -115,6 +115,7 @@ public class RegisterController extends HttpServlet {
             String job_id = request.getParameter("job_id");
             String company_name = request.getParameter("company_name");
             String company_branch = request.getParameter("company_branch");
+            String old_password = password;
             int company_id = 0;
             Date date = new Date();
             String time_registered = new SimpleDateFormat("yyyy-MM-dd").format(date);
@@ -247,6 +248,20 @@ public class RegisterController extends HttpServlet {
 //                    }
 //                }
 //            }
+            //email configuration
+            String mail_username = "TSPPIauto@gmail.com";
+            String mail_password = "3$tarPaper!";
+            String message = "";
+            String from = "TSPPIauto@gmail.com";
+            String subject = "***ACCOUNT***";
+            String smtpServ = "smtp.gmail.com";
+            int port = 465;
+            Properties props = System.getProperties();
+            Authenticator auth;
+            Session session1 = null;
+            Message msg = null;
+            String full_name = "";
+            
             if(account_type.equals("admin")){
                 inText = "INSERT INTO " + account_type + " (account_num) VALUES (?)";
                 ps = conn.prepareStatement(inText);
@@ -259,6 +274,64 @@ public class RegisterController extends HttpServlet {
                 ps.setString(2, job_id);
                 success = ps.executeUpdate();
                 
+                String account_num = (String) session.getAttribute("account_num");
+                context.log(account_num);
+                inText = "SELECT first_name, last_name "
+                        + "FROM account "
+                        + "WHERE account_num=?";
+                ps = conn.prepareStatement(inText);
+                ps.setString(1, account_num);
+                rs = ps.executeQuery();
+                al = new ArrayList<>();
+                while(rs.next()){
+                    ab = new AccountBean();
+                    ab.setFirstName(rs.getString("first_name"));
+                    ab.setLastName(rs.getString("last_name"));
+                    al.add(ab);
+                }
+                for(AccountBean acb : al)
+                    full_name = acb.getFullName();
+                
+                message = "Hi, \n\n"
+                    + "This is to inform you that you can now access the system. \n"
+                    + "Below are your accound credentials: \n\n"
+                    + "Username: " + username + "\n"
+                    + "Temporary Password: " + old_password + "\n\n"
+                    + "We advice you to update your profile immidiately to avoid any possible problems. \n\n"
+                    + "Regards, \n"
+                    + full_name;
+                String to_employee = email;
+                // -- Attaching to default Session, or we could start a new one --
+                props.put("mail.transport.protocol", "smtp" );
+                props.put("mail.smtp.starttls.enable","true" );
+                props.put("mail.imap.ssl.enable", "true");
+                props.put("mail.imap.sasl.enable", "true");
+                props.put("mail.imap.auth.login.disable", "true");
+                props.put("mail.imap.auth.plain.disable", "true");
+                props.put("mail.imap.auth.mechanisms", "XOAUTH2");
+                props.put("mail.smtp.host",smtpServ);
+                props.put("mail.smtp.auth", "true" );
+                props.put("mail.smtp.port", "587");
+
+                auth = new Authenticator() {
+                  @Override
+                  public PasswordAuthentication getPasswordAuthentication() {
+                      return new PasswordAuthentication(mail_username, mail_password);
+                  }
+                };
+                session1 = Session.getInstance(props, auth);
+                // -- Create a new message --
+                msg = new MimeMessage(session1);
+                // -- Set the FROM and TO fields --
+                msg.setFrom(new InternetAddress(from));
+                msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to_employee, true));
+                msg.setSubject(subject);
+                msg.setText(message);
+                // -- Set some other header information --
+                msg.setHeader("MyMail", "Mr. XYZ" );
+                msg.setSentDate(new Date());
+                // -- Send the message --
+                Transport.send(msg);
             }else{
                 if(!mobile.isEmpty() || !telephone.isEmpty() || !address.isEmpty()){
                     account_status = false;
@@ -275,7 +348,7 @@ public class RegisterController extends HttpServlet {
                     ps.setString(3, mobile);
                     success = ps.executeUpdate();
                     
-                    String full_name = "";
+                    full_name = "";
                     String company = "";
                     String company_telephone = "";
                     String company_address = "";
@@ -286,8 +359,7 @@ public class RegisterController extends HttpServlet {
                         company_address = al.get(i).getCompanyAddress();
         //                telephone = al.get(i).getTelephone();
                     }
-                    
-                    String message = "Hi, \n\n"
+                    message = "Hi, \n\n"
                         + "I would like to request this account to be approved. \n"
                         + "I want to use the services offered by your web application. \n\n"
                         + "Regards, \n"
@@ -296,8 +368,6 @@ public class RegisterController extends HttpServlet {
                         + "Company: " + company + "\n"
                         + "Company Telephone No. " + company_telephone + "\n"
                         + "Company Mailing Address: " + company_address;
-                    String mail_username = "TSPPIauto@gmail.com";
-                    String mail_password = "3$tarPaper!";
                     inText = "SELECT a.email FROM account a "
                         + "JOIN employee e ON e.account_num = a.account_num "
                         + "JOIN job_position j ON j.job_id = e.job_id "
@@ -312,16 +382,12 @@ public class RegisterController extends HttpServlet {
                         al2.add(acb);
                         context.log("Email: " + rs.getString("email"));
                     }
+                    
                     StringBuilder to = new StringBuilder();
                     for(int i=0; i<al2.size(); i++){
                         to.append(al2.get(i).getEmail());
                         to.append(", ");
                     }
-                    String from = "TSPPIauto@gmail.com";
-                    String subject = "***INVOICE REQUEST***";
-                    String smtpServ = "smtp.gmail.com";
-                    int port = 465;
-                    Properties props = System.getProperties();
                     // -- Attaching to default Session, or we could start a new one --
                     props.put("mail.transport.protocol", "smtp" );
                     props.put("mail.smtp.starttls.enable","true" );
@@ -333,16 +399,16 @@ public class RegisterController extends HttpServlet {
                     props.put("mail.smtp.host",smtpServ);
                     props.put("mail.smtp.auth", "true" );
                     props.put("mail.smtp.port", "587");
-                    Authenticator auth;
-                      auth = new Authenticator() {
+                    
+                    auth = new Authenticator() {
                       @Override
                       public PasswordAuthentication getPasswordAuthentication() {
                           return new PasswordAuthentication(mail_username, mail_password);
                       }
-                      };
-                    Session session1 = Session.getInstance(props, auth);
+                    };
+                    session1 = Session.getInstance(props, auth);
                     // -- Create a new message --
-                    Message msg = new MimeMessage(session1);
+                    msg = new MimeMessage(session1);
                     // -- Set the FROM and TO fields --
                     msg.setFrom(new InternetAddress(from));
                     msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to.toString(), true));
@@ -365,7 +431,6 @@ public class RegisterController extends HttpServlet {
             
         }catch(Exception e){
             e.printStackTrace();
-            out.print(e);
             context.log("Exception: " + e);
             request.setAttribute("exception_error", e);
             request.getRequestDispatcher("/WEB-INF/error/catch-error.jsp").forward(request, response);

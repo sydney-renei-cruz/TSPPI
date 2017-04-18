@@ -9,6 +9,7 @@
 <html>
     <head>
         <link href="css/form.css" rel="stylesheet" type="text/css">
+        <link href="css/form-error-validation.css" rel="stylesheet" type="text/css">
     </head>
     <body>
         <%@include file="/WEB-INF/source/navigation/navbar.jsp"%>
@@ -36,10 +37,14 @@
                                         <div class="col-lg-12">
                                             <form id="register-form" action="forgotpasswordcontroller" method="post" autocomplete="off">
                                                 <div class="form-group">
-                                                    <textarea rows="1" cols="50" name="username" id="username" class="form-control" placeholder="Username"></textarea>
+                                                    <input type="text" name="username" id="username" class="form-control" placeholder="Username">
                                                 </div>
                                                 <div class="form-group">
-                                                    <textarea rows="1" cols="50" name="email" id="email" class="form-control" placeholder="Email Address"></textarea>
+                                                    <input type="email" name="email" id="email" class="form-control" placeholder="Email Address">
+                                                </div>
+                                                <div class="form-group text-center">
+                                                    <div id="msg">${forgot_error}</div>
+                                                    <c:remove var="forgot_error" scope="session"/>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="row">
@@ -67,5 +72,8 @@
                 </div>
             </div>
 	</section>
+        <script src="imports/jquery.validate.js" type="text/javascript"></script>
+        <script src="imports/additional-methods.js" type="text/javascript"></script>
+        <script src="js/forgot-validation.js" type="text/javascript"></script>
     </body>
 </html>

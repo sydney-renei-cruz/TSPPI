@@ -1,0 +1,23 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 04 17, 17, 11:10:49 AM
+    Author     : Sydney Cruz
+*/
+
+html, body{
+    height: 100%;
+    width: 100%;
+}
+body{
+    background-color: #306d9f !important;
+    padding-top: 104px;
+}
+.col-lg-12{color: #fff !important;}
+
+.forgot-password{
+    color: #fff !important;
+}

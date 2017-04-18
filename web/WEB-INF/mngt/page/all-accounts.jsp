@@ -100,12 +100,15 @@
                                                 <form action="controlstatus" method="POST">
                                                   <input type="hidden" name="account_num" id="account_num" value="${cb.getAccountNum()}">
                                                   <input type="hidden" name="account_status" id="account_status" value="${cb.getAccountStatus()}">
-                                                  <c:if test="${cb.getAccountStatus()}">
-                                                      <input type="submit" name="submit" id="submit" value="Deactivate Account" class="btn btn-danger" data-toggle="modal" data-target="#mssgBox">
+                                                  <c:if test="${account_type == 'admin'}">
+                                                    <c:if test="${cb.getAccountStatus()}">
+                                                        <input type="submit" name="submit" id="submit" value="Deactivate Account" class="btn btn-danger" data-toggle="modal" data-target="#mssgBox">
+                                                    </c:if>
                                                   </c:if>
                                                   <c:if test="${!cb.getAccountStatus()}">                                                     
                                                       <input type="submit" name="submit" id="submit" value="Activate Account" class="btn btn-primary" data-toggle="modal" data-target="#mssgBox">
                                                   </c:if>
+                                                  
                                               </form>
                                             </td>
                                           </tr>

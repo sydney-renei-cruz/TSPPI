@@ -897,17 +897,17 @@
     </context-param>
     <context-param>
         <param-name>password</param-name>
-        <param-value></param-value>
+        <param-value>tsppi_password</param-value>
     </context-param>
     <context-param>
         <param-name>dbURL</param-name>
-        <param-value>jdbc:mysql://localhost:3306/tsppi</param-value>
+        <param-value>jdbc:mysql://localhost:3306/com_tsppi</param-value>
     </context-param>
     <!--DB Connection-->
     <!--Image path-->
     <context-param>
         <param-name>imgPath</param-name>
-        <param-value>C:/Users/SAM/Documents/TSPPIpics</param-value>
+        <param-value>C:/Users/Sydney Cruz/Desktop/test folder/</param-value>
     </context-param>
     <!--Image path-->
     <!--error-->

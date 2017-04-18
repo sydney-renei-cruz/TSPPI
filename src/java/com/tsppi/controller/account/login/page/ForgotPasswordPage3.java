@@ -37,7 +37,8 @@ public class ForgotPasswordPage3 extends HttpServlet {
             request.getRequestDispatcher("/WEB-INF/account/form/login/forgot-password3.jsp").forward(request, response);
         }catch(Exception e){
             e.printStackTrace();
-            out.print(e);
+            request.setAttribute("exception_error", e);
+            request.getRequestDispatcher("/WEB-INF/error/catch-error.jsp").forward(request, response);
         }
     }
 
