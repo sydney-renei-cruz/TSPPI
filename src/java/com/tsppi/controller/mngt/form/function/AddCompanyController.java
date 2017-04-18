@@ -62,7 +62,7 @@ public class AddCompanyController extends HttpServlet {
             String postal_code = request.getParameter("postal_code");
             String country = request.getParameter("country");
             if(!company_name.isEmpty() && !company_branch.isEmpty() && !company_telephone.isEmpty()
-                    && !street_line1.isEmpty() && !street_line2.isEmpty() && !spr.isEmpty()
+                    && !street_line1.isEmpty() && !spr.isEmpty()
                     && !city.isEmpty() && !postal_code.isEmpty() && !country.isEmpty()){
                 inText = "INSERT INTO company (company_name, company_branch, company_telephone) VALUES (?,?,?)";
                 ps = conn.prepareStatement(inText, Statement.RETURN_GENERATED_KEYS);
@@ -91,6 +91,7 @@ public class AddCompanyController extends HttpServlet {
             }else{
                 session.setAttribute("add_error", "All fields are required");
                 response.sendRedirect(request.getHeader("referer"));
+                return;
             }
             
             

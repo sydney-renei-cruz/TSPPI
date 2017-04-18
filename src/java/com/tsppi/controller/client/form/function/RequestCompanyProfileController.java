@@ -79,7 +79,7 @@ public class RequestCompanyProfileController extends HttpServlet {
             String country = request.getParameter("country");
             String company_address = "";
             if(!company_name.isEmpty() && !company_branch.isEmpty() && !company_telephone.isEmpty()
-                    && !street_line1.isEmpty() && !street_line2.isEmpty() && !spr.isEmpty()
+                    && !street_line1.isEmpty() && !spr.isEmpty()
                     && !city.isEmpty() && !postal_code.isEmpty() && !country.isEmpty()){
                 ArrayList<CompanyBean> al = new ArrayList<>();
                 CompanyBean cb = new CompanyBean();
@@ -177,6 +177,7 @@ public class RequestCompanyProfileController extends HttpServlet {
             }else{
                 session1.setAttribute("add_error", "All fields are required");
                 response.sendRedirect(request.getHeader("referer"));
+                return;
             }
         }catch(Exception e){
             e.printStackTrace();
