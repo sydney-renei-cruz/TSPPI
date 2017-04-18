@@ -140,7 +140,6 @@ public class AccountActivationController extends HttpServlet {
                         + "Your account has been deactivated, please contact the administrator to address this situation. \n\n"
                         + "Regards. \n";
                 }
-                
                 String userName = "TSPPIauto@gmail.com";
                 String password = "3$tarPaper!";
                 String to = email;
@@ -182,8 +181,8 @@ public class AccountActivationController extends HttpServlet {
                   // -- Send the message --
                   Transport.send(msg);
                   response.sendRedirect(request.getHeader("referer"));
-            }
-                
+                  return;
+            }   
             
         }catch(Exception e){
             e.printStackTrace();

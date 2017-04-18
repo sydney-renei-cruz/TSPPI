@@ -479,7 +479,7 @@
     </servlet>
     <servlet>
         <servlet-name>AccountActivationController</servlet-name>
-        <servlet-class>com.tsppi.controller.mngt.page.function.AccountActivationController</servlet-class>
+        <servlet-class>com.tsppi.controller.admin.page.function.AccountActivationController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>RequestCompanyProfilePage</servlet-name>
