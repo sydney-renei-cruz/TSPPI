@@ -9,6 +9,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="css/item-list.css">
+        <link rel="stylesheet" href="imports/datatables.css">
     </head>
     <body>
         <%@include file="/WEB-INF/source/navigation/navbar.jsp" %>
@@ -16,19 +17,19 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12 text-center">
-                        <h1>Edit Service</h1>
+                        <h1>All Services</h1>
                     </div>
                 </div>
             </div>
 	</header>
-        <section class="team">            
+        <section class="team">
             <div class="container">
               <div class="row">
                 <div class="col-md-10 col-md-offset-1">
                     <div class="col-lg-12">
                         <h3 class="description">All Services</h3>
-                        <div class="table text-center">
-                          <table class="table">
+                        <div class="table text-center ">
+                          <table class="table services-table">
                               <thead>
                                   <tr>
                                     <th></th>
@@ -61,5 +62,11 @@
               </div>
             </div>
           </section>
+        <script type="text/javascript" charset="utf8" src="imports/datatables.js"></script>
+        <script>
+        $(function(){
+          $(".services-table").dataTable();
+        });
+        </script>
     </body>
 </html>

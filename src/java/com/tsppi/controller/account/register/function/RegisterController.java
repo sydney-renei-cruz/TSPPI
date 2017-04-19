@@ -125,6 +125,19 @@ public class RegisterController extends HttpServlet {
             int success = 0;
             ArrayList<AccountBean> al = new ArrayList<>();
             AccountBean ab = new AccountBean();
+            if(account_type.equals("client")){
+                inText = "SELECT a.email FROM account a "
+                    + "JOIN employee e ON e.account_num = a.account_num "
+                    + "JOIN job_position j ON j.job_id = e.job_id "
+                    + "WHERE j.management_score = 1";
+                ps = conn.prepareStatement(inText);
+                rs = ps.executeQuery();
+                if(!rs.next()){
+                    session.setAttribute("register_error", "You can't register as of this moment, we are trying to fix some issues.");
+                    response.sendRedirect(request.getHeader("referer"));
+                    return;
+                }
+            }
             if(account_type.equals("client") && !company_name.isEmpty() && !company_branch.isEmpty()){
                 inText = "SELECT c.*, ca.* "
                 + "FROM company c "
@@ -368,6 +381,7 @@ public class RegisterController extends HttpServlet {
                         + "Company: " + company + "\n"
                         + "Company Telephone No. " + company_telephone + "\n"
                         + "Company Mailing Address: " + company_address;
+                    
                     inText = "SELECT a.email FROM account a "
                         + "JOIN employee e ON e.account_num = a.account_num "
                         + "JOIN job_position j ON j.job_id = e.job_id "

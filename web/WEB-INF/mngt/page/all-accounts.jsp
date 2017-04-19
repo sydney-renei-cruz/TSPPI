@@ -7,6 +7,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="css/item-list.css">   
+        <link rel="stylesheet" href="imports/datatables.css">
     </head>
     <body>
         <%@include file="/WEB-INF/source/navigation/navbar.jsp" %>
@@ -32,12 +33,13 @@
                         <div class="col-lg-12">
                           <h3 class="description">Employee</h3>
                           <div class="table text-center">
-                              <table class="table">
+                              <table class="table employee-table">
                                   <thead>
                                       <tr>
                                         <th class="text-center">Username</th>
                                         <th class="text-center">Full name</th>
                                         <th class="text-center">Role</th>
+                                        <th class="text-center">Email</th>
                                         <th class="text-center">Email</th>
                                     </tr>
                                   </thead>
@@ -70,7 +72,7 @@
                   <div class="col-lg-12">
                     <h3 class="description">Client</h3>
                     <div class="table text-center">
-                              <table class="table">
+                              <table class="table client-table">
                                   <thead>
                                       <tr>
                                         <c:if test="${account_type == 'admin'}">
@@ -82,6 +84,7 @@
                                         <th class="text-center">Company</th>
                                         <th class="text-center">Company Telephone</th>
                                         <th class="text-center">Company Mailing Address</th>
+                                        <th></th>
                                     </tr>
                                   </thead>
                                   <tbody>
@@ -136,6 +139,14 @@
             </div>
         </div>
         <!--Alert Box Modal-->
-        
+        <script type="text/javascript" charset="utf8" src="imports/datatables.js"></script>
+        <script>
+        $(function(){
+          $(".employee-table").dataTable();
+        });
+        $(function(){
+          $(".client-table").dataTable();
+        });
+        </script>
     </body>
 </html>

@@ -501,6 +501,14 @@
         <servlet-name>ChangePasswordController</servlet-name>
         <servlet-class>com.tsppi.controller.account.profile.function.ChangePasswordController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ConfirmModal</servlet-name>
+        <servlet-class>com.tsppi.controller.sales.invoice.ConfirmModal</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ClientInfoModal</servlet-name>
+        <servlet-class>com.tsppi.controller.sales.invoice.ClientInfoModal</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.htm</url-pattern>
@@ -881,6 +889,14 @@
     <servlet-mapping>
         <servlet-name>ChangePasswordController</servlet-name>
         <url-pattern>/changepasswordcontroller</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ConfirmModal</servlet-name>
+        <url-pattern>/confirmmodal</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ClientInfoModal</servlet-name>
+        <url-pattern>/clientinfomodal</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -7,6 +7,7 @@ package com.tsppi.controller.bean;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Random;
 
 /**
  *
@@ -15,6 +16,7 @@ import java.util.Date;
 public class InvoiceBean extends AccountBean implements Serializable{
     protected int invoice_id;
     protected int pm_id;
+    protected String tracking_id;
     protected String payment_method;
     protected String invoice_status;
     protected float total_amount;
@@ -22,17 +24,17 @@ public class InvoiceBean extends AccountBean implements Serializable{
     
     public InvoiceBean(){
        invoice_id = 0;
-       client_id = 0;
        pm_id = 0;
+       tracking_id = "";
        payment_method = "";
        invoice_status = "";
        total_amount = 0;
        invoice_date = new Date();
     }
-    public InvoiceBean(int ii, int ci, int pi, String pm, String is, float ta, Date id){
+    public InvoiceBean(int ii, int pi, String tid, String pm, String is, float ta, Date id){
         invoice_id = ii;
-        client_id = ci;
         pm_id = pi;
+        tracking_id = tid;
         payment_method = pm;
         invoice_status = is;
         total_amount = ta;
@@ -41,11 +43,11 @@ public class InvoiceBean extends AccountBean implements Serializable{
     public void setInvoiceID(int ii){
         invoice_id = ii;
     }
-    public void setClientID(int ci){
-        client_id = ci;
-    }
     public void setPMID(int pi){
         pm_id = pi;
+    }
+    public void setTrackingID(String tid){
+        tracking_id = tid;
     }
     public void setPaymentMethod(String pm){
         payment_method = pm;
@@ -62,14 +64,14 @@ public class InvoiceBean extends AccountBean implements Serializable{
     public int getInvoiceID(){
         return invoice_id;
     }
-    public int getClientID(){
-        return client_id;
-    }
     public int getPMID(){
         return pm_id;
     }
     public String getPaymentMethod(){
         return payment_method;
+    }
+    public String getTrackingID(){
+        return tracking_id;
     }
     public String getInvoiceStatus(){
         return invoice_status;

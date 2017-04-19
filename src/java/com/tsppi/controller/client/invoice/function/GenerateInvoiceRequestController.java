@@ -7,6 +7,7 @@ package com.tsppi.controller.client.invoice.function;
 
 import com.tsppi.controller.account.register.function.RegisterController;
 import com.tsppi.controller.bean.AccountBean;
+import com.tsppi.controller.bean.InvoiceBean;
 import com.tsppi.controller.bean.InvoiceItemBean;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Properties;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.Authenticator;
@@ -115,7 +117,7 @@ public class GenerateInvoiceRequestController extends HttpServlet {
             quantity.addAll(Arrays.asList(q));
             ArrayList<String> stock = new ArrayList<String>(Arrays.asList(is));
             stock.addAll(Arrays.asList(is));
-            
+            String tracking_id = "";
             //check if quantity is less than or equal to stock
             for(int j=0; j<pi.length; j++){
                 if(Integer.parseInt(stock.get(j)) < Integer.parseInt(quantity.get(j))){
@@ -129,15 +131,16 @@ public class GenerateInvoiceRequestController extends HttpServlet {
                 return;
             }
             
-            inText = "insert into invoice(client_id, pm_id, total_amount, invoice_status, invoice_date, verified) "
-                    + "values(?,?,?,?,?,?)";
+            inText = "insert into invoice(client_id, pm_id, tracking_id, total_amount, invoice_status, invoice_date, verified) "
+                    + "values(?,?,?,?,?,?,?)";
             ps = conn.prepareStatement(inText, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, client_id);
             ps.setInt(2, pm_id);
-            ps.setFloat(3, total_amount);
-            ps.setString(4, invoice_status);
-            ps.setString(5, invoice_date);
-            ps.setBoolean(6, verified);
+            ps.setString(3, tracking_id);
+            ps.setFloat(4, total_amount);
+            ps.setString(5, invoice_status);
+            ps.setString(6, invoice_date);
+            ps.setBoolean(7, verified);
             ps.executeUpdate();
             
             
@@ -145,6 +148,21 @@ public class GenerateInvoiceRequestController extends HttpServlet {
             try(ResultSet generated_keys = ps.getGeneratedKeys()){
                 if(generated_keys.next()){
                     invoice_id = generated_keys.getInt(1);
+                    
+                    String letnum = "0123456789";
+                    StringBuilder salt = new StringBuilder();
+                    Random rnd = new Random();
+                    while (salt.length() < 5) { // length of the random string.
+                        int index = (int) (rnd.nextFloat() * letnum.length());
+                        salt.append(letnum.charAt(index));
+                    }
+                    tracking_id = "TSPPIINVREQ-" + salt.toString() + invoice_id;
+                    inText = "UPDATE invoice SET tracking_id=? WHERE invoice_id=?";
+                    ps = conn.prepareStatement(inText);
+                    ps.setString(1, tracking_id);
+                    ps.setInt(2, invoice_id);
+                    ps.executeUpdate();
+                    
                     
                     for(int i=0; i<pi.length; i++){
                         inText = "insert into invoice_item(invoice_id, product_id, item_quantity)"
@@ -242,7 +260,8 @@ public class GenerateInvoiceRequestController extends HttpServlet {
                     String message = "Hi, \n\n"
                             + "These are the products, together with the quantity, that I want to buy from your company: \n\n"
                             + msg_content.toString() + "\n\n"
-                            + "Total price: " + total_price + "\n\n"
+                            + "Total price: " + total_price + "\n"
+                            + "Tracking #: " + tracking_id + "\n\n"
                             + "Regards, \n"
                             + full_name + " - " + email +"\n"
                             + "Mobile No. " + mobile +"\n"

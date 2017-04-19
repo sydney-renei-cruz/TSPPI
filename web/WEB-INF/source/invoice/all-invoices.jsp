@@ -4,12 +4,11 @@
     Author     : cruzsyd
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
 <html>
     <head>
+<!--        <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">-->
         <link rel="stylesheet" href="css/item-list.css">
-        
+        <link rel="stylesheet" href="imports/datatables.css">
     </head>
     <body>
         <%@include file="/WEB-INF/source/navigation/navbar.jsp" %>
@@ -29,305 +28,86 @@
                 </div>
             </div>
 	</header>
-        <section class="team">            
-            <div class="container">
+        <section class="team">
+            <div class="container-fluid">
                 <div class="row">
-                    <c:if test="${al1.size() == 0 && al2.size() == 0 && al3.size() == 0 && al4.size() == 0 && al5.size() == 0 && al6.size() == 0}">
+                    <c:if test="${al.size() == 0}">
                         <div class="col-md-10 col-md-offset-1" id="no-label">
                             <div class="col-lg-12 text-center">
                                 <h2>No invoices to be shown</h2>
                             </div>
                         </div>
                     </c:if>
-                    <c:if test="${al1.size() != 0}">
+                    <c:if test="${al.size() != 0}">
                         <div class="col-md-10 col-md-offset-1">
                             <div class="col-lg-12">
-                                <h3 class="description">Pending Invoices</h3>
                                     <div class="table text-center">
-                                        <table class="table">
+                                        <table class="table invoice-table">
                                             <thead>
                                                 <tr>
-                                                    <th class="text-center">Tracking ID</th>
-                                                    <c:if test="${management_score == true}">
-                                                        <th class="text-center">Client Name</th>
+                                                    <th class="text-center">Tracking #</th>
+                                                    <c:if test="${sales_score == true}">
+                                                        <th class="text-center">Requested by</th>
                                                     </c:if>
-                                                    <th class="text-center">Products</th>
+                                                    <th class="text-center"></th>
                                                     <th class="text-center">Payment Method</th>
                                                     <th class="text-center">Total Amount</th>
                                                     <th class="text-center">Status</th>
                                                     <th class="text-center">Invoice Created</th>
-                                                    <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <c:forEach var="al1" items="${al1}">
+                                                <c:forEach var="al" items="${al}">
                                                     <tr>
-                                                        <td>${al1.getInvoiceID()}</td>
-                                                        <c:if test="${management_score == true}">
-                                                            <td class="text-center">${al1.getFullName()}</td>
+                                                        <td>${al.getTrackingID()}</td>
+                                                        <c:if test="${sales_score == true}">
+                                                            <td class="text-center">
+                                                                <button class="btn btn-link cli">
+                                                                    ${al.getFullName()}
+                                                                    <input type="hidden" class="client-info" value="${al.getClientID()}">
+                                                                </button>
+                                                                
+                                                            </td>
                                                         </c:if>
                                                         <td>
                                                             <button class="btn btn-link vib">
-                                                                View Ordered Products
-                                                                <input type="hidden" class="main-item" value="${al1.getInvoiceID()}">
+                                                                View Orders
+                                                                <input type="hidden" class="main-item" value="${al.getInvoiceID()}">
                                                             </button>
                                                         </td>
-                                                        <td>${al1.getPaymentMethod()}</td>
-                                                        <td>${al1.getTotalAmount()}</td>
-                                                        <td>${al1.getInvoiceStatus()}</td>
-                                                        <td>${al1.getInvoiceDate()}</td>
+                                                        <td>${al.getPaymentMethod()}</td>
+                                                        <td>${al.getTotalAmount()}</td>
+                                                        <td>${al.getInvoiceStatus()}</td>
+                                                        <td>${al.getInvoiceDate()}</td>
                                                         <c:if test="${account_type == 'client'}">
+                                                            <c:if test="${al.getInvoiceStatus() == 'Pending' || al.getInvoiceStatus() == 'Approved'}">
                                                             <td>
                                                                 <form action="cancelinvoice" method="POST">
-                                                                    <input type="hidden" name="invoice_id" value="${al1.getInvoiceID()}">
+                                                                    <input type="hidden" name="invoice_id" value="${al.getInvoiceID()}">
                                                                     <input type="submit" name="submit" class="cancel-button form-control btn btn-link" value="Cancel Invoice">
                                                                 </form>
                                                             </td>
+                                                            </c:if>
                                                         </c:if>
                                                         <c:if test="${sales_score == true}">
+                                                            <c:if test="${al.getInvoiceStatus() == 'Pending'}">
                                                             <td>
-                                                                <form action="approveinvoice" method="POST">
-                                                                    <input type="hidden" name="invoice_id" value="${al1.getInvoiceID()}">
-                                                                    <input type="hidden" name="action" value="yes">
-                                                                    <input type="submit" name="submit" class="form-control btn btn-link" value="Approve Invoice">
-                                                                </form>
+                                                                <button class="btn btn-link cir">
+                                                                    Confirm
+                                                                    <input type="hidden" class="confirm-info" value="${al.getInvoiceID()}">
+                                                                </button>
                                                             </td>
-                                                            <td>
-                                                                <form action="approveinvoice" method="POST">
-                                                                    <input type="hidden" name="invoice_id" value="${al1.getInvoiceID()}">
-                                                                    <input type="hidden" name="action" value="no">
-                                                                    <input type="submit" name="submit" class="form-control btn btn-link" value="Reject Invoice">
-                                                                </form>
-                                                            </td>
-                                                        </c:if>
-                                                    </tr>
-                                                </c:forEach>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>                  
-                            </div>
-                        </c:if>
-                        <c:if test="${al2.size() != 0}">
-                            <div class="col-md-10 col-md-offset-1">
-                                <div class="col-lg-12">
-                                    <h3 class="description">Approved Invoices</h3>
-                                    <div class="table text-center">
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th class="text-center">Tracking ID</th>
-                                                    <th class="text-center">Products</th>
-                                                    <th class="text-center">Payment Method</th>
-                                                    <th class="text-center">Total Amount</th>
-                                                    <th class="text-center">Status</th>
-                                                    <th class="text-center">Invoice Created</th>
-                                                    <th></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <c:forEach var="al2" items="${al2}">
-                                                    <tr>
-                                                        <td>${al2.getInvoiceID()}</td>
-                                                        <td>
-                                                            <button class="btn btn-link vib">
-                                                                View Ordered Products
-                                                                <input type="hidden" class="main-item" value="${al2.getInvoiceID()}">
-                                                            </button>
-                                                        </td>
-                                                        <td>${al2.getPaymentMethod()}</td>
-                                                        <td>${al2.getTotalAmount()}</td>
-                                                        <td>${al2.getInvoiceStatus()}</td>
-                                                        <td>${al2.getInvoiceDate()}</td>
-                                                        <c:if test="${account_type == 'client'}">
-                                                            <td>
-                                                                <form action="cancelinvoice" method="POST">
-                                                                    <input type="hidden" name="invoice_id" value="${al2.getInvoiceID()}">
-                                                                    <input type="submit" name="submit" class="form-control btn btn-link" value="Cancel Invoice">
-                                                                </form>
-                                                            </td>
-                                                        </c:if>
-                                                    </tr>
-                                                </c:forEach>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>                  
-                            </div>
-                        </c:if>
-                        <c:if test="${al4.size() != 0}">
-                            <div class="col-md-10 col-md-offset-1">
-                                <div class="col-lg-12">
-                                    <h3 class="description">Invoices In Process</h3>
-                                    <div class="table text-center">
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th class="text-center">Tracking ID</th>
-                                                    <th class="text-center">Products</th>
-                                                    <th class="text-center">Payment Method</th>
-                                                    <th class="text-center">Total Amount</th>
-                                                    <th class="text-center">Status</th>
-                                                    <th class="text-center">Invoice Created</th>
-                                                    <th></th>
-                                              </tr>
-                                            </thead>
-                                            <tbody>
-                                                <c:forEach var="al4" items="${al4}">
-                                                    <tr>
-                                                        <td>${al4.getInvoiceID()}</td>
-                                                        <td>
-                                                            <button class="btn btn-link vib">
-                                                                View Ordered Products
-                                                                <input type="hidden" class="main-item" value="${al4.getInvoiceID()}">
-                                                            </button>
-                                                        </td>
-                                                        <td>${al4.getPaymentMethod()}</td>
-                                                        <td>${al4.getTotalAmount()}</td>
-                                                        <td>${al4.getInvoiceStatus()}</td>
-                                                        <td>${al4.getInvoiceDate()}</td>
-                                                        <c:if test="${management_score == true}">
+                                                            </c:if>
+                                                            <c:if test="${al.getInvoiceStatus() == 'Approved'}">
                                                             <td>
                                                                 <form action="deliverinvoice" method="POST">
-                                                                    <input type="hidden" name="invoice_id" value="${al4.getInvoiceID()}">
+                                                                    <input type="hidden" name="invoice_id" value="${al.getInvoiceID()}">
                                                                     <input type="hidden" name="action" value="yes">
-                                                                    <input type="submit" name="submit" class="form-control btn btn-link" value="Deliver!">
+                                                                    <input type="submit" name="submit" class="form-control btn btn-link" value="In Delivery">
                                                                 </form>
                                                             </td>
+                                                            </c:if>
                                                         </c:if>
-                                                    </tr>
-                                                </c:forEach>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>                  
-                            </div>
-                        </c:if>
-                        <c:if test="${al5.size() != 0}">
-                            <div class="col-md-10 col-md-offset-1">
-                                <div class="col-lg-12">
-                                    <h3 class="description">Invoices in Delivery</h3>
-                                    <div class="table text-center">
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th class="text-center">Tracking ID</th>
-                                                    <th class="text-center">Products</th>
-                                                    <th class="text-center">Payment Method</th>
-                                                    <th class="text-center">Total Amount</th>
-                                                    <th class="text-center">Status</th>
-                                                    <th class="text-center">Invoice Created</th>
-                                                    <th></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <c:forEach var="al5" items="${al5}">
-                                                    <tr>
-                                                        <td>${al5.getInvoiceID()}</td>
-                                                        <td>
-                                                            <button class="btn btn-link vib">
-                                                                View Ordered Products
-                                                                <input type="hidden" class="main-item" value="${al5.getInvoiceID()}">
-                                                            </button>
-                                                        </td>
-                                                        <td>${al5.getPaymentMethod()}</td>
-                                                        <td>${al5.getTotalAmount()}</td>
-                                                        <td>${al5.getInvoiceStatus()}</td>
-                                                        <td>${al5.getInvoiceDate()}</td>
-                                                    </tr>
-                                                </c:forEach>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>                  
-                            </div>
-                        </c:if>
-                        <c:if test="${al6.size() != 0}">
-                            <div class="col-md-10 col-md-offset-1">
-                                <div class="col-lg-12">
-                                    <h3 class="description">Expired Invoices (Not yet approved nor rejected)</h3>
-                                    <div class="table text-center">
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th class="text-center">Tracking ID</th>
-                                                    <th class="text-center">Products</th>
-                                                    <th class="text-center">Payment Method</th>
-                                                    <th class="text-center">Total Amount</th>
-                                                    <th class="text-center">Status</th>
-                                                    <th class="text-center">Invoice Created</th>
-                                                    <th></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <c:forEach var="al6" items="${al6}">
-                                                    <tr>
-                                                        <td>${al6.getInvoiceID()}</td>
-                                                        <td>
-                                                            <button class="btn btn-link vib">
-                                                                View Ordered Products
-                                                                <input type="hidden" class="main-item" value="${al6.getInvoiceID()}">
-                                                            </button>
-                                                        </td>
-                                                        <td>${al6.getPaymentMethod()}</td>
-                                                        <td>${al6.getTotalAmount()}</td>
-                                                        <td>${al6.getInvoiceStatus()}</td>
-                                                        <td>${al6.getInvoiceDate()}</td>
-                                                        <c:if test="${account_type == 'client'}">
-                                                            <td>
-                                                                <form action="resubmitinvoice" method="POST">
-                                                                    <input type="hidden" name="invoice_id" value="${al6.getInvoiceID()}">
-                                                                    <input type="submit" name="submit" class="form-control btn btn-link" value="Resubmit Invoice">
-                                                                </form>
-                                                            </td>
-                                                        </c:if>
-                                                        <c:if test="${account_type == 'client'}">
-                                                            <td>
-                                                                <form action="cancelinvoice" method="POST">
-                                                                    <input type="hidden" name="invoice_id" value="${al6.getInvoiceID()}">
-                                                                    <input type="submit" name="submit" class="form-control btn btn-link" value="Cancel Invoice">
-                                                                </form>
-                                                            </td>
-                                                        </c:if>
-                                                    </tr>
-                                                </c:forEach>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>                  
-                            </div>
-                        </c:if>
-                        <c:if test="${al3.size() != 0}">
-                            <div class="col-md-10 col-md-offset-1">
-                                <div class="col-lg-12">
-                                    <h3 class="description">Cancelled and Rejected Orders</h3>
-                                    <div class="table text-center">
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th class="text-center">Tracking ID</th>
-                                                    <th class="text-center">Products</th>
-                                                    <th class="text-center">Payment Method</th>
-                                                    <th class="text-center">Total Amount</th>
-                                                    <th class="text-center">Status</th>
-                                                    <th class="text-center">Invoice Created</th>
-                                                    <th></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <c:forEach var="al3" items="${al3}">
-                                                    <tr>
-                                                        <td>${al3.getInvoiceID()}</td>
-                                                        <td>
-                                                            <button class="btn btn-link vib">
-                                                                View Ordered Products
-                                                                <input type="hidden" class="main-item" value="${al3.getInvoiceID()}">
-                                                            </button>
-                                                        </td>
-                                                        <td>${al3.getPaymentMethod()}</td>
-                                                        <td>${al3.getTotalAmount()}</td>
-                                                        <td>${al3.getInvoiceStatus()}</td>
-                                                        <td>${al3.getInvoiceDate()}</td>
                                                     </tr>
                                                 </c:forEach>
                                             </tbody>
@@ -339,6 +119,39 @@
                     </div>
                 </div>
         </section>
+        <div id="confirmmodal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table">
+                            <tbody id="show-confirmation">
+                                <td>
+                                    <form action="approveinvoice" class="confirm-form" method="POST">
+                                        <div class="invoice_details"></div>
+                                        <input type="hidden" name="action" value="yes">
+                                        <input type="submit" name="submit" class="form-control btn btn-link" value="Approve">
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="approveinvoice" class="confirm-form" method="POST">
+                                        <div class="invoice_details"></div>
+                                        <input type="hidden" name="action" value="no">
+                                        <input type="submit" name="submit" class="form-control btn btn-link" value="Reject">
+                                    </form>
+                                </td>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div id="itemmodal" class="modal fade" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -364,6 +177,77 @@
                 </div>
             </div>
         </div>
+        <div id="clientmodal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Client Information</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Full Name</th>
+                                    <th>Email</th>
+                                    <th>Mobile</th>
+                                    <th>Company Name - Branch</th>
+                                    <th>Mailing Address</th>
+                                </tr>
+                            </thead>
+                            <tbody id="showinfo">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function(){
+                $('.cli').click(function(){
+                    $('#showinfo').empty();
+                    var $client_id = $(this).find('.client-info').val();
+                    $.getJSON('clientinfomodal', {client_id: $client_id})
+                        .done(function(json){
+                            var $tableData = "";
+                            for(var i=0; i<json.length; i++){
+                                $tableData = $('<tr/>');
+                                $tableData.append('<td>' + json[i].first_name + " " + json[i].last_name + '</td>');
+                                $tableData.append('<td>' + json[i].email + '</td>');
+                                $tableData.append('<td>' + json[i].mobile + '</td>');
+                                $tableData.append('<td>' + json[i].company_name + "-" + json[i].company_branch + '</td>');
+                                $tableData.append('<td>' 
+                                        + json[i].street_line1 + " " + json[i].street_line2 + json[i].city +
+                                         " " + json[i].spr + " " + json[i].postal_code + " " + json[i].country + 
+                                        '</td>');
+                                $('#showinfo').append($tableData);
+                            }
+                        });
+                    $('#clientmodal').modal('show');
+                });
+            });
+        </script>
+        <script>
+            $(document).ready(function(){
+                $('.cir').click(function(){
+                    $('.invoice_details').empty();
+                    var $invoice_id = $(this).find('.confirm-info').val();
+                    $.getJSON('confirmmodal', {invoice_id: $invoice_id})
+                        .done(function(json){
+                            var $tableData = "";
+                            for(var i=0; i<json.length; i++){
+                                $tableData = $('<span/>');
+                                $tableData.append('<input type="hidden" name="invoice_id" value="' + json[i].invoice_id + '">');
+                                $('.invoice_details').append($tableData);
+                            }
+                        });
+                    $('#confirmmodal').modal('show');
+                });
+            });
+        </script>
         <script>
             $(document).ready(function(){
                 $('.vib').click(function(){
@@ -384,5 +268,12 @@
                 });
             });
         </script>
+  
+  <script type="text/javascript" charset="utf8" src="imports/datatables.js"></script>
+  <script>
+  $(function(){
+    $(".invoice-table").dataTable();
+  });
+  </script>
     </body>
 </html>
