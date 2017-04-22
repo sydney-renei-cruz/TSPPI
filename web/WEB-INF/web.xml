@@ -509,6 +509,10 @@
         <servlet-name>ClientInfoModal</servlet-name>
         <servlet-class>com.tsppi.controller.sales.invoice.ClientInfoModal</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SalesReportPage</servlet-name>
+        <servlet-class>com.tsppi.controller.sales.invoice.SalesReportPage</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.htm</url-pattern>
@@ -898,6 +902,10 @@
         <servlet-name>ClientInfoModal</servlet-name>
         <url-pattern>/clientinfomodal</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SalesReportPage</servlet-name>
+        <url-pattern>/salesreport</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
@@ -923,7 +931,7 @@
     <!--Image path-->
     <context-param>
         <param-name>imgPath</param-name>
-        <param-value>C:/Users/Sydney Cruz/Desktop/test folder/</param-value>
+        <param-value>C:/Users/SAM/Documents/TSPPIpics/</param-value>
     </context-param>
     <!--Image path-->
     <!--error-->

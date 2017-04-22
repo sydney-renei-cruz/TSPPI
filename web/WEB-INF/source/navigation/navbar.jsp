@@ -167,6 +167,7 @@
                                             <ul class="dropdown-menu">
                                                 <li><a href="salesinvoices" class="text-center">Check All Invoices</a></li>
                                                 <li><a href="allaccounts" class="text-center">View Client Accounts </a></li>
+                                                <li><a href="salesreport" class="text-center">Sales Report </a></li>
                                             </ul>
                                         </li>
                                     </c:if>
@@ -227,6 +228,8 @@
                 <i class="glyphicon glyphicon-chevron-up"></i>
             </span>
         </div>
+        
+        
         <script>
             $(document).ready(function(){
                 $(function(){
