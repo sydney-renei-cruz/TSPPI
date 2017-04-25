@@ -20,6 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -60,18 +61,74 @@ public class ProductsPage extends HttpServlet {
             
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
-            
+            String sort_val = "";
             if(category.equals("All")){
-                inText = "SELECT p.*, c.category_name "
+                Cookie[] cookies = request.getCookies();
+                if (cookies != null) {
+                    for (Cookie cookie : cookies) {
+                        if (cookie.getName().equals("sort-products")) {
+                            sort_val = cookie.getValue();
+                        }
+                    }
+                }
+                if(sort_val.equals("ID")){
+                    inText = "SELECT p.*, c.category_name "
                         + "FROM product p "
-                        + "JOIN product_category c ON c.category_id = p.category_id";
+                        + "JOIN product_category c ON c.category_id = p.category_id "
+                        + "ORDER BY p.product_id";
+                }else if(sort_val.equals("Name")){
+                    inText = "SELECT p.*, c.category_name "
+                        + "FROM product p "
+                        + "JOIN product_category c ON c.category_id = p.category_id "
+                        + "ORDER BY p.product_name";
+                }else if(sort_val.equals("Category")){
+                    inText = "SELECT p.*, c.category_name "
+                        + "FROM product p "
+                        + "JOIN product_category c ON c.category_id = p.category_id "
+                        + "ORDER BY c.category_name";
+                }else{
+                    inText = "SELECT p.*, c.category_name "
+                            + "FROM product p "
+                            + "JOIN product_category c ON c.category_id = p.category_id";
+                }
                 ps = conn.prepareStatement(inText);
             }else{
-                inText = "SELECT p.*, c.category_name "
-                        + "FROM product p "
-                        + "JOIN product_category c ON c.category_id = p.category_id WHERE category_name=?";
-                ps = conn.prepareStatement(inText);
-                    ps.setString(1, category);
+                Cookie[] cookies = request.getCookies();
+                if (cookies != null) {
+                    for (Cookie cookie : cookies) {
+                        if (cookie.getName().equals("sort-products")) {
+                            sort_val = cookie.getValue();
+                        }
+                    }
+                }
+                if(sort_val.equals("ID")){
+                    inText = "SELECT p.*, c.category_name "
+                            + "FROM product p "
+                            + "JOIN product_category c ON c.category_id = p.category_id WHERE category_name=? "
+                            + "ORDER BY p.product_id";
+                    ps = conn.prepareStatement(inText);
+                        ps.setString(1, category);
+                }else if(sort_val.equals("Name")){
+                    inText = "SELECT p.*, c.category_name "
+                            + "FROM product p "
+                            + "JOIN product_category c ON c.category_id = p.category_id WHERE category_name=? "
+                            + "ORDER BY p.product_name";
+                    ps = conn.prepareStatement(inText);
+                        ps.setString(1, category);
+                }else if(sort_val.equals("Category")){
+                    inText = "SELECT p.*, c.category_name "
+                            + "FROM product p "
+                            + "JOIN product_category c ON c.category_id = p.category_id WHERE category_name=? "
+                            + "ORDER BY c.category_name";
+                    ps = conn.prepareStatement(inText);
+                        ps.setString(1, category);
+                }else{
+                    inText = "SELECT p.*, c.category_name "
+                            + "FROM product p "
+                            + "JOIN product_category c ON c.category_id = p.category_id WHERE category_name=?";
+                    ps = conn.prepareStatement(inText);
+                        ps.setString(1, category);
+                }
             }
             rs = ps.executeQuery();
             ArrayList<ProductBean> pb = new ArrayList<>();
