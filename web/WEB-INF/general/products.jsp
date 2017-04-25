@@ -41,7 +41,7 @@
                 
                 <form action="products" method="POST" id="product-filter">
                     <strong>Category Filter: </strong>
-                    <select class="sort-options" id="sort-options" name="sort-options" onchange="filterProducts()"">
+                    <select class="filter-options" id="filter-options" name="filter-options" onchange="filterProducts()"">
                         <option value="All">All</option>
                         <c:forEach var="pc" items="${pc}">
                             <option value="${pc.getCategoryName()}">${pc.getCategoryName()}</option>
@@ -51,10 +51,10 @@
                 <br>
                 <form action="products" method="POST" id="product-sort">
                     <strong>Sort By: </strong>
-                    <select class="sort-options" id="sort-options" name="sort-options" onchange="filterProducts()"">
-                        <option value="id">ID</option>
-                        <option value="name">Name</option>
-                        <option value="category">Category</option>
+                    <select class="sort-options" id="sort-options" name="sort-options" onchange="sortProducts()"">
+                        <option value="ID">ID</option>
+                        <option value="Name">Name</option>
+                        <option value="Category">Category</option>
                     </select>
                 </form>
             </div>
@@ -270,19 +270,31 @@
             }
             
             function filterProducts(){
+                var e = document.getElementById("filter-options");
+                var strValue = e.options[e.selectedIndex].text;
+                createCookie('filter-category', strValue, 7);
+                document.getElementById("product-filter").submit();
+            }
+            
+            function sortProducts(){
                 var e = document.getElementById("sort-options");
                 var strValue = e.options[e.selectedIndex].text;
-                createCookie('sort-category', strValue, 7);
+                createCookie('sort-products', strValue, 7);
+                document.getElementById("product-sort").submit();
                 document.getElementById("product-filter").submit();
             }
             
             $(function(){
-                var x = readCookie('sort-category');
+                var x = readCookie('filter-category');
+                var y = readCookie('sort-products');
                 
                 if(x){
-                    
-                    $("#sort-options").val(x);
+                    $("#filter-options").val(x);
                 }
+                if(y){
+                    $("#sort-options").val(y);
+                }
+                
             });
         </script>
     
