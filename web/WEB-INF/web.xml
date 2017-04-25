@@ -393,8 +393,8 @@
         <servlet-class>com.tsppi.controller.mngt.form.function.EditPaymentMethodController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>PaymentMethodVisibilityoptionController</servlet-name>
-        <servlet-class>com.tsppi.controller.mngt.page.PaymentMethodVisibilityoptionController</servlet-class>
+        <servlet-name>PaymentMethodVisibilityOptionController</servlet-name>
+        <servlet-class>com.tsppi.controller.mngt.page.function.PaymentMethodVisibilityOptionController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CheckMethodNameController</servlet-name>
@@ -786,7 +786,7 @@
         <url-pattern>/editpaymentmethodcontroller</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>PaymentMethodVisibilityoptionController</servlet-name>
+        <servlet-name>PaymentMethodVisibilityOptionController</servlet-name>
         <url-pattern>/paymentmethodvisibilityoption</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
