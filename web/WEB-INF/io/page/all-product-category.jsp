@@ -36,6 +36,7 @@
                 <div class="container">
                   <div class="row">
                     <div class="col-md-10 col-md-offset-1">
+                        <%@include file="/WEB-INF/source/mssgBox.jsp" %>
                         <div class="col-lg-12">
                             <div class="table text-center">
                                 <table class="table category-table">
@@ -98,6 +99,12 @@
                 </div>
               </section>
         </c:if>
+        <script type="text/javascript">
+            $(window).on('load',function(){
+                removeProdCat();
+            });
+        </script>
+        
         <script type="text/javascript" charset="utf8" src="imports/datatables.js"></script>
             <script>
             $(function(){

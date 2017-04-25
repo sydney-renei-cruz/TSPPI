@@ -28,6 +28,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -90,8 +91,9 @@ public class AccountActivationController extends HttpServlet {
         String inText = "";
         HttpSession session = request.getSession();
         int success = 0;
+        Cookie mssgStatus=new Cookie("mssgStatus","0");
+        
         try{
-            
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
             
@@ -135,10 +137,21 @@ public class AccountActivationController extends HttpServlet {
                     message = "Hi,\n\n"
                         + "Your account has been activated, you may now use your account. \n\n"
                         + "Regards. \n";
+                    
+                    String mssgScore = "1";
+                    
+                    mssgStatus=new Cookie("mssgStatus",mssgScore);
+                    mssgStatus.setMaxAge(1);
+                    
                 }else{
                     message = "Hi,\n\n"
                         + "Your account has been deactivated, please contact the administrator to address this situation. \n\n"
                         + "Regards. \n";
+                    
+                    String mssgScore = "2";
+                    
+                    mssgStatus=new Cookie("mssgStatus",mssgScore);
+                    mssgStatus.setMaxAge(1);
                 }
                 String userName = "TSPPIauto@gmail.com";
                 String password = "3$tarPaper!";
@@ -180,6 +193,7 @@ public class AccountActivationController extends HttpServlet {
                   msg.setSentDate(new Date());
                   // -- Send the message --
                   Transport.send(msg);
+                  response.addCookie(mssgStatus);
                   response.sendRedirect(request.getHeader("referer"));
                   return;
             }   

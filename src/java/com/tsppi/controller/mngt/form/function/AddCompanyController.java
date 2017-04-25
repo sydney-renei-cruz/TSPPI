@@ -18,6 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -96,6 +97,9 @@ public class AddCompanyController extends HttpServlet {
             
             
             if(success>0){
+                Cookie mssgStatus=new Cookie("regMssg","1");
+                mssgStatus.setMaxAge(1);
+                response.addCookie(mssgStatus);
                 session.setAttribute("success_msg", "Company profile has been added");
                 response.sendRedirect(request.getHeader("referer"));
             }else{

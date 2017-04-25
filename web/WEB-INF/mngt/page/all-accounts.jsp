@@ -7,6 +7,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="css/item-list.css">   
+        <link rel="stylesheet" href="css/loader-css.css">  
         <link rel="stylesheet" href="imports/datatables.css">
     </head>
     <body>
@@ -40,8 +41,16 @@
                 </div>
             </div>
 	</header>
+        
+        <script type="text/javascript">
+            $(window).on('load',function(){
+                acctAct();
+            });
+        </script>
+        
         <section class="team">            
             <div class="container">
+                <%@include file="/WEB-INF/source/mssgBox.jsp" %>
               <div class="row">
                 <div class="col-md-10 col-md-offset-1">
                     <c:if test="${eb.size() > 0}">
@@ -71,10 +80,10 @@
                                                         <input type="hidden" name="account_num" id="account_num" value="${eb.getAccountNum()}">
                                                         <input type="hidden" name="account_status" id="account_status" value="${eb.getAccountStatus()}">
                                                         <c:if test="${eb.getAccountStatus()}">
-                                                            <input type="submit" name="submit" id="deactivate" value="Deactivate Account" class="btn btn-danger" data-toggle="modal" data-target="#mssgBox">
+                                                            <input type="submit" name="submit" id="deactivate" value="Deactivate Account" class="btn btn-danger">
                                                         </c:if>
                                                         <c:if test="${!eb.getAccountStatus()}">                                                     
-                                                            <input type="submit" name="submit" id="activate" value="Activate Account" class="btn btn-primary" data-toggle="modal" data-target="#mssgBox">
+                                                            <input type="submit" name="submit" id="activate" value="Activate Account" class="btn btn-primary">
                                                         </c:if>
                                                     </form>
                                                   </td>
@@ -126,11 +135,11 @@
                                                   <input type="hidden" name="account_status" id="account_status" value="${cb.getAccountStatus()}">
                                                   <c:if test="${account_type == 'admin'}">
                                                     <c:if test="${cb.getAccountStatus()}">
-                                                        <input type="submit" name="submit" id="submit" value="Deactivate Account" class="btn btn-danger" data-toggle="modal" data-target="#mssgBox">
+                                                        <input type="submit" name="submit" id="submit" value="Deactivate Account" class="btn btn-danger" onclick="unhideMe()">
                                                     </c:if>
                                                   </c:if>
                                                   <c:if test="${!cb.getAccountStatus()}">                                                     
-                                                      <input type="submit" name="submit" id="submit" value="Activate Account" class="btn btn-primary" data-toggle="modal" data-target="#mssgBox">
+                                                      <input type="submit" name="submit" id="submit" value="Activate Account" class="btn btn-primary" onclick="unhideMe()">
                                                   </c:if>
                                                   
                                               </form>
@@ -151,18 +160,6 @@
             </div>
           </section>
         
-        <!--Alert Box Modal-->
-        <div id="mssgBox" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        Registration Successful!
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--Alert Box Modal-->
-        <script type="text/javascript" charset="utf8" src="imports/datatables.js"></script>
         <script>
         $(function(){
           $(".employee-table").dataTable({
@@ -203,5 +200,15 @@
                 </script>
             </c:otherwise>
         </c:choose>
+                
+        <!--Loader-->
+        <div id="ldrBox" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <br><br><br><br><br><br><br><br><br><br><br><br>
+                <div id="loader"></div>
+            </div>
+        </div>
+        <!--Loader-->
+        <script type="text/javascript" charset="utf8" src="imports/datatables.js"></script>
     </body>
 </html>

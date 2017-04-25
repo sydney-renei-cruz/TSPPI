@@ -934,7 +934,7 @@
     <!--Image path-->
     <context-param>
         <param-name>imgPath</param-name>
-        <param-value>C:\Users\Sydney Cruz\Documents\TSPPI ORAIS Folder\Image Upload\</param-value>
+        <param-value>C:\Users\SAM\Documents\TSPPIpics\</param-value>
     </context-param>
     <!--Image path-->
     <!--error-->

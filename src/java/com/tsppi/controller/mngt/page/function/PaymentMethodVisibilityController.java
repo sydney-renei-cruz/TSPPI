@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -68,6 +69,9 @@ public class PaymentMethodVisibilityController extends HttpServlet {
             ps.setString(2, pm_id);
             i = ps.executeUpdate();
             if(i>0){
+                Cookie mssgStatus=new Cookie("visStatus",show_method);
+                mssgStatus.setMaxAge(1);
+                response.addCookie(mssgStatus);
                 response.sendRedirect(request.getHeader("referer"));
             }else{
                 response.sendRedirect(request.getHeader("referer"));

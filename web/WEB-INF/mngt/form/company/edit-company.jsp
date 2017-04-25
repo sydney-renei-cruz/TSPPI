@@ -27,6 +27,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6 col-md-offset-3">
+                            <%@include file="/WEB-INF/source/mssgBox.jsp" %>
                             <div class="panel panel-login">
                                 <div class="panel-heading">
                                     <div class="row">
@@ -118,5 +119,10 @@
         <script src="imports/jquery.validate.js" type="text/javascript"></script>
         <script src="imports/additional-methods.js" type="text/javascript"></script>
         <script src="js/edit-company-validation.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            $(window).on('load',function(){
+                editSuccess();
+            });
+        </script>
     </body>
 </html>

@@ -28,6 +28,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -59,6 +60,7 @@ public class ApproveInvoiceController extends HttpServlet {
         String inText = "";
         ResultSet rs = null;
         HttpSession session = request.getSession();
+        Cookie mssgStatus=new Cookie("reqMssg","0");
         try{
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
@@ -70,10 +72,14 @@ public class ApproveInvoiceController extends HttpServlet {
             String content = "";
             boolean verified = true;
             if(action.equals("yes")){
+                mssgStatus=new Cookie("reqMssg","yes");
+                mssgStatus.setMaxAge(1);
                 invoice_status = "Approved";
                 content = "After some deliberation, we are happy to say that your invoice has been approved. \n"
                         + "We will be contacting you every now and then for the transaction. And if you have any question, feel free to email me. \n\n";
             }else{
+                mssgStatus=new Cookie("reqMssg","no");
+                mssgStatus.setMaxAge(1);
                 invoice_status = "Rejected";
                 content = "After some deliberation we are sorry to say that your invoice has been rejected. \n"
                         + "If you have any question, feel free to email me. \n\n";
@@ -186,6 +192,8 @@ public class ApproveInvoiceController extends HttpServlet {
               msg.setSentDate(new Date());
               // -- Send the message --
               Transport.send(msg);
+              
+                response.addCookie(mssgStatus);
             response.sendRedirect(request.getHeader("referer"));
         }catch(Exception e){
             e.printStackTrace();

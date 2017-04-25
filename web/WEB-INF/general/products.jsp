@@ -48,6 +48,15 @@
                         </c:forEach>
                     </select>
                 </form>
+                <br>
+                <form action="products" method="POST" id="product-sort">
+                    <strong>Sort By: </strong>
+                    <select class="sort-options" id="sort-options" name="sort-options" onchange="filterProducts()"">
+                        <option value="id">ID</option>
+                        <option value="name">Name</option>
+                        <option value="category">Category</option>
+                    </select>
+                </form>
             </div>
             <c:if test="${pb.size() > 0}">
             <div id="products" class="row list-group">

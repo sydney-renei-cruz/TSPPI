@@ -35,6 +35,7 @@
                 <div class="container">
                   <div class="row">
                     <div class="col-md-10 col-md-offset-1">
+                        <%@include file="/WEB-INF/source/mssgBox.jsp" %>
                         <div class="col-lg-12">
                             <div class="table text-center">
                                 <table class="table method-table">
@@ -100,6 +101,12 @@
                       });
                   });
             </script>
+            <script type="text/javascript">
+            $(window).on('load',function(){
+                payAddSuccess();
+                editPayVis();
+            });
+        </script>
         </c:if>
     </body>
 </html>

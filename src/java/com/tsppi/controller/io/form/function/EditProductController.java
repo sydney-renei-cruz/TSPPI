@@ -20,6 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -151,6 +152,9 @@ public class EditProductController extends HttpServlet {
             }
             if(success > 0){
                 session.setAttribute("success_msg", "Product has been updated");
+                Cookie mssgStatus=new Cookie("editMssg","1");
+                mssgStatus.setMaxAge(1);
+                response.addCookie(mssgStatus);
                 response.sendRedirect(request.getHeader("referer"));
             }else{
                 session.setAttribute("error_msg", "Please review the fields");

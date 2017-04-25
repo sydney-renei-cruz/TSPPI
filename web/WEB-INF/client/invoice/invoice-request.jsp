@@ -117,7 +117,7 @@
                                             </div>
                                             <div class="row text-center">
                                                 <div class="col-lg-12">
-                                                    <form class="cart-form" action="generateinvoicerequest" method="POST">
+                                                    <form id="cart-form" class="cart-form" action="generateinvoicerequest" method="POST">
                                                         <c:forEach var="al" items="${al}">
                                                             <input type="hidden" name="client_id" value="${al.getClientID()}">
                                                         </c:forEach>
@@ -138,11 +138,12 @@
                                                             </c:forEach>
                                                         </select><hr>
                                                         <p id="err-msg" style="color: #FF0000;"></p>
-                                                        <button type="submit" class="btn btn-success">
+                                                        
+                                                    </form>
+                                                    <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#confirm-box">
                                                             Generate Invoice Request <span class="glyphicon glyphicon-play"></span>
                                                         </button><br>
-                                                        <a href="cart">Go back to cart</a>
-                                                    </form>
+                                                    <a href="cart">Go back to cart</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -155,5 +156,33 @@
             </c:choose>
 	</section>
         <script src="js/invoice-request-validation.js" type="text/javascript"></script>
+        <script src="js/submitform-js.js" type="text/javascript"></script>
+        
+        <!-- Message Box -->
+        <div class="container">
+            <!-- Trigger the modal with a button -->
+            <!-- Modal -->
+            <div class="modal fade" id="confirm-box" role="dialog">
+                <div class="modal-dialog modal-md">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title"><p>Confirm</p></h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to submit this invoice?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" id="cmd-confirm">Yes</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    </div>
+                </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- Message Box -->
     </body>
 </html>

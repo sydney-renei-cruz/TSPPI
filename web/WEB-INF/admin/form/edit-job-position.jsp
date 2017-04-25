@@ -27,6 +27,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6 col-md-offset-3">
+                            <%@include file="/WEB-INF/source/mssgBox.jsp" %>
                             <div class="panel panel-login">
                                 <div class="panel-heading">
                                     <div class="row">
@@ -56,7 +57,6 @@
                                                     </div>
                                                 </c:if>
                                                 <input type="hidden" name="job_id" value="${al.getJobID()}">
-                                                </form>
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-sm-6 col-sm-offset-3">
@@ -64,6 +64,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                </form>
                                             </c:forEach>
                                                 <div class="form-group">
                                                     <div class="row">
@@ -74,7 +75,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                            
                                         </div>
                                     </div>
                                 </div>
@@ -85,26 +85,11 @@
             </div>
 	</section>
         <script src="imports/jquery.validate.js" type="text/javascript"></script>
-        <script src="js/edit-job-position-validation.js" type="text/javascript"></script>
-        
-        <!--Alert Box Modal-->
-        <div id="mssgBox" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <br>
-                        <h4 class="modal-title"></h4>
-                    </div>
-                    <div class="modal-body">
-                        Your changes have been saved!
-                    </div>
-                    <div class="modal-footer">
-                        <br>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--Alert Box Modal-->
-        
+        <script src="js/edit-job-position-validation.js" type="text/javascript"></script>        
+        <script type="text/javascript">
+            $(window).on('load',function(){
+                editSuccess();
+            });
+        </script>
     </body>
 </html>

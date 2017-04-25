@@ -13,6 +13,7 @@
     </head>
     <body>
         <%@include file="/WEB-INF/source/navigation/navbar.jsp" %>
+        
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-offset-2 col-md-8 col-lg-offset-3 col-lg-6">

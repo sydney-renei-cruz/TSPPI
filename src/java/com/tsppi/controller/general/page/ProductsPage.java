@@ -46,16 +46,15 @@ public class ProductsPage extends HttpServlet {
         PrintWriter out = response.getWriter();
         Connection conn = null;
         PreparedStatement ps = null;
-        ServletContext context = request.getSession().getServletContext();;
+        ServletContext context = request.getSession().getServletContext();
         ResultSet rs = null;
         String inText = "";
         HttpSession session = request.getSession();
         
-        String category = request.getParameter("sort-options");
+        String category = request.getParameter("filter-options");
         if(category == null){
             category = "All";
         }
-        request.setAttribute("sort-category", category);
         
         try{
             

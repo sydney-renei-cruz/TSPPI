@@ -37,6 +37,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-md-6 col-md-offset-3">
+                                <%@include file="/WEB-INF/source/mssgBox.jsp" %>
                                 <div class="panel panel-login">
                                     <div class="panel-heading">
                                         <hr>
@@ -87,14 +88,15 @@
                                                     </c:if>
                                                     <c:set var="form_type" value="employee" scope="session"></c:set>
                                                     <!--<input type="hidden" name="account_type" id="account_type" class="form-control" value="employee">-->
-                                                </form>    
-                                                <div class="form-group">
+                                                    <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-sm-6 col-sm-offset-3">
                                                             <input type="submit" name="submit" id="register-submit" class="form-control btn btn-register" value="Register Now">
                                                         </div>
                                                     </div>
                                                 </div>
+                                                </form>    
+                                                
                                             </div>
                                         </div>
                                     </div>
@@ -105,9 +107,14 @@
                 </div>
             </section>
         </c:if>
-        
+        <script type="text/javascript">
+            $(window).on('load',function(){
+                regSuccess();
+            });
+        </script>
         <script src="imports/jquery.validate.js" type="text/javascript"></script>
         <script src="imports/additional-methods.js" type="text/javascript"></script>
         <script src="js/reg-form-validation.js" type="text/javascript"></script>
+        
     </body>
 </html>

@@ -34,6 +34,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -450,6 +451,10 @@ public class RegisterController extends HttpServlet {
                 session.setAttribute("error_msg", "Please review the fields");
                 response.sendRedirect(request.getHeader("referer"));
             }else{
+                String mssgScore = "1";
+                Cookie mssgStatus=new Cookie("regMssg",mssgScore);
+                mssgStatus.setMaxAge(1);
+                response.addCookie(mssgStatus);
                 session.removeAttribute("form_type");
                 session.setAttribute("success_msg", "Account has been created");
                 response.sendRedirect(request.getHeader("referer"));

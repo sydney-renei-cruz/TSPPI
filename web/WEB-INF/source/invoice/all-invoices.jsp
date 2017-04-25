@@ -40,6 +40,7 @@
             <div class="container-fluid">
                 <div class="row">
                         <div class="col-md-10 col-md-offset-1">
+                            <%@include file="/WEB-INF/source/mssgBox.jsp" %>
                             <div class="col-lg-12">
                                     <div class="table text-center">
                                         <table class="table invoice-table">
@@ -83,10 +84,10 @@
                                                         <td>
                                                             <c:if test="${account_type == 'client'}">
                                                                 <c:if test="${al.getInvoiceStatus() == 'Pending' || al.getInvoiceStatus() == 'Approved'}">
-                                                                <form action="cancelinvoice" method="POST">
+                                                                <form action="cancelinvoice" method="POST" id="cancel-inv">
                                                                     <input type="hidden" name="invoice_id" value="${al.getInvoiceID()}">
-                                                                    <input type="submit" name="submit" class="cancel-button form-control btn btn-link" value="Cancel Invoice">
                                                                 </form>
+                                                                <button type="submit" name="submit" class="cancel-button form-control btn btn-link" value="Cancel Invoice" data-toggle="modal" data-target="#confirm-box">Cancel Invoice</button>
                                                                 </c:if>
                                                              </c:if>
                                                             <c:if test="${sales_score == true}">
@@ -116,7 +117,7 @@
                 </div>
         </section>
         <div id="confirmmodal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -293,5 +294,38 @@
             </script>
         </c:if>    
   </c:if>
+            
+        <script type="text/javascript">
+        $(window).on('load',function(){
+            confirmInv();
+        });
+        </script>
+        <script src="js/submitform-js.js" type="text/javascript"></script>
+        <!-- Message Box -->
+        <div class="container">
+            <!-- Trigger the modal with a button -->
+            <!-- Modal -->
+            <div class="modal fade" id="confirm-box" role="dialog">
+                <div class="modal-dialog modal-md">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title"><p>Confirm</p></h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to cancel this invoice?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" id="cmd-cancel">Yes</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    </div>
+                </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- Message Box -->
     </body>
 </html>
