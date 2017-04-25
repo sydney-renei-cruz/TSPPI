@@ -394,7 +394,7 @@
     </servlet>
     <servlet>
         <servlet-name>PaymentMethodVisibilityOptionController</servlet-name>
-        <servlet-class>com.tsppi.controller.mngt.page.function.PaymentMethodVisibilityOptionController</servlet-class>
+        <servlet-class>com.tsppi.controller.mngt.page.function.PaymentMethodVisibilityController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CheckMethodNameController</servlet-name>
