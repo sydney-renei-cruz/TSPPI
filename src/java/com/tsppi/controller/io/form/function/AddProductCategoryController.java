@@ -89,15 +89,17 @@ public class AddProductCategoryController extends HttpServlet {
                 ps.setBoolean(2, show_category);
                 success = ps.executeUpdate();
             }else{
-                session.setAttribute("add_error", "All fields are required");
+                session.setAttribute("error_msg", "All fields are required");
                 response.sendRedirect(request.getHeader("referer"));
+                return;
             }
             
             
             if(success>0){
-                response.sendRedirect("allproductcategory");
+                session.setAttribute("success_msg", "Product category has been added.");
+                response.sendRedirect(request.getHeader("referer"));
             }else{
-                session.setAttribute("add_error", "Please review the fields");
+                session.setAttribute("error_msg", "Please review the fields");
                 response.sendRedirect(request.getHeader("referer"));
             }
         }catch(Exception e){

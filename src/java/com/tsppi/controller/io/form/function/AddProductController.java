@@ -137,14 +137,15 @@ public class AddProductController extends HttpServlet {
                     }
                 }
             }else{
-                session.setAttribute("add_error", "All fields are required");
+                session.setAttribute("error_msg", "All fields are required");
                 response.sendRedirect(request.getHeader("referer"));
             }
             
             if(success>0){
-                response.sendRedirect("profile");
+                session.setAttribute("success_msg", "Product has been added.");
+                response.sendRedirect(request.getHeader("referer"));
             }else{
-                session.setAttribute("add_error", "Please review the fields");
+                session.setAttribute("error_msg", "Please review the fields");
                 response.sendRedirect(request.getHeader("referer"));
             }
         }catch(Exception e){

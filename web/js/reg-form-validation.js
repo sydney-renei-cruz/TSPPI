@@ -81,6 +81,7 @@ function countdown( elementName, minutes, seconds )
 }
 
 $(document).ready(function(){
+    
    $("#register-form").validate({
        errorClass: "my-error-class",
        rules: {
@@ -114,7 +115,9 @@ $(document).ready(function(){
                    data: {
                        'email': function() { return $('#email').val();}
                    }
-               }
+               },
+               gmailOnly: true
+               
             },
             mobile_number: {
                 required: true,
@@ -138,7 +141,8 @@ $(document).ready(function(){
                     }
                     
                 }
-            }
+            },
+            special_code: "required"
        },
        messages: {
            username:{
@@ -175,7 +179,8 @@ $(document).ready(function(){
            company_branch: {
                required: "Please enter company's branch",
                remote: "The Company is not yet registered in the system. To register the company, click <a href='requestcompany'>here</a>."
-           }
+           },
+           special_code: "Please enter the code sent to you"
        }
    });
    

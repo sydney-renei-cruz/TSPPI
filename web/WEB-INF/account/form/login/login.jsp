@@ -42,10 +42,12 @@
                                                 <div class="form-group">
                                                     <input type="password" name="password" id="log-password" class="form-control" placeholder="Password">
                                                 </div>
-                                                <div class="form-group text-center">
-                                                    <div id="msg">${login_error}</div>
-                                                    <c:remove var="login_error" scope="session"/>
-                                                </div>
+                                                <c:if test="${error_login != ''}">
+                                                    <div class="form-group text-center">
+                                                        <div id="error-msg">${error_login}</div>
+                                                        <c:remove var="error_login" scope="session"/>
+                                                    </div>
+                                                </c:if>
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-sm-6 col-sm-offset-3">

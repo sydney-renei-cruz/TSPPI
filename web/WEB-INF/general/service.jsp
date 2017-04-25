@@ -22,11 +22,19 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h1>SERVICES</h1>
+                    <c:choose>
+                        <c:when test="${sb.size() > 0}">
+                            <h1>SERVICES</h1>
+                        </c:when>
+                        <c:otherwise>
+                            <h1>No Services to be shown</h1>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
         </div>
     </header>
+    <c:if test="${sb.size() > 0}">
     <section>
         <div class="container">
             <div id="products" class="row list-group">
@@ -144,6 +152,7 @@
                 });
             });
     </script>
+    </c:if>
 </body>
 
 </html>

@@ -43,6 +43,9 @@
 
 }() );
 
+$.validator.addMethod("gmailOnly", function(value){
+        return /^([\w-.]+@(?!yahoo.com)(?!hotmail.com)([\w-]+.)+[\w-]{2,})?$/.test(value);
+   }, "Please enter only Gmail email account.");
 // Accept a value from a file input based on a required mimetype
 $.validator.addMethod( "accept", function( value, element, param ) {
 

@@ -135,7 +135,11 @@ public class LoginController extends HttpServlet {
                 context.log("new password: " + sb.toString());
                 //      correct will become TRUE if a match is found
                 if(pass.equals(sb.toString())){
-
+                    if(status == false){
+                        session.setAttribute("error_login", "Your account is deactivated, please contact the administrator");
+                        response.sendRedirect(request.getHeader("referer"));
+                        return;
+                    }
                     account_num = rs.getString("account_num");
                     account_type = rs.getString("account_type");
 
@@ -170,7 +174,7 @@ public class LoginController extends HttpServlet {
             }
             
             if(!rs.previous()){
-                session.setAttribute("login_error", "Incorrect username or password");
+                session.setAttribute("error_login", "Incorrect username or password");
                 response.sendRedirect(request.getHeader("referer"));
             }
         }catch(Exception e){

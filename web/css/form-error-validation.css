@@ -9,4 +9,5 @@ and open the template in the editor.
 */
 
 .my-error-class{color: #FF0000;}
-#msg{color: #FF0000;}
+#error-msg{color: #FF0000;}
+#success-msg{color: #1CB94A;}

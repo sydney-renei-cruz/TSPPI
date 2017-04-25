@@ -217,9 +217,10 @@ public class ServiceInquiryController extends HttpServlet {
                   msg.setSentDate(new Date());
                   // -- Send the message --
                   Transport.send(msg);
-                  response.sendRedirect("services");
+                  session1.setAttribute("success_msg", "Your inquiry has been sent.");
+                  response.sendRedirect(request.getHeader("referer"));
             }else{
-                session1.setAttribute("add_error", "All fields are required");
+                session1.setAttribute("error_msg", "All fields are required");
                 response.sendRedirect(request.getHeader("referer"));
             }
             

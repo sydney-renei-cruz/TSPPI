@@ -60,9 +60,10 @@ public class EditPaymentMethodController extends HttpServlet {
                 success = ps.executeUpdate();
             }
             if(success > 0){
-                response.sendRedirect("allpaymentmethod");
+                session.setAttribute("success_msg", "Payment method has been updated");
+                response.sendRedirect(request.getHeader("referer"));
             }else{
-                session.setAttribute("add_error", "Please review the fields");
+                session.setAttribute("error_msg", "Please review the fields");
                 response.sendRedirect(request.getHeader("referer"));
             }
             

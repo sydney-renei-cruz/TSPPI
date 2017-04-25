@@ -17,28 +17,28 @@
                 <div class="row">
                     <div class="col-lg-12 text-center">
                         <c:choose>
-                            <c:when test="${account_type == 'client'}">
-                                <h1>Your Invoices</h1>
+                            <c:when test="${al.size() > 0}">
+                                <c:choose>
+                                    <c:when test="${account_type == 'client'}">
+                                        <h1>Your Invoices</h1>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <h1>All Invoices</h1>
+                                    </c:otherwise>
+                                </c:choose>
                             </c:when>
                             <c:otherwise>
-                                <h1>All Invoices</h1>
+                                <h1>No invoices to be shown.</h1>
                             </c:otherwise>
                         </c:choose>
                     </div>
                 </div>
             </div>
 	</header>
+        <c:if test="${al.size() > 0}">
         <section class="team">
             <div class="container-fluid">
                 <div class="row">
-                    <c:if test="${al.size() == 0}">
-                        <div class="col-md-10 col-md-offset-1" id="no-label">
-                            <div class="col-lg-12 text-center">
-                                <h2>No invoices to be shown</h2>
-                            </div>
-                        </div>
-                    </c:if>
-                    <c:if test="${al.size() != 0}">
                         <div class="col-md-10 col-md-offset-1">
                             <div class="col-lg-12">
                                     <div class="table text-center">
@@ -54,6 +54,7 @@
                                                     <th class="text-center">Total Amount</th>
                                                     <th class="text-center">Status</th>
                                                     <th class="text-center">Invoice Created</th>
+                                                    <th></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -79,35 +80,31 @@
                                                         <td>${al.getTotalAmount()}</td>
                                                         <td>${al.getInvoiceStatus()}</td>
                                                         <td>${al.getInvoiceDate()}</td>
-                                                        <c:if test="${account_type == 'client'}">
-                                                            <c:if test="${al.getInvoiceStatus() == 'Pending' || al.getInvoiceStatus() == 'Approved'}">
-                                                            <td>
+                                                        <td>
+                                                            <c:if test="${account_type == 'client'}">
+                                                                <c:if test="${al.getInvoiceStatus() == 'Pending' || al.getInvoiceStatus() == 'Approved'}">
                                                                 <form action="cancelinvoice" method="POST">
                                                                     <input type="hidden" name="invoice_id" value="${al.getInvoiceID()}">
                                                                     <input type="submit" name="submit" class="cancel-button form-control btn btn-link" value="Cancel Invoice">
                                                                 </form>
-                                                            </td>
-                                                            </c:if>
-                                                        </c:if>
-                                                        <c:if test="${sales_score == true}">
-                                                            <c:if test="${al.getInvoiceStatus() == 'Pending'}">
-                                                            <td>
+                                                                </c:if>
+                                                             </c:if>
+                                                            <c:if test="${sales_score == true}">
+                                                             <c:if test="${al.getInvoiceStatus() == 'Pending'}">
                                                                 <button class="btn btn-link cir">
                                                                     Confirm
                                                                     <input type="hidden" class="confirm-info" value="${al.getInvoiceID()}">
                                                                 </button>
-                                                            </td>
+                                                                </c:if>
+                                                                <c:if test="${al.getInvoiceStatus() == 'Approved'}">
+                                                                    <form action="deliverinvoice" method="POST">
+                                                                        <input type="hidden" name="invoice_id" value="${al.getInvoiceID()}">
+                                                                        <input type="hidden" name="action" value="yes">
+                                                                        <input type="submit" name="submit" class="form-control btn btn-link" value="In Delivery">
+                                                                    </form>
+                                                                </c:if>
                                                             </c:if>
-                                                            <c:if test="${al.getInvoiceStatus() == 'Approved'}">
-                                                            <td>
-                                                                <form action="deliverinvoice" method="POST">
-                                                                    <input type="hidden" name="invoice_id" value="${al.getInvoiceID()}">
-                                                                    <input type="hidden" name="action" value="yes">
-                                                                    <input type="submit" name="submit" class="form-control btn btn-link" value="In Delivery">
-                                                                </form>
-                                                            </td>
-                                                            </c:if>
-                                                        </c:if>
+                                                        </td>
                                                     </tr>
                                                 </c:forEach>
                                             </tbody>
@@ -115,7 +112,6 @@
                                     </div>
                                 </div>                  
                             </div>
-                        </c:if>
                     </div>
                 </div>
         </section>
@@ -205,7 +201,7 @@
                 </div>
             </div>
         </div>
-        <script>
+        <script type="text/javascript">
             $(document).ready(function(){
                 $('.cli').click(function(){
                     $('#showinfo').empty();
@@ -230,7 +226,7 @@
                 });
             });
         </script>
-        <script>
+        <script type="text/javascript">
             $(document).ready(function(){
                 $('.cir').click(function(){
                     $('.invoice_details').empty();
@@ -248,7 +244,7 @@
                 });
             });
         </script>
-        <script>
+        <script type="text/javascript">
             $(document).ready(function(){
                 $('.vib').click(function(){
                     $('#showitems').empty();
@@ -269,11 +265,33 @@
             });
         </script>
   
-  <script type="text/javascript" charset="utf8" src="imports/datatables.js"></script>
-  <script>
-  $(function(){
-    $(".invoice-table").dataTable();
-  });
-  </script>
+        <script type="text/javascript" src="imports/datatables.js"></script>
+        <c:if test="${sales_score == true}">
+            <script>
+              $(function(){
+                $(".invoice-table").dataTable({
+                    "columnDefs": [
+                        {"orderable": false, "targets": 2},
+                        {"orderable": false, "targets": 7}
+                    ]
+                });
+                $.noConflict();
+              });
+            </script>
+        </c:if>
+        <c:if test="${account_type == 'client'}">
+            <script>
+              $(function(){
+                $(".invoice-table").dataTable({
+                    "columnDefs": [
+                        {"orderable": false, "targets": 1},
+                        {"orderable": false, "targets": 6}
+                    ]
+                });
+                $.noConflict();
+              });
+            </script>
+        </c:if>    
+  </c:if>
     </body>
 </html>

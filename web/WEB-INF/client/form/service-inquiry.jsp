@@ -9,6 +9,7 @@
 <html>
     <head>
         <link href="css/form.css" rel="stylesheet" type="text/css">
+        <link href="css/form-error-validation.css" rel="stylesheet" type="text/css">
     </head>
     <body>
         <%@include file="/WEB-INF/source/navigation/navbar.jsp"%>
@@ -40,10 +41,14 @@
                                                 <div class="form-group">
                                                     <textarea rows="4" cols="50" name="message" id="message" class="form-control" placeholder="What are your questions?"></textarea>
                                                 </div>
-                                                <div class="form-group text-center">
-                                                    <div id="msg">${add_error}</div>
-                                                    <c:remove var="add_error" scope="session"/>
-                                                </div>
+                                                <c:if test="${error_msg != '' || success_msg != ''}">
+                                                    <div class="form-group text-center">
+                                                        <div id="error-msg">${error_msg}</div>
+                                                        <c:remove var="error_msg" scope="session"/>
+                                                        <div id="success-msg">${success_msg}</div>
+                                                        <c:remove var="success_msg" scope="session"/>
+                                                    </div>
+                                                </c:if>
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-sm-6 col-sm-offset-3">

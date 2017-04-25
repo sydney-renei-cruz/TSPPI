@@ -150,9 +150,10 @@ public class EditProductController extends HttpServlet {
                 outFile.close();
             }
             if(success > 0){
-                response.sendRedirect("approveproducts");
+                session.setAttribute("success_msg", "Product has been updated");
+                response.sendRedirect(request.getHeader("referer"));
             }else{
-                session.setAttribute("edit_error", "Please review the fields");
+                session.setAttribute("error_msg", "Please review the fields");
                 response.sendRedirect(request.getHeader("referer"));
             }
             

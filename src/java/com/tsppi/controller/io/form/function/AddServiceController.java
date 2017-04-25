@@ -90,51 +90,60 @@ public class AddServiceController extends HttpServlet {
             
             String service_name = request.getParameter("service_name");
             String service_description = request.getParameter("service_description");
-            InputStream inputStream = null;
-            Part filePart = request.getPart("service_image");
-            if(filePart.getSize() != 0){
-                inputStream = filePart.getInputStream();
-            }
-//            if(filePart.getSize() != 0){
-//                inText = "INSERT INTO services (service_name, service_description, service_image) VALUES (?,?,?)";
-//                ps = conn.prepareStatement(inText, Statement.RETURN_GENERATED_KEYS);
-//                ps.setBlob(3, inputStream);
-//            }else{
-//                inText = "INSERT INTO services (service_name, service_description) VALUES (?,?)";
-//                ps = conn.prepareStatement(inText, Statement.RETURN_GENERATED_KEYS);
-//            }
-            inText = "INSERT INTO services (service_name, service_description) VALUES (?,?)";
-            ps = conn.prepareStatement(inText, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, service_name);
-            ps.setString(2, service_description);
-            i = ps.executeUpdate();
-            
-            int id;
-            try(ResultSet generated_keys = ps.getGeneratedKeys()){
-                if(generated_keys.next()){
-                   id = generated_keys.getInt(1);
-                   if(filePart.getSize() != 0){
-                        String imagePath = context.getInitParameter("imgPath") + "service\\" + id + ".png";
-                        File file = new File(imagePath);
-                        
-                        FileOutputStream outFile = new FileOutputStream(file);
-                        inputStream = filePart.getInputStream();
-                        
-                        int read = 0;
-                        int bufferSize = 1024;
-                        byte[] buffer = new byte[bufferSize];
-                        while((read = inputStream.read(buffer)) != -1){
-                            outFile.write(buffer, 0, read);
+            if(!service_name.isEmpty() && !service_description.isEmpty()){
+                InputStream inputStream = null;
+                Part filePart = request.getPart("service_image");
+                if(filePart.getSize() != 0){
+                    inputStream = filePart.getInputStream();
+                }
+    //            if(filePart.getSize() != 0){
+    //                inText = "INSERT INTO services (service_name, service_description, service_image) VALUES (?,?,?)";
+    //                ps = conn.prepareStatement(inText, Statement.RETURN_GENERATED_KEYS);
+    //                ps.setBlob(3, inputStream);
+    //            }else{
+    //                inText = "INSERT INTO services (service_name, service_description) VALUES (?,?)";
+    //                ps = conn.prepareStatement(inText, Statement.RETURN_GENERATED_KEYS);
+    //            }
+                inText = "INSERT INTO services (service_name, service_description) VALUES (?,?)";
+                ps = conn.prepareStatement(inText, Statement.RETURN_GENERATED_KEYS);
+                ps.setString(1, service_name);
+                ps.setString(2, service_description);
+                i = ps.executeUpdate();
+
+                int id;
+                try(ResultSet generated_keys = ps.getGeneratedKeys()){
+                    if(generated_keys.next()){
+                       id = generated_keys.getInt(1);
+                       if(filePart.getSize() != 0){
+                            String imagePath = context.getInitParameter("imgPath") + "service\\" + id + ".png";
+                            File file = new File(imagePath);
+
+                            FileOutputStream outFile = new FileOutputStream(file);
+                            inputStream = filePart.getInputStream();
+
+                            int read = 0;
+                            int bufferSize = 1024;
+                            byte[] buffer = new byte[bufferSize];
+                            while((read = inputStream.read(buffer)) != -1){
+                                outFile.write(buffer, 0, read);
+                            }
+                            inputStream.close();
+                            outFile.close();
                         }
-                        inputStream.close();
-                        outFile.close();
                     }
                 }
-            }
-            if(i>0){
-                response.sendRedirect("profile");
             }else{
-                response.sendRedirect("addservice");
+                session.setAttribute("error_msg", "All fields are required.");
+                response.sendRedirect(request.getHeader("referer"));
+                return;
+            }
+            
+            if(i>0){
+                session.setAttribute("success_msg", "Service has been added.");
+                response.sendRedirect(request.getHeader("referer"));
+            }else{
+                session.setAttribute("error_msg", "Please review the fields");
+                response.sendRedirect(request.getHeader("referer"));
             }
         }catch(Exception e){
             e.printStackTrace();

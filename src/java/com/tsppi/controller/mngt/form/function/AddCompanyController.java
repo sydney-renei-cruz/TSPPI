@@ -89,16 +89,17 @@ public class AddCompanyController extends HttpServlet {
                     }
                 }
             }else{
-                session.setAttribute("add_error", "All fields are required");
+                session.setAttribute("error_msg", "All fields are required");
                 response.sendRedirect(request.getHeader("referer"));
                 return;
             }
             
             
             if(success>0){
-                response.sendRedirect("allcompany");
+                session.setAttribute("success_msg", "Company profile has been added");
+                response.sendRedirect(request.getHeader("referer"));
             }else{
-                session.setAttribute("add_error", "Please review the fields");
+                session.setAttribute("error_msg", "Please review the fields");
                 response.sendRedirect(request.getHeader("referer"));
             }
         }catch(Exception e){

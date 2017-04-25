@@ -45,7 +45,8 @@ $(document).ready(function(){
                    data: {
                        'email': function() { return $('#email').val();}
                    }
-               }
+               },
+               gmailOnly: true
             },
             mobile_number: {
                 minlength: 11,

@@ -90,9 +90,10 @@ public class EditProductCategoryController extends HttpServlet {
             }
             
             if(success > 0){
-                response.sendRedirect("allproductcategory");
+                session.setAttribute("success_msg", "Product category has been updated");
+                response.sendRedirect(request.getHeader("referer"));
             }else{
-                session.setAttribute("edit_error", "Please review the fields");
+                session.setAttribute("error_msg", "Please review the fields");
                 response.sendRedirect(request.getHeader("referer"));
             }
             

@@ -60,11 +60,20 @@
                                                     <label>Email </label>
                                                     <input type="email" name="email" id="email" class="form-control" placeholder="Ex. john.doe@gmail.com" >
                                                 </div>
-                                                <div class="form-group text-center">
-                                                    <div id="msg">${register_error}</div>
-                                                    <c:remove var="register_error" scope="session"/>
+                                                <div class="form-group">
+                                                    <label>Register Code </label>
+                                                    <input type="password" name="special_code" id="special_code" class="form-control" placeholder="Please enter the code given to you" >
                                                 </div>
-                                                <input type="hidden" name="account_type" id="account_type" class="form-control" value="admin">
+                                                <c:if test="${error_msg != '' || success_msg != ''}">
+                                                    <div class="form-group text-center">
+                                                        <div id="error-msg">${error_msg}</div>
+                                                        <c:remove var="error_msg" scope="session"/>
+                                                        <div id="success-msg">${success_msg}</div>
+                                                        <c:remove var="success_msg" scope="session"/>
+                                                    </div>
+                                                </c:if>
+                                                <c:set var="form_type" value="admin" scope="session"></c:set>
+                                                <!--<input type="hidden" name="account_type" id="account_type" class="form-control" value="admin">-->
                                             </form>
                                                 <div class="form-group">
                                                     <div class="row">

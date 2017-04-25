@@ -89,9 +89,10 @@ public class EditJobPositionController extends HttpServlet {
                 success = ps.executeUpdate();
             }
             if(success > 0){
-                response.sendRedirect("alljobposition");
+                session.setAttribute("success_msg", "Job Position has been updated");
+                response.sendRedirect(request.getHeader("referer"));
             }else{
-                session.setAttribute("edit_error", "Please review the fields");
+                session.setAttribute("error_msg", "Please review the fields");
                 response.sendRedirect(request.getHeader("referer"));
             }
             

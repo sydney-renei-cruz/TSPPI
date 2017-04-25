@@ -28,6 +28,9 @@
         <url-pattern>/adrp</url-pattern>
         <url-pattern>/login</url-pattern>
         <url-pattern>/requestcompany</url-pattern>
+        <url-pattern>/forgotpassword</url-pattern>
+        <url-pattern>/forgotpassword2</url-pattern>
+        <url-pattern>/forgotpassword3</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>WebAdminFilter</filter-name>
@@ -931,7 +934,7 @@
     <!--Image path-->
     <context-param>
         <param-name>imgPath</param-name>
-        <param-value>C:/Users/SAM/Documents/TSPPIpics/</param-value>
+        <param-value>C:\Users\Sydney Cruz\Documents\TSPPI ORAIS Folder\Image Upload\</param-value>
     </context-param>
     <!--Image path-->
     <!--error-->

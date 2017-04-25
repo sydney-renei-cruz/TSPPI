@@ -78,78 +78,93 @@ public class ForgotPasswordController extends HttpServlet {
                 ps.setString(2, username);
                 rs = ps.executeQuery();
                 if(rs.next()){
-                    String userName = "TSPPIauto@gmail.com";
-                    String password = "3$tarPaper!";
-                    String to = email;
-                    String from = "TSPPIauto@gmail.com";
-                    String subject = "***RESET PASSWORD***";
-                    String smtpServ = "smtp.gmail.com";
-                    //Salts for the hashing
-
-                    String hashedEmail = to;
-                    MessageDigest md = MessageDigest.getInstance("SHA-256");
-                    md.update(hashedEmail.getBytes());
-                    byte byteData[] = md.digest();
-                    StringBuffer sb = new StringBuffer();
-                    for(int i = 0; i < byteData.length; i++){
-                        sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+                    String account_num = rs.getString("account_num");
+                    boolean account_status = rs.getBoolean("account_status");
+                    context.log("account status: " + account_status);
+                    context.log("Account Num:" + account_num);
+                    context.log("Forgot Password: " + rs.getString("forgot"));
+                    if(account_status == false){
+                        session.setAttribute("error_msg", "Your account is deactivated, kindly contact the administrator.");
+                        response.sendRedirect(request.getHeader("referer"));
+                        return;
                     }
-                    hashedEmail = sb.toString();
-                    //End Hashing
-                    inText = "UPDATE account SET forgot = ? WHERE email = ?";
-                    ps = conn.prepareStatement(inText);
-                    ps.setString(1, hashedEmail);
-                    ps.setString(2, email);
-                    ps.executeUpdate();
+                    if(rs.getString("forgot") == null){
+                        String userName = "TSPPIauto@gmail.com";
+                        String password = "3$tarPaper!";
+                        String to = email;
+                        String from = "TSPPIauto@gmail.com";
+                        String subject = "***RESET PASSWORD***";
+                        String smtpServ = "smtp.gmail.com";
+                        //Salts for the hashing
 
-                    String message = "Please click on the following link to change your TSPPI account password:\n <a href='http://localhost:8084/main_tsppi/forgotpassword2?id=" + hashedEmail + "'>Change Password</a>";
-
-                    Properties props = System.getProperties();
-                    // -- Attaching to default Session, or we could start a new one --
-                    props.put("mail.transport.protocol", "smtp" );
-                    props.put("mail.smtp.starttls.enable","true" );
-                    props.put("mail.imap.ssl.enable", "true");
-                    props.put("mail.imap.sasl.enable", "true");
-                    props.put("mail.imap.auth.login.disable", "true");
-                    props.put("mail.imap.auth.plain.disable", "true");
-                    props.put("mail.imap.auth.mechanisms", "XOAUTH2");
-                    props.put("mail.smtp.host",smtpServ);
-                    props.put("mail.smtp.auth", "true" );
-                    props.put("mail.smtp.port", "587");
-                    Authenticator auth;
-                    auth = new Authenticator() {
-                        @Override
-                        public PasswordAuthentication getPasswordAuthentication() {
-                            return new PasswordAuthentication(userName, password);
+                        String hashedEmail = to;
+                        MessageDigest md = MessageDigest.getInstance("SHA-256");
+                        md.update(hashedEmail.getBytes());
+                        byte byteData[] = md.digest();
+                        StringBuffer sb = new StringBuffer();
+                        for(int i = 0; i < byteData.length; i++){
+                            sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
                         }
-                        };
-                    //  -- Set Body part --
-                    MimeBodyPart messageBodyPart = new MimeBodyPart();
-                    Session session2 = Session.getInstance(props, auth);
-                    Message msg = new MimeMessage(session2);
-                    // -- Set the FROM and TO fields --
-                    msg.setFrom(new InternetAddress(from));
-                    msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to, false));
-                    msg.setSubject(subject);
-                    messageBodyPart.setText(message, "UTF-8", "html");
-                    // -- Put Body part in message --
-                    MimeMultipart multipart = new MimeMultipart();
-                    multipart.addBodyPart(messageBodyPart);
-                    msg.setContent(multipart);
-                    // -- Set some other header information --
-                    msg.setHeader("MyMail", "Mr. XYZ" );
-                    msg.setSentDate(new Date());
-                    // -- Send the message --
-                    Transport.send(msg);
-                    response.sendRedirect("login");
+                        hashedEmail = sb.toString();
+                        //End Hashing
+                        inText = "UPDATE account SET forgot = ? WHERE account_num=?";
+                        ps = conn.prepareStatement(inText);
+                        ps.setString(1, hashedEmail);
+                        ps.setString(2, account_num);
+                        ps.executeUpdate();
+
+                        String message = "Please click on the following link to change your TSPPI account password:\n <a href='http://localhost:8084/main_tsppi/forgotpassword2?id=" + hashedEmail + "'>Change Password</a>";
+
+                        Properties props = System.getProperties();
+                        // -- Attaching to default Session, or we could start a new one --
+                        props.put("mail.transport.protocol", "smtp" );
+                        props.put("mail.smtp.starttls.enable","true" );
+                        props.put("mail.imap.ssl.enable", "true");
+                        props.put("mail.imap.sasl.enable", "true");
+                        props.put("mail.imap.auth.login.disable", "true");
+                        props.put("mail.imap.auth.plain.disable", "true");
+                        props.put("mail.imap.auth.mechanisms", "XOAUTH2");
+                        props.put("mail.smtp.host",smtpServ);
+                        props.put("mail.smtp.auth", "true" );
+                        props.put("mail.smtp.port", "587");
+                        Authenticator auth;
+                        auth = new Authenticator() {
+                            @Override
+                            public PasswordAuthentication getPasswordAuthentication() {
+                                return new PasswordAuthentication(userName, password);
+                            }
+                            };
+                        //  -- Set Body part --
+                        MimeBodyPart messageBodyPart = new MimeBodyPart();
+                        Session session2 = Session.getInstance(props, auth);
+                        Message msg = new MimeMessage(session2);
+                        // -- Set the FROM and TO fields --
+                        msg.setFrom(new InternetAddress(from));
+                        msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to, false));
+                        msg.setSubject(subject);
+                        messageBodyPart.setText(message, "UTF-8", "html");
+                        // -- Put Body part in message --
+                        MimeMultipart multipart = new MimeMultipart();
+                        multipart.addBodyPart(messageBodyPart);
+                        msg.setContent(multipart);
+                        // -- Set some other header information --
+                        msg.setHeader("MyMail", "Mr. XYZ" );
+                        msg.setSentDate(new Date());
+                        // -- Send the message --
+                        Transport.send(msg);
+                        response.sendRedirect("forgotpassword3");
+                        
+                    }else{
+                        session.setAttribute("error_msg", "You have an existing link, please use it.");
+                        response.sendRedirect(request.getHeader("referer"));
+                    }
                 }else{
-                    session.setAttribute("forgot_error", "Please review the fields");
+                    session.setAttribute("error_msg", "Incorrect Email or Username");
                     response.sendRedirect(request.getHeader("referer"));
-                    return;
                 }
                
             }else{
-                session.setAttribute("forgot_error", "All fields are required");
+                session.setAttribute("error_msg", "All fields are required");
                 response.sendRedirect(request.getHeader("referer"));
             }
         }catch(Exception e){

@@ -47,10 +47,14 @@
                                                     <label>Job Name </label>
                                                     <input type="text" name="job_type" id="job_type" class="form-control" placeholder="Job Name" value="${al.getJobType()}">
                                                 </div>	
-                                                <div class="form-group text-center">
-                                                    <div id="msg">${edit_error}</div>
-                                                    <c:remove var="edit_error" scope="session"/>
-                                                </div>
+                                                <c:if test="${error_msg != '' || success_msg != ''}">
+                                                    <div class="form-group text-center">
+                                                        <div id="error-msg">${error_msg}</div>
+                                                        <c:remove var="error_msg" scope="session"/>
+                                                        <div id="success-msg">${success_msg}</div>
+                                                        <c:remove var="success_msg" scope="session"/>
+                                                    </div>
+                                                </c:if>
                                                 <input type="hidden" name="job_id" value="${al.getJobID()}">
                                                 </form>
                                                 <div class="form-group">

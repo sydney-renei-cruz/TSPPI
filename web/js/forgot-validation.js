@@ -22,8 +22,9 @@ $(document).ready(function(){
             },
             email: {
                 required: true,
-                email: true
-            },
+                email: true,
+                gmailOnly: true
+            }
        },
        messages: {
            username:{

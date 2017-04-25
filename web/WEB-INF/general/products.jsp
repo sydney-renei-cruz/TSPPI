@@ -21,17 +21,26 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h1>PRODUCTS</h1>
+                    <c:choose>
+                        <c:when test="${pb.size() > 0}">
+                            <h1>PRODUCTS</h1>
+                        </c:when>
+                        <c:otherwise>
+                            <h1>No Products to be shown</h1>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
         </div>
     </header>
+    
     <!-- main content -->
     <section>
         <div class="container">
             <div class="well well-sm">
-                <strong>Sort: </strong>
+                
                 <form action="products" method="POST" id="product-filter">
+                    <strong>Category Filter: </strong>
                     <select class="sort-options" id="sort-options" name="sort-options" onchange="filterProducts()"">
                         <option value="All">All</option>
                         <c:forEach var="pc" items="${pc}">
@@ -40,6 +49,7 @@
                     </select>
                 </form>
             </div>
+            <c:if test="${pb.size() > 0}">
             <div id="products" class="row list-group">
                 <div id="columns">
                     <c:forEach var="pb" items="${pb}">
@@ -72,6 +82,7 @@
                     </c:forEach>
                 </div>
             </div>
+            </c:if>
         </div>
     </section>
     
@@ -272,6 +283,7 @@
     
     <script src="imports/shuffle.js" type="text/javascript"></script>
     <script src="js/shuffle-sort.js" type="text/javascript"></script>
+    
 </body>
 
 </html>

@@ -21,7 +21,7 @@
         <!-- Bootstrap css -->
 	<link href="imports/bootstrap.min.css" rel="stylesheet">
         <!-- Jquery plugin -->
-	<script src="imports/jquery-2.2.2.js"></script>
+	<script src="imports/jquery-2.2.4.js"></script>
 	<!-- Bootstrap plugin -->
 	<script src="imports/bootstrap.js"></script>
     </head>
@@ -118,17 +118,16 @@
                                                     <a class="test" tabindex="-1" href="#">Product <span class="caret"></span></a>
                                                     <ul class="dropdown-menu">
                                                         <li><a href="addproduct" class="text-center">Add Product</a></li>
-                                                        <li><a href="approveproducts" class="text-center">Edit Product</a></li>
-                                                        <li><a href="approveproducts" class="text-center">Approve Products</a></li>
+                                                        <li><a href="approveproducts" class="text-center">All Products</a></li>
                                                         <li><a href="addproductcategory" class="text-center">Add Product Category</a></li>
-                                                        <li><a href="allproductcategory" class="text-center">Edit Product Category</a></li>
+                                                        <li><a href="allproductcategory" class="text-center">All Product Categories</a></li>
                                                     </ul>
                                                 </li>
                                                 <li class="dropdown-submenu text-center">
                                                     <a class="test" tabindex="-1" href="#">Service <span class="caret"></span></a>
                                                     <ul class="dropdown-menu">
                                                         <li><a href="addservice" class="text-center">Add Service</a></li>
-                                                        <li><a href="allservices" class="text-center">Edit Service</a></li>
+                                                        <li><a href="allservices" class="text-center">All Services</a></li>
                                                     </ul>
                                                 </li>
                                             </ul>
@@ -142,14 +141,14 @@
                                                     <a class="test" tabindex="-1" href="#">Payment Method <span class="caret"></span></a>
                                                     <ul class="dropdown-menu">
                                                         <li><a href="addpaymentmethod" class="text-center">Add Payment Method</a></li>
-                                                        <li><a href="allpaymentmethod" class="text-center">Edit Payment Method</a></li>
+                                                        <li><a href="allpaymentmethod" class="text-center">All Payment Methods</a></li>
                                                     </ul>
                                                 </li>
                                                 <li class="dropdown-submenu text-center">
                                                     <a class="test" tabindex="-1" href="#">Client Company<span class="caret"></span></a>
                                                     <ul class="dropdown-menu">
                                                         <li><a href="addcompany" class="text-center">Add Client Company</a></li>
-                                                        <li><a href="allcompany" class="text-center">Edit Client Company</a></li>
+                                                        <li><a href="allcompany" class="text-center">All Client Companies</a></li>
                                                     </ul>
                                                 </li>
                                                 <li class="dropdown-submenu text-center">

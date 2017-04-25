@@ -89,11 +89,16 @@
                                                     <input type="file" accept="image/*" name="account_image" id="account_image" class="form-control">
                                                     <span id="image_size_error" style="color: #FF0000"></span>
                                                 </div>-->
-                                                <div class="form-group text-center">
-                                                    <div id="msg">${register_error}</div>
-                                                    <c:remove var="register_error" scope="session"/>
-                                                </div>
-                                                <input type="hidden" name="account_type" id="account_type" class="form-control" value="client">
+                                                <c:if test="${error_msg != '' || success_msg != ''}">
+                                                    <div class="form-group text-center">
+                                                        <div id="error-msg">${error_msg}</div>
+                                                        <c:remove var="error_msg" scope="session"/>
+                                                        <div id="success-msg">${success_msg}</div>
+                                                        <c:remove var="success_msg" scope="session"/>
+                                                    </div>
+                                                </c:if>
+                                                <c:set var="form_type" value="client" scope="session"></c:set>
+                                                <!--<input type="hidden" name="account_type" id="account_type" class="form-control" value="client">-->
                                             </form>    
                                             <div class="form-group">
                                                 <div class="row">
@@ -121,6 +126,7 @@
             </div>
 	</section>
         <script src="imports/jquery.validate.js" type="text/javascript"></script>
+        <script src="imports/additional-methods.js" type="text/javascript"></script>
         <script src="js/reg-form-validation.js" type="text/javascript"></script>
         
         <!--Alert Box Modal-->

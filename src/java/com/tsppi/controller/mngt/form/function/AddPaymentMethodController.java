@@ -88,13 +88,15 @@ public class AddPaymentMethodController extends HttpServlet {
                 ps.setBoolean(2, show_category);
                 success = ps.executeUpdate();
             }else{
-                session.setAttribute("add_error", "All fields are required");
+                session.setAttribute("error_msg", "All fields are required");
                 response.sendRedirect(request.getHeader("referer"));
+                return;
             }
             if(success>0){
-                response.sendRedirect("allpaymentmethod");
+                session.setAttribute("success_msg", "Payment method has been added.");
+                response.sendRedirect(request.getHeader("referer"));
             }else{
-                session.setAttribute("add_error", "Please review the fields");
+                session.setAttribute("error_msg", "Please review the fields");
                 response.sendRedirect(request.getHeader("referer"));
             }
         }catch(Exception e){

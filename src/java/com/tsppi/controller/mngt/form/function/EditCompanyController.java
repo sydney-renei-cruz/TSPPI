@@ -115,9 +115,10 @@ public class EditCompanyController extends HttpServlet {
                 success = ps.executeUpdate();
             }
             if(success > 0){
-                response.sendRedirect("allcompany");
+                session.setAttribute("success_msg", "Company profile has been updated.");
+                response.sendRedirect(request.getHeader("referer"));
             }else{
-                session.setAttribute("edit_error", "Please review the fields");
+                session.setAttribute("error_msg", "Please review the fields");
                 response.sendRedirect(request.getHeader("referer"));
             }
             

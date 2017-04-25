@@ -111,7 +111,11 @@ public class RegisterController extends HttpServlet {
             String mobile = request.getParameter("mobile_number");
             String telephone = request.getParameter("telephone_number");
             String address = request.getParameter("address");
-            String account_type = request.getParameter("account_type");
+            String account_type = (String)session.getAttribute("form_type");
+            
+            String special_code = request.getParameter("special_code");
+            context.log("Special_code: " + special_code);
+//            String account_type = request.getParameter("account_type");
             String job_id = request.getParameter("job_id");
             String company_name = request.getParameter("company_name");
             String company_branch = request.getParameter("company_branch");
@@ -122,6 +126,13 @@ public class RegisterController extends HttpServlet {
             Boolean account_status = true;
             int last_id = 0;
             
+            if(account_type.equals("admin")){
+                if(!special_code.equals("BiYEqXq9MPj0TsW3")){
+                    session.setAttribute("error_msg", "Code is incorrect");
+                    response.sendRedirect(request.getHeader("referer"));
+                    return;
+                }
+            }
             int success = 0;
             ArrayList<AccountBean> al = new ArrayList<>();
             AccountBean ab = new AccountBean();
@@ -129,11 +140,11 @@ public class RegisterController extends HttpServlet {
                 inText = "SELECT a.email FROM account a "
                     + "JOIN employee e ON e.account_num = a.account_num "
                     + "JOIN job_position j ON j.job_id = e.job_id "
-                    + "WHERE j.management_score = 1";
+                    + "WHERE j.management_score = 1 AND a.account_status = 1";
                 ps = conn.prepareStatement(inText);
                 rs = ps.executeQuery();
                 if(!rs.next()){
-                    session.setAttribute("register_error", "You can't register as of this moment, we are trying to fix some issues.");
+                    session.setAttribute("error_msg", "You can't register as of this moment, we are trying to fix some issues.");
                     response.sendRedirect(request.getHeader("referer"));
                     return;
                 }
@@ -163,8 +174,8 @@ public class RegisterController extends HttpServlet {
                     ab.setCountry(rs.getString("country"));
                     al.add(ab);
                 }else{
-                    session.setAttribute("register_error", "All fields are required");
-                    response.sendRedirect("register");
+                    session.setAttribute("error_msg", "All fields are required");
+                    response.sendRedirect(request.getHeader("referer"));
                     return;
                 }
             }
@@ -218,8 +229,8 @@ public class RegisterController extends HttpServlet {
                 }
                 context.log("Last ID Inserted: " + last_id);
             }else{
-                session.setAttribute("register_error", "All fields are required");
-                response.sendRedirect("register");
+                session.setAttribute("error_msg", "All fields are required");
+                response.sendRedirect(request.getHeader("referer"));
                 return;
             }
             //image upload with blob
@@ -385,7 +396,7 @@ public class RegisterController extends HttpServlet {
                     inText = "SELECT a.email FROM account a "
                         + "JOIN employee e ON e.account_num = a.account_num "
                         + "JOIN job_position j ON j.job_id = e.job_id "
-                        + "WHERE j.management_score = 1";
+                        + "WHERE j.management_score = 1 and a.account_status = 1";
                     ps = conn.prepareStatement(inText);
                     rs = ps.executeQuery();
                     ArrayList<AccountBean> al2 = new ArrayList<>();
@@ -436,10 +447,12 @@ public class RegisterController extends HttpServlet {
                 }
             }
             if(success == 0){
-                session.setAttribute("register_error", "Please review the fields");
+                session.setAttribute("error_msg", "Please review the fields");
                 response.sendRedirect(request.getHeader("referer"));
             }else{
-                response.sendRedirect("login");
+                session.removeAttribute("form_type");
+                session.setAttribute("success_msg", "Account has been created");
+                response.sendRedirect(request.getHeader("referer"));
             }
             
             

@@ -65,7 +65,7 @@ public class CancelInvoiceController extends HttpServlet {
             
             int invoice_id = Integer.parseInt(request.getParameter("invoice_id"));
 //            int invoice_id = 1;
-            String invoice_status = "Cancelled";
+            String invoice_status = "Canceled";
             
             inText = "UPDATE invoice SET invoice_status = ? WHERE invoice_id = ?";
             ps = conn.prepareStatement(inText);

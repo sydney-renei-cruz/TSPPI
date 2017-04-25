@@ -90,6 +90,11 @@ public class CartController extends HttpServlet {
                     if(!quantity.isEmpty()){
                         if(stock >= Integer.parseInt(quantity)){
                             updateCart(request);
+                            session.setAttribute("success_msg", "Item has been updated");
+                        }else{
+                            session.setAttribute("error_msg", "Quantity should not exceed stock.");
+                            response.sendRedirect(request.getHeader("referer"));
+                            return;
                         }
                     }
                 }else if(action.equals("x")){ //delete

@@ -128,9 +128,10 @@ public class EditServiceController extends HttpServlet {
                 outFile.close();
             }
             if(success > 0){
-                response.sendRedirect("allservices");
+                session.setAttribute("success_msg", "Service has been updated");
+                response.sendRedirect(request.getHeader("referer"));
             }else{
-                session.setAttribute("add_error", "Please review the fields");
+                session.setAttribute("error_msg", "Please review the fields");
                 response.sendRedirect(request.getHeader("referer"));
             }
             

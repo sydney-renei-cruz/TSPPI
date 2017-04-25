@@ -38,7 +38,7 @@ public class ImageRetrieve extends HttpServlet {
         ServletContext context = request.getSession().getServletContext();
         
         response.setContentType("image/png");
-        String imagePath = context.getInitParameter("imgPath") + "placement\\car-placeholder.png";
+        String imagePath = context.getInitParameter("imgPath") + "placement\\no-image.png";
         
         if(request.getParameter("an") != null){
             imagePath = context.getInitParameter("imgPath") + "account\\" + request.getParameter("an") + ".png";
@@ -54,9 +54,9 @@ public class ImageRetrieve extends HttpServlet {
             bi = ImageIO.read(file);
         }catch(javax.imageio.IIOException e){
             if(request.getParameter("an") != null){
-                file = new File(context.getInitParameter("imgPath") + "placement\\person-placeholder.jpg");
+                file = new File(context.getInitParameter("imgPath") + "placement\\no-profile.png");
             }else{
-                file = new File(context.getInitParameter("imgPath") + "placement\\car-placeholder.png");
+                file = new File(context.getInitParameter("imgPath") + "placement\\no-image.png");
             }
             
             bi = ImageIO.read(file);

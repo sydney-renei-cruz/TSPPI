@@ -127,11 +127,11 @@ public class ChangePasswordController extends HttpServlet {
                         ps.setString(2, auth_account);
                         success = ps.executeUpdate();
                         if(success > 0){
-                            context.log("done!");
-                            response.sendRedirect("profile");
+                            session.setAttribute("success_msg", "Password has been updated");
+                            response.sendRedirect(request.getHeader("referer"));
                             return;
                         }else{
-                            session.setAttribute("change_error", "Please review the fields");
+                            session.setAttribute("error_msg", "Please review the fields");
                             response.sendRedirect(request.getHeader("referer"));
                             return;
                         }
@@ -139,7 +139,7 @@ public class ChangePasswordController extends HttpServlet {
                 }
                 
                 if(!rs.previous()){
-                    session.setAttribute("change_error", "Incorrect current password");
+                    session.setAttribute("error_msg", "Incorrect current password");
                     response.sendRedirect(request.getHeader("referer"));
                 }
                 
@@ -156,7 +156,7 @@ public class ChangePasswordController extends HttpServlet {
 //                            
 //                        }else{
 //                            context.log("Password not equal to confirm password");
-//                            session.setAttribute("change_error", "Password does not match");
+//                            session.setAttribute("error_msg", "Password does not match");
 //                            response.sendRedirect(request.getHeader("referer"));
 //                            return;
 //                        }
@@ -171,7 +171,7 @@ public class ChangePasswordController extends HttpServlet {
 //                    }
 //                }
             }else{
-                session.setAttribute("change_error", "Please fill up each field");
+                session.setAttribute("error_msg", "Please fill up each field");
                 response.sendRedirect(request.getHeader("referer"));
             }
             

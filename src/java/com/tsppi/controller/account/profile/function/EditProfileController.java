@@ -1,6 +1,6 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
+ * To error_msg this license header, choose License Headers in Project Properties.
+ * To error_msg this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package com.tsppi.controller.account.profile.function;
@@ -104,7 +104,7 @@ public class EditProfileController extends HttpServlet {
                 ps.setString(2, currentUsername);
                 success = ps.executeUpdate();
                 if(success == 0){
-                    session.setAttribute("change", "Please review fields");
+                    session.setAttribute("error_msg", "Please review the fields");
                     response.sendRedirect(request.getHeader("referer"));
                     return;
                 }
@@ -116,7 +116,7 @@ public class EditProfileController extends HttpServlet {
                 ps.setString(2, currentUsername);
                 success = ps.executeUpdate();
                 if(success == 0){
-                    session.setAttribute("change", "Please review fields");
+                    session.setAttribute("error_msg", "Please review the fields");
                     response.sendRedirect(request.getHeader("referer"));
                     return;
                 }
@@ -128,7 +128,7 @@ public class EditProfileController extends HttpServlet {
                 ps.setString(2, currentUsername);
                 success = ps.executeUpdate();
                 if(success == 0){
-                    session.setAttribute("change", "Please review fields");
+                    session.setAttribute("error_msg", "Please review the fields");
                     response.sendRedirect(request.getHeader("referer"));
                     return;
                 }
@@ -138,7 +138,6 @@ public class EditProfileController extends HttpServlet {
 //                ps.setBlob(1, inputStream);
 //                ps.setString(2, currentUsername);
 //                ps.executeUpdate();
-                
                 String imagePath = context.getInitParameter("imgPath") + "account\\" + currentUsername + ".png";
                 File file = new File(imagePath);
 
@@ -162,7 +161,7 @@ public class EditProfileController extends HttpServlet {
                     success = ps.executeUpdate();
                 }
                 if(success == 0){
-                    session.setAttribute("change", "Please review fields");
+                    session.setAttribute("error_msg", "Please review the fields");
                     response.sendRedirect(request.getHeader("referer"));
                     return;
                 }
@@ -176,13 +175,13 @@ public class EditProfileController extends HttpServlet {
                 success = ps.executeUpdate();
                 session.setAttribute("user", username);
                 if(success == 0){
-                    session.setAttribute("change", "Please review fields");
+                    session.setAttribute("error_msg", "Please review the fields");
                     response.sendRedirect(request.getHeader("referer"));
                     return;
                 }
             }
-            response.sendRedirect("profile");
-        
+            session.setAttribute("success_msg", "Profile has been updated");
+            response.sendRedirect(request.getHeader("referer"));
             
         }catch(Exception e){
             e.printStackTrace();

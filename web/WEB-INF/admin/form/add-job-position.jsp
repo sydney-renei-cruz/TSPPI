@@ -58,10 +58,14 @@
                                                     <input type="radio" name="inventory_score" class="inventory_score" class="form-control" value="0"> No
                                                     <br><label for="sales_score" class="my-error-class"></label>
                                                 </div>
-                                                <div class="form-group text-center">
-                                                    <div id="msg">${add_error}</div>
-                                                    <c:remove var="add_error" scope="session"/>
-                                                </div>
+                                                <c:if test="${error_msg != '' || success_msg != ''}">
+                                                    <div class="form-group text-center">
+                                                        <div id="error-msg">${error_msg}</div>
+                                                        <c:remove var="error_msg" scope="session"/>
+                                                        <div id="success-msg">${success_msg}</div>
+                                                        <c:remove var="success_msg" scope="session"/>
+                                                    </div>
+                                                </c:if>
                                                 </form>
                                                 <div class="form-group">
                                                     <div class="row">

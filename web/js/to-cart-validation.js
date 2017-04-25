@@ -50,7 +50,7 @@ function countdown( elementName, minutes, seconds )
 
 $(document).ready(function(){
     $.validator.addMethod("max_stock", function(value, element){
-        var $stock = $('.cart-element').find('input[name="item_stock"]').val();
+        var $stock = $('.cart-element').find('input[name="item_stock"]').val() + 1;
         return this.optional(element) || ($stock > parseInt(value));
     }, "Quantity should not exceed stock on hand");
    $(".cart-form").each(function(){

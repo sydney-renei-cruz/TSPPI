@@ -46,10 +46,14 @@
                                                     <label>Payment Method Name </label>
                                                     <input type="text" name="payment_method" id="payment_method" class="form-control" placeholder="Payment Method Name" value="${al.getPaymentMethod()}">
                                                 </div>	
-                                                <div class="form-group text-center">
-                                                    <div id="msg">${edit_error}</div>
-                                                    <c:remove var="edit_error" scope="session"/>
-                                                </div>
+                                                <c:if test="${error_msg != '' || success_msg != ''}">
+                                                    <div class="form-group text-center">
+                                                        <div id="error-msg">${error_msg}</div>
+                                                        <c:remove var="error_msg" scope="session"/>
+                                                        <div id="success-msg">${success_msg}</div>
+                                                        <c:remove var="success_msg" scope="session"/>
+                                                    </div>
+                                                </c:if>
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-sm-6 col-sm-offset-3"> 

@@ -16,10 +16,25 @@
                 <div class="row">
                     <div class="col-lg-12 text-center">
                         <c:if test="${management_score == true}">
-                        <h1>All Client Accounts</h1>
+                            <c:choose>
+                                <c:when test="${cb.size() > 0}">
+                                    <h1>All Client Accounts</h1>
+                                </c:when>
+                                <c:otherwise>
+                                    <h1>No Client Accounts To Be Shown</h1>
+                                </c:otherwise>
+                            </c:choose>
+                        
                         </c:if>
                         <c:if test="${account_type == 'admin'}">
-                        <h1>All Accounts</h1>
+                            <c:choose>
+                                <c:when test="${eb.size() > 0 || cb.size() > 0}">
+                                    <h1>All Accounts</h1>
+                                </c:when>
+                                <c:otherwise>
+                                    <h1>No Accounts To Be Shown</h1>
+                                </c:otherwise>
+                            </c:choose>
                         </c:if>
                     </div>
                 </div>
@@ -29,46 +44,49 @@
             <div class="container">
               <div class="row">
                 <div class="col-md-10 col-md-offset-1">
-                    <c:if test="${account_type == 'admin'}">
-                        <div class="col-lg-12">
-                          <h3 class="description">Employee</h3>
-                          <div class="table text-center">
-                              <table class="table employee-table">
-                                  <thead>
-                                      <tr>
-                                        <th class="text-center">Username</th>
-                                        <th class="text-center">Full name</th>
-                                        <th class="text-center">Role</th>
-                                        <th class="text-center">Email</th>
-                                        <th class="text-center">Email</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                      <c:forEach var="eb" items="${eb}">
+                    <c:if test="${eb.size() > 0}">
+                        <c:if test="${account_type == 'admin'}">
+                            <div class="col-lg-12">
+                              <h3 class="description">Employee</h3>
+                              <div class="table text-center">
+                                  <table class="table employee-table">
+                                      <thead>
                                           <tr>
-                                              <td>${eb.getUsername()}</td>
-                                              <td>${eb.getFullName()}</td>
-                                              <td>${eb.getJobType()}</td>
-                                              <td>${eb.getEmail()}</td>
-                                              <td>
-                                                  <form action="controlstatus" method="POST">
-                                                    <input type="hidden" name="account_num" id="account_num" value="${eb.getAccountNum()}">
-                                                    <input type="hidden" name="account_status" id="account_status" value="${eb.getAccountStatus()}">
-                                                    <c:if test="${eb.getAccountStatus()}">
-                                                        <input type="submit" name="submit" id="deactivate" value="Deactivate Account" class="btn btn-danger" data-toggle="modal" data-target="#mssgBox">
-                                                    </c:if>
-                                                    <c:if test="${!eb.getAccountStatus()}">                                                     
-                                                        <input type="submit" name="submit" id="activate" value="Activate Account" class="btn btn-primary" data-toggle="modal" data-target="#mssgBox">
-                                                    </c:if>
-                                                </form>
-                                              </td>
-                                          </tr>
-                                      </c:forEach>
-                                  </tbody>
-                              </table>
-                          </div>
-                        </div>
+                                            <th class="text-center">Username</th>
+                                            <th class="text-center">Full name</th>
+                                            <th class="text-center">Role</th>
+                                            <th class="text-center">Email</th>
+                                            <th class="text-center"></th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                          <c:forEach var="eb" items="${eb}">
+                                              <tr>
+                                                  <td>${eb.getUsername()}</td>
+                                                  <td>${eb.getFullName()}</td>
+                                                  <td>${eb.getJobType()}</td>
+                                                  <td>${eb.getEmail()}</td>
+                                                  <td>
+                                                      <form action="controlstatus" method="POST">
+                                                        <input type="hidden" name="account_num" id="account_num" value="${eb.getAccountNum()}">
+                                                        <input type="hidden" name="account_status" id="account_status" value="${eb.getAccountStatus()}">
+                                                        <c:if test="${eb.getAccountStatus()}">
+                                                            <input type="submit" name="submit" id="deactivate" value="Deactivate Account" class="btn btn-danger" data-toggle="modal" data-target="#mssgBox">
+                                                        </c:if>
+                                                        <c:if test="${!eb.getAccountStatus()}">                                                     
+                                                            <input type="submit" name="submit" id="activate" value="Activate Account" class="btn btn-primary" data-toggle="modal" data-target="#mssgBox">
+                                                        </c:if>
+                                                    </form>
+                                                  </td>
+                                              </tr>
+                                          </c:forEach>
+                                      </tbody>
+                                  </table>
+                              </div>
+                            </div>
+                        </c:if>
                     </c:if>
+                    <c:if test="${cb.size() > 0}">
                   <div class="col-lg-12">
                     <h3 class="description">Client</h3>
                     <div class="table text-center">
@@ -84,7 +102,9 @@
                                         <th class="text-center">Company</th>
                                         <th class="text-center">Company Telephone</th>
                                         <th class="text-center">Company Mailing Address</th>
+                                        <c:if test="${account_type == 'admin' || management_score == true}">
                                         <th></th>
+                                        </c:if>
                                     </tr>
                                   </thead>
                                   <tbody>
@@ -99,6 +119,7 @@
                                               <td>${cb.getFullCompany()}</td>
                                               <td>${cb.getCompanyTelephone()}</td>
                                               <td>${cb.getCompanyAddress()}</td>
+                                            <c:if test="${account_type == 'admin' || management_score == true}">
                                             <td>
                                                 <form action="controlstatus" method="POST">
                                                   <input type="hidden" name="account_num" id="account_num" value="${cb.getAccountNum()}">
@@ -114,6 +135,7 @@
                                                   
                                               </form>
                                             </td>
+                                            </c:if>
                                           </tr>
                                       </c:forEach>
                                   </tbody>
@@ -123,6 +145,7 @@
                     <div class="col-lg-12 text-center" id="all-acc">
                         <a href="profile">Go back to profile.</a>
                     </div>
+                  </c:if>
                 </div>
               </div>
             </div>
@@ -142,11 +165,43 @@
         <script type="text/javascript" charset="utf8" src="imports/datatables.js"></script>
         <script>
         $(function(){
-          $(".employee-table").dataTable();
-        });
-        $(function(){
-          $(".client-table").dataTable();
+          $(".employee-table").dataTable({
+                "columnDefs": [
+                    {"orderable": false, "targets": 4}
+                ]
+            });
         });
         </script>
+        <c:choose>
+            <c:when test="${account_type == 'admin'}">
+                <script>
+                    $(function(){
+                        $(".client-table").dataTable({
+                              "columnDefs": [
+                                  {"orderable": false, "targets": 7}
+                              ]
+                          });
+                      });
+                </script>
+            </c:when>
+            <c:when test="${management_score == true}">
+                <script>
+                    $(function(){
+                        $(".client-table").dataTable({
+                              "columnDefs": [
+                                  {"orderable": false, "targets": 6}
+                              ]
+                          });
+                      });
+                </script>
+            </c:when>
+            <c:otherwise>
+                <script>
+                    $(function(){
+                        $(".client-table").dataTable();
+                      });
+                </script>
+            </c:otherwise>
+        </c:choose>
     </body>
 </html>

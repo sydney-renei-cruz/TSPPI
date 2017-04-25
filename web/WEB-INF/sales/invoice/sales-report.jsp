@@ -58,7 +58,6 @@
                                                                     ${al.getFullName()}
                                                                     <input type="hidden" class="client-info" value="${al.getClientID()}">
                                                                 </button>
-                                                                
                                                             </td>
                                                         </c:if>
                                                         <td>
@@ -69,18 +68,7 @@
                                                         </td>
                                                         <td>${al.getPaymentMethod()}</td>
                                                         <td>${al.getTotalAmount()}</td>
-                                                        <td>${al.getInvoiceDate()}</td>
-                                                        <c:if test="${account_type == 'client'}">
-                                                            <c:if test="${al.getInvoiceStatus() == 'Pending' || al.getInvoiceStatus() == 'Approved'}">
-                                                            <td>
-                                                                <form action="cancelinvoice" method="POST">
-                                                                    <input type="hidden" name="invoice_id" value="${al.getInvoiceID()}">
-                                                                    <input type="submit" name="submit" class="cancel-button form-control btn btn-link" value="Cancel Invoice">
-                                                                </form>
-                                                            </td>
-                                                            </c:if>
-                                                        </c:if>
-                                                        
+                                                        <td>${al.getInvoiceDate()}</td>                                                        
                                                     </tr>
                                                 </c:forEach>
                                             </tbody>
@@ -102,39 +90,6 @@
                     </div>
                 </div>
         </section>
-        <div id="confirmmodal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title"></h4>
-                    </div>
-                    <div class="modal-body">
-                        <table class="table">
-                            <tbody id="show-confirmation">
-                                <td>
-                                    <form action="approveinvoice" class="confirm-form" method="POST">
-                                        <div class="invoice_details"></div>
-                                        <input type="hidden" name="action" value="yes">
-                                        <input type="submit" name="submit" class="form-control btn btn-link" value="Approve">
-                                    </form>
-                                </td>
-                                <td>
-                                    <form action="approveinvoice" class="confirm-form" method="POST">
-                                        <div class="invoice_details"></div>
-                                        <input type="hidden" name="action" value="no">
-                                        <input type="submit" name="submit" class="form-control btn btn-link" value="Reject">
-                                    </form>
-                                </td>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div id="itemmodal" class="modal fade" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -255,7 +210,12 @@
   <script type="text/javascript" charset="utf8" src="imports/datatables.js"></script>
   <script>
   $(function(){
-    $(".invoice-table").dataTable();
+    $(".invoice-table").dataTable({
+        "columnDefs": [
+            {"orderable": false, "targets": 2}
+        ]
+    });
+    $.noConflict();
   });
   </script>
     </body>

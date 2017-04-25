@@ -11,7 +11,8 @@ $(document).ready(function(){
           last_name: "required",
           email: {
               required: true,
-              email: true
+              email: true,
+              gmailOnly: true
           },
           company_name: "required",
           company_branch: {

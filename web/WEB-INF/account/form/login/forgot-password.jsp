@@ -42,10 +42,12 @@
                                                 <div class="form-group">
                                                     <input type="email" name="email" id="email" class="form-control" placeholder="Email Address">
                                                 </div>
-                                                <div class="form-group text-center">
-                                                    <div id="msg">${forgot_error}</div>
-                                                    <c:remove var="forgot_error" scope="session"/>
-                                                </div>
+                                                <c:if test="${error_msg != '' || success_msg != ''}">
+                                                    <div class="form-group text-center">
+                                                        <div id="error-msg">${error_msg}</div>
+                                                        <c:remove var="error_msg" scope="session"/>
+                                                    </div>
+                                                </c:if>
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-sm-6 col-sm-offset-3"> 

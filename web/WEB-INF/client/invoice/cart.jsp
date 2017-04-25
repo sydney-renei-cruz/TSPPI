@@ -10,6 +10,7 @@
     <head>
         <link href="css/form.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" type="text/css" href="imports/tooltipster.bundle.min.css" />
+        <link href="css/form-error-validation.css" rel="stylesheet" type="text/css">
     </head>
     <body>
         <%@include file="/WEB-INF/source/navigation/navbar.jsp" %>
@@ -88,6 +89,21 @@
                                                 <h3><strong>₱${cart.getOrderTotal()}</strong></h3>
                                             </td>
                                         </tr>
+                                        <c:if test="${error_msg != '' || success_msg != ''}"> 
+                                            <tr>
+                                                <td>   </td>
+                                                <td>   </td>
+                                                <td>   </td>
+                                                <td>   </td>
+                                                <td>   </td>
+                                                <td class="text-right">
+                                                    <div id="error-msg">${error_msg}</div>
+                                                    <c:remove var="error_msg" scope="session"/>
+                                                    <div id="success-msg">${success_msg}</div>
+                                                    <c:remove var="success_msg" scope="session"/>
+                                                </td>
+                                            </tr>
+                                        </c:if>
                                         <tr>
                                             <td>   </td>
                                             <td>   </td>

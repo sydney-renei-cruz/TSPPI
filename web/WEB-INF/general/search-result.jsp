@@ -21,27 +21,11 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-lg-12 text-center">
-                                <h1>Search Results</h1>
+                                <h1>No Results Found</h1>
                             </div>
                         </div>
                     </div>
-                </header>
-                <section>
-                    <div class="container">
-                        <div id="srch-error" class="row text-center">
-                            <h1>
-                                Oops!
-                            </h1>
-                            <h2 class="">
-                                No results found
-                            </h2>
-                            <h5 class="">
-                                Try searching again.
-                            </h5>
-                        </div>
-                    </div>
-                </section>
-                 
+                </header>                 
             </c:when>
             <c:otherwise>
                 <header id="header">

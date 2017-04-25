@@ -48,10 +48,14 @@
                                                     <label>Confirm New Password </label>
                                                     <input type="password" name="confirm_password" id="confirm_password" class="form-control" placeholder="Confirm New Password">
                                                 </div>
-                                                <div class="form-group text-center">
-                                                    <div id="msg">${change_error}</div>
-                                                    <c:remove var="change_error" scope="session"/>
-                                                </div>
+                                                <c:if test="${error_msg != '' || success_msg != ''}">
+                                                    <div class="form-group text-center">
+                                                        <div id="error-msg">${error_msg}</div>
+                                                        <c:remove var="error_msg" scope="session"/>
+                                                        <div id="success-msg">${success_msg}</div>
+                                                        <c:remove var="success_msg" scope="session"/>
+                                                    </div>
+                                                </c:if>
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-sm-6 col-sm-offset-3"> 

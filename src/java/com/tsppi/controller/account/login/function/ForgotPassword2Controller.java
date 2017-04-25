@@ -96,20 +96,19 @@ public class ForgotPassword2Controller extends HttpServlet {
                     // -- Remove session values --
                     session.invalidate();
                 }else{
-                    session.setAttribute("forgot_error", "Password does not match with confirm password");
+                    session.setAttribute("error_msg", "Password does not match with confirm password");
                     response.sendRedirect(request.getHeader("referer"));
                     return;
                 }
                 if(success > 0){
                     response.sendRedirect("login");
                 }else{
-                    session.setAttribute("forgot_error", "Please review the fields");
+                    session.setAttribute("error_msg", "Please review the fields");
                     response.sendRedirect(request.getHeader("referer"));
-                    return;
                 }
                 
             }else{
-                session.setAttribute("forgot_error", "All fields are required");
+                session.setAttribute("error_msg", "All fields are required");
                 response.sendRedirect(request.getHeader("referer"));
             }
             

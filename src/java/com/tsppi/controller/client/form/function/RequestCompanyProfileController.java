@@ -63,6 +63,17 @@ public class RequestCompanyProfileController extends HttpServlet {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
             
+            inText = "SELECT a.email FROM account a "
+                    + "JOIN employee e ON e.account_num = a.account_num "
+                    + "JOIN job_position j ON j.job_id = e.job_id "
+                    + "WHERE j.management_score = 1 AND a.account_status=1";
+            ps = conn.prepareStatement(inText);
+            rs = ps.executeQuery();
+            if(!rs.next()){
+                session1.setAttribute("error_msg", "You can't request as of this moment, we are trying to fix some issues.");
+                response.sendRedirect(request.getHeader("referer"));
+                return;
+            }
             String first_name = request.getParameter("first_name");
             String last_name = request.getParameter("last_name");
             String email = request.getParameter("email");
@@ -117,7 +128,7 @@ public class RequestCompanyProfileController extends HttpServlet {
                 inText = "SELECT a.email FROM account a "
                         + "JOIN employee e ON e.account_num = a.account_num "
                         + "JOIN job_position j ON j.job_id = e.job_id "
-                        + "WHERE j.sales_score = 1";
+                        + "WHERE j.management_score = 1 AND a.account_status = 1";
                 ps = conn.prepareStatement(inText);
                 rs = ps.executeQuery();
                 ArrayList<AccountBean> al2 = new ArrayList<>();
@@ -173,11 +184,11 @@ public class RequestCompanyProfileController extends HttpServlet {
                   msg.setSentDate(new Date());
                   // -- Send the message --
                   Transport.send(msg);
-                  response.sendRedirect("login");
-            }else{
-                session1.setAttribute("add_error", "All fields are required");
+                  session1.setAttribute("success_msg", "Request has been sent.");
                 response.sendRedirect(request.getHeader("referer"));
-                return;
+            }else{
+                session1.setAttribute("error_msg", "All fields are required");
+                response.sendRedirect(request.getHeader("referer"));
             }
         }catch(Exception e){
             e.printStackTrace();
