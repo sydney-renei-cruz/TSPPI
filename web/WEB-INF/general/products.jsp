@@ -52,8 +52,8 @@
                 <form action="products" method="POST" id="product-sort">
                     <strong>Sort By: </strong>
                     <select class="sort-options" id="sort-options" name="sort-options" onchange="sortProducts()"">
-                        <option value="ID">ID</option>
                         <option value="Name">Name</option>
+                        <option value="Price">Price</option>
                         <option value="Category">Category</option>
                     </select>
                 </form>

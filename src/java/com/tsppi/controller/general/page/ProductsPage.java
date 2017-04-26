@@ -71,11 +71,11 @@ public class ProductsPage extends HttpServlet {
                         }
                     }
                 }
-                if(sort_val.equals("ID")){
+                if(sort_val.equals("Price")){
                     inText = "SELECT p.*, c.category_name "
                         + "FROM product p "
                         + "JOIN product_category c ON c.category_id = p.category_id "
-                        + "ORDER BY p.product_id";
+                        + "ORDER BY p.msrp";
                 }else if(sort_val.equals("Name")){
                     inText = "SELECT p.*, c.category_name "
                         + "FROM product p "
@@ -101,11 +101,11 @@ public class ProductsPage extends HttpServlet {
                         }
                     }
                 }
-                if(sort_val.equals("ID")){
+                if(sort_val.equals("Price")){
                     inText = "SELECT p.*, c.category_name "
                             + "FROM product p "
                             + "JOIN product_category c ON c.category_id = p.category_id WHERE category_name=? "
-                            + "ORDER BY p.product_id";
+                            + "ORDER BY p.msrp";
                     ps = conn.prepareStatement(inText);
                         ps.setString(1, category);
                 }else if(sort_val.equals("Name")){
