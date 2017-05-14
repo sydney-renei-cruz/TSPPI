@@ -241,10 +241,6 @@
         <servlet-class>com.tsppi.controller.account.login.function.ForgotPasswordController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ForgotPassword2Controller</servlet-name>
-        <servlet-class>com.tsppi.controller.account.login.function.ForgotPassword2Controller</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>EditProfileController</servlet-name>
         <servlet-class>com.tsppi.controller.account.profile.function.EditProfileController</servlet-class>
     </servlet>
@@ -516,6 +512,14 @@
         <servlet-name>SalesReportPage</servlet-name>
         <servlet-class>com.tsppi.controller.sales.invoice.SalesReportPage</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ResetPasswordPage</servlet-name>
+        <servlet-class>com.tsppi.controller.account.login.page.ResetPasswordPage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ResetPasswordController</servlet-name>
+        <servlet-class>com.tsppi.controller.account.login.function.ResetPasswordController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.htm</url-pattern>
@@ -632,10 +636,6 @@
     <servlet-mapping>
         <servlet-name>ForgotPasswordController</servlet-name>
         <url-pattern>/forgotpasswordcontroller</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ForgotPassword2Controller</servlet-name>
-        <url-pattern>/forgotpassword2controller</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>EditProfileController</servlet-name>
@@ -909,6 +909,14 @@
         <servlet-name>SalesReportPage</servlet-name>
         <url-pattern>/salesreport</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ResetPasswordPage</servlet-name>
+        <url-pattern>/resetpassword</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ResetPasswordController</servlet-name>
+        <url-pattern>/resetpasswordcontroller</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
@@ -934,7 +942,7 @@
     <!--Image path-->
     <context-param>
         <param-name>imgPath</param-name>
-        <param-value>C:\Users\SAM\Documents\TSPPIpics\</param-value>
+        <param-value>C:\Users\Sydney Cruz\Documents\TSPPI ORAIS Folder\Image Upload\</param-value>
     </context-param>
     <!--Image path-->
     <!--error-->

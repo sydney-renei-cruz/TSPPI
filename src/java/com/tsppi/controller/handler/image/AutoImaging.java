@@ -63,7 +63,7 @@ class ImageStore implements Runnable{
             
             stmt = conn.createStatement();
             
-            String inText = "SELECT account_num, account_image FROM account";
+            String inText = "SELECT account_num FROM account";
             if(stmt.execute(inText))
                 rs = stmt.getResultSet();
             
@@ -90,7 +90,7 @@ class ImageStore implements Runnable{
             stmt.close();
             conn.close();
             
-            inText = "SELECT product_id, product_image FROM product";
+            inText = "SELECT product_id FROM product";
             if(stmt.execute(inText))
                 rs = stmt.getResultSet();
             
@@ -117,7 +117,7 @@ class ImageStore implements Runnable{
             stmt.close();
             conn.close();
             
-            inText = "SELECT service_id, service_image FROM product";
+            inText = "SELECT service_id FROM product";
             if(stmt.execute(inText))
                 rs = stmt.getResultSet();
             

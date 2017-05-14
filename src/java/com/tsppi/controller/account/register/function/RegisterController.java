@@ -31,7 +31,9 @@ import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -317,12 +319,29 @@ public class RegisterController extends HttpServlet {
                 for(AccountBean acb : al)
                     full_name = acb.getFullName();
                 
+                //Start Hashing
+                String hashedUser = username;
+                MessageDigest ne = MessageDigest.getInstance("SHA-256");
+                md.update(hashedUser.getBytes());
+                byte byteInfo[] = ne.digest();
+                StringBuffer tc = new StringBuffer();
+                for(int i = 0; i < byteInfo.length; i++){
+                    tc.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+                }
+                hashedUser = tc.toString();
+                //End Hashing
+                inText = "UPDATE account SET temporary = ? WHERE username=?";
+                        ps = conn.prepareStatement(inText);
+                        ps.setString(1, hashedUser);
+                        ps.setString(2, username);
+                        ps.executeUpdate();
+                
                 message = "Hi, \n\n"
                     + "This is to inform you that you can now access the system. \n"
-                    + "Below are your accound credentials: \n\n"
-                    + "Username: " + username + "\n"
-                    + "Temporary Password: " + old_password + "\n\n"
-                    + "We advice you to update your profile immidiately to avoid any possible problems. \n\n"
+                    + "However, you need to set up your password first. \n\n"
+                    + "Click on the following link to do so: \n"
+                    + "<a href='http://localhost:8084/main_tsppi/resetpassword?id=" + hashedUser + "'>Setup Password</a>\n\n"
+                    + "We advice you to do this as soon as possible. \n\n"
                     + "Regards, \n"
                     + full_name;
                 String to_employee = email;
@@ -344,19 +363,24 @@ public class RegisterController extends HttpServlet {
                       return new PasswordAuthentication(mail_username, mail_password);
                   }
                 };
-                session1 = Session.getInstance(props, auth);
-                // -- Create a new message --
-                msg = new MimeMessage(session1);
+                //  -- Set Body part -- MimeBodyPart is necessary if you want to put links in emails
+                MimeBodyPart messageBodyPart = new MimeBodyPart();
+                Session session2 = Session.getInstance(props, auth);
+                Message msgg = new MimeMessage(session2);
                 // -- Set the FROM and TO fields --
-                msg.setFrom(new InternetAddress(from));
-                msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to_employee, true));
-                msg.setSubject(subject);
-                msg.setText(message);
+                msgg.setFrom(new InternetAddress(from));
+                msgg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to_employee, true));
+                msgg.setSubject(subject);
+                messageBodyPart.setText(message, "UTF-8", "html");
+                // -- Put Body part in message --
+                MimeMultipart multipart = new MimeMultipart();
+                multipart.addBodyPart(messageBodyPart);
+                msgg.setContent(multipart);
                 // -- Set some other header information --
-                msg.setHeader("MyMail", "Mr. XYZ" );
-                msg.setSentDate(new Date());
+                msgg.setHeader("MyMail", "Mr. XYZ" );
+                msgg.setSentDate(new Date());
                 // -- Send the message --
-                Transport.send(msg);
+                Transport.send(msgg);
             }else{
                 if(!mobile.isEmpty() || !telephone.isEmpty() || !address.isEmpty()){
                     account_status = false;

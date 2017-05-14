@@ -3,16 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.tsppi.controller.account.login.page;
+package com.tsppi.controller.account.login.function;
 
 import com.tsppi.controller.account.register.function.RegisterController;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.MessageDigest;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletContext;
@@ -24,9 +26,9 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Jasteen
+ * @author Sydney Cruz
  */
-public class ForgotPasswordPage2 extends HttpServlet {
+public class ResetPasswordController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -47,28 +49,84 @@ public class ForgotPasswordPage2 extends HttpServlet {
         Connection conn = null;
         PreparedStatement ps = null;
         String inText = "";
+        int success = 0;
         ResultSet rs = null;
-        String hashedEmail = "";
-        
         try{
-            hashedEmail = request.getParameter("id");
             
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(context.getInitParameter("dbURL"),context.getInitParameter("user"),context.getInitParameter("password"));
             
-            // -- Forgot Password--
-            inText = "SELECT * FROM account WHERE forgot = ?";
-            ps = conn.prepareStatement(inText);
-            ps.setString(1, hashedEmail);
-            rs = ps.executeQuery();
+            String id = request.getParameter("id");
+            String password = request.getParameter("password");
+            String confirm_password = request.getParameter("confirm_password");
+            context.log("forgot: " + id);
+            context.log("password: " + password);
+            //Salts for the hashing
+            if(!password.isEmpty() && !confirm_password.isEmpty()){
+                if(password.equals(confirm_password)){
+                    String[] salts = new String[10];
+                    salts[0] = "7LsDFJ9oHjDnfUr12";
+                    salts[1] = "K8oMilIOi0ji43amS";
+                    salts[2] = "AFIOUVAJNONVASJja";
+                    salts[3] = "nVaWIdsj19Aij63df";
+                    salts[4] = "uahRksD47kljnJN9k";
+                    salts[5] = "dMna7sY01jfIoaPlY";
+                    salts[6] = "Wg480ioAjEdsf31Ka";
+                    salts[7] = "gMutRHj70ubQnjB67";
+                    salts[8] = "gnQiaOhfXquh82z74";
+                    salts[9] = "mKvqn7834wHjk1kLa";
+                    Random rand = new Random();
+                    password = password + salts[rand.nextInt(10)];
+                    //End Salting
+                    MessageDigest md = MessageDigest.getInstance("SHA-256");
+                    md.update(password.getBytes());
+                    byte byteData[] = md.digest();
+                    StringBuffer sb = new StringBuffer();
+
+                    for(int i = 0; i < byteData.length; i++){
+                        sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+                    }
+                    // -- Did they forget? --
+                    password = sb.toString();
+                    inText = "SELECT * FROM account WHERE forgot = ?";
+                    ps = conn.prepareStatement(inText);
+                    ps.setString(1, id);
+                    rs = ps.executeQuery();
+                    
+                    if(rs.next()){
+                    inText = "UPDATE account SET password = ?, forgot = NULL WHERE forgot = ?";
+                    ps = conn.prepareStatement(inText);
+                    ps.setString(1, password);
+                    ps.setString(2, id);
+                    success = ps.executeUpdate();
+                    }
+                    else{
+                    inText = "UPDATE account SET password = ?, temporary = NULL WHERE temporary = ?";
+                    ps = conn.prepareStatement(inText);
+                    ps.setString(1, password);
+                    ps.setString(2, id);
+                    success = ps.executeUpdate();
+                    }
+
+                    // -- Remove session values --
+                    session.invalidate();
+                }else{
+                    session.setAttribute("error_msg", "Password does not match with confirm password");
+                    response.sendRedirect(request.getHeader("referer"));
+                    return;
+                }
+                if(success > 0){
+                    response.sendRedirect("login");
+                }else{
+                    session.setAttribute("error_msg", "Please review the fields");
+                    response.sendRedirect(request.getHeader("referer"));
+                }
+                
+            }else{
+                session.setAttribute("error_msg", "All fields are required");
+                response.sendRedirect(request.getHeader("referer"));
+            }
             
-            if(rs.next() && !hashedEmail.isEmpty()){
-                request.setAttribute("id", hashedEmail);
-                request.getRequestDispatcher("/WEB-INF/account/form/login/forgot-password2.jsp").forward(request, response);
-            }
-            else{
-                request.getRequestDispatcher("/WEB-INF/error/reset-password-page-error.jsp").forward(request, response);
-            }
         }catch(Exception e){
             e.printStackTrace();
             context.log("Exception: " + e);
@@ -85,13 +143,6 @@ public class ForgotPasswordPage2 extends HttpServlet {
             if(ps != null){
                 try {
                     ps.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if(rs != null){
-                try {
-                    rs.close();
                 } catch (SQLException ex) {
                     Logger.getLogger(RegisterController.class.getName()).log(Level.SEVERE, null, ex);
                 }

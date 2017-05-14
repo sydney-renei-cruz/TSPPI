@@ -74,7 +74,6 @@
                                                 </c:if>
                                                 <c:set var="form_type" value="admin" scope="session"></c:set>
                                                 <!--<input type="hidden" name="account_type" id="account_type" class="form-control" value="admin">-->
-                                            </form>
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-sm-6 col-sm-offset-3">
@@ -82,6 +81,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </form>
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col-lg-12">

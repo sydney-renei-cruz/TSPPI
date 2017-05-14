@@ -1,7 +1,7 @@
 <%-- 
-    Document   : forgot-password2
-    Created on : Nov 16, 2016, 9:46:50 PM
-    Author     : Jasteen
+    Document   : employee-change-password
+    Created on : 05 14, 17, 6:20:43 PM
+    Author     : Sydney Cruz
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -79,23 +79,5 @@
         <script src="imports/jquery.validate.js" type="text/javascript"></script>
         <script src="imports/additional-methods.js" type="text/javascript"></script>
         <script src="js/forgot-validation.js" type="text/javascript"></script>
-        <!--Alert Box Modal-->
-        <div id="mssgBox" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <br>
-                        <h4 class="modal-title"></h4>
-                    </div>
-                    <div class="modal-body">
-                        Password Reset Successful!
-                    </div>
-                    <div class="modal-footer">
-                        <br>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--Alert Box Modal-->
     </body>
 </html>
