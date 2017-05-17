@@ -112,6 +112,7 @@
                 regSuccess();
             });
         </script>
+        <script src="imports/loader-js.js" type="text/javascript"></script>
         <script src="imports/jquery.validate.js" type="text/javascript"></script>
         <script src="imports/additional-methods.js" type="text/javascript"></script>
         <script src="js/reg-form-validation.js" type="text/javascript"></script>

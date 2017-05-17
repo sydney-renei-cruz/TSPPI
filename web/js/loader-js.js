@@ -92,7 +92,6 @@ function prodCat(){
 
 function removeProd(){
     var mssgStatus=getCookie("mssgStatus");
-    alert(mssgStatus);
     
     if (mssgStatus == "false"){
         $("#mssg-body").text("Product removed from for-sale list.");

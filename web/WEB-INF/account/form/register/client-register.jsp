@@ -99,14 +99,15 @@
                                                 </c:if>
                                                 <c:set var="form_type" value="client" scope="session"></c:set>
                                                 <!--<input type="hidden" name="account_type" id="account_type" class="form-control" value="client">-->
-                                            </form>    
-                                            <div class="form-group">
+                                                <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-sm-6 col-sm-offset-3">
                                                         <input type="submit" name="submit" id="register-submit" class="form-control btn btn-register" value="Request Now">
                                                     </div>
                                                 </div>
                                             </div>
+                                            </form>    
+                                            
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-lg-12">
@@ -125,6 +126,12 @@
                 </div>
             </div>
 	</section>
+        <script type="text/javascript">
+            $(window).on('load',function(){
+                regSuccess();
+            });
+        </script>
+        <script src="imports/loader-js.js" type="text/javascript"></script>
         <script src="imports/jquery.validate.js" type="text/javascript"></script>
         <script src="imports/additional-methods.js" type="text/javascript"></script>
         <script src="js/reg-form-validation.js" type="text/javascript"></script>

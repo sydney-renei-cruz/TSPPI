@@ -113,7 +113,7 @@ public class ForgotPasswordController extends HttpServlet {
                         ps.setString(2, account_num);
                         ps.executeUpdate();
 
-                        String message = "Please click on the following link to change your TSPPI account password:\n <a href='http://localhost:8084/main_tsppi/forgotpassword2?id=" + hashedEmail + "'>Change Password</a>";
+                        String message = "Please click on the following link to change your TSPPI account password:\n <a href='http://localhost:8080/main_tsppi/forgotpassword2?id=" + hashedEmail + "'>Change Password</a>";
 
                         Properties props = System.getProperties();
                         // -- Attaching to default Session, or we could start a new one --
