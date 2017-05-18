@@ -57,3 +57,6 @@ h4.description{color: #337ab7;}
 }
 
 .appr-product{width: 100%;}
+#show-info div legend{font-size: 2em;}
+#show-info div strong{font-size: 1.4em;}
+#show-info div{padding-bottom: 20px;}

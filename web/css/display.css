@@ -69,3 +69,6 @@ div#columns:hover figure:not(:hover) {
 }
 
 #srch-error{color:#fff;}
+#show-products div legend, #show-services div legend{font-size: 2em;}
+#show-products div strong, #show-services div strong{font-size: 1.4em;}
+#show-products div, #show-services div{padding-bottom: 20px;}

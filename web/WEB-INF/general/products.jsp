@@ -103,19 +103,8 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title"></h4>
                 </div>
-                <div class="modal-body">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Product Category</th>
-                                <th>Stock</th>
-                                <th>Price</th>
-                                <th>Product Details</th>
-                            </tr>
-                        </thead>
-                        <tbody id="show-products">
-                        </tbody>
-                    </table>
+                <div class="modal-body text-center">
+                    <div id="show-products"></div>
                     <c:if test="${account_type == 'client'}">
                         
                         <div class="row text-center">
@@ -198,7 +187,6 @@
             $(document).ready(function(){
                 $('.vib').click(function(){
                     $('#show-products').empty();
-                    $('.modal-title').empty();
                     $('.cart-element').empty();
                     $('.edit-element').empty();
                     
@@ -211,15 +199,13 @@
                             var $editData = "";
                             
                             for(var i=0; i<json.length; i++){
-                                $spanData = $('<span/>');
-                                $spanData.append(json[i].product_name);
-                                $('.modal-title').append($spanData);
                                 
-                                $tableData = $('<tr/>');
-                                $tableData.append('<td>' + json[i].category_name + '</td>');
-                                $tableData.append('<td>' + json[i].stock + '</td>');
-                                $tableData.append('<td>' + json[i].msrp + '</td>');
-                                $tableData.append('<td>' + json[i].product_detail + '</td>');
+                                $tableData = $('<div/>');
+                                $tableData.append('<div class="col-md-8 col-md-offset-2"><legend>' + json[i].product_name + '</legend></div>');
+                                $tableData.append('<div class="col-md-12"><strong>' + json[i].product_detail + '</strong><br>Product Description</div>');
+                                $tableData.append('<div class="col-md-6"><strong>' + json[i].category_name + '</strong><br>Product Category</div>');
+                                $tableData.append('<div class="col-md-6"><strong>' + json[i].stock + '</strong><br>Stock</div>');
+                                $tableData.append('<div class="col-md-6 col-md-offset-3"><strong>₱' + json[i].msrp + '</strong><br>Price</div>');
                                 $('#show-products').append($tableData);
                                 
                                 $cartData = $('<span/>');

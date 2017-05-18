@@ -337,7 +337,8 @@ public class RegisterController extends HttpServlet {
                         ps.executeUpdate();
                 
                 message = "Hi, \n\n"
-                    + "This is to inform you that you can now access the system. \n"
+                    + "This is to inform you that you can now access the system. "
+                    + "Username: \n" + username + "\n\n"
                     + "However, you need to set up your password first. \n\n"
                     + "Click on the following link to do so: \n"
                     + "<a href='http://localhost:8084/main_tsppi/resetpassword?id=" + hashedUser + "'>Setup Password</a>\n\n"

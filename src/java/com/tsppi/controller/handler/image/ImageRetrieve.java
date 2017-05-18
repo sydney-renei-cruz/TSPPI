@@ -36,7 +36,7 @@ public class ImageRetrieve extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         ServletContext context = request.getSession().getServletContext();
-        
+        context.log("Real Path: " + context.getRealPath("/img_lib") + "\\placement\\no-image.png");
         response.setContentType("image/png");
         String imagePath = context.getInitParameter("imgPath") + "placement\\no-image.png";
         

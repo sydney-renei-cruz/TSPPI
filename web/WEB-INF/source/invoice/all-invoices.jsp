@@ -179,22 +179,10 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Client Information</h4>
+                        <h4 class="modal-title"></h4>
                     </div>
-                    <div class="modal-body">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Full Name</th>
-                                    <th>Email</th>
-                                    <th>Mobile</th>
-                                    <th>Company Name - Branch</th>
-                                    <th>Mailing Address</th>
-                                </tr>
-                            </thead>
-                            <tbody id="showinfo">
-                            </tbody>
-                        </table>
+                    <div class="modal-body text-center">
+                        <div id="show-info" class="row"></div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
@@ -205,22 +193,22 @@
         <script type="text/javascript">
             $(document).ready(function(){
                 $('.cli').click(function(){
-                    $('#showinfo').empty();
+                    $('#show-info').empty();
                     var $client_id = $(this).find('.client-info').val();
                     $.getJSON('clientinfomodal', {client_id: $client_id})
                         .done(function(json){
                             var $tableData = "";
                             for(var i=0; i<json.length; i++){
-                                $tableData = $('<tr/>');
-                                $tableData.append('<td>' + json[i].first_name + " " + json[i].last_name + '</td>');
-                                $tableData.append('<td>' + json[i].email + '</td>');
-                                $tableData.append('<td>' + json[i].mobile + '</td>');
-                                $tableData.append('<td>' + json[i].company_name + "-" + json[i].company_branch + '</td>');
-                                $tableData.append('<td>' 
+                                $tableData = $('<div/>');
+                                $tableData.append('<div class="col-md-8 col-md-offset-2"><legend>' + json[i].first_name + " " + json[i].last_name + '</legend></div>');
+                                $tableData.append('<div class="col-md-6 col-md-offset-3"><strong>' + json[i].company_name + "-" + json[i].company_branch + '</strong><br>Company Name</div>');
+                                $tableData.append('<div class="col-md-6"><strong>' + json[i].email + '</strong><br>Email Address</div>');
+                                $tableData.append('<div class="col-md-6"><strong>' + json[i].mobile + '</strong><br>Email Address</div>');
+                                $tableData.append('<div class="col-md-12"><strong>' 
                                         + json[i].street_line1 + " " + json[i].street_line2 + json[i].city +
                                          " " + json[i].spr + " " + json[i].postal_code + " " + json[i].country + 
-                                        '</td>');
-                                $('#showinfo').append($tableData);
+                                        '</strong><br>Mailing Address</div>');
+                                $('#show-info').append($tableData);
                             }
                         });
                     $('#clientmodal').modal('show');

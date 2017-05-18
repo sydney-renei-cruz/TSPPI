@@ -42,6 +42,7 @@
                               <table class="table approval-table">
                                   <thead>
                                       <tr>
+                                        <th>Status</th>
                                         <th></th>
                                         <th class="text-center">Product Name</th>
                                         <th class="text-center">Category</th>
@@ -55,6 +56,10 @@
                                   <tbody>
                                       <c:forEach var="pb" items="${pb}">
                                           <tr class="content">
+                                                <td>
+                                                    <c:if test="${pb.getForSale()}">Visible</c:if>
+                                                    <c:if test="${!pb.getForSale()}">Hidden</c:if>
+                                                </td>
                                                 <td><img src="img?pi=${pb.getProductID()}" alt="" class="img-responsive appr-product"></td>
                                                 <td>${pb.getProductName()}</td>
                                                 <td>${pb.getCategoryName()}</td>
@@ -100,9 +105,9 @@
             $(function(){
               $(".approval-table").dataTable({
                     "columnDefs": [
-                        {"orderable": false, "targets": 0},
-                        {"orderable": false, "targets": 6},
-                        {"orderable": false, "targets": 7}
+                        {"orderable": false, "targets": 1},
+                        {"orderable": false, "targets": 7},
+                        {"orderable": false, "targets": 8}
                     ]
                 });
             });

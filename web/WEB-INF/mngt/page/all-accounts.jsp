@@ -61,6 +61,7 @@
                                   <table class="table employee-table">
                                       <thead>
                                           <tr>
+                                            <th class="text-center">Account Status</th>
                                             <th class="text-center">Username</th>
                                             <th class="text-center">Full name</th>
                                             <th class="text-center">Role</th>
@@ -71,6 +72,14 @@
                                       <tbody>
                                           <c:forEach var="eb" items="${eb}">
                                               <tr>
+                                                  <td>
+                                                      <c:if test="${eb.getAccountStatus()}">
+                                                          Activated
+                                                      </c:if>
+                                                      <c:if test="${!eb.getAccountStatus()}">
+                                                          Deactivated
+                                                      </c:if>
+                                                  </td>
                                                   <td>${eb.getUsername()}</td>
                                                   <td>${eb.getFullName()}</td>
                                                   <td>${eb.getJobType()}</td>
@@ -102,6 +111,7 @@
                               <table class="table client-table">
                                   <thead>
                                       <tr>
+                                        <th class="text-center">Account Status</th>
                                         <c:if test="${account_type == 'admin'}">
                                         <th class="text-center">Username</th>
                                         </c:if>
@@ -119,6 +129,14 @@
                                   <tbody>
                                       <c:forEach var="cb" items="${cb}">
                                           <tr>
+                                              <td>
+                                                    <c:if test="${cb.getAccountStatus()}">
+                                                        Activated
+                                                    </c:if>
+                                                    <c:if test="${!cb.getAccountStatus()}">
+                                                        Deactivated
+                                                    </c:if>
+                                              </td>
                                               <c:if test="${account_type == 'admin'}">
                                               <td>${cb.getUsername()}</td>
                                               </c:if>

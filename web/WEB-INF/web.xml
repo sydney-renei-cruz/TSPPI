@@ -942,7 +942,7 @@
     <!--Image path-->
     <context-param>
         <param-name>imgPath</param-name>
-        <param-value>C:\Users\Sydney Cruz\Documents\TSPPI ORAIS Folder\Image Upload\</param-value>
+        <param-value>C:\Users\Sydney Cruz\Documents\NetBeansProjects\old_tsppi\img_lib\</param-value>
     </context-param>
     <!--Image path-->
     <!--error-->

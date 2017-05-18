@@ -67,16 +67,8 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title"></h4>
                 </div>
-                <div class="modal-body">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Service Description</th>
-                            </tr>
-                        </thead>
-                        <tbody id="show-services">
-                        </tbody>
-                    </table>
+                <div class="modal-body text-center">
+                    <div id="show-services"></div>
                     <c:if test="${account_type == 'client'}">
                         <form action="serviceinquiry" method="GET">
                             <div class="inquiry-element"></div>
@@ -130,12 +122,10 @@
                             var $editData = "";
                             var $inquiryData = "";
                             for(var i=0; i<json.length; i++){
-                                $spanData = $('<span/>');
-                                $spanData.append(json[i].name);
-                                $('.modal-title').append($spanData);
                                 
-                                $tableData = $('<tr/>');
-                                $tableData.append('<td>' + json[i].description + '</td>');
+                                $tableData = $('<div/>');
+                                $tableData.append('<div class="col-md-8 col-md-offset-2"><legend>' + json[i].name + '</legend></div>');
+                                $tableData.append('<div class="col-md-12"><strong>' + json[i].description + '</strong><br>Service Description</div>');
                                 $('#show-services').append($tableData);
                                 
                                 $editData = $('<span/>');

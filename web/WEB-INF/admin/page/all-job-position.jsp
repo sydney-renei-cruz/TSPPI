@@ -41,6 +41,7 @@
                             <table class="table position-table">
                                 <thead>
                                     <tr>
+                                      <th class="text-center">Status</th>
                                       <th class="text-center">Job Position</th>
                                       <th></th>
                                       <th></th>
@@ -52,6 +53,16 @@
                                 <tbody>
                                       <c:forEach var="al" items="${al}">
                                       <tr>
+                                          <td>
+                                              <c:choose>
+                                                  <c:when test="${al.getShowJob() == true}">
+                                                        Visible
+                                                  </c:when>
+                                                  <c:otherwise>
+                                                        Hidden
+                                                  </c:otherwise>
+                                              </c:choose>
+                                          </td>
                                           <td>${al.getJobType()}</td>
                                           <td>
                                               <form action="editjobposition" method="GET">

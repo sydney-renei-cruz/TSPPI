@@ -41,12 +41,21 @@
                                 <table class="table method-table">
                                     <thead>
                                         <tr>
+                                          <th class="text-center">Status</th>
                                           <th class="text-center">Payment Method</th>
                                       </tr>
                                     </thead>
                                     <tbody>
                                           <c:forEach var="al" items="${al}">
                                           <tr>
+                                              <td>
+                                                  <c:if test="${al.getShowMethod() == false}">
+                                                      Hidden
+                                                  </c:if>
+                                                  <c:if test="${al.getShowMethod() == true}">
+                                                      Visible
+                                                  </c:if>
+                                              </td>
                                               <td>${al.getPaymentMethod()}</td>
                                               <td>
                                                   <form action="editpaymentmethod" method="GET">
