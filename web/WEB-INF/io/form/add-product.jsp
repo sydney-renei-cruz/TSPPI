@@ -54,11 +54,11 @@
                                                     <form id="service-product-form" action="addproductcontroller" method="post" autocomplete="off" enctype="multipart/form-data" onSubmit="return fileSize();">
                                                         <div class="form-group">
                                                             <label>Product Name </label>
-                                                            <input type="text" name="product_name" id="product_name" class="form-control" placeholder="Product Name">
+                                                            <input type="text" name="product_name" id="product_name" class="form-control" placeholder="Ex. White Folder">
                                                         </div>                       
                                                         <div class="form-group">
                                                             <label>Price </label>
-                                                            <input type="number" name="msrp" id="msrp" class="form-control" placeholder="MSRP">
+                                                            <input type="number" name="msrp" id="msrp" class="form-control" placeholder="Ex. 100.23">
                                                         </div>
                                                         <div class="form-group">
                                                             <label>Product Stock </label>

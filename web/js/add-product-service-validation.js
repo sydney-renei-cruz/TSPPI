@@ -101,6 +101,10 @@ $(document).ready(function(){
                required: "Please select an image for you profile",
                extension: "Only image type jpeg, gif, jpg, or png is accepted"
            }
-      }
+      },
+      submitHandler: function(form){
+           $('input[type="submit"]').attr("disabled", true);
+           form.submit();
+       }
    }); 
 });

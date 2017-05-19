@@ -55,6 +55,10 @@ $(document).ready(function(){
           city: "Please enter City",
           postal_code: "Please enter ZIP/postal_code",
           country: "Please enter country"
-      }
+      },
+      submitHandler: function(form){
+           $('input[type="submit"]').attr("disabled", true);
+           form.submit();
+       }
    }); 
 });

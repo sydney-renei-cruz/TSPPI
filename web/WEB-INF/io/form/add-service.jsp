@@ -39,7 +39,7 @@
                                             <form id="service-product-form" action="addservicecontroller" method="post" autocomplete="off" enctype="multipart/form-data" onSubmit="return fileSize();">
                                                 <div class="form-group">
                                                     <label>Service Name </label>
-                                                    <input type="text" name="service_name" id="service_name" class="form-control" placeholder="Service Name">
+                                                    <input type="text" name="service_name" id="service_name" class="form-control" placeholder="Ex. Slitting">
                                                 </div>	
                                                 <div class="form-group">
                                                     <label>Description of the Service </label>

@@ -153,6 +153,10 @@ $(document).ready(function(){
                remote: "The Company is not yet registered in the system. To register the company, click <a href='requestcompany'>here</a>."
            },
            special_code: "Please enter the code sent to you"
+       },
+      submitHandler: function(form){
+           $('input[type="submit"]').attr("disabled", true);
+           form.submit();
        }
    });
 });

@@ -48,7 +48,7 @@
                                                 <form id="register-form" action="registercontroller" method="post" autocomplete="off" enctype="multipart/form-data">
                                                     <div class="form-group">
                                                         <label>Username </label>
-                                                        <input type="text" name="username" id="username" class="form-control" placeholder="Username" required>
+                                                        <input type="text" name="username" id="username" class="form-control" placeholder="Ex. MyUsername01" required>
                                                     </div>
                                                     <div class="form-group">
                                                         <label>Password </label>
@@ -60,15 +60,15 @@
                                                     </div> 
                                                     <div class="form-group">
                                                         <label>First Name </label>
-                                                        <input type="text" name="first_name" id="first_name" class="form-control" placeholder="First Name" required>
+                                                        <input type="text" name="first_name" id="first_name" class="form-control" placeholder="Ex. John" required>
                                                     </div>
                                                     <div class="form-group">
                                                         <label>Last Name </label>
-                                                        <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Last Name" required>
+                                                        <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Ex. Doe" required>
                                                     </div>
                                                     <div class="form-group">
                                                         <label>Email </label>
-                                                        <input type="email" name="email" id="email" class="form-control" placeholder="Email Address" required>
+                                                        <input type="email" name="email" id="email" class="form-control" placeholder="Ex. john.doe@gmail.com" required>
                                                     </div>
                                                     <div class="form-group text-center">
                                                         <label>Job Position: </label>

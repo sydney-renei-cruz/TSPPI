@@ -81,6 +81,10 @@ $(document).ready(function(){
            account_image: {
                extension: "Only image type jpeg, gif, jpg, or png is accepted"
            }
+       },
+      submitHandler: function(form){
+           $('input[type="submit"]').attr("disabled", true);
+           form.submit();
        }
    }); 
    

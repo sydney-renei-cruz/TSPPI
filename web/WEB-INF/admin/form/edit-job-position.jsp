@@ -46,7 +46,7 @@
                                                 <c:set var="job_id" value="${al.getJobID()}" scope="session"/>   
                                                 <div class="form-group">
                                                     <label>Job Name </label>
-                                                    <input type="text" name="job_type" id="job_type" class="form-control" placeholder="Job Name" value="${al.getJobType()}">
+                                                    <input type="text" name="job_type" id="job_type" class="form-control" placeholder="Ex. Vice President" value="${al.getJobType()}">
                                                 </div>	
                                                 <c:if test="${error_msg != '' || success_msg != ''}">
                                                     <div class="form-group text-center">

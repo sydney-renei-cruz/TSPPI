@@ -39,7 +39,7 @@
                                             <form id="service-product-form" action="addproductcategorycontroller" method="post" autocomplete="off">
                                                 <div class="form-group">
                                                     <label>Product Category Name </label>
-                                                    <input type="text" name="category_name" id="category_name" class="form-control" placeholder="Product Category Name">
+                                                    <input type="text" name="category_name" id="category_name" class="form-control" placeholder="Ex. Folder">
                                                 </div>
                                                 <c:if test="${error_msg != '' || success_msg != ''}">
                                                     <div class="form-group text-center">

@@ -47,7 +47,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Company Telephone Number</label>
-                                                    <input type="text" name="company_telephone" id="company_telephone" class="form-control" placeholder="Telephone Number">
+                                                    <input type="text" name="company_telephone" id="company_telephone" class="form-control" placeholder="Ex. 02**********">
                                                 </div>
                                                 <h4>Company Address</h4>
                                                 <div class="form-group">
@@ -56,7 +56,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Street line 2</label>
-                                                    <input type="text" name="street_line2" id="street_line2" class="form-control" placeholder="Apartment, suite, unit, building, floor, etc.">
+                                                    <input type="text" name="street_line2" id="street_line2" class="form-control" placeholder="Barangay, Apartment, suite, unit, building, floor, etc.">
                                                 </div>
                                                 <div class="form-group">
                                                     <label>State/Province/Region</label>

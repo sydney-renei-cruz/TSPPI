@@ -30,6 +30,10 @@ $(document).ready(function(){
                required: "Re-enter new password",
                equalTo: "Password does not match, please re-enter new password"
            }
+       },
+      submitHandler: function(form){
+           $('input[type="submit"]').attr("disabled", true);
+           form.submit();
        }
    }); 
    

@@ -46,7 +46,7 @@
                                                 <c:forEach var="sb" items="${sb}">
                                                 <div class="form-group">
                                                     <label>Service Name </label>
-                                                    <input type="text" name="service_name" id="service_name" class="form-control" placeholder="Service Name" value="${sb.getServiceName()}">
+                                                    <input type="text" name="service_name" id="service_name" class="form-control" placeholder="Ex. Slitting" value="${sb.getServiceName()}">
                                                 </div>	
                                                 <div class="form-group">
                                                     <label>Description of the Service </label>

@@ -22,7 +22,11 @@ $(document).ready(function(){
           company_branch: {
               remote: "Company already exists"
           }
-      }
+      },
+      submitHandler: function(form){
+           $('input[type="submit"]').attr("disabled", true);
+           form.submit();
+       }
    }); 
 });
 

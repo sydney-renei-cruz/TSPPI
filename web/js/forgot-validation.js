@@ -43,6 +43,10 @@ $(document).ready(function(){
                required: "Please enter an email adress",
                email: "Please enter a valid email address"
            }
+       },
+      submitHandler: function(form){
+           $('input[type="submit"]').attr("disabled", true);
+           form.submit();
        }
    });
 });

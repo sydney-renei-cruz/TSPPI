@@ -23,6 +23,10 @@ $(document).ready(function(){
           job_type: {
               remote: "Job name already exists"
           }
-      }
+      },
+      submitHandler: function(form){
+           $('input[type="submit"]').attr("disabled", true);
+           form.submit();
+       }
    });
 });

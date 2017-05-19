@@ -64,7 +64,7 @@
                                                 <c:if test="${account_type == 'client'}">
                                                     <div class="form-group">
                                                         <label>Mobile Number </label>
-                                                        <input type="number" name="mobile" id="mobile_number" class="form-control" value="${pb.getMobile()}" placeholder="Mobile Number (The length of the number should be 11)" pattern=".{11,11}" title="Required length of number is 11">
+                                                        <input type="number" name="mobile" id="mobile_number" class="form-control" value="${pb.getMobile()}" placeholder="Ex. 09*********" pattern=".{11,11}" title="Required length of number is 11">
                                                     </div>
                                                 </c:if>
                                                 <div class="form-group">

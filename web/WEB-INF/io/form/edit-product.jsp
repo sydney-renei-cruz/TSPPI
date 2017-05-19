@@ -47,11 +47,11 @@
                                                 <c:forEach var="pb" items="${pb}">
                                                 <div class="form-group">
                                                     <label>Product Name </label>
-                                                    <input type="text" name="product_name" id="product_name" class="form-control" placeholder="Product Name" value="${pb.getProductName()}">
+                                                    <input type="text" name="product_name" id="product_name" class="form-control" placeholder="Ex. White Folder" value="${pb.getProductName()}">
                                                 </div>                       
                                                 <div class="form-group">
                                                     <label>Price </label>
-                                                    <input type="number" name="msrp" id="msrp" class="form-control" placeholder="MSRP" value="${pb.getMSRP()}">
+                                                    <input type="number" name="msrp" id="msrp" class="form-control" placeholder="Ex. 100.29" value="${pb.getMSRP()}">
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Product Stock </label>

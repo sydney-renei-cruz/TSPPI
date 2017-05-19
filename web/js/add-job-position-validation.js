@@ -30,6 +30,10 @@ $(document).ready(function(){
           management_score: "Please select yes or no",
           sales_score: "Please select yes or no",
           inventory_score: "Please select yes or no"
-      }
+      },
+      submitHandler: function(form){
+           $('input[type="submit"]').attr("disabled", true);
+           form.submit();
+       }
    });
 });

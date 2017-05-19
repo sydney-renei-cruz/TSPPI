@@ -53,7 +53,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label>Telephone Number</label>
-                                                        <input type="text" name="company_telephone" id="company_telephone" class="form-control" placeholder="Telephone Number" value="${al.getCompanyTelephone()}">
+                                                        <input type="text" name="company_telephone" id="company_telephone" class="form-control" placeholder="Ex. 02*********" value="${al.getCompanyTelephone()}">
                                                     </div>
                                                     <h4>Company Address</h4>
                                                 <div class="form-group">

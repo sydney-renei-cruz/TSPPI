@@ -68,7 +68,11 @@ $(document).ready(function(){
                 required: "This field is required",
                 min: "Quantity should not be below 1"
             }
-        }
+        },
+      submitHandler: function(form){
+           $('input[type="submit"]').attr("disabled", true);
+           form.submit();
+       }
       });
    });
    

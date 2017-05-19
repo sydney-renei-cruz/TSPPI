@@ -80,6 +80,10 @@ $(document).ready(function(){
            payment_method: {
                remote: "Method name already exists"
            }
-      }
+      },
+      submitHandler: function(form){
+           $('input[type="submit"]').attr("disabled", true);
+           form.submit();
+       }
    }); 
 });

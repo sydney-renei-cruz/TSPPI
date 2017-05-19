@@ -45,7 +45,7 @@
                                                     <c:set var="pm_id" value="${al.getPMID()}" scope="session"></c:set>
                                                 <div class="form-group">
                                                     <label>Payment Method Name </label>
-                                                    <input type="text" name="payment_method" id="payment_method" class="form-control" placeholder="Payment Method Name" value="${al.getPaymentMethod()}">
+                                                    <input type="text" name="payment_method" id="payment_method" class="form-control" placeholder="Ex. Cash on Delivery" value="${al.getPaymentMethod()}">
                                                 </div>	
                                                 <c:if test="${error_msg != '' || success_msg != ''}">
                                                     <div class="form-group text-center">

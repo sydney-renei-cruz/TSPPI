@@ -38,7 +38,7 @@
                                                 <h4>Account Information</h4>
                                                 <div class="form-group">
                                                     <label>Username</label>
-                                                    <input type="text" name="username" id="username" class="form-control" placeholder="Username" >
+                                                    <input type="text" name="username" id="username" class="form-control" placeholder="Ex. MyUsername01" >
                                                     <div id="username_message"></div>
                                                 </div>
                                                 <div class="form-group">
@@ -53,29 +53,29 @@
                                                 <h4>Personal Information</h4>
                                                 <div class="form-group">
                                                     <label>First Name</label>
-                                                        <input type="text" name="first_name" id="first_name" class="form-control" placeholder="First Name" >
+                                                        <input type="text" name="first_name" id="first_name" class="form-control" placeholder="Ex. John" >
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Last Name</label>
-                                                    <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Last Name" >
+                                                    <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Ex. Doe" >
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Email</label>
-                                                    <input type="email" name="email" id="email" class="form-control" placeholder="Email Address" >
+                                                    <input type="email" name="email" id="email" class="form-control" placeholder="Ex. john.doe@gmail.com" >
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Mobile Number</label>
-                                                    <input type="number" name="mobile_number" id="mobile_number" class="form-control" placeholder="Mobile Number (ex. 09xxxxxxxxx)" >
+                                                    <input type="number" name="mobile_number" id="mobile_number" class="form-control" placeholder="Ex. 09*********" >
                                                 </div>
                                                 <hr>
                                                 <h4>Company Currently Employed</h4>
                                                 <div class="form-group">
                                                     <label>Company Name</label> 
-                                                    <input type="text" name="company_name" id="company_name" class="form-control" placeholder="Company Name" >
+                                                    <input type="text" name="company_name" id="company_name" class="form-control" placeholder="Ex. MyCompany" >
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Company Branch</label> 
-                                                    <input type="text" name="company_branch" id="company_branch" class="form-control" placeholder="Company Branch" >
+                                                    <input type="text" name="company_branch" id="company_branch" class="form-control" placeholder="Ex. Ortigas" >
 <!--                                                    <p id="err-msg" style="color: #FF0000;"></p>-->
                                                 </div>
 <!--                                                <div class="form-group">

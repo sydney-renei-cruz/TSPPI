@@ -45,7 +45,7 @@
                                                 <c:set var="cat_id" value="${al.getCategoryID()}" scope="session"/>   
                                                 <div class="form-group">
                                                     <label>Product Category Name </label>
-                                                    <input type="text" name="category_name" id="category_name" class="form-control" placeholder="Product Category Name" value="${al.getCategoryName()}">
+                                                    <input type="text" name="category_name" id="category_name" class="form-control" placeholder="Ex. Folder" value="${al.getCategoryName()}">
                                                 </div>
                                                 <c:if test="${error_msg != '' || success_msg != ''}">
                                                     <div class="form-group text-center">

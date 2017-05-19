@@ -37,9 +37,11 @@
                                         <div class="col-lg-12">
                                             <form id="login-form" action="logincontroller" method="post" role="form" autocomplete="off">
                                                 <div class="form-group">
+                                                    <label>Username</label>
                                                     <input type="text" name="username" id="username" class="form-control" placeholder="Username" value="">
                                                 </div>
                                                 <div class="form-group">
+                                                    <label>Password</label>
                                                     <input type="password" name="password" id="log-password" class="form-control" placeholder="Password">
                                                 </div>
                                                 <c:if test="${error_login != ''}">
@@ -84,5 +86,8 @@
                 </div>
             </div>
 	</section>
+        <script src="imports/jquery.validate.js" type="text/javascript"></script>
+        <script src="imports/additional-methods.js" type="text/javascript"></script>
+        <script src="js/login-validation.js" type="text/javascript"></script>
     </body>
 </html>
