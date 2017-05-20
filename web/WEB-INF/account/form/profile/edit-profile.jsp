@@ -98,7 +98,7 @@
                                                 </div>
                                             </form>                 
                                         </div>
-                                        </c:forEach>z
+                                        </c:forEach>
                                     </div>
                                 </div>
                             </div>

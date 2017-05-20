@@ -89,6 +89,12 @@
                                                                 </form>
                                                                 <button type="submit" name="submit" class="cancel-button form-control btn btn-link" value="Cancel Invoice" data-toggle="modal" data-target="#confirm-box">Cancel Invoice</button>
                                                                 </c:if>
+                                                                <c:if test="${al.getInvoiceStatus() == 'Expired'}">
+                                                                <form action="resubmitinvoice" method="POST" id="resubmit-inv">
+                                                                    <input type="hidden" name="invoice_id" value="${al.getInvoiceID()}">
+                                                                    <input type="submit" name="submit" class="btn btn-link" value="Resubmit Invoice">
+                                                                </form>
+                                                                </c:if>
                                                              </c:if>
                                                             <c:if test="${sales_score == true}">
                                                              <c:if test="${al.getInvoiceStatus() == 'Pending'}">

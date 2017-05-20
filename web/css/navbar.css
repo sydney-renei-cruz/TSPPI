@@ -127,12 +127,12 @@ ref = http://bootsnipp.com/snippets/featured/link-to-top-page
     -o-transition: all 0.5s ease-in-out;
     transition: all 0.5s ease-in-out;
 }
-.scroll-top-wrapper:hover {
-    background: linear-gradient(rgba(245,229,252,0.5), rgba(245,229,252,0.5));
-}
+.scroll-top-wrapper:hover {background: linear-gradient(rgba(245,229,252,0.5), rgba(245,229,252,0.5));}
 .scroll-top-wrapper.show {
     visibility:visible;
     cursor:pointer;
     opacity: 1.0;
 }
+
+
 

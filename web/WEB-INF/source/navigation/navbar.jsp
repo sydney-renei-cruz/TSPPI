@@ -119,7 +119,8 @@
                                                     <li><a href="editprofile" class="text-center">Edit Profile</a></li>
                                                     <li><a href="changepassword" class="text-center">Change Password</a></li>
                                                 </ul>
-                                            </li>                                            
+                                            </li>    
+                                            <li><a class="btn btn-link show-inv-items text-center" data-toggle="modal" href="#" data-target="#guide-modal">Help</a></li>
                                             <li><a href="logoutcontroller" class="text-center">Logout</a></li>
                                         </ul>
                                     </li>
@@ -220,7 +221,7 @@
                 <i class="glyphicon glyphicon-chevron-up"></i>
             </span>
         </div>
-        
+        <%@include file="/WEB-INF/source/guide.jsp" %>
         
         <script>
             $(document).ready(function(){

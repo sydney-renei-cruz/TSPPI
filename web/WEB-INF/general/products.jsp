@@ -38,25 +38,29 @@
     <section>
         <div class="container">
             <div class="well well-sm">
-                
-                <form action="products" method="POST" id="product-filter">
-                    <strong>Category Filter: </strong>
-                    <select class="filter-options" id="filter-options" name="filter-options" onchange="filterProducts()"">
-                        <option value="All">All</option>
-                        <c:forEach var="pc" items="${pc}">
-                            <option value="${pc.getCategoryName()}">${pc.getCategoryName()}</option>
-                        </c:forEach>
-                    </select>
-                </form>
-                <br>
-                <form action="products" method="POST" id="product-sort">
-                    <strong>Sort By: </strong>
-                    <select class="sort-options" id="sort-options" name="sort-options" onchange="sortProducts()"">
-                        <option value="Name">Name</option>
-                        <option value="Price">Price</option>
-                        <option value="Category">Category</option>
-                    </select>
-                </form>
+                <div class="row">
+                    <div class="col-md-2">
+                        <form action="products" method="POST" id="product-sort">
+                            <strong>Sort By: </strong>
+                            <select class="sort-options" id="sort-options" name="sort-options" onchange="sortProducts()"">
+                                <option value="Name">Name</option>
+                                <option value="Price">Price</option>
+                                <option value="Category">Category</option>
+                            </select>
+                        </form>
+                    </div>
+                    <div class="col-md-6">
+                        <form action="products" method="POST" id="product-filter">
+                            <strong>Category Filter: </strong>
+                            <select class="filter-options" id="filter-options" name="filter-options" onchange="filterProducts()"">
+                                <option value="All">All</option>
+                                <c:forEach var="pc" items="${pc}">
+                                    <option value="${pc.getCategoryName()}">${pc.getCategoryName()}</option>
+                                </c:forEach>
+                            </select>
+                        </form>
+                    </div>
+                </div>
             </div>
             <c:if test="${pb.size() > 0}">
             <div id="products" class="row list-group">
